@@ -1,6 +1,6 @@
 // Row mapping + merge rules between the local store and Supabase tables.
 // Pure functions (no imports with side effects) so they can be tested in isolation.
-import type { Entry, Food, SavedMeal, WeightLog } from "../types";
+import type { Entry, Fitness, Food, Gym, GymVisit, SavedMeal, WeightLog, Workout } from "../types";
 
 export type LogRow = {
   id: string;
@@ -27,6 +27,7 @@ export type WeightRow = { user_id?: string; measured_on: string; kg: number; upd
 export type WaterRow = { user_id?: string; logged_on: string; glasses: number; updated_at?: string };
 export type FoodRow = { id: string; user_id?: string; data: Food; updated_at?: string; deleted_at: string | null };
 export type MealRow = { id: string; user_id?: string; data: SavedMeal; updated_at?: string; deleted_at: string | null };
+export type WorkoutRow = { id: string; user_id?: string; data: Workout; updated_at?: string; deleted_at: string | null };
 
 const num = (v: unknown) => (v == null ? null : Number(v));
 
@@ -87,9 +88,62 @@ export function mergeDocs<T extends { id: string }>(local: T[], rows: { id: stri
 }
 export const mergeFoods = (local: Food[], rows: FoodRow[], skip: Set<string>) => mergeDocs(local, rows, skip);
 
+/** user_goals.fitness from the server; older rows have none. */
+export function rowToFitness(v: unknown, fallback: Fitness): Fitness {
+  if (!v || typeof v !== "object") return fallback;
+  const f = v as Partial<Fitness>;
+  return {
+    burnGoal: typeof f.burnGoal === "number" && f.burnGoal > 0 ? f.burnGoal : null,
+    restDays: Array.isArray(f.restDays) ? f.restDays.filter((d) => Number.isInteger(d) && d >= 0 && d <= 6) : fallback.restDays,
+  };
+}
+
 /** Latest server timestamp seen, used as the next pull's lower bound. */
 export function maxUpdated(current: string | null, ...lists: { updated_at?: string }[][]) {
   let max = current;
   for (const list of lists) for (const r of list) if (r.updated_at && (!max || r.updated_at > max)) max = r.updated_at;
   return max;
+}
+
+// ── Gym check-in (D30) ──
+export type GymRow = {
+  id: string; user_id?: string; name: string; lat: number | null; lng: number | null; radius_m: number;
+  created_at?: string; updated_at?: string; deleted_at: string | null;
+};
+export const gymToRow = (g: Gym, userId: string): GymRow => ({
+  id: g.id, user_id: userId, name: g.name, lat: g.lat, lng: g.lng, radius_m: g.radiusM,
+  created_at: new Date(g.createdAt).toISOString(), deleted_at: null,
+});
+export const rowToGym = (r: GymRow): Gym => ({
+  id: r.id, name: r.name, lat: r.lat == null ? null : Number(r.lat), lng: r.lng == null ? null : Number(r.lng),
+  radiusM: Number(r.radius_m), createdAt: r.created_at ? Date.parse(r.created_at) : 0,
+});
+export function mergeGyms(local: Gym[], rows: GymRow[], skip: Set<string>): Gym[] {
+  const byId = new Map(local.map((g) => [g.id, g]));
+  for (const r of rows) {
+    if (skip.has(r.id)) continue;
+    if (r.deleted_at) byId.delete(r.id);
+    else byId.set(r.id, rowToGym(r));
+  }
+  return [...byId.values()];
+}
+
+/** gym_visits row (server-written; the device only reads it). Also the shape the gym functions return. */
+export type VisitRow = {
+  id: string; user_id?: string; gym_id: string | null; started_at: string; ended_at: string | null;
+  status: GymVisit["status"]; start_verification: GymVisit["startVerification"]; end_verification: GymVisit["endVerification"];
+  source: GymVisit["source"]; updated_at?: string; deleted_at?: string | null;
+};
+export const rowToVisit = (r: VisitRow): GymVisit => ({
+  id: r.id, gymId: r.gym_id, startedAt: new Date(r.started_at).toISOString(), endedAt: r.ended_at ? new Date(r.ended_at).toISOString() : null,
+  status: r.status, startVerification: r.start_verification, endVerification: r.end_verification, source: r.source,
+});
+/** Server always wins for visits (the device never edits them). */
+export function mergeVisits(local: GymVisit[], rows: VisitRow[]): GymVisit[] {
+  const byId = new Map(local.map((v) => [v.id, v]));
+  for (const r of rows) {
+    if (r.deleted_at) byId.delete(r.id);
+    else byId.set(r.id, rowToVisit(r));
+  }
+  return [...byId.values()];
 }

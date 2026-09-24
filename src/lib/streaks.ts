@@ -1,4 +1,4 @@
-// Streak rules (decision D24). Pure functions, no app imports, so they can be tested in isolation.
+// Streak rules (decisions D24 food, D27 workout + global). Pure functions, no app imports, so they can be tested in isolation.
 
 export type DayStatus = "none" | "under" | "on" | "over";
 
@@ -29,29 +29,32 @@ const next = (key: string) => {
   return `${dt.getFullYear()}-${String(dt.getMonth() + 1).padStart(2, "0")}-${String(dt.getDate()).padStart(2, "0")}`;
 };
 
-/**
- * Walks every day from the first logged day to today.
- * - on target: streak +1; every 7th day earns a freeze (max 2)
- * - anything else (not logged, under, over): spends a freeze if there is one, otherwise the streak resets
- * - today only counts once it's on target; an unfinished today never breaks the streak
- */
-export function computeStreaks(kcalByDay: Map<string, number>, goal: number, today: string): StreakResult {
-  const status = new Map<string, DayStatus>();
-  const frozen = new Set<string>();
-  const logged = [...kcalByDay.keys()].filter((d) => d <= today).sort();
-  let current = 0, best = 0, freezes = 0, onTargetDays = 0;
-  if (!logged.length) return { current, best, freezes, frozen, status, onTargetDays };
+/** How one day counts for a streak. "rest" = a planned rest day: it neither adds to nor breaks the streak. */
+export type Judged = "hit" | "miss" | "rest";
 
-  for (let d = logged[0]; d <= today; d = next(d)) {
-    const s = dayStatus(kcalByDay.get(d) ?? 0, goal);
-    status.set(d, s);
-    if (s === "on") {
-      onTargetDays++;
+export type RunResult = { current: number; best: number; freezes: number; frozen: Set<string>; hits: number };
+
+/**
+ * Walks every day from `first` to today.
+ * - hit: streak +1; every 7th day earns a freeze (max 2)
+ * - rest: skipped
+ * - miss: spends a freeze if there is one, otherwise the streak resets
+ * - today only counts once it's a hit; an unfinished today never breaks the streak
+ */
+export function runStreak(first: string | null, today: string, judge: (day: string) => Judged): RunResult {
+  const frozen = new Set<string>();
+  let current = 0, best = 0, freezes = 0, hits = 0;
+  if (!first) return { current, best, freezes, frozen, hits };
+
+  for (let d = first; d <= today; d = next(d)) {
+    const j = judge(d);
+    if (j === "hit") {
+      hits++;
       current++;
       best = Math.max(best, current);
       if (current % FREEZE_EVERY === 0 && freezes < MAX_FREEZES) freezes++;
-    } else if (d === today) {
-      // still in progress
+    } else if (j === "rest" || d === today) {
+      // rest day, or today still in progress
     } else if (current > 0 && freezes > 0) {
       freezes--;
       frozen.add(d);
@@ -59,5 +62,29 @@ export function computeStreaks(kcalByDay: Map<string, number>, goal: number, tod
       current = 0;
     }
   }
-  return { current, best, freezes, frozen, status, onTargetDays };
+  return { current, best, freezes, frozen, hits };
 }
+
+/** Food streak (D24): on target = logged and 80–105% of the goal. */
+export function computeStreaks(kcalByDay: Map<string, number>, goal: number, today: string): StreakResult {
+  const status = new Map<string, DayStatus>();
+  const first = [...kcalByDay.keys()].filter((d) => d <= today).sort()[0] ?? null;
+  const r = runStreak(first, today, (d) => {
+    const s = dayStatus(kcalByDay.get(d) ?? 0, goal);
+    status.set(d, s);
+    return s === "on" ? "hit" : "miss";
+  });
+  return { current: r.current, best: r.best, freezes: r.freezes, frozen: r.frozen, status, onTargetDays: r.hits };
+}
+
+/**
+ * Workout day (D27): with a daily burn goal, hit = burned at least the goal; without one, hit = any workout logged.
+ * A missed planned rest day is "rest", so it never breaks the streak.
+ */
+export function workoutDay(logged: boolean, burned: number, burnGoal: number | null, restDay: boolean): Judged {
+  if (logged && (burnGoal == null || burned >= burnGoal)) return "hit";
+  return restDay ? "rest" : "miss";
+}
+
+/** Global "Prana" day: food on target and the workout side done (hit, or a planned rest day). */
+export const globalDay = (food: DayStatus, workout: Judged): Judged => (food === "on" && workout !== "miss" ? "hit" : "miss");

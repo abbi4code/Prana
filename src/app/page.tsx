@@ -1,6 +1,10 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
+import { Check, Pencil, X } from "lucide-react";
+import { AddBar } from "@/components/today/AddBar";
+import { BurnCard } from "@/components/today/BurnCard";
 import { CalorieRing } from "@/components/today/CalorieRing";
 import { DateStrip } from "@/components/today/DateStrip";
 import { MacroBars } from "@/components/today/MacroBars";
@@ -10,15 +14,23 @@ import { addDays, dayKey } from "@/lib/dates";
 import { MEALS, totals } from "@/lib/nutrition";
 import { useStore, useUI } from "@/lib/store";
 import { useStreaks } from "@/lib/useStreaks";
+import { useDayWorkouts, useFitnessStreaks } from "@/lib/useWorkouts";
 
 export default function TodayPage() {
   const hydrated = useStore((s) => s.hydrated);
   const entries = useStore((s) => s.entries);
   const goals = useStore((s) => s.goals);
+  const setGoals = useStore((s) => s.setGoals);
   const date = useUI((s) => s.date) ?? dayKey();
   const setDate = useUI((s) => s.setDate);
   const streak = useStreaks();
+  const fit = useFitnessStreaks();
+  const burned = useDayWorkouts(date).kcal;
   const prev = addDays(date, -1);
+  // the flame is the global streak (food + workout) once workouts are being logged; food-only users keep the food streak
+  const flame = fit.started
+    ? { n: fit.global.current, live: fit.global.status.get(fit.today) === "hit" }
+    : { n: streak.current, live: streak.status.get(streak.today) === "on" };
 
   const { day, yesterday, logged } = useMemo(
     () => ({
@@ -36,14 +48,16 @@ export default function TodayPage() {
   return (
     <div className="space-y-4 lg:grid lg:grid-cols-[400px_minmax(0,1fr)] lg:items-start lg:gap-8 lg:space-y-0">
       <div className="space-y-4 lg:sticky lg:top-10">
-        <DateStrip date={date} onChange={setDate} logged={logged} streak={streak.current} streakLive={streak.status.get(streak.today) === "on"} />
+        <DateStrip date={date} onChange={setDate} logged={logged} streak={flame.n} streakLive={flame.live} />
+        <AddBar />
 
         <section className="card px-5 pb-5 pt-6">
           <CalorieRing eaten={t.kcal} goal={goals.kcal} />
-          <div className="mt-4 flex justify-center gap-6 text-sm">
+          <div className="mt-4 grid grid-cols-4 divide-x divide-line-strong text-sm">
             <Stat label="Eaten" value={t.kcal} />
-            <span className="w-px bg-line-strong" />
-            <Stat label="Goal" value={goals.kcal} />
+            <Stat label="Burned" value={burned} tone="text-jamun" />
+            <Stat label="Net" value={t.kcal - burned} />
+            <GoalStat goal={goals.kcal} onSave={(kcal) => setGoals({ ...goals, kcal })} />
           </div>
           <div className="mt-5 border-t border-line pt-5">
             <MacroBars totals={t} goals={goals} date={date} />
@@ -51,6 +65,7 @@ export default function TodayPage() {
         </section>
 
         <QuickRow date={date} />
+        <BurnCard date={date} />
       </div>
 
       <div className="space-y-4">
@@ -59,7 +74,7 @@ export default function TodayPage() {
           <p className="text-sm text-muted">
             {day.length
               ? `${day.length} item${day.length === 1 ? "" : "s"} · ${t.kcal.toLocaleString("en-IN")} kcal`
-              : "Nothing logged yet. Press N to add food."}
+              : "Nothing logged yet. Press / to add food or a workout."}
           </p>
         </div>
         <div className="space-y-4 md:grid md:grid-cols-2 md:gap-4 md:space-y-0 lg:block lg:space-y-4 xl:grid xl:space-y-0">
@@ -80,11 +95,67 @@ export default function TodayPage() {
   );
 }
 
-function Stat({ label, value }: { label: string; value: number }) {
+function Stat({ label, value, tone = "" }: { label: string; value: number; tone?: string }) {
   return (
-    <div className="text-center">
-      <p className="font-display text-xl font-semibold tabular">{value.toLocaleString("en-IN")}</p>
-      <p className="text-[11px] font-bold uppercase tracking-wider text-faint">{label}</p>
+    <div className="px-1 text-center">
+      <p className={`font-display text-lg font-semibold tabular ${tone}`}>{value.toLocaleString("en-IN")}</p>
+      <p className="text-[10px] font-bold uppercase tracking-wider text-faint">{label}</p>
+    </div>
+  );
+}
+
+/** Tap the goal to change the daily kcal right here (macros stay as set in Me). */
+function GoalStat({ goal, onSave }: { goal: number; onSave: (kcal: number) => void }) {
+  const [draft, setDraft] = useState<string | null>(null);
+  const v = Number(draft);
+  const ok = draft != null && v >= 800 && v <= 6000;
+  const save = () => {
+    if (ok) onSave(Math.round(v));
+    setDraft(null);
+  };
+  return (
+    <div className="relative px-1 text-center">
+      <AnimatePresence mode="wait" initial={false}>
+        {draft == null ? (
+          <motion.button
+            key="view"
+            initial={{ opacity: 0, y: 4 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -4 }}
+            onClick={() => setDraft(String(goal))}
+            aria-label={`Daily goal ${goal} kcal. Edit`}
+            className="group w-full"
+          >
+            <p className="font-display text-lg font-semibold tabular">{goal.toLocaleString("en-IN")}</p>
+            <p className="flex items-center justify-center gap-1 text-[10px] font-bold uppercase tracking-wider text-faint group-hover:text-turmeric">
+              Goal <Pencil size={10} />
+            </p>
+          </motion.button>
+        ) : (
+          <motion.form
+            key="edit"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0 }}
+            onSubmit={(e) => { e.preventDefault(); save(); }}
+            className="flex flex-col items-center"
+          >
+            <input
+              autoFocus
+              value={draft}
+              onChange={(e) => setDraft(e.target.value.replace(/[^\d]/g, ""))}
+              onKeyDown={(e) => e.key === "Escape" && setDraft(null)}
+              inputMode="numeric"
+              aria-label="Daily calorie goal"
+              className="w-full rounded-lg border border-turmeric/60 bg-surface-2 text-center font-display text-lg font-semibold outline-none tabular"
+            />
+            <span className="mt-0.5 flex gap-1">
+              <button type="submit" aria-label="Save goal" disabled={!ok} className="grid size-5 place-items-center rounded-full bg-cream text-bg disabled:opacity-30"><Check size={12} /></button>
+              <button type="button" aria-label="Cancel" onClick={() => setDraft(null)} className="grid size-5 place-items-center rounded-full border border-line-strong text-muted"><X size={12} /></button>
+            </span>
+          </motion.form>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
@@ -94,11 +165,13 @@ function TodaySkeleton() {
     <div className="space-y-4 lg:grid lg:grid-cols-[400px_minmax(0,1fr)] lg:gap-8 lg:space-y-0">
       <div className="space-y-4">
         <div className="skeleton h-28" />
+        <div className="skeleton h-16" />
         <div className="skeleton h-[26rem]" />
         <div className="grid grid-cols-2 gap-3">
           <div className="skeleton h-28" />
           <div className="skeleton h-28" />
         </div>
+        <div className="skeleton h-20" />
       </div>
       <div className="space-y-4 md:grid md:grid-cols-2 md:gap-4 md:space-y-0 lg:block lg:space-y-4 lg:pt-24 xl:grid xl:space-y-0">
         {[0, 1, 2, 3].map((i) => <div key={i} className="skeleton h-24" />)}

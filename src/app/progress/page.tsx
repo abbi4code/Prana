@@ -5,11 +5,12 @@ import { motion } from "motion/react";
 import { Scale, X } from "lucide-react";
 import { Bar, BarChart, CartesianGrid, Cell, Line, LineChart, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { addDays, dayKey, parseDay } from "@/lib/dates";
-import { StreakCard } from "@/components/progress/StreakCard";
+import { PranaStreakCard, StreakCard } from "@/components/progress/StreakCard";
 import { YearHeatmap } from "@/components/progress/YearHeatmap";
 import { useStore } from "@/lib/store";
 import { dayStatus } from "@/lib/streaks";
 import { useTokens } from "@/lib/useTokens";
+import { useFitnessStreaks } from "@/lib/useWorkouts";
 
 const short = (k: string) => parseDay(k).toLocaleDateString("en-IN", { day: "numeric", month: "short" });
 
@@ -22,6 +23,7 @@ export default function ProgressPage() {
   const removeWeight = useStore((s) => s.removeWeight);
   const [kg, setKg] = useState("");
   const tk = useTokens();
+  const { started } = useFitnessStreaks();
   const today = dayKey();
 
   const calories = useMemo(() => {
@@ -57,7 +59,10 @@ export default function ProgressPage() {
       <h1 className="font-display text-[2rem] font-semibold lg:text-4xl">Progress</h1>
 
       <div className="space-y-4 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)] lg:items-start lg:gap-6 lg:space-y-0">
-        <StreakCard />
+        <div className="space-y-4">
+          {started && <PranaStreakCard />}
+          <StreakCard />
+        </div>
         <YearHeatmap />
       </div>
 

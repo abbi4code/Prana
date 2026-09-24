@@ -1,6 +1,6 @@
 import data from "@/data/foods.generated.json";
 import prefer from "@/data/food-prefer.generated.json";
-import { buildMatcher, type Candidate } from "./nl/match";
+import { buildMatcher, type Candidate, type Matcher } from "./nl/match";
 import { STARTER_IDS, matchBoost } from "./nl/ranking";
 
 export { STARTER_IDS };
@@ -22,20 +22,20 @@ export function setCustomFoods(list: Food[]) {
 }
 
 // typo-tolerant matcher over catalog + custom foods (nl-logging.md); built on first use
-let matcher: ReturnType<typeof buildMatcher> | null = null;
+let matcher: Matcher<Food> | null = null;
 /**
  * Best candidates for a free-text food name ("rotii", "anda bhurji"), highest score first.
  * `history` = food ids this user logs; they win ties, so ambiguous words learn the user's habits.
  * Veg wins remaining ties by a hair (still ambiguous, so "Did you mean?" is shown).
  */
-export function matchFood(name: string, limit = 3, history?: ReadonlySet<string>): Candidate[] {
+export function matchFood(name: string, limit = 3, history?: ReadonlySet<string>): Candidate<Food>[] {
   matcher ??= buildMatcher([...CUSTOM, ...FOODS], {
     prefer: prefer as Record<string, string>,
     boost: matchBoost,
   });
   const cands = matcher.match(name, limit + 4);
   if (history?.size)
-    for (const c of cands) if (history.has(c.food.id)) c.score = Math.min(1, c.score + 0.04);
+    for (const c of cands) if (history.has(c.item.id)) c.score = Math.min(1, c.score + 0.04);
   return cands.sort((a, b) => b.score - a.score).slice(0, limit);
 }
 export const getCustomFoods = () => CUSTOM;
@@ -98,7 +98,7 @@ export function searchFoods(query: string, limit = 40): Food[] {
   // few or no hits (typos, spelling variants like "daal", "fulka"): add fuzzy matches after them
   if (found.length < 4) {
     const seen = new Set(found.map((f) => f.id));
-    for (const c of matchFood(query, 8)) if (c.score >= 0.45 && !seen.has(c.food.id)) found.push(c.food);
+    for (const c of matchFood(query, 8)) if (c.score >= 0.45 && !seen.has(c.item.id)) found.push(c.item);
   }
   return found.slice(0, limit);
 }

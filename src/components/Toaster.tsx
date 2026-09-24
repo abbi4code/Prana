@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { useUI } from "@/lib/store";
 
-/** One toast at a time, above the bottom nav; auto-hides after 4.5 s. */
+/** One toast at a time, above the bottom nav and open sheets (z 55; the grain overlay is 60); auto-hides after 4.5 s. */
 export function Toaster() {
   const toast = useUI((s) => s.toast);
   const dismiss = useUI((s) => s.dismissToast);
@@ -16,7 +16,7 @@ export function Toaster() {
   }, [toast, dismiss]);
 
   return (
-    <div className="pointer-events-none fixed inset-x-0 bottom-[calc(6.2rem+var(--safe-bottom))] z-50 flex justify-center px-4 lg:bottom-8 lg:left-64">
+    <div className="pointer-events-none fixed inset-x-0 bottom-[calc(6.2rem+var(--safe-bottom))] z-[55] flex justify-center px-4 lg:bottom-4 lg:left-64">
       <AnimatePresence>
         {toast && (
           <motion.div

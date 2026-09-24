@@ -4,7 +4,9 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { getFood, getUnit, setCustomFoods } from "./foods";
 import { DEFAULT_GOALS, portion } from "./nutrition";
-import type { Entry, Food, Goals, LogSource, Meal, Profile, SavedMeal, ThaliItem, WeightLog } from "./types";
+import { dayKey } from "./dates";
+import { activeVisit } from "./gym/visits";
+import type { Entry, Fitness, Food, Goals, Gym, GymVisit, LocalVisit, LogSource, Meal, Profile, SavedMeal, ThaliItem, WeightLog, Workout } from "./types";
 
 /**
  * Local changes not yet pushed to Supabase (decision D14).
@@ -22,12 +24,17 @@ export type SyncQueue = {
   deletedFoods: string[];
   dirtyMeals: string[]; // saved meal ids
   deletedMeals: string[];
+  dirtyWorkouts: string[];
+  deletedWorkouts: string[];
+  dirtyGyms: string[];
+  deletedGyms: string[];
+  /** goals, profile or fitness changed (all live in user_goals) */
   goalsDirty: boolean;
 };
 
 export const EMPTY_QUEUE: SyncQueue = {
   userId: null, lastPulledAt: null, dirtyEntries: [], deletedEntries: [],
-  dirtyWeights: [], deletedWeights: [], dirtyWater: [], dirtyFoods: [], deletedFoods: [], dirtyMeals: [], deletedMeals: [], goalsDirty: false,
+  dirtyWeights: [], deletedWeights: [], dirtyWater: [], dirtyFoods: [], deletedFoods: [], dirtyMeals: [], deletedMeals: [], dirtyWorkouts: [], deletedWorkouts: [], dirtyGyms: [], deletedGyms: [], goalsDirty: false,
 };
 
 type Data = {
@@ -39,6 +46,19 @@ type Data = {
   /** user-created foods (same shape as catalog foods, conf "user") */
   customFoods: Food[];
   savedMeals: SavedMeal[];
+  /** logged exercises + cardio (D27) */
+  workouts: Workout[];
+  fitness: Fitness;
+  /** gym check-in (D30): the user's gym (synced), server visits (read-only copy), visits saved only on this device */
+  gyms: Gym[];
+  visits: GymVisit[];
+  localVisits: LocalVisit[];
+  /** "Done" tapped while offline on a server visit; sent when back online */
+  pendingCheckout: { visitId: string; endedAt: number } | null;
+  /** app-level location consent for check-in verification (layer 1; the browser permission is layer 2).
+   *  null = never asked, false = off, true = on. Synced with the goals (user_goals). */
+  locationConsent: boolean | null;
+  locationConsentAt: number | null;
   sync: SyncQueue;
   /** chose "use without account" on the login screen */
   guest: boolean;
@@ -65,16 +85,41 @@ type State = Data & {
   deleteSavedMeal: (id: string) => void;
   /** log every item of a saved meal; returns the new entry ids */
   logSavedMeal: (id: string, meal: Meal, date: string) => string[];
+  addWorkout: (w: Omit<Workout, "id" | "createdAt">) => string;
+  updateWorkout: (id: string, patch: Omit<Workout, "id" | "createdAt" | "date">) => void;
+  removeWorkout: (id: string) => void;
+  /** undo a delete: put the same workout (same id) back */
+  restoreWorkout: (w: Workout) => void;
+  setFitness: (f: Fitness) => void;
+  saveGym: (g: Gym) => void;
+  /** server answer from a gym API call */
+  putVisit: (v: GymVisit) => void;
+  startLocalVisit: (gymId: string | null) => LocalVisit;
+  endLocalVisit: (id: string, endedAt: number) => void;
+  /** uploaded: the server copy replaces it */
+  dropLocalVisit: (id: string) => void;
+  setPendingCheckout: (p: { visitId: string; endedAt: number } | null) => void;
+  setLocationConsent: (on: boolean) => void;
   setGuest: (guest: boolean) => void;
   /** wipe everything on this device (sign-out); server data is untouched */
   resetLocal: () => void;
 };
 
+/** Sunday off until the user picks their own rest days. */
+export const DEFAULT_FITNESS: Fitness = { burnGoal: null, restDays: [0] };
+
 const INITIAL: Data = {
-  entries: [], goals: DEFAULT_GOALS, profile: null, weights: [], water: {}, customFoods: [], savedMeals: [], sync: EMPTY_QUEUE, guest: false,
+  entries: [], goals: DEFAULT_GOALS, profile: null, weights: [], water: {}, customFoods: [], savedMeals: [],
+  workouts: [], fitness: DEFAULT_FITNESS, gyms: [], visits: [], localVisits: [], pendingCheckout: null,
+  locationConsent: null, locationConsentAt: null, sync: EMPTY_QUEUE, guest: false,
 };
 
 const uid = () => (typeof crypto !== "undefined" && crypto.randomUUID ? crypto.randomUUID() : String(Math.random()).slice(2));
+/** RFC 4122 v4 (the server checks offline visit ids are uuids); randomUUID is missing on plain-http LAN testing. */
+const uuid = () =>
+  typeof crypto !== "undefined" && crypto.randomUUID
+    ? crypto.randomUUID()
+    : "10000000-1000-4000-8000-100000000000".replace(/[018]/g, (c) => (+c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (+c / 4)))).toString(16));
 const add = (list: string[], ...items: string[]) => [...new Set([...list, ...items])];
 const drop = (list: string[], item: string) => list.filter((x) => x !== item);
 
@@ -184,14 +229,53 @@ export const useStore = create<State>()(
         }));
         return made.map((e) => e.id);
       },
+      addWorkout: (w) => {
+        // logged during a gym visit today → linked to it (the visit never adds calories, D30)
+        const s0 = get();
+        const active = w.date === dayKey() ? activeVisit(s0.visits, s0.localVisits, s0.pendingCheckout?.visitId ?? null) : null;
+        const made: Workout = { ...w, id: uid(), createdAt: Date.now(), ...(active && !w.visitId ? { visitId: active.id } : {}) };
+        set((s) => ({ workouts: [...s.workouts, made], sync: { ...s.sync, dirtyWorkouts: add(s.sync.dirtyWorkouts, made.id) } }));
+        return made.id;
+      },
+      updateWorkout: (id, patch) =>
+        set((s) => ({
+          workouts: s.workouts.map((w) => (w.id === id ? { id, createdAt: w.createdAt, date: w.date, ...patch } : w)),
+          sync: { ...s.sync, dirtyWorkouts: add(s.sync.dirtyWorkouts, id) },
+        })),
+      removeWorkout: (id) =>
+        set((s) => ({
+          workouts: s.workouts.filter((w) => w.id !== id),
+          sync: { ...s.sync, dirtyWorkouts: drop(s.sync.dirtyWorkouts, id), deletedWorkouts: add(s.sync.deletedWorkouts, id) },
+        })),
+      restoreWorkout: (w) =>
+        set((s) => ({
+          workouts: [...s.workouts.filter((x) => x.id !== w.id), w],
+          sync: { ...s.sync, dirtyWorkouts: add(s.sync.dirtyWorkouts, w.id), deletedWorkouts: drop(s.sync.deletedWorkouts, w.id) },
+        })),
+      setFitness: (fitness) => set((s) => ({ fitness, sync: { ...s.sync, goalsDirty: true } })),
+      saveGym: (g) =>
+        set((s) => ({
+          gyms: [...s.gyms.filter((x) => x.id !== g.id), g],
+          sync: { ...s.sync, dirtyGyms: add(s.sync.dirtyGyms, g.id), deletedGyms: drop(s.sync.deletedGyms, g.id) },
+        })),
+      putVisit: (v) => set((s) => ({ visits: [...s.visits.filter((x) => x.id !== v.id), v] })),
+      startLocalVisit: (gymId) => {
+        const v: LocalVisit = { id: uuid(), gymId, startedAt: Date.now(), endedAt: null };
+        set((s) => ({ localVisits: [...s.localVisits, v] }));
+        return v;
+      },
+      endLocalVisit: (id, endedAt) => set((s) => ({ localVisits: s.localVisits.map((v) => (v.id === id ? { ...v, endedAt } : v)) })),
+      dropLocalVisit: (id) => set((s) => ({ localVisits: s.localVisits.filter((v) => v.id !== id) })),
+      setPendingCheckout: (pendingCheckout) => set({ pendingCheckout }),
+      setLocationConsent: (on) => set((s) => ({ locationConsent: on, locationConsentAt: Date.now(), sync: { ...s.sync, goalsDirty: true } })),
       setGuest: (guest) => set({ guest }),
       resetLocal: () => set({ ...INITIAL }),
     }),
     {
       name: "ct-v1",
       version: 1, // new fields fall back to INITIAL via the default shallow merge
-      partialize: ({ entries, goals, profile, weights, water, customFoods, savedMeals, sync, guest }) =>
-        ({ entries, goals, profile, weights, water, customFoods, savedMeals, sync, guest }),
+      partialize: ({ entries, goals, profile, weights, water, customFoods, savedMeals, workouts, fitness, gyms, visits, localVisits, pendingCheckout, locationConsent, locationConsentAt, sync, guest }) =>
+        ({ entries, goals, profile, weights, water, customFoods, savedMeals, workouts, fitness, gyms, visits, localVisits, pendingCheckout, locationConsent, locationConsentAt, sync, guest }),
       // queues persisted before a field existed would lack it
       merge: (persisted, current) => {
         const p = persisted as Partial<State>;
@@ -216,7 +300,8 @@ useStore.subscribe((s, prev) => {
 /** Changes waiting to be pushed. */
 export const pendingCount = (q: SyncQueue) =>
   q.dirtyEntries.length + q.deletedEntries.length + q.dirtyWeights.length + q.deletedWeights.length + q.dirtyWater.length +
-  q.dirtyFoods.length + q.deletedFoods.length + q.dirtyMeals.length + q.deletedMeals.length + (q.goalsDirty ? 1 : 0);
+  q.dirtyFoods.length + q.deletedFoods.length + q.dirtyMeals.length + q.deletedMeals.length +
+  q.dirtyWorkouts.length + q.deletedWorkouts.length + q.dirtyGyms.length + q.deletedGyms.length + (q.goalsDirty ? 1 : 0);
 
 export type Toast = { id: number; text: string; action?: { label: string; run: () => void } };
 
@@ -231,11 +316,22 @@ type UI = {
   showToast: (text: string, action?: Toast["action"]) => void;
   dismissToast: () => void;
   sheet: null | { mode: "add"; meal: Meal } | { mode: "edit"; entryId: string } | { mode: "thali"; slot: Meal; thaliId?: string; prefill?: ThaliItem[] };
+  /** workout sheet (D27): pick an exercise/activity, or edit a logged one */
+  gym: null | { mode: "pick"; tab: "strength" | "cardio" } | { mode: "edit"; workoutId: string };
   setDate: (d: string) => void;
   openAdd: (meal: Meal) => void;
   openEdit: (entryId: string) => void;
   openThali: (opts: { slot: Meal; thaliId?: string; prefill?: ThaliItem[] }) => void;
   close: () => void;
+  openGym: (tab?: "strength" | "cardio") => void;
+  editWorkout: (workoutId: string) => void;
+  closeGym: () => void;
+  /** server clock − device clock, ms (from gym API replies), so the visit timer is right on a wrong phone clock */
+  clockSkew: number;
+  /** "Add anything" sheet (D29): one search for food + workouts, opened from the Today bar or / and ⌘K */
+  quick: boolean;
+  openQuick: () => void;
+  closeQuick: () => void;
 };
 
 export const useUI = create<UI>((set) => ({
@@ -252,4 +348,12 @@ export const useUI = create<UI>((set) => ({
   openEdit: (entryId) => set({ sheet: { mode: "edit", entryId } }),
   openThali: (opts) => set({ sheet: { mode: "thali", ...opts } }),
   close: () => set({ sheet: null }),
+  gym: null,
+  openGym: (tab = "strength") => set({ gym: { mode: "pick", tab } }),
+  editWorkout: (workoutId) => set({ gym: { mode: "edit", workoutId } }),
+  closeGym: () => set({ gym: null }),
+  clockSkew: 0,
+  quick: false,
+  openQuick: () => set({ quick: true }),
+  closeQuick: () => set({ quick: false }),
 }));

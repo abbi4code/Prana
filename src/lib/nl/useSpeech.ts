@@ -36,6 +36,8 @@ const MESSAGES: Record<string, string> = {
   "language-not-supported": "This browser can't recognise English (India). Type instead.",
 };
 
+export const useSpeechSupported = () => useSyncExternalStore(() => () => {}, () => Boolean(ctor()), () => false);
+
 /**
  * `supported` is false (and the mic hidden) when the browser has no SpeechRecognition.
  * onInterim streams live text into the box; onFinal fires once with the final sentence.
@@ -45,7 +47,7 @@ export function useSpeech({ onInterim, onFinal, onError }: {
   onFinal: (text: string) => void;
   onError: (message: string) => void;
 }) {
-  const supported = useSyncExternalStore(() => () => {}, () => Boolean(ctor()), () => false);
+  const supported = useSpeechSupported();
   const [listening, setListening] = useState(false);
   const rec = useRef<Recognition | null>(null);
   const handlers = useRef({ onInterim, onFinal, onError });
@@ -54,6 +56,15 @@ export function useSpeech({ onInterim, onFinal, onError }: {
   });
 
   const stop = useCallback(() => rec.current?.stop(), []);
+  /** Stop without delivering the sentence (the sheet was closed mid-sentence). */
+  const abort = useCallback(() => {
+    const r = rec.current;
+    if (!r) return;
+    r.onresult = r.onend = r.onerror = null;
+    r.abort();
+    rec.current = null;
+    setListening(false);
+  }, []);
 
   const start = useCallback(() => {
     const Ctor = ctor();
@@ -92,7 +103,7 @@ export function useSpeech({ onInterim, onFinal, onError }: {
   }, []);
 
   // stop listening if the sheet closes mid-sentence
-  useEffect(() => () => rec.current?.abort(), []);
+  useEffect(() => abort, [abort]);
 
-  return { supported, listening, start, stop };
+  return { supported, listening, start, stop, abort };
 }

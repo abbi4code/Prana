@@ -18,6 +18,7 @@
   --color-chilli: #ff5a6e; /* protein, over-goal */
   --color-leaf: #6cc46f; /* on target */
   --color-sky: #7dd3fc; /* water */
+  --color-jamun: #b48cff; /* workouts + calories burned (D27) */
   --color-brass: #c9974c;
   --color-cream: #fff4e4; /* selected pills; inverts in light mode */
   --color-on-accent: #1d140e; /* text on turmeric→saffron buttons, both themes */
@@ -31,6 +32,8 @@
 
 :root {
   color-scheme: dark;
+  /* OpenStreetMap tiles are light; in dark mode they're inverted to match (gym map, D30) */
+  --map-filter: invert(1) hue-rotate(180deg) brightness(0.9) contrast(0.88) saturate(0.55);
   --ink: 255 236 214;
   --glow: 0.13;
   --grain: 0.05;
@@ -43,6 +46,7 @@
 @media (prefers-color-scheme: light) {
   :root:not([data-theme="dark"]) {
     color-scheme: light;
+    --map-filter: none;
     --ink: 70 45 20;
     --glow: 0.1;
     --grain: 0.025;
@@ -59,12 +63,14 @@
     --color-chilli: #e0405a;
     --color-leaf: #3f9a4a;
     --color-sky: #3aa6dd;
+    --color-jamun: #7b4fd6;
     --color-brass: #a8742c;
     --color-cream: #2b1e15;
   }
 }
 :root[data-theme="light"] {
   color-scheme: light;
+  --map-filter: none;
   --ink: 70 45 20;
   --glow: 0.1;
   --grain: 0.025;
@@ -81,6 +87,7 @@
   --color-chilli: #e0405a;
   --color-leaf: #3f9a4a;
   --color-sky: #3aa6dd;
+  --color-jamun: #7b4fd6;
   --color-brass: #a8742c;
   --color-cream: #2b1e15;
 }
@@ -155,6 +162,47 @@ input[type="number"]::-webkit-outer-spin-button {
   to {
     background-position: -200% 0;
   }
+}
+
+/* exercise photos: start and end position cross-fade like a slow GIF */
+@keyframes flip {
+  0%, 42% { opacity: 0; }
+  50%, 92% { opacity: 1; }
+  100% { opacity: 0; }
+}
+@utility animate-flip {
+  animation: flip 2.6s ease-in-out infinite;
+}
+
+/* gym map (Leaflet): themed tiles, jamun pin + radius (SVG attributes can't read CSS vars, so classes do it) */
+.gym-map .leaflet-tile-pane { filter: var(--map-filter); }
+.gym-map.leaflet-container { background: var(--color-surface-2); font-family: var(--font-sans); }
+.gym-map .leaflet-control-attribution { background: rgb(var(--ink) / 0.1); color: var(--color-muted); font-size: 10px; border-radius: 8px 0 0 0; backdrop-filter: blur(6px); }
+.gym-map .leaflet-control-attribution a { color: var(--color-text); }
+.gym-map .leaflet-bar a { background: var(--color-surface); color: var(--color-text); border-color: var(--color-line-strong); }
+.gym-radius { stroke: var(--color-jamun); stroke-width: 2; fill: var(--color-jamun); fill-opacity: 0.14; }
+.gym-accuracy { stroke: var(--color-sky); stroke-width: 1.5; stroke-dasharray: 5 6; fill: var(--color-sky); fill-opacity: 0.06; }
+/* doubled class: leaflet.css (loaded after this file) sets .leaflet-marker-icon { display: block } */
+.leaflet-marker-icon.gym-pin { display: grid; place-items: center; }
+.gym-pin span { display: block; width: 20px; height: 20px; border-radius: 9999px; background: var(--color-jamun); border: 3px solid #fff; box-shadow: 0 4px 14px rgb(0 0 0 / 0.45); position: relative; }
+.gym-pin::before { content: ""; position: absolute; inset: 4px; border-radius: 9999px; background: var(--color-jamun); animation: pin-pulse 1.8s ease-out infinite; }
+@keyframes pin-pulse { from { transform: scale(1); opacity: 0.55; } to { transform: scale(3.2); opacity: 0; } }
+
+/* desktop log sheets (components/Sheet.tsx): centred modal that rises + fades, instead of vaul's slide-from-bottom */
+@keyframes modal-in {
+  from { opacity: 0; transform: translate3d(0, 18px, 0) scale(0.97); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes modal-out {
+  to { opacity: 0; transform: translate3d(0, 10px, 0) scale(0.98); }
+}
+.modal-pop[data-vaul-drawer][data-state="open"] {
+  animation-name: modal-in !important;
+  animation-duration: 0.32s !important;
+}
+.modal-pop[data-vaul-drawer][data-state="closed"] {
+  animation-name: modal-out !important;
+  animation-duration: 0.2s !important;
 }
 
 @utility skeleton {

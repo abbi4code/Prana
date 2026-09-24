@@ -32,8 +32,11 @@ When something changes, mark the old entry **Superseded by Dxx** instead of dele
 | D23 | Interaction patterns: swipe-delete + undo, drag katori, celebrate habits only | Decided | 2026-09-24 |
 | D24 | Streak rules: on target = logged + 80–105% of goal; freezes | Decided | 2026-09-24 |
 | D25 | Saved meals ("thalis"), logged in one tap | Decided | 2026-09-24 |
-| D26 | Natural-language + voice logging: server parses, device matches | Decided (built) | 2026-09-25 |
-| D26 | Workouts: exercise library, sets × reps × kg, estimated burn kept separate from food, food/workout/global streaks | Decided (rest-day rule Proposed) | 2026-09-24 |
+| D26 | Natural-language + voice logging (food + workouts): server parses, device matches | Decided (built) | 2026-09-25 |
+| D27 | Workouts: exercise library, sets × reps × kg, estimated burn kept separate from food, food/workout/global streaks | Decided (built) | 2026-09-24 |
+| D28 | Desktop log sheets are centred modals (workout: two-pane); supersedes the side panel in D17 | Decided (built) | 2026-09-25 |
+| D29 | "Add anything": one search bar on Today for food + workouts; + adds exactly what the row shows | Decided (built) | 2026-09-25 |
+| D30 | Gym check-in: manual (web can't geofence), server-written visits + append-only events, online by default with offline/guest fallback, server-side location verification | Decided (phases 1–3 built) | 2026-09-25 |
 
 ---
 
@@ -149,10 +152,10 @@ The owner uses both phone and desktop, so every screen has a layout per size (Ta
 |---|---|---|---|
 | Phone (< 768) | Floating bottom tab bar + round **+** | One column | Bottom sheet |
 | Tablet (`md`, 768+) | Bottom bar | One column, meals in a 2-column grid | Bottom sheet |
-| Desktop (`lg`, 1024+) | Left sidebar with "Log food" button | Sticky summary column (ring, macros, chai/water) + meals column | Side panel from the right, search autofocused |
+| Desktop (`lg`, 1024+) | Left sidebar with "Log food" button | Sticky summary column (ring, macros, chai/water) + meals column | ~~Side panel from the right~~ centred modal (D28), search autofocused |
 | Wide (`xl`, 1280+) | Sidebar | Meals in a 2×2 grid | Side panel |
 
-Progress and Me become two-column on desktop. Desktop extras: hover states, pointer cursors, keyboard shortcut **N** or **/** to log food. `useIsDesktop()` (`src/lib/useMediaQuery.ts`) switches the drawer direction.
+Progress and Me become two-column on desktop. Desktop extras: hover states, pointer cursors, keyboard shortcut **N** to log food (**/** now opens "Add anything", D29). `useIsDesktop()` (`src/lib/useMediaQuery.ts`) switches bottom sheet ↔ desktop modal (D28).
 
 ## D18 — Auth and sync
 - **Sign-in:** Google only, via Supabase Auth, PKCE flow, entirely in the browser (`src/lib/supabase.ts`). Google returns to `/auth/callback`; the client exchanges the code. No server code or cookies needed, so the app stays static.
@@ -199,13 +202,15 @@ A saved meal = name + usual meal slot + items `{ foodId, unitId, qty }`. Nutriti
 - Log: tap a card under **My thalis** in the add sheet (goes to the selected meal), or tap the **⚡ chip on an empty meal card** (thalis saved for that slot). Logging from Today shows an Undo toast.
 - Synced via `saved_meals` (jsonb, RLS), migration `20260924130000_saved_meals`.
 
-## D26 — Workouts and calorie burn
-Workout tracking is no longer parked (future.md). Full plan: [workouts.md](workouts.md).
-- Exercise library curated from **free-exercise-db** (public domain, photos). Photos load on demand and are cached offline.
-- Log sets × reps × kg per exercise. Bodyweight exercises use a published body-weight fraction.
-- Burn = Compendium 2024 MET (corrected for the person's weight, height, age, sex) × time, counting only calories above resting ((MET − 1)). Computed by formula, never a lookup table; shown with "~".
-- **Burn is separate from food:** its own figure and an optional daily burn goal. It does not change the food budget. The food goal default stays (the Me goal calculator) and gets a quick edit on Today.
-- **Streaks:** food streak (D24) and workout streak in their own sections; a global streak lights when both are hit on the same day. Rest-day handling is **Proposed** (see workouts.md).
+## D27 — Workouts and calorie burn
+(First written as a second "D26" the same day; renumbered because NL logging took D26. Migration `20260925120000_workouts` still says D26 in its comment.)
+Workout tracking is no longer parked (future.md). Full plan and as-built notes: [workouts.md](workouts.md).
+- Exercise library curated from **free-exercise-db** (public domain): 200 exercises with start/end photos, self-hosted as 480 px WebP, cached offline; + 11 without photos; + 20 cardio/sport activities.
+- Log sets × reps × kg per exercise (seconds for holds); cardio by minutes + speed/incline or effort.
+- Burn = Compendium 2024 MET × body weight × time (ACSM equations for walking/running), **minus the person's own resting burn (Mifflin–St Jeor)**. Formula, never a lookup table; snapshotted at log time; shown with "~" (about ±25 %). Supersedes the "(MET − 1)" / corrected-MET wording from the planning note.
+- **Burn is separate from food:** its own figure and an optional daily burn goal. It never changes the food budget. Today shows Eaten · Burned · Net · Goal, and the goal kcal can be edited there.
+- **Streaks:** food streak (D24) and workout streak in their own sections; a global "Prana streak" lights when food is on target and the workout is done. **Rest days are chosen by the user** (default Sunday) and never break the workout or global streak. Today's flame shows the global streak once workouts exist.
+- Workouts get their own colour token, **jamun** (purple), in both themes.
 
 ## D26 — Natural-language + voice logging
 Full spec, architecture and as-built notes: [nl-logging.md](nl-logging.md).
@@ -214,7 +219,30 @@ Full spec, architecture and as-built notes: [nl-logging.md](nl-logging.md).
 - **Device does matching + maths + confirm card** (catalog + custom foods live there). Matching is a pure module, so it can move server-side later without a rewrite.
 - Nothing is saved without confirmation; entries get `source` (manual/text/voice) + `raw_input`; corrections go to `parse_corrections`.
 - Voice = Web Speech API filling the same box (en-IN), feature-detected; typing and plain search are always the fallback.
-- Quality gate: `npm run eval:parse` (60 cases) on every prompt/model change.
+- Quality gate: `npm run eval:parse` (84 cases) on every prompt/model change.
+- **Addendum 2026-09-25 (owner: "build it for workout as well"):** the same endpoint also returns `workouts[]` (names + only the numbers said) and `day` (today/yesterday). Burn comes from the D27 maths on the device; missing values come from the user's last session, else defaults, and are flagged on the card; body weight is asked, never guessed. One confirm card logs food and workouts together from either sheet. Details: nl-logging.md Part 5.
+
+## D28 — Desktop log sheets are centred modals
+Owner, 2026-09-25: the right-hand side panel made you move the pointer to the screen edge. On desktop (`lg`+) both log sheets now open as a **centred modal** (`components/Sheet.tsx`, rise + fade, Esc / click outside closes, no drag). Food: 680 px. Workout picking: **two-pane**, 1120 px (library grid left, the chosen exercise's logger right; before picking, the right pane shows today's session), so a session is logged without going back and forth; editing one entry: 500 px. Filter chips wrap on desktop instead of scrolling sideways. Phones keep the bottom sheet. Supersedes the "side panel" column of D17.
+
+## D29 — "Add anything": one search bar for food and workouts
+Owner, 2026-09-25: "a global search bar … that works for both … on home screen … one step button to add … super reliable".
+- **Where:** a bar on Today under the week strip (phone + desktop), an "Add anything…" field at the top of the desktop sidebar, and **/** or **⌘K / Ctrl+K** anywhere on desktop. The bottom-nav + and the N / W shortcuts still open the food and workout sheets directly.
+- **One sheet** (`components/log/QuickAdd.tsx`) searches foods and exercises + cardio together. Both lists come from the normal prefix search; the section that fits the words better goes first (typo-tolerant matcher scores from nl-logging.md: "curl" → workouts first, "dal" → food first). A sentence goes to the AI parser and the same confirm card as the two sheets (signed-in).
+- **One tap, never blind:** "+" logs exactly what the row shows. Food: your last portion of it, else the default serving, into the meal picked in "Food in" (defaults to the time of day). Workout: your last session of that exercise repeated, burn recomputed for today's weight. A workout with nothing to repeat (or no body weight yet) shows › instead and opens the detail; Enter opens the best match, it never logs. Every one-tap add has an Undo toast.
+- **Empty box:** My thalis (one tap logs all), then "Again?": your last 10 foods and workouts mixed by recency, each with +. New users see popular foods + workouts.
+- **Voice from the bar:** the mic on the Today bar starts listening inside the same tap (iPhone browsers only allow the mic from a user gesture), so the sheet's speech hook lives in an always-mounted component.
+- Nothing new is stored: it only calls existing store actions (`addEntry`, `addWorkout`, `logSavedMeal`), so sync is unchanged.
+
+## D30 — Gym check-in
+Full spec, review, answers and as-built notes: [gym-checkin.md](gym-checkin.md).
+- **Manual**: "I'm at the gym" / "Done". Browsers can't track location in the background or geofence, so there's no automatic check-in on the web; a native app can add it later through `gym_events` (`source = native_geofence`).
+- **The server decides and stamps the time.** `gym_visits` / `gym_events` are written only by API routes (service role → Postgres functions); users can read, never write, so a verdict can't be forged. One active visit per user is a database rule. Events are append-only.
+- **Store visits, not location trails** (from phase 2: only distance + accuracy are kept).
+- **Online by default; never block.** No signal → the visit is saved on the phone with the phone's clock, marked offline, uploaded on the next sync. Guests: phone only; sign in for synced/verified visits.
+- **Location (phase 2–3):** two consent layers (app setting in `user_goals`, re-checked by the server; then the browser permission, only ever asked after our own explainer and a tap). The server measures the distance (Haversine) and decides; outside/fuzzy readings ask "Try again / Check in anyway". Gym location = current location or a Leaflet + OpenStreetMap map pin, radius 100–300 m.
+- Forgotten visits (phase 4): closed on the next app open after 3 h, ending at the last sign of activity, else start + 1:30.
+- One gym per user for now (editable); gyms sync like other data. Unverified visits count (with a tag). Nearby detection runs on the phone. Distance = Haversine in TypeScript (no PostGIS). A counted visit makes the day a workout day (no separate visit streak). **Calories never come from visit time.**
 
 ## D12 — Project docs
 Decisions, features, future changes and data notes live as separate md files in `.claude/`, indexed in [CLAUDE.md](CLAUDE.md).

@@ -22,30 +22,34 @@ Tagline: *"Discipline, one katori at a time."*
 - "Focus on building features." Verify work in a real browser (see [architecture.md](architecture.md#verifying-changes)) before calling it done.
 - Keep these `.claude/*.md` docs updated as you go (see Working rules).
 
-## Current status (2026-09-24)
+## Current status (2026-09-25)
 
 Working MVP+ on GitHub (`abbi4code/Prana`, public). Built:
 - Today (calorie ring, macros, week strip, streak flame, chai counter, water, 4 meal cards), Progress (streak card, year heatmap, weight trend, 14-day calories), Me (goal calculator, goals, appearance, my foods, account), login + Google OAuth.
 - Food search (Hinglish, Hindi, aliases) over **276 foods**; food detail with draggable brass katori; create-your-own food; thalis (saved meals); swipe-to-delete with undo; celebrations for protein/water goals; streaks with freezes.
-- Supabase project **`fitness`** (ref `ibioqnkpbvxgsmhswgyd`, Mumbai) has all 3 migrations pushed; Google sign-in live and confirmed working by the owner.
+- Supabase project **`fitness`** (ref `ibioqnkpbvxgsmhswgyd`, Mumbai) has Google sign-in live and confirmed working by the owner.
 
-- **Natural-language + voice logging** ("2 roti aur dal for dinner" → confirm card → log), signed-in users, via `/api/food/parse` + OpenAI `gpt-6-luna`. See [nl-logging.md](nl-logging.md). Eval 60/60.
-- Supabase: 6 migrations pushed (latest `20260925093000_nl_parsing`).
+- **Natural-language + voice logging** for food **and workouts** ("2 roti aur dal for dinner", "bench 3x10 60kg aur 20 min walk", "kal raat…" → one confirm card → log), signed-in users, via `/api/food/parse` + OpenAI `gpt-6-luna`. See [nl-logging.md](nl-logging.md). Eval 84/84.
+- **"Add anything"** (D29): one search bar on Today (+ sidebar, / or ⌘K) for food and workouts; + adds exactly what the row shows (last portion / last session) with Undo; sentences + voice in the same box.
+- **Workouts** (D27, [workouts.md](workouts.md)): Workout tab, 211 exercises with photos (free-exercise-db), sets × reps × kg, 20 cardio/sport activities, calorie-burn estimate (Compendium + ACSM, minus resting), Today Eaten · Burned · Net · Goal (goal editable inline), workout + global "Prana" streaks with user-picked rest days.
+- **Gym check-in** phases 1–3 (D30, [gym-checkin.md](gym-checkin.md)): gym sheet with current location + Leaflet/OSM map + radius; "I'm at the gym" / Done with a live timer; location consent + explainer, server-side distance verification (verified / not verified); offline + guest fallback. Phase 4 (nearby banner, auto-close) next.
+- Supabase: 8 migrations pushed (latest `20260925140000_location_consent`).
 
-**Next up** (roadmap ([features.md](features.md) / [future.md](future.md)): home vs restaurant oil toggle, hidden-calorie chips (+ghee, +sugar), fried-food fix (Q4), Hinglish voice logging (Claude API), weekly Wrapped, calorie bank, festival/fasting modes, barcode scan.
+**Next up**: workouts phase 2 (routines, rest timer, PRs), then the roadmap ([features.md](features.md) / [future.md](future.md)): home vs restaurant oil toggle, hidden-calorie chips (+ghee, +sugar), fried-food fix (Q4), weekly Wrapped, calorie bank, festival/fasting modes, barcode scan.
 
 ## Docs index
 
 | File | What's in it |
 |---|---|
 | [architecture.md](architecture.md) | **How the code works**: data flow, store, sync, theming, food pipeline, checklists for common changes, gotchas, how to verify |
-| [decisions.md](decisions.md) | All decisions D01–D26 with reasons (stack, data model, units, design, UX, streak rules, thalis…) |
+| [decisions.md](decisions.md) | All decisions D01–D28 with reasons (stack, data model, units, design, UX, streak rules, thalis…) |
 | [features.md](features.md) | Feature list by phase with status |
 | [future.md](future.md) | Open questions, backlog, parked ideas, change log |
 | [data.md](data.md) | Food data: files, sources actually used, rules, review results, known gaps |
 | [setup-auth.md](setup-auth.md) | Supabase + Google sign-in setup (done; keep for reference and redeploys) |
-| [nl-logging.md](nl-logging.md) | **Next feature:** natural-language + voice food logging. Owner's spec + mapping onto Prana + open decisions |
-| [workouts.md](workouts.md) | **Planned:** gym section: exercise library with photos, sets × reps × kg, calorie burn (separate from food), workout + global streaks (D26) |
+| [nl-logging.md](nl-logging.md) | Natural-language + voice logging (food + workouts): owner's spec, architecture, as-built files, eval, odd-input behaviour |
+| [gym-checkin.md](gym-checkin.md) | Gym check-in (D30): owner's spec, mapping onto Prana, answers, as-built phases 1–3, phase 4 next |
+| [workouts.md](workouts.md) | Workouts (built, phase 1): exercise library + photos, burn model and its sources, streak rules, data pipeline, phases 2–3 |
 
 ## Commands
 
@@ -54,6 +58,8 @@ npm run dev          # http://localhost:3000
 npm run build        # production build (also type-checks)
 npm run lint
 npm run foods        # rebuild src/data/foods.generated.json after editing data/*.json
+npm run exercises    # rebuild src/data/exercises*.generated.json after editing data/exercises*.json / burn-model.json
+node scripts/import-exercise-db.mjs   # fetch free-exercise-db muscles + photos (WebP via cwebp) for new exercises
 node scripts/import-extra.mjs /path/to/INDB.xlsx   # regenerate data/foods-extra.json (see data.md)
 npm run db:push      # push supabase/migrations to the hosted project (reads .env)
 npm run auth:push    # push supabase/config.toml auth settings (preview first: npx supabase config diff --project-ref <ref>)

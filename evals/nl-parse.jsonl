@@ -58,3 +58,27 @@
 {"text":"tea without sugar","meal":null,"items":[{"food":["chai-no-sugar"]}]}
 {"text":"biryani half plate and raita","meal":null,"items":[{"food":["veg-biryani","mutton-biryani"],"qty":0.5,"unit":"plate"},{"food":["cucumber-raita","aloo-raita","pudina-raita","lauki-raita","tomato-onion-raita"]}]}
 {"text":"aloo gobhi sabzi aur 2 phulka","meal":null,"items":[{"food":["aloo-gobi"]},{"food":["chapati-roti"],"qty":2,"unit":"piece"}]}
+{"text":"bench press 3x10 60kg","meal":null,"items":[],"workouts":[{"ex":["barbell-bench-press"],"sets":3,"reps":10,"weight_kg":60}]}
+{"text":"30 min running","meal":null,"items":[],"workouts":[{"ex":["running"],"minutes":30}]}
+{"text":"3 sets of 12 pushups","meal":null,"items":[],"workouts":[{"ex":["push-up"],"sets":3,"reps":12}]}
+{"text":"50 pushups","meal":null,"items":[],"workouts":[{"ex":["push-up"],"sets":1,"reps":50}]}
+{"text":"20 minute treadmill walk","meal":null,"items":[],"workouts":[{"ex":["treadmill-walk"],"minutes":20}]}
+{"text":"5 km run in 30 minutes","meal":null,"items":[],"workouts":[{"ex":["running"],"minutes":30,"distance_km":5}]}
+{"text":"1 ghanta badminton","meal":null,"items":[],"workouts":[{"ex":["badminton"],"minutes":60}]}
+{"text":"aadha ghanta yoga","meal":null,"items":[],"workouts":[{"ex":["yoga-hatha","yoga-power"],"minutes":30}]}
+{"text":"squats 4x8 80 kg aur leg press 3x12 120kg","meal":null,"items":[],"workouts":[{"ex":["barbell-back-squat"],"sets":4,"reps":8,"weight_kg":80},{"ex":["leg-press"],"sets":3,"reps":12,"weight_kg":120}]}
+{"text":"plank 1 minute","meal":null,"items":[],"workouts":[{"ex":["plank"],"minutes":1}]}
+{"text":"12 surya namaskar","meal":null,"items":[],"workouts":[{"ex":["surya-namaskar"]}]}
+{"text":"10000 steps","meal":null,"items":[],"workouts":[{"ex":["outdoor-walk"]}]}
+{"text":"gym gaya 1 ghanta","meal":null,"items":[],"workouts":[{"minutes":60}]}
+{"text":"2 roti khayi aur 30 min gym","meal":null,"items":[{"food":["chapati-roti"],"qty":2,"unit":"piece"}],"workouts":[{"minutes":30}]}
+{"text":"maine 5 km walk kiya aur ek banana khaya","meal":null,"items":[{"food":["banana"],"qty":1,"unit":"piece"}],"workouts":[{"ex":["outdoor-walk"],"distance_km":5}]}
+{"text":"kal raat 2 roti khayi aur 30 min walk kiya","day":"yesterday","meal":"dinner","items":[{"food":["chapati-roti"],"qty":2,"unit":"piece"}],"workouts":[{"ex":["outdoor-walk"],"minutes":30}]}
+{"text":"kal gym jaunga","meal":null,"items":[],"workouts":[]}
+{"text":"aaj gym nahi gaya","meal":null,"items":[],"workouts":[]}
+{"text":"aaj mausam bahut acha hai","meal":null,"items":[],"workouts":[]}
+{"text":"lat pulldown 3 sets 12 reps 45 kg","meal":null,"items":[],"workouts":[{"ex":["lat-pulldown"],"sets":3,"reps":12,"weight_kg":45}]}
+{"text":"bicep curls 3x10 12kg dumbbells","meal":null,"items":[],"workouts":[{"ex":["dumbbell-curl","alternate-dumbbell-curl","barbell-curl","hammer-curl"],"sets":3,"reps":10,"weight_kg":12}]}
+{"text":"cycling 45 min","meal":null,"items":[],"workouts":[{"ex":["stationary-cycle"],"minutes":45}]}
+{"text":"skipping 10 min","meal":null,"items":[],"workouts":[{"ex":["skipping-rope"],"minutes":10}]}
+{"text":"deadlift 5x5 100kg","meal":null,"items":[],"workouts":[{"ex":["deadlift"],"sets":5,"reps":5,"weight_kg":100}]}

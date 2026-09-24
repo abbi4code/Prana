@@ -12,6 +12,7 @@ How Prana works, where things live, and the traps already hit once. Decisions re
 | State | `zustand` v5 + `persist` → localStorage key **`ct-v1`** | the whole user dataset lives here (D14) |
 | Sheets | `vaul` drawer | bottom sheet on phone, right side panel on desktop |
 | Charts | `recharts` v3 | themed via CSS + `useTokens()` |
+| Maps | `leaflet` 1.9 + OpenStreetMap tiles | gym location picker only, loaded on demand; tiles inverted in dark mode (`--map-filter`) |
 | Icons | `lucide-react` (UI) + hand-drawn inline SVG food art | |
 | Backend | **Supabase**: Postgres + RLS + Google OAuth (PKCE, browser-only) | `@supabase/supabase-js`; no server code |
 | Offline | hand-written `public/sw.js` (D15) | production only |
@@ -25,20 +26,24 @@ src/app/
   layout.tsx            fonts (Manrope + Fraunces), theme no-flash script, <AppShell>
   template.tsx          page rise-and-fade on navigation
   page.tsx              Today
-  progress/page.tsx     streak card, year heatmap, weight, 14-day calories
+  workout/page.tsx      Workout tab: gym check-in card (D30), burn card, session list, workout streak, workout goals (D27)
+  api/gym/              check-in, check-out, active (D30): sign-in required, server-written visits
+  progress/page.tsx     Prana (global) + food streak cards, year heatmap (food/workout/both), weight, 14-day calories
   me/page.tsx           goal calculator, goals, appearance, my foods, account + backup
   login/, auth/callback/  login screen (full-screen, no nav), OAuth return page
   manifest.ts, icon.tsx, apple-icon.tsx, pwa-icon/[size]/route.tsx   PWA manifest + generated icons
   globals.css           theme tokens (dark + light), utilities (card, skeleton, tabular), Recharts overrides
 src/components/
-  AppShell.tsx          hydrate store → init auth; login gate; keyboard N or /; nav + sheets + toaster
+  AppShell.tsx          hydrate store → init auth; login gate; keyboard N (food), W (workout), / or ⌘K ("Add anything", D29); nav + sheets + toaster
+  Sheet.tsx             shared sheet frame: vaul bottom sheet on phones, centred modal on desktop (D28)
   BottomNav.tsx / Sidebar.tsx   phone / desktop navigation (NAV_TABS shared)
   FoodIcon.tsx          category illustrations (48×48 SVG per Category), `bare` mode for the thali
   RollingNumber.tsx     odometer digits  ·  Burst.tsx particles + useGoalHits  ·  Toaster.tsx undo toasts
-  log/                  LogSheet (add/edit/thali flows), FoodDetail, PortionVisual (katori/glass/pieces), CreateFood
+  log/                  LogSheet (add/edit/thali flows), FoodDetail, PortionVisual (katori/glass/pieces), CreateFood, NlLog + ConfirmParse + ConfirmWorkoutRow (NL confirm card, used by all three sheets), QuickAdd ("Add anything" sheet, D29)
   thali/                ThaliPlate (steel thali art), ThaliBuilder
-  today/                CalorieRing, MacroBars, DateStrip (+streak flame), QuickRow (chai/water), MealCard (swipe rows)
-  progress/             StreakCard, YearHeatmap
+  today/                AddBar ("Add anything" + mic, D29), CalorieRing, MacroBars, DateStrip (+streak flame), QuickRow (chai/water), MealCard (swipe rows), BurnCard
+  workout/              WorkoutSheet (library, LiftDetail, CardioDetail), WorkoutList (swipe rows), WorkoutCards (burn, streak, goals), ExercisePhoto
+  progress/             StreakCard + PranaStreakCard, YearHeatmap
   account/              GoogleButton, AccountCard (+ SyncStatus, Avatar)
 src/lib/
   types.ts              Food, FoodUnit, Entry, Goals, Profile, SavedMeal, ThaliItem, Category, UnitKind
@@ -46,21 +51,28 @@ src/lib/
   nutrition.ts          portion maths, MEALS, qtyOptions per unit kind, Mifflin–St Jeor goals
   store.ts              useStore (persisted data + sync queue + actions) and useUI (sheet, date, toast, fresh ids)
   thali.ts              resolveItems / thaliTotals for saved meals
-  streaks.ts            PURE streak rules (dayStatus, computeStreaks); useStreaks.ts wraps it
+  streaks.ts            PURE streak rules (dayStatus, runStreak engine with rest days, workoutDay, globalDay); useStreaks.ts wraps the food one
+  burn.ts               PURE burn maths (Compendium MET, ACSM walk/run, minus Mifflin resting burn)
+  exercises.ts          exercise/activity catalog, filters, search, setsSummary, lazy how-to steps
+  gym/                  D30 check-in: config (thresholds), visits + verify (pure: Haversine, judge), location (browser permission/reading), schema (Zod, both sides), api (fetch + skew + offline flush), actions
+  useWorkouts.ts        usePerson (body weight for a day), useDayWorkouts, lastTime, useFitnessStreaks (workout + global)
   auth.ts               useAuth, initAuth, signInWithGoogle, signOut, adoptLocalData
   sync/engine.ts        push → pull loop; sync/rows.ts PURE row mapping + merge rules
   supabase.ts           lazy browser client; supabaseEnabled = env keys present
   dates.ts              local-time YYYY-MM-DD keys (never UTC: late-night IST logs)
   useTokens.ts, useMediaQuery.ts (useIsDesktop), app.ts (APP_NAME, TAGLINE)
-  nl/                   natural-language logging: match, units, schema, prompt, request, ranking (PURE, node-runnable)
+  nl/                   natural-language logging: match, units, schema, prompt, request, ranking, workoutMatch, workoutDraft (PURE, node-runnable)
                         + client.ts, corrections.ts, useSpeech.ts (browser)
 src/server/             server-only: env (Zod), supabase-admin (service role), auth (getClaims), nl/{llm,cache,quota}
 src/app/api/food/parse/ the parse route
 src/data/foods.generated.json   BUILT catalog; never edit by hand (+ food-prefer.generated.json)
+src/data/exercises.generated.json, exercise-steps.generated.json   BUILT by `npm run exercises`; never edit by hand
 data/aliases.json       reviewed search names (add / remove / prefer) merged into the catalog
 evals/nl-parse.jsonl    60 parsing cases for `npm run eval:parse`
 data/foods.json, data/foods-extra.json   food sources (see data.md)
-scripts/ build-foods.mjs, import-extra.mjs, supabase.sh, load-env.mjs
+data/exercises.json, exercises-extra.json, burn-model.json, free-exercise-db.json   workout sources (see workouts.md)
+public/exercises/<id>-0|1.webp   exercise photos (scripts/import-exercise-db.mjs)
+scripts/ build-foods.mjs, import-extra.mjs, build-exercises.mjs, import-exercise-db.mjs, supabase.sh, load-env.mjs
 supabase/ config.toml (minimal on purpose), migrations/*.sql
 ```
 
@@ -86,7 +98,7 @@ UI action → useStore action ─→ state (entries, goals, weights, water, cust
 - `useUI` (not persisted): selected `date` (null = today), `sheet` (`add` | `edit` | `thali`), `toast`, `fresh` (entry ids to glow once).
 
 ### Sync (`lib/sync`, `lib/auth.ts`, D18)
-- Tables: `food_logs`, `user_goals`, `weights`, `water`, `custom_foods` (jsonb), `saved_meals` (jsonb). All have RLS `user_id = auth.uid()`, `updated_at` trigger, soft delete via `deleted_at`.
+- Tables: `food_logs`, `user_goals` (+ `profile`, `fitness` jsonb), `weights`, `water`, `custom_foods` (jsonb), `saved_meals` (jsonb), `workouts` (jsonb), `user_gyms` (columns). **Read-only on the device:** `gym_visits` (pulled, never pushed; written by `/api/gym/*` through Postgres functions), `gym_events` (server only). Device-only gym visits (offline/guest) upload through `flushGym()` inside the sync run. All have RLS `user_id = auth.uid()`, `updated_at` trigger, soft delete via `deleted_at`.
 - Push upserts dirty rows, soft-deletes deleted ids, then clears only what it pushed (edits made mid-push stay queued).
 - Pull fetches rows with `updated_at > lastPulledAt` (paged by 1000) and merges: server wins, **except** ids with unpushed local changes.
 - Sign-in: `adoptLocalData` pushes guest data into the account (goals only if edited as guest). Another user's leftover data is wiped first. Sign-out: sync, `signOut`, `resetLocal()`.
@@ -100,11 +112,11 @@ UI action → useStore action ─→ state (entries, goals, weights, water, cust
 - Search (`lib/foods.ts`): token prefix/word/alias/compact matching, +25 when the query matches the category label, +40 on an exact alias/name hit, +15 for staples (`STARTER_IDS`), +20 for your own foods, −30 for uncooked.
 
 ### Theming (D08, D20)
-- Tokens: `--color-bg/surface/surface-2/surface-3/line/line-strong/text/muted/faint`, spices `turmeric` (carbs) `saffron` (fat) `chilli` (protein/over) `leaf` (on target) `sky` (water) `brass`, plus `cream` (selected pills; **inverts** in light mode) and `on-accent` (text on turmeric→saffron gradient buttons). `--ink` = RGB triplet for hairlines/glows: `rgb(var(--ink) / 0.1)`.
+- Tokens: `--color-bg/surface/surface-2/surface-3/line/line-strong/text/muted/faint`, spices `turmeric` (carbs) `saffron` (fat) `chilli` (protein/over) `leaf` (on target) `sky` (water) `jamun` (workouts / burn) `brass`, plus `cream` (selected pills; **inverts** in light mode) and `on-accent` (text on turmeric→saffron gradient buttons). `--ink` = RGB triplet for hairlines/glows: `rgb(var(--ink) / 0.1)`.
 - Light theme = `prefers-color-scheme` unless `localStorage["prana-theme"]` is `light`/`dark` (set in Me → Appearance, applied by the inline script in `layout.tsx` via `data-theme` on `<html>`).
 
 ### Layout (D17)
-Phone < 768: bottom pill nav + round +, bottom sheet. `md`: wider single column, meals 2-up. `lg` ≥ 1024: left sidebar (`Sidebar`), Today = sticky summary column + meals column, sheet becomes a right side panel (`useIsDesktop` switches vaul `direction`). `xl`: meals 2×2.
+Phone < 768: bottom pill nav + round +, bottom sheet. `md`: wider single column, meals 2-up. `lg` ≥ 1024: left sidebar (`Sidebar`), Today = sticky summary column + meals column, sheets become centred modals (`Sheet.tsx`: `useIsDesktop` → `modal-pop` class, `handleOnly`; the workout picker is two-pane). `xl`: meals 2×2.
 
 ## Checklists
 
@@ -118,6 +130,8 @@ Phone < 768: bottom pill nav + round +, bottom sheet. `md`: wider single column,
 
 **Change the NL prompt, model or aliases:** edit `src/lib/nl/prompt.ts` (bump `PROMPT_VERSION`), `NL_MODEL`, or `data/aliases.json` (+ `npm run foods`) → `npm run eval:parse` must pass → add a case to `evals/nl-parse.jsonl` for any real miss.
 
+**Add exercises:** add to `data/exercises.json` (free-exercise-db id, aliases, group) or `data/exercises-extra.json` (no photo), run `node scripts/import-exercise-db.mjs` for new photos (needs `cwebp`), then `npm run exercises`. Burn class = `metFor` in `scripts/build-exercises.mjs`; METs are looked up by Compendium code in `data/burn-model.json` (never typed in). New cardio option → `OPTIONS` there.
+
 **Add a screen/feature:** phone and desktop layouts, dark and light theme, skeleton while `!hydrated`, the store as the only data path, docs updated.
 
 ## Gotchas (all hit once already)
@@ -126,7 +140,10 @@ Phone < 768: bottom pill nav + round +, bottom sheet. `md`: wider single column,
 - **React Compiler lint rules** (`eslint-config-next`): no `Date.now()`/impure calls during render, no synchronous `setState` in effects (defer with a timeout), no reading refs during render.
 - **SVG presentation attributes can't use `var()`** → use `style={{ fill: "var(--color-x)" }}`. Recharts props: CSS overrides in `globals.css` or `useTokens()`.
 - **Multiple SVGs on one page need unique gradient/clip ids** → `useId()` (a hidden duplicate once broke the katori on login).
-- **vaul:** give every sheet a `Drawer.Title`; add `data-vaul-no-drag` to anything draggable inside a sheet; side panel needs `after:hidden`.
+- **vaul:** give every sheet exactly one `Drawer.Title` (embedded panes skip theirs); add `data-vaul-no-drag` to anything draggable inside a sheet; keep `after:hidden`. The desktop modal animation overrides vaul's keyframes with `!important` (`.modal-pop` in globals.css) because vaul injects its CSS at runtime, after ours.
+- **Leaflet**: its CSS loads after ours, so override with doubled classes (`.leaflet-marker-icon.gym-pin`); SVG paths are styled by `className` (vars can't go in attributes); call `invalidateSize()` after a sheet animates in; mark the map `data-vaul-no-drag`.
+- **Location**: never call `getCurrentPosition` on load or when the app setting is off; `navigator.permissions` can throw (wrap it); test with puppeteer `overridePermissions` + `setGeolocation`.
+- **Horizontal chip rows** scroll on phones but must wrap on desktop (`lg:flex-wrap`): sideways scrolling is awkward with a mouse.
 - **Next 16:** `LayoutProps`/`RouteContext` types come from `npx next typegen`; deleting a route leaves stale `.next/types` until typegen/build runs. Middleware is now `proxy.ts` (unused here).
 - **`supabase/config.toml` is deliberately minimal.** The CLI template would overwrite unrelated dashboard settings (email confirmations, MFA…). Never `supabase init --force`; preview with `config diff`.
 - **`.env` is parsed with Node's dotenv parser** (`scripts/load-env.mjs`), not the shell: the DB password contains `&`.

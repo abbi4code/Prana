@@ -3,12 +3,13 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "motion/react";
-import { ChartLine, House, Plus, UserRound } from "lucide-react";
+import { ChartLine, Dumbbell, House, Plus, UserRound } from "lucide-react";
 import { useUI } from "@/lib/store";
 import { mealForNow } from "@/lib/nutrition";
 
 export const NAV_TABS = [
   { href: "/", label: "Today", icon: House },
+  { href: "/workout", label: "Workout", icon: Dumbbell },
   { href: "/progress", label: "Progress", icon: ChartLine },
   { href: "/me", label: "Me", icon: UserRound },
 ] as const;
@@ -16,6 +17,9 @@ export const NAV_TABS = [
 export function BottomNav() {
   const path = usePathname();
   const openAdd = useUI((s) => s.openAdd);
+  const openGym = useUI((s) => s.openGym);
+  // on the Workout tab the + logs exercise; everywhere else it logs food
+  const gym = path === "/workout";
 
   return (
     <div className="pointer-events-none fixed inset-x-0 bottom-0 z-40 pb-[calc(0.9rem+var(--safe-bottom))] lg:hidden">
@@ -27,8 +31,9 @@ export function BottomNav() {
               <Link
                 key={href}
                 href={href}
-                className={`relative flex flex-1 items-center justify-center gap-1.5 rounded-full py-2.5 text-[13px] font-semibold transition-colors ${
-                  active ? "text-bg" : "text-muted"
+                aria-label={label}
+                className={`relative flex items-center justify-center gap-1.5 rounded-full py-2.5 text-[13px] font-semibold transition-[color,flex-grow] duration-300 md:flex-1 ${
+                  active ? "flex-[1.9] text-bg" : "flex-1 text-muted"
                 }`}
               >
                 {active && (
@@ -39,16 +44,21 @@ export function BottomNav() {
                   />
                 )}
                 <Icon size={17} strokeWidth={2.2} className="relative" />
-                <span className="relative">{label}</span>
+                {/* four tabs + the round button don't fit with labels on a phone: only the active tab shows its name */}
+                <span className={`relative ${active ? "" : "hidden md:inline"}`}>{label}</span>
               </Link>
             );
           })}
         </nav>
         <motion.button
           whileTap={{ scale: 0.9 }}
-          onClick={() => openAdd(mealForNow())}
-          aria-label="Log food"
-          className="grid size-[3.6rem] shrink-0 place-items-center rounded-full bg-gradient-to-br from-turmeric to-saffron text-on-accent shadow-[0_10px_30px_-6px_rgb(255_138_61/0.6)]"
+          onClick={() => (gym ? openGym("strength") : openAdd(mealForNow()))}
+          aria-label={gym ? "Log exercise" : "Log food"}
+          className={`grid size-[3.6rem] shrink-0 place-items-center rounded-full bg-gradient-to-br transition-shadow ${
+            gym
+              ? "from-jamun to-chilli text-white shadow-[0_10px_30px_-6px_var(--color-jamun)]"
+              : "from-turmeric to-saffron text-on-accent shadow-[0_10px_30px_-6px_rgb(255_138_61/0.6)]"
+          }`}
         >
           <Plus size={28} strokeWidth={2.6} />
         </motion.button>

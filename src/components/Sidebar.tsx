@@ -3,18 +3,20 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "motion/react";
-import { CloudOff, LogIn, Plus } from "lucide-react";
+import { CloudOff, Dumbbell, LogIn, Plus, Search } from "lucide-react";
 import { useAuth } from "@/lib/auth";
 import { Avatar, SyncStatus } from "./account/AccountCard";
 import { APP_NAME } from "@/lib/app";
 import { mealForNow } from "@/lib/nutrition";
 import { useUI } from "@/lib/store";
 import { NAV_TABS } from "./BottomNav";
+import { openQuickAdd } from "./log/QuickAdd";
 
 /** Desktop navigation (lg and up). Phones use BottomNav. */
 export function Sidebar() {
   const path = usePathname();
   const openAdd = useUI((s) => s.openAdd);
+  const openGym = useUI((s) => s.openGym);
 
   return (
     <aside className="fixed inset-y-0 left-0 z-30 hidden w-64 flex-col border-r border-line bg-bg/60 px-5 py-8 backdrop-blur-xl lg:flex">
@@ -29,15 +31,32 @@ export function Sidebar() {
         <span className="font-display text-2xl font-semibold">{APP_NAME}</span>
       </Link>
 
+      <button
+        onClick={() => openQuickAdd()}
+        className="mt-8 flex h-11 items-center gap-2 rounded-2xl border border-line-strong bg-surface px-3.5 text-sm text-muted transition-colors hover:border-turmeric/50 hover:text-text"
+      >
+        <Search size={16} /> <span className="flex-1 text-left">Add anything…</span>
+        <kbd className="rounded-md border border-line-strong px-1.5 py-0.5 font-sans text-xs">/</kbd>
+      </button>
       <motion.button
         whileTap={{ scale: 0.97 }}
         onClick={() => openAdd(mealForNow())}
-        className="mt-8 flex h-12 items-center justify-between rounded-2xl bg-gradient-to-r from-turmeric to-saffron px-4 font-bold text-on-accent shadow-[0_10px_30px_-10px_rgb(255_138_61/0.6)] transition-[filter] hover:brightness-110"
+        className="mt-2 flex h-12 items-center justify-between rounded-2xl bg-gradient-to-r from-turmeric to-saffron px-4 font-bold text-on-accent shadow-[0_10px_30px_-10px_rgb(255_138_61/0.6)] transition-[filter] hover:brightness-110"
       >
         <span className="flex items-center gap-2">
           <Plus size={19} strokeWidth={2.6} /> Log food
         </span>
         <kbd className="rounded-md bg-bg/15 px-1.5 py-0.5 font-sans text-xs">N</kbd>
+      </motion.button>
+      <motion.button
+        whileTap={{ scale: 0.97 }}
+        onClick={() => openGym("strength")}
+        className="mt-2 flex h-11 items-center justify-between rounded-2xl border border-line-strong px-4 font-semibold transition-colors hover:border-jamun/50 hover:bg-surface"
+      >
+        <span className="flex items-center gap-2">
+          <Dumbbell size={17} className="text-jamun" /> Log workout
+        </span>
+        <kbd className="rounded-md bg-surface-2 px-1.5 py-0.5 font-sans text-xs text-muted">W</kbd>
       </motion.button>
 
       <nav className="mt-6 flex flex-col gap-1">

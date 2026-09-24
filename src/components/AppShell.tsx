@@ -3,12 +3,15 @@
 import { useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { initAuth, useAuth } from "@/lib/auth";
+import { initGym } from "@/lib/gym/actions";
 import { mealForNow } from "@/lib/nutrition";
 import { hydrateStore, useStore, useUI } from "@/lib/store";
 import { BottomNav } from "./BottomNav";
 import { LogSheet } from "./log/LogSheet";
+import { QuickAddSheet, openQuickAdd } from "./log/QuickAdd";
 import { Sidebar } from "./Sidebar";
 import { Toaster } from "./Toaster";
+import { WorkoutSheet } from "./workout/WorkoutSheet";
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const path = usePathname();
@@ -21,7 +24,10 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     // auth needs the local store loaded first: it decides whose data is on this device
-    hydrateStore().then(initAuth);
+    hydrateStore().then(() => {
+      initAuth();
+      initGym();
+    });
     if (process.env.NODE_ENV === "production" && "serviceWorker" in navigator) {
       navigator.serviceWorker.register("/sw.js", { scope: "/", updateViaCache: "none" }).catch(() => {});
     }
@@ -32,15 +38,27 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     if (hydrated && status === "signedOut" && !guest && !bare) router.replace("/login");
   }, [hydrated, status, guest, bare, router]);
 
-  // keyboard: N or / opens the log sheet (desktop)
+  // keyboard (desktop): / or ⌘K / Ctrl+K opens "Add anything", N the food sheet, W the workout sheet
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       const t = e.target as HTMLElement;
       if (location.pathname === "/login" || location.pathname.startsWith("/auth/")) return;
-      if (e.metaKey || e.ctrlKey || e.altKey || t.closest("input, textarea, select, [contenteditable]")) return;
-      if ((e.key === "n" || e.key === "/") && !useUI.getState().sheet) {
+      const ui = useUI.getState();
+      if (ui.sheet || ui.gym || ui.quick) return;
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
         e.preventDefault();
-        useUI.getState().openAdd(mealForNow());
+        return openQuickAdd();
+      }
+      if (e.metaKey || e.ctrlKey || e.altKey || t.closest("input, textarea, select, [contenteditable]")) return;
+      if (e.key === "/") {
+        e.preventDefault();
+        openQuickAdd();
+      } else if (e.key === "n") {
+        e.preventDefault();
+        ui.openAdd(mealForNow());
+      } else if (e.key === "w") {
+        e.preventDefault();
+        ui.openGym("strength");
       }
     };
     window.addEventListener("keydown", onKey);
@@ -57,6 +75,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       </main>
       <BottomNav />
       <LogSheet />
+      <WorkoutSheet />
+      <QuickAddSheet />
       <Toaster />
     </>
   );

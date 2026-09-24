@@ -2,10 +2,11 @@
 
 import { useAuth } from "../auth";
 import { getSupabase } from "../supabase";
+import { flushGym } from "../gym/api";
 import { useStore, type SyncQueue } from "../store";
 import {
-  entryToRow, maxUpdated, mergeDocs, mergeEntries, mergeFoods, mergeWater, mergeWeights,
-  type FoodRow, type LogRow, type MealRow, type WaterRow, type WeightRow,
+  entryToRow, gymToRow, maxUpdated, mergeDocs, mergeEntries, mergeFoods, mergeGyms, mergeVisits, mergeWater, mergeWeights, rowToFitness,
+  type FoodRow, type GymRow, type LogRow, type MealRow, type VisitRow, type WaterRow, type WeightRow, type WorkoutRow,
 } from "./rows";
 
 const PAGE = 1000; // PostgREST max rows per request
@@ -48,6 +49,7 @@ async function run() {
 
   try {
     await push(user.id);
+    await flushGym(); // gym visits saved offline / as a guest go through the API, never direct writes (D30)
     await pull();
     useAuth.setState({ sync: "idle", lastSyncedAt: Date.now() });
   } catch (err) {
@@ -92,9 +94,22 @@ async function push(userId: string) {
   if (q.deletedMeals.length)
     check(await supabase.from("saved_meals").update({ deleted_at: now }).in("id", q.deletedMeals));
 
+  const workouts = s.workouts.filter((w) => q.dirtyWorkouts.includes(w.id));
+  if (workouts.length) check(await supabase.from("workouts").upsert(workouts.map((w) => ({ id: w.id, user_id: userId, data: w, deleted_at: null }))));
+  if (q.deletedWorkouts.length)
+    check(await supabase.from("workouts").update({ deleted_at: now }).in("id", q.deletedWorkouts));
+
+  const gyms = s.gyms.filter((g) => q.dirtyGyms.includes(g.id));
+  if (gyms.length) check(await supabase.from("user_gyms").upsert(gyms.map((g) => gymToRow(g, userId))));
+  if (q.deletedGyms.length)
+    check(await supabase.from("user_gyms").update({ deleted_at: now }).in("id", q.deletedGyms));
+
   if (q.goalsDirty)
     check(await supabase.from("user_goals").upsert({
       user_id: userId, daily_kcal: s.goals.kcal, protein_g: s.goals.p, carbs_g: s.goals.c, fat_g: s.goals.f, profile: s.profile,
+      fitness: s.fitness,
+      location_consent: s.locationConsent,
+      location_consent_at: s.locationConsentAt ? new Date(s.locationConsentAt).toISOString() : null,
     }));
 
   // clear only what this run pushed
@@ -111,8 +126,12 @@ async function push(userId: string) {
       deletedFoods: minus(cur.sync.deletedFoods, q.deletedFoods),
       dirtyMeals: minus(cur.sync.dirtyMeals, meals.map((m) => m.id)),
       deletedMeals: minus(cur.sync.deletedMeals, q.deletedMeals),
+      dirtyWorkouts: minus(cur.sync.dirtyWorkouts, workouts.map((w) => w.id)),
+      deletedWorkouts: minus(cur.sync.deletedWorkouts, q.deletedWorkouts),
+      dirtyGyms: minus(cur.sync.dirtyGyms, gyms.map((g) => g.id)),
+      deletedGyms: minus(cur.sync.deletedGyms, q.deletedGyms),
       // if goals changed again mid-push, keep the flag
-      goalsDirty: cur.goals === s.goals && cur.profile === s.profile ? false : cur.sync.goalsDirty,
+      goalsDirty: cur.goals === s.goals && cur.profile === s.profile && cur.fitness === s.fitness && cur.locationConsent === s.locationConsent ? false : cur.sync.goalsDirty,
     },
   }));
 }
@@ -133,12 +152,15 @@ async function fetchSince<T>(table: string, since: string | null): Promise<T[]> 
 async function pull() {
   const supabase = getSupabase()!;
   const since = useStore.getState().sync.lastPulledAt;
-  const [logs, weights, water, foods, meals, goalsRes] = await Promise.all([
+  const [logs, weights, water, foods, meals, workouts, gyms, visits, goalsRes] = await Promise.all([
     fetchSince<LogRow>("food_logs", since),
     fetchSince<WeightRow>("weights", since),
     fetchSince<WaterRow>("water", since),
     fetchSince<FoodRow>("custom_foods", since),
     fetchSince<MealRow>("saved_meals", since),
+    fetchSince<WorkoutRow>("workouts", since),
+    fetchSince<GymRow>("user_gyms", since),
+    fetchSince<VisitRow>("gym_visits", since),
     supabase.from("user_goals").select("*").maybeSingle(),
   ]);
   if (goalsRes.error) throw new Error(goalsRes.error.message);
@@ -152,11 +174,17 @@ async function pull() {
       water: mergeWater(s.water, water, new Set(q.dirtyWater)),
       customFoods: mergeFoods(s.customFoods, foods, new Set([...q.dirtyFoods, ...q.deletedFoods])),
       savedMeals: mergeDocs(s.savedMeals, meals, new Set([...q.dirtyMeals, ...q.deletedMeals])),
-      sync: { ...q, lastPulledAt: maxUpdated(q.lastPulledAt, logs, weights, water, foods, meals) },
+      workouts: mergeDocs(s.workouts, workouts, new Set([...q.dirtyWorkouts, ...q.deletedWorkouts])),
+      gyms: mergeGyms(s.gyms, gyms, new Set([...q.dirtyGyms, ...q.deletedGyms])),
+      visits: mergeVisits(s.visits, visits),
+      sync: { ...q, lastPulledAt: maxUpdated(q.lastPulledAt, logs, weights, water, foods, meals, workouts, gyms, visits) },
     };
     if (g && !q.goalsDirty) {
       next.goals = { kcal: g.daily_kcal, p: g.protein_g, c: g.carbs_g, f: g.fat_g };
       next.profile = g.profile ?? s.profile;
+      next.fitness = rowToFitness(g.fitness, s.fitness);
+      next.locationConsent = typeof g.location_consent === "boolean" ? g.location_consent : null;
+      next.locationConsentAt = g.location_consent_at ? Date.parse(g.location_consent_at) : null;
     }
     return next;
   });

@@ -41,6 +41,8 @@ function adoptLocalData(userId: string) {
         dirtyWater: Object.keys(s.water),
         dirtyFoods: s.customFoods.map((f) => f.id),
         dirtyMeals: s.savedMeals.map((m) => m.id),
+        dirtyWorkouts: s.workouts.map((w) => w.id),
+        dirtyGyms: s.gyms.map((g) => g.id), // guest visits (localVisits) upload on the first sync
         // only if edited as a guest, so a fresh device doesn't overwrite the account's goals with defaults
         goalsDirty: s.sync.goalsDirty,
       },

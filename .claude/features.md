@@ -40,21 +40,32 @@ Guiding rule: **logging fast beats everything.** People quit trackers because lo
 | Weekly calorie bank | Save calories on weekdays for weekends/festivals | planned |
 | Festival / shaadi mode | Celebration days don't break streaks | planned |
 | Fasting mode | Navratri, Ekadashi, intermittent fasting; vrat foods first in search | planned |
-| Hinglish voice + text logging | "2 roti aur dal for dinner" → confirm card → log; mic fills the same box (D26, nl-logging.md) | done (voice: verify on real phones) |
+| "Add anything" bar (D29) | One search on Today for food + workouts; + adds the shown portion / repeats last session with Undo; recents, thalis, sentences and voice in the same box | done |
+| Hinglish voice + text logging | "2 roti aur dal for dinner", "bench 3x10 60kg aur 20 min walk", "kal raat…" → one confirm card (food + workouts, today/yesterday) → log; mic in both sheets (D26, nl-logging.md) | done (voice: verify on real phones) |
 | Thali photo logging | Photo → suggested items + katori counts, confirm in one tap | planned |
 | Barcode scan | Packaged foods | planned |
 
-## v2.5: Workouts (D26, see workouts.md)
+## v2.5: Workouts (D27, see workouts.md)
 
 | Feature | Notes | Status |
 |---|---|---|
-| Exercise library | ~150–200 exercises with photos (free-exercise-db), muscle + equipment filters, alias search; cardio + sports | planned |
-| Workout log | Sets × reps × kg per exercise; bodyweight exercises by body-weight fraction | planned |
-| Calorie burn | Compendium MET × time, corrected for the person; own bar + optional daily burn goal; separate from food | planned |
-| Quick food-goal edit on Today | Default stays the goal calculator's suggestion | planned |
-| Workout + global streaks | Global lights when food and workout are both hit | planned |
-| Routines, last-session hints, rest timer, PRs | Phase 2 | planned |
+| Exercise library | 211 exercises (200 with start/end photos from free-exercise-db), muscle + sub-muscle + equipment filters, alias search, recents | done |
+| Workout log | Sets × reps × kg (seconds for holds), "last time" pre-fill, rest + pace, edit / swipe-delete + undo | done |
+| Cardio & sports | 20 activities: walk/run by speed + incline (ACSM), bike/rower/elliptical/skipping/swim/cricket/badminton/football/yoga/surya namaskar/HIIT/zumba by effort | done |
+| Calorie burn | Compendium MET × weight × time minus resting burn; Burned card + optional daily burn goal; separate from food | done |
+| Today: Eaten · Burned · Net · Goal | Goal kcal editable inline (default stays the goal calculator) | done |
+| Workout + global streaks | Rest days picked by the user; global "Prana streak" = food on target + workout done; heatmap Food/Workout/Both | done |
+| Routines, rest timer, PRs, last-session beside each set | Phase 2 | planned |
 | Weekly volume + body heatmap, measurements, progress photos | Phase 3 | planned |
+
+## v2.6: Gym check-in (D30, see gym-checkin.md)
+
+| Feature | Notes | Status |
+|---|---|---|
+| Save your gym + "I'm at the gym" / Done with live timer | Server visits, one active per user, offline + guest fallback, live pill on Today | done (phase 1) |
+| Location verification | Consent + explainer, permission states, server distance check, iOS notes, verified / not verified tags | done (phase 2) |
+| Gym location | Current location + map picker (Leaflet/OSM, dark tiles), radius 100–300 m, gym settings sheet | done (phase 3) |
+| Nearby banner, auto-close, visit counts as workout day | Nearby check on the phone | planned (phase 4) |
 
 ## Also built
 | Feature | Status |
@@ -64,7 +75,8 @@ Guiding rule: **logging fast beats everything.** People quit trackers because lo
 | Calorie history chart (14 days) + days on target | done |
 | Backup download (JSON) | done |
 | "High estimate" badge for deep-fried items | done |
-| Desktop + tablet layouts (sidebar, side panel, multi-column), keyboard shortcut N / | done |
+| Desktop + tablet layouts (sidebar, multi-column), keyboard shortcuts N (food), W (workout), / or ⌘K (add anything) | done |
+| Desktop log sheets as centred modals; workout picker two-pane (library + logger side by side) (D28) | done |
 | Create your own food (from a packet label; per serving or per 100 g), synced; "My foods" in Me | done |
 | ~40 more foods: dahi, sugar, bread, butter, honey, jeera rice, kadhai paneer, khichdi, raitas, burfi, sandwiches… | done |
 | Light theme + Appearance setting (System / Light / Dark) | done |
@@ -80,11 +92,12 @@ Guiding rule: **logging fast beats everything.** People quit trackers because lo
 
 - **Today** `/`: week strip + streak flame, calorie ring (rolling digits), macro bars, chai + water cards, 4 meal cards (swipe rows, save-as-thali, ⚡ thali chips, "same as yesterday").
 - **Log sheet** (+ button, or N / on desktop): meal chips, search, My thalis, recent/frequent/popular, create food → food detail (drag katori, units, meal) · thali builder · create food.
-- **Progress** `/progress`: streak card, year heatmap, weight (7-day avg), calories last 14 days.
+- **Workout** `/workout`: week strip + workout flame, Burned card, Exercise/Cardio buttons, session list, workout streak, workout goals (burn goal, rest days). Sheet: library → lift / cardio detail.
+- **Progress** `/progress`: Prana (global) streak, food streak, year heatmap (Food/Workout/Both), weight (7-day avg), calories last 14 days.
 - **Me** `/me`: goal calculator, daily goals, appearance, my foods, account/sync, backup.
 - **Login** `/login`, **OAuth return** `/auth/callback`.
 - Planned: Weekly Wrapped (Progress), voice logging (log sheet).
 
 ## Explicitly not building (for now)
 
-Social feed · recipe pages · workout tracking. See [future.md](future.md).
+Social feed · recipe pages. See [future.md](future.md).

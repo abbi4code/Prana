@@ -202,8 +202,8 @@ function MyFoodsCard() {
 
 function DataCard() {
   const exportData = () => {
-    const { entries, goals, profile, weights, water } = useStore.getState();
-    const blob = new Blob([JSON.stringify({ entries, goals, profile, weights, water }, null, 2)], { type: "application/json" });
+    const { entries, goals, profile, weights, water, workouts, fitness } = useStore.getState();
+    const blob = new Blob([JSON.stringify({ entries, goals, profile, weights, water, workouts, fitness }, null, 2)], { type: "application/json" });
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
     a.download = `${APP_NAME.toLowerCase()}-backup.json`;

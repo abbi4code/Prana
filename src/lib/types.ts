@@ -77,3 +77,101 @@ export type Profile = {
 };
 
 export type WeightLog = { date: string; kg: number };
+
+// ── Workouts (decision D27, .claude/workouts.md) ──
+
+export type MuscleGroup = "chest" | "back" | "shoulders" | "biceps" | "triceps" | "forearms" | "abs" | "legs" | "full";
+
+/** A Compendium 2024 activity: code + MET, looked up from data/burn-model.json at build time. */
+export type Met = { code: string; value: number };
+
+/** One row of src/data/exercises.generated.json (built by scripts/build-exercises.mjs). */
+export type Exercise = {
+  id: string;
+  name: string;
+  aliases: string[];
+  group: MuscleGroup;
+  sub: string | null;
+  equip: string;
+  mech: "compound" | "isolation" | null;
+  /** external = kg you add; bodyweight = reps (+ optional kg); assisted = counterweight kg; timed = seconds */
+  load: "external" | "bodyweight" | "assisted" | "timed";
+  /** share of body mass moved (push-ups only, Ebben 2011) */
+  bwf: number | null;
+  /** 3 = very common in Indian gyms, 1 = occasional */
+  pop: 1 | 2 | 3;
+  /** has start/end photos in public/exercises (free-exercise-db) */
+  photo: boolean;
+  frames: number;
+  muscles: string[];
+  also: string[];
+  met: Met;
+  /** short rest / supersets */
+  metIntense: Met;
+};
+
+/** Cardio or sport. walk/run use the ACSM equations; "met" picks one of `options`. */
+export type Activity = {
+  id: string;
+  name: string;
+  aliases: string[];
+  model: "walk" | "run" | "met";
+  incline: boolean;
+  start: { speed: number; incline: number } | null;
+  options: (Met & { label: string })[];
+};
+
+/** One set. `secs` replaces reps for timed holds (plank). kg = weight added (or counterweight when assisted). */
+export type WorkSet = { reps: number; kg: number; secs?: number };
+
+/** A logged exercise or cardio bout. Burn is snapshotted at log time, like food (D05). */
+export type Workout = {
+  id: string;
+  date: string; // YYYY-MM-DD
+  kind: "lift" | "cardio";
+  /** exercise or activity id */
+  refId: string;
+  name: string;
+  // lift
+  sets?: WorkSet[];
+  restSec?: number;
+  intense?: boolean;
+  // cardio
+  speedKmh?: number;
+  inclinePct?: number;
+  optionCode?: string;
+  minutes: number;
+  /** effective MET used */
+  met: number;
+  /** estimated kcal above resting */
+  kcal: number;
+  createdAt: number;
+  /** gym visit this was logged during (D30); calories never come from the visit itself */
+  visitId?: string;
+};
+
+/** Workout goals. restDays uses JS weekday numbers (0 = Sunday). */
+export type Fitness = { burnGoal: number | null; restDays: number[] };
+
+
+// ── Gym check-in (decision D30, .claude/gym-checkin.md) ──
+
+export type Verification = "verified" | "outside_radius" | "low_accuracy" | "permission_denied" | "unavailable" | "not_checked";
+
+/** The user's gym. lat/lng stay null until a location is saved (phase 3). Synced (user_gyms). */
+export type Gym = { id: string; name: string; lat: number | null; lng: number | null; radiusM: number; createdAt: number };
+
+/** A visit as stored by the server (gym_visits). Written only by the API; the device keeps a read-only copy. */
+export type GymVisit = {
+  id: string;
+  gymId: string | null;
+  startedAt: string; // ISO, server clock (device clock when source = web_offline)
+  endedAt: string | null;
+  status: "active" | "completed" | "auto_closed";
+  startVerification: Verification;
+  endVerification: Verification | null;
+  source: "web_manual" | "web_offline" | "native_geofence";
+};
+
+/** A visit saved only on this device (offline, or as a guest), uploaded once signed in and online. */
+export type LocalVisit = { id: string; gymId: string | null; startedAt: number; endedAt: number | null };

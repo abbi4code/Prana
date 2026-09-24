@@ -1,4 +1,4 @@
-// Food-name matching for natural-language logging and typo-tolerant search (nl-logging.md, Phase 1).
+// Name matching for natural-language logging and typo-tolerant search (nl-logging.md): foods, exercises, activities.
 // PURE module: no app imports, no side effects, so it runs in the browser, on a server and in the
 // eval script (node, type-stripping) alike. Matching is cheap → expensive:
 //   1. exact name/alias (after Hinglish spelling canonicalisation)
@@ -6,7 +6,8 @@
 //   3. trigram similarity (typos)
 // Scores are 0–1; callers treat < LOW_CONFIDENCE as "show alternatives".
 
-import type { Food } from "../types";
+/** Anything matchable: a food, an exercise, a cardio activity. */
+export type Named = { id: string; name: string; aliases: string[] };
 
 export const LOW_CONFIDENCE = 0.72;
 
@@ -49,18 +50,18 @@ export function similarity(a: string, b: string): number {
   return shared / (ta.size + tb.size - shared);
 }
 
-type Entry = { food: Food; names: string[]; grams: Set<string>[] };
+type Entry<T> = { item: T; names: string[]; grams: Set<string>[] };
 
-export type Candidate = { food: Food; score: number; via: "exact" | "prefix" | "fuzzy" };
+export type Candidate<T extends Named = Named> = { item: T; score: number; via: "exact" | "prefix" | "fuzzy" };
 
-export type Matcher = {
-  /** best candidates for one food name, highest score first */
-  match: (name: string, limit?: number) => Candidate[];
+export type Matcher<T extends Named> = {
+  /** best candidates for one name, highest score first */
+  match: (name: string, limit?: number) => Candidate<T>[];
 };
 
-export type MatcherOptions = {
+export type MatcherOptions<T extends Named> = {
   /** tie-breaker for equal scores, e.g. staples or the user's own foods (keep it small, ≤ 0.05) */
-  boost?: (f: Food) => number;
+  boost?: (item: T) => number;
   /** generic word → the food it means ("roti" → plain chapati); from data/aliases.json */
   prefer?: Record<string, string>;
 };
@@ -80,20 +81,20 @@ export function confidenceOf(cands: Candidate[]): number {
  * Index a list of foods (catalog + custom foods). Build once per list; matching is then O(foods).
  * `boost` lets callers prefer foods (staples, the user's own foods) when scores tie.
  */
-export function buildMatcher(foods: Food[], { boost = () => 0, prefer = {} }: MatcherOptions = {}): Matcher {
+export function buildMatcher<T extends Named>(items: T[], { boost = () => 0, prefer = {} }: MatcherOptions<T> = {}): Matcher<T> {
   const preferred = new Map(Object.entries(prefer).map(([word, id]) => [canon(word), id]));
-  const entries: Entry[] = foods.map((food) => {
-    const names = [...new Set([food.name, food.name.replace(/\s*\(.*?\)\s*/g, " "), ...food.aliases, food.id.replace(/-/g, " ")].map(canon).filter(Boolean))];
-    return { food, names, grams: names.map(trigrams) };
+  const entries: Entry<T>[] = items.map((item) => {
+    const names = [...new Set([item.name, item.name.replace(/\s*\(.*?\)\s*/g, " "), ...item.aliases, item.id.replace(/-/g, " ")].map(canon).filter(Boolean))];
+    return { item, names, grams: names.map(trigrams) };
   });
 
-  const match = (raw: string, limit = 3): Candidate[] => {
+  const match = (raw: string, limit = 3): Candidate<T>[] => {
     const q = canon(raw);
     if (!q) return [];
     const preferredId = preferred.get(q);
     const qGrams = trigrams(q);
     const qWords = q.split(" ");
-    const out: Candidate[] = [];
+    const out: Candidate<T>[] = [];
 
     for (const e of entries) {
       let best = 0;
@@ -122,13 +123,13 @@ export function buildMatcher(foods: Food[], { boost = () => 0, prefer = {} }: Ma
         if (s > best) { best = s; via = "fuzzy"; }
       }
       if (best >= 0.3) {
-        let score = Math.min(1, best + boost(e.food));
+        let score = Math.min(1, best + boost(e.item));
         // a generic word ("roti") names one default; other exact hits become close alternatives
-        if (preferredId) score = e.food.id === preferredId ? 1 : Math.min(score, 0.95);
-        out.push({ food: e.food, score, via });
+        if (preferredId) score = e.item.id === preferredId ? 1 : Math.min(score, 0.95);
+        out.push({ item: e.item, score, via });
       }
     }
-    return out.sort((a, b) => b.score - a.score || a.food.name.length - b.food.name.length).slice(0, limit);
+    return out.sort((a, b) => b.score - a.score || a.item.name.length - b.item.name.length).slice(0, limit);
   };
 
   return { match };

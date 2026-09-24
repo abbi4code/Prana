@@ -34,7 +34,7 @@
 
 - Social feed / friends
 - Recipe pages
-- ~~Workout tracking~~: un-parked 2026-09-24, see D26 / workouts.md. Step import from Google Fit / Apple Health still parked
+- ~~Workout tracking~~: built 2026-09-24, see D27 / workouts.md. Step import from Google Fit / Apple Health still parked
 
 ## Change log
 
@@ -52,4 +52,10 @@
 | 2026-09-24 | Yogabar protein oats & muesli (7 rows) from official label images; `cereal` category |
 | 2026-09-24 | Docs reorganised for future sessions: CLAUDE.md rewritten as the entry point, architecture.md added |
 | 2026-09-25 | Natural-language + voice logging built (D26): typo-tolerant matcher, `data/aliases.json`, `/api/food/parse` (gpt-6-luna), confirm card, mic, eval 60/60. Migrations `…090000_food_logs_source`, `…093000_nl_parsing` pushed |
-| 2026-09-24 | Workouts & calorie burn planned (D26, workouts.md): free-exercise-db library, sets × reps × kg, MET-based burn separate from food, food/workout/global streaks |
+| 2026-09-24 | Workouts & calorie burn planned (D27, workouts.md): free-exercise-db library, sets × reps × kg, MET-based burn separate from food, food/workout/global streaks |
+| 2026-09-25 | Workouts phase 1 built (D27): Workout tab + sheet, 211 exercises / 400 self-hosted photos, 20 cardio activities, burn estimate, Today Eaten·Burned·Net·Goal + inline goal edit, workout + global streaks with user-picked rest days, heatmap modes, `jamun` token. Migration `…120000_workouts` pushed, RLS verified |
+| 2026-09-25 | Desktop log sheets moved from right side panel to centred modals; workout picker two-pane (D28). Filter chips wrap on desktop; toasts sit above sheets |
+| 2026-09-25 | NL/voice logging extended to workouts + "yesterday" (D26 addendum): workout sheet gets the ✨ row + mic, one confirm card for food + workouts, burn on device, weight asked if unknown; `MIN_FUZZY` stops weak fuzzy food matches; eval 84/84 (prompt `2026-09-25.3`). No migration |
+| 2026-09-25 | "Add anything" (D29): Today bar + sidebar field + / ⌘K open one sheet searching food and workouts; one-tap + (last portion / last session, Undo), mixed recents, thalis, sentence + voice (mic starts from the bar). `searchWorkouts()` in `lib/exercises.ts`; `useSpeech` gained a silent `abort()`. No migration |
+| 2026-09-25 | Gym check-in phase 1 (D30): `user_gyms`, `gym_visits` (server-written), `gym_events` (append-only), check-in/out API, timer, offline/guest fallback. Migration `…130000_gym_checkin` pushed; SQL tests in a rolled-back transaction |
+| 2026-09-25 | Gym check-in phases 2–3 (D30): location consent (`…140000_location_consent` pushed), explainer + permission states, server Haversine verification with confirm step, gym sheet with current location + Leaflet/OSM map + radius. Dependency: `leaflet` |

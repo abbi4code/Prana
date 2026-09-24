@@ -1,4 +1,5 @@
-// POST /api/food/parse: sentence → { meal, items[{ name, qty, unit }] } for the confirm card.
+// POST /api/food/parse: sentence → { day, meal, items[{ name, qty, unit }], workouts[{ name, sets, reps, … }] }
+// for the confirm card (food + workouts in one call).
 // Signed-in users only. Never returns nutrition numbers and never writes food logs (nl-logging.md).
 import { APIError } from "openai";
 import { ParseRequest, normalizeInput, type ParseResponse } from "@/lib/nl/schema";
@@ -36,8 +37,8 @@ export async function POST(req: Request) {
     if (hit) return json({ ...hit, cached: true } satisfies ParseResponse);
 
     const parsed = await parseWithLlm(normalized);
-    if (parsed.items.length) await writeCache(key, normalized, model, parsed);
-    console.info(`[parse] ok items=${parsed.items.length} ms=${Date.now() - started}`);
+    if (parsed.items.length || parsed.workouts.length) await writeCache(key, normalized, model, parsed);
+    console.info(`[parse] ok items=${parsed.items.length} workouts=${parsed.workouts.length} ms=${Date.now() - started}`);
     return json({ ...parsed, cached: false } satisfies ParseResponse);
   } catch (err) {
     // every failure tells the client to fall back to plain search; no internals leak
