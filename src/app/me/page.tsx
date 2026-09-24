@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { motion } from "motion/react";
-import { Download, Sparkles } from "lucide-react";
+import { Download, Monitor, Moon, Sparkles, Sun, Trash } from "lucide-react";
+import { FoodIcon } from "@/components/FoodIcon";
 import { AccountCard } from "@/components/account/AccountCard";
 import { APP_NAME } from "@/lib/app";
 import { suggestGoals } from "@/lib/nutrition";
@@ -29,6 +30,8 @@ export default function MePage() {
         <ProfileCard key={JSON.stringify(profile)} profile={profile} />
         <div className="space-y-4 lg:space-y-6">
           <GoalsCard key={JSON.stringify(goals)} goals={goals} />
+          <AppearanceCard />
+          <MyFoodsCard />
           <DataCard />
         </div>
       </div>
@@ -76,7 +79,7 @@ function ProfileCard({ profile }: { profile: Profile | null }) {
         <motion.button
           whileTap={{ scale: 0.95 }}
           onClick={() => { setProfile(p); setGoals(suggestion); }}
-          className="rounded-2xl bg-gradient-to-r from-turmeric to-saffron px-4 py-3 text-sm font-bold text-bg"
+          className="rounded-2xl bg-gradient-to-r from-turmeric to-saffron px-4 py-3 text-sm font-bold text-on-accent"
         >
           Use this
         </motion.button>
@@ -112,6 +115,87 @@ function GoalsCard({ goals }: { goals: Goals }) {
           Save goals
         </motion.button>
       )}
+    </section>
+  );
+}
+
+type ThemeChoice = "system" | "light" | "dark";
+const THEMES: { v: ThemeChoice; label: string; icon: typeof Sun }[] = [
+  { v: "system", label: "System", icon: Monitor },
+  { v: "light", label: "Light", icon: Sun },
+  { v: "dark", label: "Dark", icon: Moon },
+];
+
+/** Per-device preference (localStorage), applied before paint by the script in app/layout.tsx. */
+function AppearanceCard() {
+  const [theme, setTheme] = useState<ThemeChoice>(() => {
+    try {
+      const t = typeof window !== "undefined" ? localStorage.getItem("prana-theme") : null;
+      return t === "light" || t === "dark" ? t : "system";
+    } catch {
+      return "system";
+    }
+  });
+  const choose = (t: ThemeChoice) => {
+    setTheme(t);
+    try {
+      if (t === "system") localStorage.removeItem("prana-theme");
+      else localStorage.setItem("prana-theme", t);
+    } catch {}
+    if (t === "system") document.documentElement.removeAttribute("data-theme");
+    else document.documentElement.setAttribute("data-theme", t);
+  };
+  return (
+    <section className="card p-5">
+      <h2 className="font-display text-lg font-semibold">Appearance</h2>
+      <div className="mt-3 flex rounded-2xl border border-line-strong bg-surface-2 p-1">
+        {THEMES.map(({ v, label, icon: Icon }) => (
+          <button
+            key={v}
+            onClick={() => choose(v)}
+            className={`relative flex flex-1 items-center justify-center gap-1.5 rounded-xl py-2 text-sm font-semibold transition-colors ${theme === v ? "text-bg" : "text-muted hover:text-text"}`}
+          >
+            {theme === v && <motion.span layoutId="theme-pill" className="absolute inset-0 rounded-xl bg-cream" transition={{ type: "spring", stiffness: 500, damping: 38 }} />}
+            <Icon size={15} className="relative" />
+            <span className="relative">{label}</span>
+          </button>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function MyFoodsCard() {
+  const foods = useStore((s) => s.customFoods);
+  const remove = useStore((s) => s.removeCustomFood);
+  if (!foods.length) return null;
+  return (
+    <section className="card p-5">
+      <h2 className="font-display text-lg font-semibold">My foods</h2>
+      <p className="text-xs text-muted">Foods you created. Past logs keep their values if you delete one.</p>
+      <ul className="mt-3 space-y-1">
+        {foods.map((f) => {
+          const u = f.units[0];
+          return (
+            <li key={f.id} className="flex items-center gap-3 rounded-2xl px-1 py-1.5">
+              <FoodIcon cat={f.cat} size={36} />
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-sm font-semibold">{f.name}</p>
+                <p className="truncate text-xs text-muted">
+                  {u.label} · {Math.round((f.kcal * u.g) / 100)} kcal
+                </p>
+              </div>
+              <button
+                onClick={() => confirm(`Delete "${f.name}"?`) && remove(f.id)}
+                aria-label={`Delete ${f.name}`}
+                className="grid size-9 place-items-center rounded-full text-faint hover:bg-chilli/10 hover:text-chilli"
+              >
+                <Trash size={16} />
+              </button>
+            </li>
+          );
+        })}
+      </ul>
     </section>
   );
 }

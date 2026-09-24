@@ -3,9 +3,10 @@
 import { useMemo } from "react";
 import { motion } from "motion/react";
 import { Coffee, GlassWater, Minus, Plus } from "lucide-react";
-import { useStore } from "@/lib/store";
+import { Burst, useGoalHits } from "@/components/Burst";
+import { useStore, useUI } from "@/lib/store";
 
-const CHAI_ID = "hot-tea";
+export const CHAI_ID = "chai";
 const WATER_GOAL = 8;
 
 /** One-tap chai counter + water tracker. */
@@ -16,6 +17,8 @@ export function QuickRow({ date }: { date: string }) {
   const addEntry = useStore((s) => s.addEntry);
   const removeEntry = useStore((s) => s.removeEntry);
   const addWater = useStore((s) => s.addWater);
+  const showToast = useUI((s) => s.showToast);
+  const waterHits = useGoalHits(water, WATER_GOAL, date, () => showToast("8 glasses. Hydrated."));
 
   return (
     <div className="grid grid-cols-2 gap-3">
@@ -40,9 +43,10 @@ export function QuickRow({ date }: { date: string }) {
         <p className="mt-2 text-xs text-muted">{chai.length === 1 ? "cup" : "cups"} · {chai.reduce((t, e) => t + e.kcal, 0)} kcal</p>
       </div>
 
-      <div className="card p-4">
+      <div className="card relative p-4">
+        <Burst trigger={waterHits} />
         <div className="flex items-center gap-2 text-muted">
-          <GlassWater size={16} className="text-sky-300" />
+          <GlassWater size={16} className="text-sky" />
           <span className="text-xs font-bold uppercase tracking-wider">Water</span>
         </div>
         <div className="mt-2 flex items-center justify-between gap-2">
@@ -59,11 +63,7 @@ export function QuickRow({ date }: { date: string }) {
         </div>
         <div className="mt-3 flex gap-1">
           {Array.from({ length: WATER_GOAL }, (_, i) => (
-            <motion.span
-              key={i}
-              className="h-1.5 flex-1 rounded-full"
-              animate={{ backgroundColor: i < water ? "#7dd3fc" : "rgb(255 236 214 / 0.1)" }}
-            />
+            <span key={i} className={`h-1.5 flex-1 rounded-full transition-colors duration-300 ${i < water ? "bg-sky" : "bg-line-strong"}`} />
           ))}
         </div>
       </div>

@@ -45,7 +45,7 @@ export function suggestGoals(p: Profile): Goals {
 /** Sensible step and quick-pick amounts per unit kind. */
 export function qtyOptions(kind: FoodUnit["kind"]) {
   if (kind === "g") return { step: 10, min: 10, picks: [50, 100, 150, 200] };
-  if (kind === "tsp" || kind === "tbsp") return { step: 1, min: 1, picks: [1, 2, 3] };
+  if (kind === "tsp" || kind === "tbsp" || kind === "scoop") return { step: 1, min: 1, picks: [1, 2, 3] };
   if (kind === "piece" || kind === "pack") return { step: 1, min: 0.5, picks: [1, 2, 3, 4] };
   return { step: 0.5, min: 0.25, picks: [0.5, 1, 1.5, 2] };
 }

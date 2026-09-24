@@ -1,6 +1,6 @@
 // Row mapping + merge rules between the local store and Supabase tables.
 // Pure functions (no imports with side effects) so they can be tested in isolation.
-import type { Entry, WeightLog } from "../types";
+import type { Entry, Food, WeightLog } from "../types";
 
 export type LogRow = {
   id: string;
@@ -23,6 +23,7 @@ export type LogRow = {
 };
 export type WeightRow = { user_id?: string; measured_on: string; kg: number; updated_at?: string; deleted_at: string | null };
 export type WaterRow = { user_id?: string; logged_on: string; glasses: number; updated_at?: string };
+export type FoodRow = { id: string; user_id?: string; data: Food; updated_at?: string; deleted_at: string | null };
 
 const num = (v: unknown) => (v == null ? null : Number(v));
 
@@ -66,6 +67,16 @@ export function mergeWater(local: Record<string, number>, rows: WaterRow[], skip
   const out = { ...local };
   for (const r of rows) if (!skip.has(r.logged_on)) out[r.logged_on] = r.glasses;
   return out;
+}
+
+export function mergeFoods(local: Food[], rows: FoodRow[], skip: Set<string>): Food[] {
+  const byId = new Map(local.map((f) => [f.id, f]));
+  for (const r of rows) {
+    if (skip.has(r.id)) continue;
+    if (r.deleted_at) byId.delete(r.id);
+    else byId.set(r.id, r.data);
+  }
+  return [...byId.values()];
 }
 
 /** Latest server timestamp seen, used as the next pull's lower bound. */

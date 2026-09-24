@@ -27,7 +27,7 @@ Guiding rule: **logging fast beats everything.** People quit trackers because lo
 | Thali builder | Drop roti/dal/sabzi/rice into an illustrated thali; save as a named thali; log in one tap. **Signature feature.** | planned |
 | Home vs restaurant toggle | Oil/ghee multiplier (~1.5–2×) for dhaba/restaurant food | planned |
 | Hidden-calorie chips | "+ ghee on roti", "+ tadka", "+ sugar in chai" | planned |
-| Chai counter | One-tap card on Today (uses INDB tea until Q6 is decided) | done |
+| Chai counter | One-tap card on Today; home chai derived from IFCT milk + sugar (89 kcal/cup) | done |
 | Year heatmap | GitHub-style grid of on-target days | planned |
 | Forgiving streaks | Streak freezes included | planned |
 | Smart swaps | e.g. "2 phulka instead of puri saves ~140 kcal" | planned |
@@ -53,6 +53,15 @@ Guiding rule: **logging fast beats everything.** People quit trackers because lo
 | Backup download (JSON) | done |
 | "High estimate" badge for deep-fried items | done |
 | Desktop + tablet layouts (sidebar, side panel, multi-column), keyboard shortcut N / | done |
+| Create your own food (from a packet label; per serving or per 100 g), synced; "My foods" in Me | done |
+| ~40 more foods: dahi, sugar, bread, butter, honey, jeera rice, kadhai paneer, khichdi, raitas, burfi, sandwiches… | done |
+| Light theme + Appearance setting (System / Light / Dark) | done |
+| Category illustrations (katori, kulhad, roti stack, samosa, laddoo…) | done |
+| Swipe-to-delete with Undo toast | done |
+| Drag the katori to change amount | done |
+| Odometer numbers, shared icon transition, new-item glow, page transitions | done |
+| Celebrations: protein goal, water goal | done |
+| Supplements: whey protein (scoop), creatine, whey shake with water / milk (whey + creatine findable) | done |
 
 ## Screens
 

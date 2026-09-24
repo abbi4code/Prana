@@ -48,7 +48,7 @@ export function BottomNav() {
           whileTap={{ scale: 0.9 }}
           onClick={() => openAdd(mealForNow())}
           aria-label="Log food"
-          className="grid size-[3.6rem] shrink-0 place-items-center rounded-full bg-gradient-to-br from-turmeric to-saffron text-bg shadow-[0_10px_30px_-6px_rgb(255_138_61/0.6)]"
+          className="grid size-[3.6rem] shrink-0 place-items-center rounded-full bg-gradient-to-br from-turmeric to-saffron text-on-accent shadow-[0_10px_30px_-6px_rgb(255_138_61/0.6)]"
         >
           <Plus size={28} strokeWidth={2.6} />
         </motion.button>

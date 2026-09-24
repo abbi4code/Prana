@@ -9,8 +9,8 @@
 | Q3 | Sign off meal slots (D10)? | Units (D07) are done |
 | Q4 | How to handle fried foods (samosa, puri, pakora, jalebi, namkeen)? | INDB counts the *full* frying oil, not the absorbed amount. For now the app shows them with "~" and a "high estimate" note (D16). Options for a real fix: (a) use INDB value with a documented absorbed-oil adjustment, flagged `low`; (b) find a published absorbed-oil study; (c) manufacturer label for packaged namkeen. |
 | Q5 | Food images: AI-generated illustrations vs photos? | D11 proposes illustrations |
-| Q6 | Chai: INDB's tea is dilute (24 kcal/cup). Replace with a **derived recipe** from IFCT parts (e.g. 100 ml milk + 50 ml water + 2 tsp sugar), marked `source: DERIVED` with the recipe in notes? | Chai is likely the most-logged item, so it must be right. Same approach could cover sweet lassi. |
-| Q7 | Fill missing basics (dahi, sugar, honey, butter, bread, toned milk, cheese, cola, Parle-G) how? | Options: (a) read values off packets at home, (b) Claude fetches IFCT/label values, (c) "custom food" feature in-app |
+| ~~Q6~~ | ~~Chai value~~ | **Resolved:** derived chai (80 g milk + 8 g sugar per 150 ml cup = 89 kcal) + no-sugar variant (D22) |
+| ~~Q7~~ | ~~Missing basics~~ | **Resolved:** USDA values for dahi/sugar/honey/butter/bread/cheese/cola (D22); packaged items (toned milk, Parle-G…) via custom foods (D21) |
 
 ## Planned future changes
 
@@ -44,3 +44,4 @@
 | 2026-09-24 | Moved to `data/foods.json`, old files deleted. v1 app built: Next.js 16, local-first, PWA; 224 foods in catalog |
 | 2026-09-24 | Desktop/tablet layouts (D17). Google sign-in + sync built (D18) |
 | 2026-09-24 | Supabase project `fitness` set up via CLI: migration pushed, Google provider + redirect URLs pushed |
+| 2026-09-24 | Renamed to Prana (D19). Food data +41 (D22), custom foods (D21, migration `20260924120000_custom_foods` pushed), design pass: light theme, illustrations, gestures, celebrations (D20, D23) |

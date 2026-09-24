@@ -5,7 +5,8 @@
 | File | What |
 |---|---|
 | `data/foods.json` | Research dataset v2 (227 foods). Source of truth; edit this, not the generated file |
-| `src/data/foods.generated.json` | App catalog built by `npm run foods` (224 foods after exclusions) |
+| `data/foods-extra.json` | 45 foods added later (INDB codes, USDA fdcIds, derived chai). Built by `node scripts/import-extra.mjs <INDB.xlsx>` (D22) |
+| `src/data/foods.generated.json` | App catalog built by `npm run foods` from both files (269 foods after exclusions) |
 
 Older files (`foods.json` v1, `foods (1).json`) were deleted on 2026-09-24.
 
@@ -14,6 +15,10 @@ All were produced by browser Claude from the research prompt. Schema: `meta` + `
 ## Sources actually used
 - **INDB** (188 foods): `INDB.xlsx` from github.com/lindsayjaacks/Indian-Nutrient-Databank-INDB- (1,014 recipes). Unit grams derived as per-serving kcal ÷ per-100g kcal × 100, or corrected to a realistic single portion (estimated, noted per food).
 - **IFCT 2017** (38 foods): via npm `@ifct2017/compositions`, kJ → kcal ÷ 4.184. Pure fats (ghee, oil) have no energy in IFCT, so they are derived as 9 kcal/g fat.
+- **USDA FoodData Central, SR Legacy** (7 foods in foods-extra): dahi (171284), sugar (169655), honey (169640), butter (173410), white bread (174924), brown bread (172688), cheese slice (170853), cola (174852). Fetched from the FDC API; unit weights are estimated household measures.
+- **USDA 173180** "Protein powder, whey based": Whey Protein Powder (352 kcal, 78 g protein per 100 g; scoop 30 g = 106 kcal, 23 g protein). Brand scoops vary (30–36 g): users can create their brand from its label.
+- **DERIVED** (4): chai with / without sugar = IFCT whole cow milk (L002) + USDA sugar, per 150 ml cup; whey shake with water (1 scoop + 250 ml = 106 kcal) and with milk (1 scoop + 250 ml whole milk ≈ 258 g = 294 kcal, 32 g protein). Creatine adds 0 kcal, so "whey + creatine" searches land on the shakes.
+- **Manufacturer label** (creatine): Optimum Nutrition Micronized Creatine, India site: 3 g scoop, 0 kcal, 0 carbs.
 - **Manufacturer label** (1 food): Maggi, from maggi.in. Amul, Parle, Coca-Cola and Haldiram's pages couldn't be read, so those items were omitted.
 - Not accessible: the ICMR-NIN household-measures table, so **all katori/serving weights are estimates**.
 
@@ -45,10 +50,12 @@ All were produced by browser Claude from the research prompt. Schema: `meta` + `
 | Stale caveat | `meta.caveats` still says packaged foods aren't included, but Maggi is | ✓ `meta` isn't shipped to the app |
 | Inconsistent unit names | 33 names | ✓ D07 |
 
-**Still missing:**
-- **Basics:** plain dahi, toned milk, sugar, honey, butter, bread slice, cheese slice, papad
-- **Dishes:** jeera rice, chicken biryani, missi roti, plain bhindi/lauki/palak/mixed-veg sabzi, kadai paneer, paneer bhurji, chicken tikka
+**Added 2026-09-24 (foods-extra):** jeera rice, matar pulao, bhindi… (see file). Chicken & mutton pulao were rejected (macros 30% off kcal). Recipe-yield servings (e.g. 668 g "plate") replaced with standard portions.
+
+**Still missing (use Create food for packaged ones):**
+- **Basics:** toned milk (label only; aggregator values not allowed), papad
+- **Dishes:** chicken biryani, missi roti, plain lauki/palak/mixed-veg sabzi, paneer bhurji, chicken tikka (none in INDB)
 - **Street food & sweets:** aloo tikki, vada pav, pani puri, momos, jalebi, barfi
-- **Packaged:** Parle-G, Amul butter, cola
+- **Packaged:** Parle-G and other brands → Create food
 
 Most of the basics are single-ingredient IFCT items or printed on packet labels, so they're easy to fill (see future.md).

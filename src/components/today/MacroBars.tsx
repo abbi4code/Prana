@@ -1,6 +1,8 @@
 "use client";
 
 import { motion } from "motion/react";
+import { Burst, useGoalHits } from "@/components/Burst";
+import { useUI } from "@/lib/store";
 import type { Goals } from "@/lib/types";
 
 const MACROS = [
@@ -9,14 +11,18 @@ const MACROS = [
   { key: "f", label: "Fat", color: "var(--color-saffron)" },
 ] as const;
 
-export function MacroBars({ totals, goals }: { totals: { p: number; c: number; f: number }; goals: Goals }) {
+export function MacroBars({ totals, goals, date }: { totals: { p: number; c: number; f: number }; goals: Goals; date: string }) {
+  const showToast = useUI((s) => s.showToast);
+  // protein is the one macro worth cheering for
+  const proteinHits = useGoalHits(totals.p, goals.p, date, () => showToast("Protein goal reached. Strong day."));
   return (
     <div className="grid grid-cols-3 gap-4">
       {MACROS.map(({ key, label, color }) => {
         const v = Math.round(totals[key]);
         const g = goals[key];
         return (
-          <div key={key}>
+          <div key={key} className="relative">
+            {key === "p" && <Burst trigger={proteinHits} />}
             <div className="flex items-baseline justify-between">
               <span className="text-[11px] font-bold uppercase tracking-wider text-muted">{label}</span>
             </div>

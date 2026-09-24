@@ -32,7 +32,7 @@ export function Sidebar() {
       <motion.button
         whileTap={{ scale: 0.97 }}
         onClick={() => openAdd(mealForNow())}
-        className="mt-8 flex h-12 items-center justify-between rounded-2xl bg-gradient-to-r from-turmeric to-saffron px-4 font-bold text-bg shadow-[0_10px_30px_-10px_rgb(255_138_61/0.6)] transition-[filter] hover:brightness-110"
+        className="mt-8 flex h-12 items-center justify-between rounded-2xl bg-gradient-to-r from-turmeric to-saffron px-4 font-bold text-on-accent shadow-[0_10px_30px_-10px_rgb(255_138_61/0.6)] transition-[filter] hover:brightness-110"
       >
         <span className="flex items-center gap-2">
           <Plus size={19} strokeWidth={2.6} /> Log food

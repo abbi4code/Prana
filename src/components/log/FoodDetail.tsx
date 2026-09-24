@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { motion } from "motion/react";
-import { ChevronLeft, Flame, Info, Minus, Plus, Trash } from "lucide-react";
-import { CountUp } from "@/components/CountUp";
+import { ChevronLeft, ChevronsUpDown, Flame, Info, Minus, Plus, Trash } from "lucide-react";
+import { RollingNumber } from "@/components/RollingNumber";
 import { FoodIcon, categoryHue } from "@/components/FoodIcon";
 import { getUnit } from "@/lib/foods";
 import { MEALS, fmtQty, portion, qtyOptions } from "@/lib/nutrition";
@@ -36,6 +36,18 @@ export function FoodDetail({ food, initial, confirmLabel, onConfirm, onBack, onD
   };
   const step = (dir: 1 | -1) => setQty((q) => Math.max(opts.min, Math.round((q + dir * opts.step) * 100) / 100));
 
+  // drag the portion art up/down to change the amount: one step per 22 px, a light tick each step
+  const pan = useRef(0);
+  const onPan = (_: unknown, info: { delta: { y: number } }) => {
+    pan.current -= info.delta.y;
+    while (Math.abs(pan.current) >= 22) {
+      const dir = pan.current > 0 ? 1 : -1;
+      pan.current -= dir * 22;
+      step(dir);
+      navigator.vibrate?.(4);
+    }
+  };
+
   return (
     <div className="flex h-full flex-col">
       <div className="no-scrollbar flex-1 overflow-y-auto px-5 pb-4">
@@ -45,7 +57,9 @@ export function FoodDetail({ food, initial, confirmLabel, onConfirm, onBack, onD
               <ChevronLeft size={24} />
             </button>
           )}
-          <FoodIcon cat={food.cat} size={40} />
+          <motion.div layoutId={`food-icon-${food.id}`} transition={{ type: "spring", stiffness: 380, damping: 32 }}>
+            <FoodIcon cat={food.cat} size={40} />
+          </motion.div>
           <div className="min-w-0">
             <h2 className="truncate font-display text-xl font-semibold leading-tight">{food.name}</h2>
             {food.hi && <p className="text-sm text-muted">{food.hi}</p>}
@@ -63,14 +77,24 @@ export function FoodDetail({ food, initial, confirmLabel, onConfirm, onBack, onD
           </div>
         )}
 
-        <div className="relative mx-auto mt-2 h-44 w-64">
+        <motion.div
+          data-vaul-no-drag
+          onPan={onPan}
+          onPanStart={() => (pan.current = 0)}
+          whileTap={{ scale: 0.98 }}
+          className="group relative mx-auto mt-2 h-44 w-64 cursor-ns-resize touch-none select-none"
+          title="Drag up or down to change the amount"
+        >
           <PortionVisual kind={unit.kind} qty={qty} grams={n.grams} hue={hue} />
-        </div>
+          <span className="pointer-events-none absolute -right-6 top-1/2 flex -translate-y-1/2 flex-col items-center text-faint opacity-60 transition-opacity group-hover:opacity-100">
+            <ChevronsUpDown size={18} />
+          </span>
+        </motion.div>
 
         <div className="text-center">
           <div className="font-display text-6xl font-semibold leading-none tracking-tight">
             {food.fried && <span className="text-4xl text-muted">~</span>}
-            <CountUp value={n.kcal} />
+            <RollingNumber value={n.kcal} />
           </div>
           <p className="mt-1 text-sm text-muted">
             kcal · {n.grams} g
@@ -129,7 +153,7 @@ export function FoodDetail({ food, initial, confirmLabel, onConfirm, onBack, onD
         </div>
 
         <p className="mt-5 text-center text-[11px] text-faint">
-          {food.kcal} kcal / 100 g · source {food.src === "IFCT2017" ? "IFCT 2017" : food.src === "MFR_LABEL" ? "pack label" : food.src}
+          {food.kcal} kcal / 100 g · source {SOURCE_LABEL[food.src] ?? food.src}
         </p>
       </div>
 
@@ -148,7 +172,7 @@ export function FoodDetail({ food, initial, confirmLabel, onConfirm, onBack, onD
           whileTap={{ scale: 0.97 }}
           disabled={!qty}
           onClick={() => onConfirm({ unitId, qty, meal })}
-          className="h-14 flex-1 rounded-2xl bg-gradient-to-r from-turmeric to-saffron text-base font-bold text-bg disabled:opacity-40"
+          className="h-14 flex-1 rounded-2xl bg-gradient-to-r from-turmeric to-saffron text-base font-bold text-on-accent disabled:opacity-40"
         >
           {confirmLabel(MEALS.find((m) => m.id === meal)!.label)}
         </motion.button>
@@ -167,6 +191,10 @@ function Macro({ label, value, color }: { label: string; value: number | null; c
     </div>
   );
 }
+
+const SOURCE_LABEL: Record<string, string> = {
+  IFCT2017: "IFCT 2017", MFR_LABEL: "pack label", USDA: "USDA FoodData Central", DERIVED: "recipe from IFCT + USDA", USER: "your own food",
+};
 
 const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 

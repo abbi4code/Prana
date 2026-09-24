@@ -1,9 +1,9 @@
 export type Category =
   | "breakfast" | "roti_bread" | "rice" | "dal" | "sabzi" | "paneer" | "egg" | "non_veg"
-  | "snack" | "sweet" | "dairy" | "fruit" | "beverage" | "condiment" | "nuts" | "soup";
+  | "snack" | "sweet" | "dairy" | "fruit" | "beverage" | "condiment" | "nuts" | "soup" | "supplement";
 
 export type UnitKind =
-  | "g" | "katori" | "bowl" | "plate" | "piece" | "glass" | "cup" | "tbsp" | "tsp" | "handful" | "pack";
+  | "g" | "katori" | "bowl" | "plate" | "piece" | "glass" | "cup" | "tbsp" | "tsp" | "handful" | "pack" | "scoop";
 
 export type FoodUnit = { id: string; kind: UnitKind; label: string; g: number };
 
@@ -23,7 +23,8 @@ export type Food = {
   fib: number | null;
   units: FoodUnit[];
   du: string;
-  conf: "high" | "medium" | "low";
+  /** "user" = created by the owner (custom food) */
+  conf: "high" | "medium" | "low" | "user";
   src: string;
   /** deep-fried INDB row: kcal includes full frying oil, so it's a high estimate */
   fried: boolean;

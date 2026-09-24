@@ -8,6 +8,7 @@ import { hydrateStore, useStore, useUI } from "@/lib/store";
 import { BottomNav } from "./BottomNav";
 import { LogSheet } from "./log/LogSheet";
 import { Sidebar } from "./Sidebar";
+import { Toaster } from "./Toaster";
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const path = usePathname();
@@ -56,6 +57,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       </main>
       <BottomNav />
       <LogSheet />
+      <Toaster />
     </>
   );
 }

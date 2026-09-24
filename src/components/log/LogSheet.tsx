@@ -3,14 +3,15 @@
 import { useMemo, useState } from "react";
 import { Drawer } from "vaul";
 import { AnimatePresence, motion } from "motion/react";
-import { Check, Flame, Search, X } from "lucide-react";
+import { Check, Flame, Plus, Search, X } from "lucide-react";
 import { FoodIcon } from "@/components/FoodIcon";
-import { FOODS, STARTER_IDS, getFood, searchFoods } from "@/lib/foods";
+import { STARTER_IDS, getFood, searchFoods } from "@/lib/foods";
 import { addDays, dayKey } from "@/lib/dates";
 import { MEALS } from "@/lib/nutrition";
 import { useStore, useUI } from "@/lib/store";
 import { useIsDesktop } from "@/lib/useMediaQuery";
 import type { Food, Meal } from "@/lib/types";
+import { CreateFood } from "./CreateFood";
 import { FoodDetail } from "./FoodDetail";
 
 export function LogSheet() {
@@ -56,6 +57,7 @@ function AddFlow({ meal: initialMeal }: { meal: Meal }) {
   const [meal, setMeal] = useState(initialMeal);
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState<Food | null>(null);
+  const [creating, setCreating] = useState<string | null>(null);
   const [added, setAdded] = useState<{ name: string; kcal: number }[]>([]);
 
   // recents: last distinct foods; frequent: most logged in the last 30 days
@@ -80,6 +82,21 @@ function AddFlow({ meal: initialMeal }: { meal: Meal }) {
   const results = useMemo(() => searchFoods(query), [query]);
   const lastFor = (id: string) => recent.find((r) => r.food.id === id)?.last;
 
+  if (creating !== null)
+    return (
+      <>
+        <Drawer.Title className="sr-only">Create a food</Drawer.Title>
+        <CreateFood
+          initialName={creating}
+          onBack={() => setCreating(null)}
+          onCreated={(food) => {
+            setCreating(null);
+            setSelected(food);
+          }}
+        />
+      </>
+    );
+
   if (selected) {
     const last = lastFor(selected.id);
     return (
@@ -93,6 +110,7 @@ function AddFlow({ meal: initialMeal }: { meal: Meal }) {
         onConfirm={(v) => {
           addEntry(selected.id, v.unitId, v.qty, v.meal, date);
           const e = useStore.getState().entries.at(-1);
+          if (e) useUI.getState().markFresh(e.id);
           setAdded((a) => [...a, { name: selected.name, kcal: e?.kcal ?? 0 }]);
           setMeal(v.meal);
           setSelected(null);
@@ -177,22 +195,38 @@ function AddFlow({ meal: initialMeal }: { meal: Meal }) {
 
       <div className="no-scrollbar mt-2 min-h-0 flex-1 overflow-y-auto px-3 pb-[calc(1.5rem+var(--safe-bottom))]">
         {showingSearch ? (
-          results.length ? (
-            <FoodList foods={results} onPick={setSelected} />
-          ) : (
-            <p className="px-2 py-10 text-center text-sm text-muted">
-              No match for “{query}”. Try another name. {FOODS.length} foods so far, more coming.
-            </p>
-          )
+          <>
+            {results.length ? (
+              <FoodList foods={results} onPick={setSelected} />
+            ) : (
+              <p className="px-2 pb-2 pt-8 text-center text-sm text-muted">No match for “{query}”. Try another name, or add it yourself:</p>
+            )}
+            <CreateRow label={`Create “${query.trim()}”`} onClick={() => setCreating(query.trim())} />
+          </>
         ) : (
           <>
             {recent.length > 0 && <Section title="Recent" foods={recent.map((r) => r.food)} onPick={setSelected} />}
             {frequent.length > 0 && <Section title="You eat these often" foods={frequent} onPick={setSelected} />}
             {recent.length === 0 && <Section title="Popular" foods={starter} onPick={setSelected} />}
+            <CreateRow label="Can't find a food? Create it" onClick={() => setCreating("")} />
           </>
         )}
       </div>
     </div>
+  );
+}
+
+function CreateRow({ label, onClick }: { label: string; onClick: () => void }) {
+  return (
+    <button
+      onClick={onClick}
+      className="mt-2 flex w-full items-center gap-3 rounded-2xl border border-dashed border-line-strong px-3 py-3 text-left text-sm font-semibold text-muted transition-colors hover:border-turmeric/50 hover:text-text"
+    >
+      <span className="grid size-9 place-items-center rounded-xl bg-surface-2 text-turmeric">
+        <Plus size={18} />
+      </span>
+      <span className="truncate">{label}</span>
+    </button>
   );
 }
 
@@ -217,7 +251,9 @@ function FoodList({ foods, onPick }: { foods: Food[]; onPick: (f: Food) => void 
               onClick={() => onPick(f)}
               className="flex w-full items-center gap-3 rounded-2xl px-2 py-2.5 text-left hover:bg-surface-2 active:bg-surface-2"
             >
-              <FoodIcon cat={f.cat} size={42} />
+              <motion.div layoutId={`food-icon-${f.id}`} transition={{ type: "spring", stiffness: 380, damping: 32 }}>
+                <FoodIcon cat={f.cat} size={42} />
+              </motion.div>
               <div className="min-w-0 flex-1">
                 <p className="flex items-center gap-1.5 font-semibold">
                   <span className="truncate">{f.name}</span>
@@ -244,6 +280,8 @@ function EditFlow({ entryId }: { entryId: string }) {
   const entry = useStore((s) => s.entries.find((e) => e.id === entryId));
   const updateEntry = useStore((s) => s.updateEntry);
   const removeEntry = useStore((s) => s.removeEntry);
+  const restoreEntry = useStore((s) => s.restoreEntry);
+  const showToast = useUI((s) => s.showToast);
   const close = useUI((s) => s.close);
   const food = entry && getFood(entry.foodId);
   if (!entry || !food) return null;
@@ -262,6 +300,7 @@ function EditFlow({ entryId }: { entryId: string }) {
         onDelete={() => {
           removeEntry(entry.id);
           close();
+          showToast(`Removed ${entry.name}`, { label: "Undo", run: () => restoreEntry(entry) });
         }}
       />
     </>

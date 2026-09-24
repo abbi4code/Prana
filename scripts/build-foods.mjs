@@ -1,11 +1,12 @@
 // Builds the app's food catalog from the research dataset.
 //   input:  data/foods.json            (research output, see .claude/data.md)
+//           data/foods-extra.json      (added later from INDB/USDA/derived, built by scripts/import-extra.mjs)
 //   output: src/data/foods.generated.json
 // Run: npm run foods
 
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 
-const SRC = "data/foods.json";
+const SOURCES = ["data/foods.json", "data/foods-extra.json"];
 const OUT = "src/data/foods.generated.json";
 
 // Rows flagged in the v2 review as unreliable. Excluded until re-verified.
@@ -20,8 +21,9 @@ const KIND = {
   katori: "katori",
   bowl: "bowl", small_bowl: "bowl", soup_bowl: "bowl", curry_bowl: "bowl",
   plate: "plate", portion: "plate",
-  glass: "glass", tall_glass: "glass",
-  cup: "cup", tea_cup: "cup",
+  glass: "glass", tall_glass: "glass", can: "glass", shaker: "glass",
+  scoop: "scoop",
+  cup: "cup", tea_cup: "cup", cutting: "cup",
   tbsp: "tbsp", tablespoon: "tbsp",
   tsp: "tsp", teaspoon: "tsp",
   handful: "handful",
@@ -32,11 +34,13 @@ const YIELD_UNITS = { curry_bowl: "bowl", soup_bowl: "bowl", tall_glass: "glass"
 
 const round = (n, d = 1) => (n == null ? null : Math.round(n * 10 ** d) / 10 ** d);
 
-const raw = JSON.parse(readFileSync(SRC, "utf8"));
+const all = SOURCES.flatMap((f) => JSON.parse(readFileSync(f, "utf8")).foods);
+const dupes = all.map((f) => f.id).filter((id, i, ids) => ids.indexOf(id) !== i);
+if (dupes.length) throw new Error(`duplicate food ids: ${dupes.join(", ")}`);
 const out = [];
 const report = { excluded: [], macroNulled: [], fried: [], unitsDropped: 0 };
 
-for (const f of raw.foods) {
+for (const f of all) {
   if (EXCLUDE[f.id]) {
     report.excluded.push(`${f.id}: ${EXCLUDE[f.id]}`);
     continue;
@@ -68,7 +72,8 @@ for (const f of raw.foods) {
   if (fried) report.fried.push(f.id);
   if (p.protein_g == null) report.macroNulled.push(f.id);
   // raw grains/dals/flours: easy to confuse with the cooked dish in search
-  const uncooked = f.form === "raw" && ["rice", "roti_bread", "dal", "egg", "breakfast"].includes(f.category);
+  // (IFCT files boiled eggs under "raw" too, hence the name check)
+  const uncooked = f.form === "raw" && ["rice", "roti_bread", "dal", "egg", "breakfast"].includes(f.category) && !/boiled|cooked/i.test(f.name);
 
   out.push({
     id: f.id,

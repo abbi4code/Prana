@@ -14,7 +14,7 @@ When something changes, mark the old entry **Superseded by Dxx** instead of dele
 | D05 | Log entries snapshot grams + kcal | Decided | 2026-09-24 |
 | D06 | Standard household unit sizes | Decided | 2026-09-24 |
 | D07 | Canonical unit names (normalize dataset) | Decided (built) | 2026-09-24 |
-| D08 | Visual identity "Modern Masala" | Built; awaiting owner's sign-off | 2026-09-24 |
+| D08 | Visual identity "Modern Masala" | Built (dark + light, D20); owner asked for more polish | 2026-09-24 |
 | D09 | UX rules (≤3 taps to log, etc.) | Decided | 2026-09-24 |
 | D10 | Meal slots incl. "Chai & Snacks" | Built; awaiting owner's sign-off | 2026-09-24 |
 | D11 | One consistent illustration style for food images | Proposed | 2026-09-24 |
@@ -26,6 +26,10 @@ When something changes, mark the old entry **Superseded by Dxx** instead of dele
 | D17 | Responsive: phone, tablet and desktop layouts from one codebase | Decided | 2026-09-24 |
 | D18 | Google sign-in (Supabase, PKCE) + offline-first sync; guest mode kept | Decided | 2026-09-24 |
 | D19 | App name: **Prana** (प्राण) | Decided | 2026-09-24 |
+| D20 | Light theme + per-device Appearance setting | Decided | 2026-09-24 |
+| D21 | User-created ("custom") foods, synced | Decided | 2026-09-24 |
+| D22 | Extra food sources: INDB import, USDA fallback, derived recipes | Decided | 2026-09-24 |
+| D23 | Interaction patterns: swipe-delete + undo, drag katori, celebrate habits only | Decided | 2026-09-24 |
 
 ---
 
@@ -156,6 +160,23 @@ Progress and Me become two-column on desktop. Desktop extras: hover states, poin
 ## D19 — Name: Prana
 Sanskrit प्राण, "life force / breath". Chosen by the owner for people who eat with discipline. Tagline: *"Discipline, one katori at a time."*
 Name, Hindi name and tagline live in `src/lib/app.ts`. The Google consent screen still shows the name set in Google Cloud (Google Auth Platform → Branding) and can be renamed there.
+
+## D20 — Light theme
+Dark stays the default look; light is "warm paper" (`#f7f0e5`) with deeper spice colours for contrast. Follows the system unless the user picks System / Light / Dark in **Me → Appearance** (stored per device in `localStorage["prana-theme"]`, applied before first paint by an inline script in `app/layout.tsx`).
+Rules: all colours are CSS tokens (`globals.css`); `--ink` is the RGB used for hairlines; `cream` inverts (light pill on dark, dark pill on light); gradient buttons use `text-on-accent`. SVG attributes and Recharts props can't read CSS variables, so they use `style={{…}}`, CSS overrides, or `useTokens()`.
+
+## D21 — Custom foods
+"Create “x”" in search (or "Can't find a food?") opens a form copied from a packet label: values per serving or per 100 g, stored per 100 g in the catalog shape with `conf: "user"`, `src: "USER"`. Kept in the store (`customFoods`), searchable (ranked first), synced to `custom_foods` (whole food as jsonb, RLS). Deleting one keeps past logs (they snapshot nutrition, D05). Listed in **Me → My foods**.
+
+## D22 — More food data
+`data/foods-extra.json`, built by `scripts/import-extra.mjs` from the INDB spreadsheet (by food code), USDA FoodData Central values (fdcId recorded) for basics IFCT/INDB lack (dahi, sugar, honey, butter, bread, cheese, cola), and **DERIVED** recipes computed from sourced ingredients (chai = IFCT milk + USDA sugar). Supplements (whey powder, creatine, whey shakes with water/milk) live in a `supplement` category with a shaker illustration; scoops use unit kind `scoop` (steps of 1), shakes render as a glass. USDA and derived rows are `medium` confidence. The import refuses INDB codes already in `data/foods.json`. Calorie apps / aggregator sites are still never a source (D03): e.g. Amul toned milk is left to custom foods.
+
+## D23 — Interaction patterns
+- Swipe a logged item left to delete; every delete shows an **Undo** toast (restores the same entry id, so sync stays clean).
+- Drag the portion art up/down to change the amount (22 px per step, light haptic tick). Steppers and chips remain for precision/accessibility.
+- Celebrate **habits**, not eating: particle burst + toast when protein goal or 8 glasses of water is reached, never for hitting the calorie number.
+- Big numbers roll like an odometer (`RollingNumber`); the icon glides from the result list into the detail (`layoutId`); new items glow once on Today; pages rise-and-fade (`app/template.tsx`).
+- Category illustrations (brass katori, kulhad, roti stack…) replace icon tiles until per-dish art exists (D11).
 
 ## D12 — Project docs
 Decisions, features, future changes and data notes live as separate md files in `.claude/`, indexed in [CLAUDE.md](CLAUDE.md).

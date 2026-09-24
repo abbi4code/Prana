@@ -5,7 +5,7 @@ import { CalorieRing } from "@/components/today/CalorieRing";
 import { DateStrip } from "@/components/today/DateStrip";
 import { MacroBars } from "@/components/today/MacroBars";
 import { MealCard } from "@/components/today/MealCard";
-import { QuickRow } from "@/components/today/QuickRow";
+import { CHAI_ID, QuickRow } from "@/components/today/QuickRow";
 import { addDays, dayKey } from "@/lib/dates";
 import { MEALS, totals } from "@/lib/nutrition";
 import { useStore, useUI } from "@/lib/store";
@@ -44,7 +44,7 @@ export default function TodayPage() {
             <Stat label="Goal" value={goals.kcal} />
           </div>
           <div className="mt-5 border-t border-line pt-5">
-            <MacroBars totals={t} goals={goals} />
+            <MacroBars totals={t} goals={goals} date={date} />
           </div>
         </section>
 
@@ -68,8 +68,8 @@ export default function TodayPage() {
               label={m.label}
               date={date}
               prevDate={prev}
-              entries={day.filter((e) => e.meal === m.id && e.foodId !== "hot-tea")}
-              yesterday={yesterday.filter((e) => e.meal === m.id && e.foodId !== "hot-tea")}
+              entries={day.filter((e) => e.meal === m.id && e.foodId !== CHAI_ID)}
+              yesterday={yesterday.filter((e) => e.meal === m.id && e.foodId !== CHAI_ID)}
             />
           ))}
         </div>

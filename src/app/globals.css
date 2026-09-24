@@ -1,13 +1,14 @@
 @import "tailwindcss";
 
-/* "Modern Masala" (decision D08): warm charcoal base, spice accents with fixed meanings. */
+/* "Modern Masala" (decision D08): warm charcoal base, spice accents with fixed meanings.
+   Dark is the default; light values below (D20). `--ink` is the RGB triplet used for hairlines and glows. */
 @theme {
   --color-bg: #15100d;
   --color-surface: #201813;
   --color-surface-2: #2a2019;
   --color-surface-3: #352a21;
-  --color-line: rgb(255 236 214 / 0.08);
-  --color-line-strong: rgb(255 236 214 / 0.16);
+  --color-line: rgb(var(--ink) / 0.08);
+  --color-line-strong: rgb(var(--ink) / 0.16);
   --color-text: #f7ecdf;
   --color-muted: #a89484;
   --color-faint: #6f5f52;
@@ -16,8 +17,10 @@
   --color-saffron: #ff8a3d; /* fat */
   --color-chilli: #ff5a6e; /* protein, over-goal */
   --color-leaf: #6cc46f; /* on target */
+  --color-sky: #7dd3fc; /* water */
   --color-brass: #c9974c;
-  --color-cream: #fff4e4;
+  --color-cream: #fff4e4; /* selected pills; inverts in light mode */
+  --color-on-accent: #1d140e; /* text on turmeric→saffron buttons, both themes */
 
   --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
@@ -28,8 +31,58 @@
 
 :root {
   color-scheme: dark;
+  --ink: 255 236 214;
+  --glow: 0.13;
+  --grain: 0.05;
+  --card-shadow: 0 10px 30px -12px rgb(0 0 0 / 0.6);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
   --safe-top: env(safe-area-inset-top, 0px);
+}
+
+/* light: warm paper, darker spices for contrast. System preference unless the user picked one in Me. */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    color-scheme: light;
+    --ink: 70 45 20;
+    --glow: 0.1;
+    --grain: 0.025;
+    --card-shadow: 0 1px 2px rgb(70 45 20 / 0.06), 0 12px 32px -16px rgb(70 45 20 / 0.25);
+    --color-bg: #f7f0e5;
+    --color-surface: #fffcf7;
+    --color-surface-2: #f3eadd;
+    --color-surface-3: #e8dcca;
+    --color-text: #2b1e15;
+    --color-muted: #7b6757;
+    --color-faint: #a08c7a;
+    --color-turmeric: #e0a412;
+    --color-saffron: #ee7424;
+    --color-chilli: #e0405a;
+    --color-leaf: #3f9a4a;
+    --color-sky: #3aa6dd;
+    --color-brass: #a8742c;
+    --color-cream: #2b1e15;
+  }
+}
+:root[data-theme="light"] {
+  color-scheme: light;
+  --ink: 70 45 20;
+  --glow: 0.1;
+  --grain: 0.025;
+  --card-shadow: 0 1px 2px rgb(70 45 20 / 0.06), 0 12px 32px -16px rgb(70 45 20 / 0.25);
+  --color-bg: #f7f0e5;
+  --color-surface: #fffcf7;
+  --color-surface-2: #f3eadd;
+  --color-surface-3: #e8dcca;
+  --color-text: #2b1e15;
+  --color-muted: #7b6757;
+  --color-faint: #a08c7a;
+  --color-turmeric: #e0a412;
+  --color-saffron: #ee7424;
+  --color-chilli: #e0405a;
+  --color-leaf: #3f9a4a;
+  --color-sky: #3aa6dd;
+  --color-brass: #a8742c;
+  --color-cream: #2b1e15;
 }
 
 html {
@@ -39,31 +92,40 @@ html {
 
 body {
   background:
-    radial-gradient(120% 60% at 50% -10%, rgb(255 138 61 / 0.13), transparent 60%),
-    radial-gradient(80% 40% at 100% 0%, rgb(246 195 67 / 0.06), transparent 60%),
+    radial-gradient(120% 60% at 50% -10%, rgb(255 138 61 / var(--glow)), transparent 60%),
+    radial-gradient(80% 40% at 100% 0%, rgb(246 195 67 / calc(var(--glow) / 2)), transparent 60%),
     var(--color-bg);
   background-attachment: fixed;
   color: var(--color-text);
   font-family: var(--font-sans);
   overscroll-behavior-y: none;
+  transition: background-color 0.3s, color 0.3s;
 }
 
-/* film grain, keeps the dark surfaces from looking flat */
+/* film grain, keeps the flat surfaces from looking digital */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 60;
-  opacity: 0.05;
+  opacity: var(--grain);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 @utility card {
-  background: linear-gradient(180deg, rgb(255 236 214 / 0.035), transparent 40%), var(--color-surface);
+  background: linear-gradient(180deg, rgb(var(--ink) / 0.035), transparent 40%), var(--color-surface);
   border: 1px solid var(--color-line);
   border-radius: var(--radius-card);
-  box-shadow: inset 0 1px 0 rgb(255 236 214 / 0.05), 0 10px 30px -12px rgb(0 0 0 / 0.6);
+  box-shadow: inset 0 1px 0 rgb(var(--ink) / 0.05), var(--card-shadow);
+}
+
+/* charts: Recharts sets colors as SVG attributes, which CSS overrides, so they follow the theme */
+.recharts-cartesian-grid line {
+  stroke: rgb(var(--ink) / 0.07);
+}
+.recharts-cartesian-axis-tick-value {
+  fill: var(--color-faint);
 }
 
 @utility tabular {

@@ -6,6 +6,7 @@ import { Scale, X } from "lucide-react";
 import { Bar, BarChart, CartesianGrid, Cell, Line, LineChart, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { addDays, dayKey, parseDay } from "@/lib/dates";
 import { useStore } from "@/lib/store";
+import { useTokens } from "@/lib/useTokens";
 
 const short = (k: string) => parseDay(k).toLocaleDateString("en-IN", { day: "numeric", month: "short" });
 
@@ -17,6 +18,7 @@ export default function ProgressPage() {
   const logWeight = useStore((s) => s.logWeight);
   const removeWeight = useStore((s) => s.removeWeight);
   const [kg, setKg] = useState("");
+  const tk = useTokens();
   const today = dayKey();
 
   const calories = useMemo(() => {
@@ -96,12 +98,12 @@ export default function ProgressPage() {
             <div className="-ml-3 mt-5 h-48">
               <ResponsiveContainer>
                 <LineChart data={weightSeries}>
-                  <CartesianGrid stroke="rgb(255 236 214 / 0.06)" vertical={false} />
-                  <XAxis dataKey="label" tick={{ fill: "#6f5f52", fontSize: 11 }} axisLine={false} tickLine={false} minTickGap={24} />
-                  <YAxis domain={["dataMin - 1", "dataMax + 1"]} tickFormatter={(v: number) => v.toFixed(1)} tick={{ fill: "#6f5f52", fontSize: 11 }} axisLine={false} tickLine={false} width={36} />
+                  <CartesianGrid vertical={false} />
+                  <XAxis dataKey="label" tick={{ fontSize: 11 }} axisLine={false} tickLine={false} minTickGap={24} />
+                  <YAxis domain={["dataMin - 1", "dataMax + 1"]} tickFormatter={(v: number) => v.toFixed(1)} tick={{ fontSize: 11 }} axisLine={false} tickLine={false} width={36} />
                   <Tooltip content={<ChartTip unit="kg" />} />
-                  <Line dataKey="kg" stroke="rgb(255 236 214 / 0.35)" strokeWidth={0} dot={{ r: 3, fill: "#a89484" }} isAnimationActive={false} />
-                  <Line dataKey="avg" stroke="#f6c343" strokeWidth={3} dot={false} type="monotone" />
+                  <Line dataKey="kg" strokeWidth={0} dot={{ r: 3, fill: tk.muted, strokeWidth: 0 }} isAnimationActive={false} />
+                  <Line dataKey="avg" stroke={tk.turmeric} strokeWidth={3} dot={false} type="monotone" />
                 </LineChart>
               </ResponsiveContainer>
             </div>
@@ -139,14 +141,14 @@ export default function ProgressPage() {
           <div className="-ml-3 mt-4 h-52">
             <ResponsiveContainer>
               <BarChart data={calories}>
-                <CartesianGrid stroke="rgb(255 236 214 / 0.06)" vertical={false} />
-                <XAxis dataKey="label" tick={{ fill: "#6f5f52", fontSize: 11 }} axisLine={false} tickLine={false} interval={1} />
-                <YAxis tick={{ fill: "#6f5f52", fontSize: 11 }} axisLine={false} tickLine={false} width={36} />
-                <Tooltip content={<ChartTip unit="kcal" />} cursor={{ fill: "rgb(255 236 214 / 0.05)" }} />
-                <ReferenceLine y={goals.kcal} stroke="#6cc46f" strokeDasharray="4 4" />
+                <CartesianGrid vertical={false} />
+                <XAxis dataKey="label" tick={{ fontSize: 11 }} axisLine={false} tickLine={false} interval={1} />
+                <YAxis tick={{ fontSize: 11 }} axisLine={false} tickLine={false} width={36} />
+                <Tooltip content={<ChartTip unit="kcal" />} cursor={{ fill: tk.faint, fillOpacity: 0.12 }} />
+                <ReferenceLine y={goals.kcal} stroke={tk.leaf} strokeDasharray="4 4" />
                 <Bar dataKey="kcal" radius={[6, 6, 2, 2]}>
                   {calories.map((c) => (
-                    <Cell key={c.d} fill={c.kcal > goals.kcal * 1.05 ? "#ff5a6e" : "#f6c343"} />
+                    <Cell key={c.d} fill={c.kcal > goals.kcal * 1.05 ? tk.chilli : tk.turmeric} />
                   ))}
                 </Bar>
               </BarChart>

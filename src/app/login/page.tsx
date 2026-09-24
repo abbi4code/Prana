@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { motion } from "motion/react";
 import { GoogleButton } from "@/components/account/GoogleButton";
 import { PortionVisual } from "@/components/log/PortionVisual";
-import { APP_NAME } from "@/lib/app";
+import { APP_NAME, APP_NAME_HI, TAGLINE } from "@/lib/app";
 import { useAuth } from "@/lib/auth";
 import { FOODS } from "@/lib/foods";
 import { useStore } from "@/lib/store";
@@ -104,7 +104,10 @@ function Logo() {
           <path d="M12,40 C13,66 30,80 50,80 C70,80 87,66 88,40 C76,50 24,50 12,40 Z" fill="#15100d" />
         </svg>
       </span>
-      <span className="font-display text-2xl font-semibold">{APP_NAME}</span>
+      <span className="flex flex-col leading-none">
+        <span className="font-display text-2xl font-semibold">{APP_NAME}</span>
+        <span className="mt-1 text-xs text-muted">{APP_NAME_HI} · {TAGLINE}</span>
+      </span>
     </div>
   );
 }

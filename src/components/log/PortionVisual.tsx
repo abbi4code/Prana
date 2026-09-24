@@ -88,13 +88,13 @@ function Glass({ level, extra, hue }: { level: number; extra: number; hue: strin
       </defs>
       <ellipse cx="110" cy="140" rx="46" ry="6" fill="black" opacity="0.45" />
       <g clipPath={`url(#${id("glass")})`}>
-        <rect x="60" y="0" width="100" height="150" fill="rgb(255 236 214 / 0.05)" />
+        <rect x="60" y="0" width="100" height="150" style={{ fill: "rgb(var(--ink) / 0.05)" }} />
         <motion.rect x="60" width="100" height="150" fill={`url(#${id("drink")})`} initial={false} animate={{ y }} transition={spring} />
       </g>
-      <path d="M70,20 L150,20 L140,136 L80,136 Z" fill="none" stroke="rgb(255 236 214 / 0.55)" strokeWidth="3" strokeLinejoin="round" />
+      <path d="M70,20 L150,20 L140,136 L80,136 Z" fill="none" style={{ stroke: "rgb(var(--ink) / 0.55)" }} strokeWidth="3" strokeLinejoin="round" />
       <path d="M82,34 L88,120" stroke="white" strokeOpacity="0.35" strokeWidth="4" strokeLinecap="round" />
       {extra > 1 && (
-        <text x="176" y="40" fill="#f7ecdf" fontSize="22" fontWeight="700">×{extra}</text>
+        <text x="176" y="40" style={{ fill: "var(--color-text)" }} fontSize="22" fontWeight="700">×{extra}</text>
       )}
     </svg>
   );
@@ -123,7 +123,7 @@ function Pieces({ qty, hue }: { qty: number; hue: string }) {
               ry="20"
               fill={hue}
               fillOpacity={isPartial ? 0.35 : 0.9 - i * 0.04}
-              stroke="#15100d"
+              style={{ stroke: "var(--color-bg)" }}
               strokeOpacity="0.5"
               strokeWidth="2"
               strokeDasharray={isPartial ? "6 6" : undefined}

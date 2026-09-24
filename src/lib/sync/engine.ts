@@ -4,8 +4,8 @@ import { useAuth } from "../auth";
 import { getSupabase } from "../supabase";
 import { useStore, type SyncQueue } from "../store";
 import {
-  entryToRow, maxUpdated, mergeEntries, mergeWater, mergeWeights,
-  type LogRow, type WaterRow, type WeightRow,
+  entryToRow, maxUpdated, mergeEntries, mergeFoods, mergeWater, mergeWeights,
+  type FoodRow, type LogRow, type WaterRow, type WeightRow,
 } from "./rows";
 
 const PAGE = 1000; // PostgREST max rows per request
@@ -81,6 +81,12 @@ async function push(userId: string) {
   if (q.dirtyWater.length)
     check(await supabase.from("water").upsert(q.dirtyWater.map((d) => ({ user_id: userId, logged_on: d, glasses: s.water[d] ?? 0 }))));
 
+  // user-created foods (whole food stored as jsonb)
+  const foods = s.customFoods.filter((f) => q.dirtyFoods.includes(f.id));
+  if (foods.length) check(await supabase.from("custom_foods").upsert(foods.map((f) => ({ id: f.id, user_id: userId, data: f, deleted_at: null }))));
+  if (q.deletedFoods.length)
+    check(await supabase.from("custom_foods").update({ deleted_at: now }).in("id", q.deletedFoods));
+
   if (q.goalsDirty)
     check(await supabase.from("user_goals").upsert({
       user_id: userId, daily_kcal: s.goals.kcal, protein_g: s.goals.p, carbs_g: s.goals.c, fat_g: s.goals.f, profile: s.profile,
@@ -96,6 +102,8 @@ async function push(userId: string) {
       dirtyWeights: minus(cur.sync.dirtyWeights, weights.map((w) => w.date)),
       deletedWeights: minus(cur.sync.deletedWeights, q.deletedWeights),
       dirtyWater: minus(cur.sync.dirtyWater, q.dirtyWater),
+      dirtyFoods: minus(cur.sync.dirtyFoods, foods.map((f) => f.id)),
+      deletedFoods: minus(cur.sync.deletedFoods, q.deletedFoods),
       // if goals changed again mid-push, keep the flag
       goalsDirty: cur.goals === s.goals && cur.profile === s.profile ? false : cur.sync.goalsDirty,
     },
@@ -118,10 +126,11 @@ async function fetchSince<T>(table: string, since: string | null): Promise<T[]> 
 async function pull() {
   const supabase = getSupabase()!;
   const since = useStore.getState().sync.lastPulledAt;
-  const [logs, weights, water, goalsRes] = await Promise.all([
+  const [logs, weights, water, foods, goalsRes] = await Promise.all([
     fetchSince<LogRow>("food_logs", since),
     fetchSince<WeightRow>("weights", since),
     fetchSince<WaterRow>("water", since),
+    fetchSince<FoodRow>("custom_foods", since),
     supabase.from("user_goals").select("*").maybeSingle(),
   ]);
   if (goalsRes.error) throw new Error(goalsRes.error.message);
@@ -133,7 +142,8 @@ async function pull() {
       entries: mergeEntries(s.entries, logs, new Set([...q.dirtyEntries, ...q.deletedEntries])),
       weights: mergeWeights(s.weights, weights, new Set([...q.dirtyWeights, ...q.deletedWeights])),
       water: mergeWater(s.water, water, new Set(q.dirtyWater)),
-      sync: { ...q, lastPulledAt: maxUpdated(q.lastPulledAt, logs, weights, water) },
+      customFoods: mergeFoods(s.customFoods, foods, new Set([...q.dirtyFoods, ...q.deletedFoods])),
+      sync: { ...q, lastPulledAt: maxUpdated(q.lastPulledAt, logs, weights, water, foods) },
     };
     if (g && !q.goalsDirty) {
       next.goals = { kcal: g.daily_kcal, p: g.protein_g, c: g.carbs_g, f: g.fat_g };

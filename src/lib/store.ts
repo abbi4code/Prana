@@ -2,9 +2,9 @@
 
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { getFood, getUnit } from "./foods";
+import { getFood, getUnit, setCustomFoods } from "./foods";
 import { DEFAULT_GOALS, portion } from "./nutrition";
-import type { Entry, Goals, Meal, Profile, WeightLog } from "./types";
+import type { Entry, Food, Goals, Meal, Profile, WeightLog } from "./types";
 
 /**
  * Local changes not yet pushed to Supabase (decision D14).
@@ -18,12 +18,14 @@ export type SyncQueue = {
   dirtyWeights: string[]; // dates
   deletedWeights: string[]; // dates
   dirtyWater: string[]; // dates
+  dirtyFoods: string[]; // custom food ids
+  deletedFoods: string[];
   goalsDirty: boolean;
 };
 
 export const EMPTY_QUEUE: SyncQueue = {
   userId: null, lastPulledAt: null, dirtyEntries: [], deletedEntries: [],
-  dirtyWeights: [], deletedWeights: [], dirtyWater: [], goalsDirty: false,
+  dirtyWeights: [], deletedWeights: [], dirtyWater: [], dirtyFoods: [], deletedFoods: [], goalsDirty: false,
 };
 
 type Data = {
@@ -32,6 +34,8 @@ type Data = {
   profile: Profile | null;
   weights: WeightLog[];
   water: Record<string, number>;
+  /** user-created foods (same shape as catalog foods, conf "user") */
+  customFoods: Food[];
   sync: SyncQueue;
   /** chose "use without account" on the login screen */
   guest: boolean;
@@ -42,19 +46,23 @@ type State = Data & {
   addEntry: (foodId: string, unitId: string, qty: number, meal: Meal, date: string) => void;
   updateEntry: (id: string, patch: { unitId: string; qty: number; meal: Meal }) => void;
   removeEntry: (id: string) => void;
+  /** undo a delete: put the same entry (same id) back */
+  restoreEntry: (e: Entry) => void;
   copyMeal: (fromDate: string, toDate: string, meal: Meal) => void;
   setGoals: (g: Goals) => void;
   setProfile: (p: Profile) => void;
   logWeight: (date: string, kg: number) => void;
   removeWeight: (date: string) => void;
   addWater: (date: string, delta: number) => void;
+  addCustomFood: (food: Food) => void;
+  removeCustomFood: (id: string) => void;
   setGuest: (guest: boolean) => void;
   /** wipe everything on this device (sign-out); server data is untouched */
   resetLocal: () => void;
 };
 
 const INITIAL: Data = {
-  entries: [], goals: DEFAULT_GOALS, profile: null, weights: [], water: {}, sync: EMPTY_QUEUE, guest: false,
+  entries: [], goals: DEFAULT_GOALS, profile: null, weights: [], water: {}, customFoods: [], sync: EMPTY_QUEUE, guest: false,
 };
 
 const uid = () => (typeof crypto !== "undefined" && crypto.randomUUID ? crypto.randomUUID() : String(Math.random()).slice(2));
@@ -96,6 +104,11 @@ export const useStore = create<State>()(
           entries: s.entries.filter((e) => e.id !== id),
           sync: { ...s.sync, dirtyEntries: drop(s.sync.dirtyEntries, id), deletedEntries: add(s.sync.deletedEntries, id) },
         })),
+      restoreEntry: (e) =>
+        set((s) => ({
+          entries: [...s.entries.filter((x) => x.id !== e.id), e],
+          sync: { ...s.sync, dirtyEntries: add(s.sync.dirtyEntries, e.id), deletedEntries: drop(s.sync.deletedEntries, e.id) },
+        })),
       copyMeal: (fromDate, toDate, meal) =>
         set((s) => {
           const copies = s.entries
@@ -123,13 +136,28 @@ export const useStore = create<State>()(
           water: { ...s.water, [date]: Math.max(0, (s.water[date] ?? 0) + delta) },
           sync: { ...s.sync, dirtyWater: add(s.sync.dirtyWater, date) },
         })),
+      addCustomFood: (food) =>
+        set((s) => ({
+          customFoods: [...s.customFoods.filter((f) => f.id !== food.id), food],
+          sync: { ...s.sync, dirtyFoods: add(s.sync.dirtyFoods, food.id) },
+        })),
+      removeCustomFood: (id) =>
+        set((s) => ({
+          customFoods: s.customFoods.filter((f) => f.id !== id),
+          sync: { ...s.sync, dirtyFoods: drop(s.sync.dirtyFoods, id), deletedFoods: add(s.sync.deletedFoods, id) },
+        })),
       setGuest: (guest) => set({ guest }),
       resetLocal: () => set({ ...INITIAL }),
     }),
     {
       name: "ct-v1",
       version: 1, // new fields fall back to INITIAL via the default shallow merge
-      partialize: ({ entries, goals, profile, weights, water, sync, guest }) => ({ entries, goals, profile, weights, water, sync, guest }),
+      partialize: ({ entries, goals, profile, weights, water, customFoods, sync, guest }) => ({ entries, goals, profile, weights, water, customFoods, sync, guest }),
+      // queues persisted before a field existed would lack it
+      merge: (persisted, current) => {
+        const p = persisted as Partial<State>;
+        return { ...current, ...p, sync: { ...EMPTY_QUEUE, ...p.sync } };
+      },
       // rehydrated from AppShell after mount, so server HTML and first client render match
       skipHydration: true,
     },
@@ -141,13 +169,28 @@ export async function hydrateStore() {
   useStore.setState({ hydrated: true });
 }
 
+// keep the catalog's view of custom foods current (search, getFood)
+useStore.subscribe((s, prev) => {
+  if (s.customFoods !== prev.customFoods) setCustomFoods(s.customFoods);
+});
+
 /** Changes waiting to be pushed. */
 export const pendingCount = (q: SyncQueue) =>
-  q.dirtyEntries.length + q.deletedEntries.length + q.dirtyWeights.length + q.deletedWeights.length + q.dirtyWater.length + (q.goalsDirty ? 1 : 0);
+  q.dirtyEntries.length + q.deletedEntries.length + q.dirtyWeights.length + q.deletedWeights.length + q.dirtyWater.length +
+  q.dirtyFoods.length + q.deletedFoods.length + (q.goalsDirty ? 1 : 0);
+
+export type Toast = { id: number; text: string; action?: { label: string; run: () => void } };
 
 /** UI-only state, not persisted. */
 type UI = {
   date: string | null;
+  toast: Toast | null;
+  /** entries added in this session, highlighted once when they appear on Today */
+  fresh: string[];
+  markFresh: (id: string) => void;
+  clearFresh: (id: string) => void;
+  showToast: (text: string, action?: Toast["action"]) => void;
+  dismissToast: () => void;
   sheet: null | { mode: "add"; meal: Meal } | { mode: "edit"; entryId: string };
   setDate: (d: string) => void;
   openAdd: (meal: Meal) => void;
@@ -157,6 +200,12 @@ type UI = {
 
 export const useUI = create<UI>((set) => ({
   date: null,
+  toast: null,
+  fresh: [],
+  markFresh: (id) => set((s) => ({ fresh: [...s.fresh, id] })),
+  clearFresh: (id) => set((s) => ({ fresh: s.fresh.filter((x) => x !== id) })),
+  showToast: (text, action) => set({ toast: { id: Date.now(), text, action } }),
+  dismissToast: () => set({ toast: null }),
   sheet: null,
   setDate: (date) => set({ date }),
   openAdd: (meal) => set({ sheet: { mode: "add", meal } }),
