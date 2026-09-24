@@ -1,0 +1,4226 @@
+{
+  "meta": {
+    "version": "1.0",
+    "generated_on": "2026-09-24",
+    "sources": [
+      {
+        "id": "fedb",
+        "title": "free-exercise-db",
+        "url": "https://github.com/yuhonas/free-exercise-db",
+        "licence": "Public domain (Unlicense per repository)",
+        "snapshot": "dist/exercises.json at commit a859101d633a01c4a1a920d6a8ce41dabba0705f (876 exercises)"
+      },
+      {
+        "id": "ebben2011",
+        "title": "Ebben WP et al. Kinetic analysis of several variations of push-ups. J Strength Cond Res 2011;25(10):2891-2894",
+        "url": "https://journals.lww.com/nsca-jscr/fulltext/2011/10000/kinetic_analysis_of_several_variations_of_push_ups.31.aspx",
+        "licence": "Citation only",
+        "secondary_source_for_box_heights": "Contreras B et al. The biomechanics of the push-up. Strength Cond J 2012 (summarises Ebben 2011 values by box height)"
+      },
+      {
+        "id": "compendium2024",
+        "title": "2024 Adult Compendium of Physical Activities",
+        "url": "https://pacompendium.com/adult-compendium/",
+        "licence": "Citation only"
+      }
+    ],
+    "field_notes": {
+      "fedb_id": "Every value was checked programmatically against the snapshot above; all exist.",
+      "mechanic": "Copied from free-exercise-db; for timed holds with no value in the dataset it is null.",
+      "aliases": "Author judgement of Indian gym usage and common misspellings. Not from a published source.",
+      "popularity": "Author judgement (very common / common / occasional). Not from a published source.",
+      "group/sub_group": "Assigned for Indian gym use; where this differs from free-exercise-db primaryMuscles the notes field says so.",
+      "bodyweight_fraction": "Only filled where a measured value was found (peak vertical ground reaction force as a share of body mass). null everywhere else."
+    }
+  },
+  "exercises": [
+    {
+      "id": "barbell-bench-press",
+      "fedb_id": "Barbell_Bench_Press_-_Medium_Grip",
+      "name": "Barbell Bench Press",
+      "aliases": [
+        "bench",
+        "bench press",
+        "flat bench",
+        "flat bench press",
+        "barbell chest press",
+        "BB bench"
+      ],
+      "group": "chest",
+      "sub_group": null,
+      "equipment": "barbell",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "very common",
+      "notes": ""
+    },
+    {
+      "id": "incline-barbell-bench-press",
+      "fedb_id": "Barbell_Incline_Bench_Press_-_Medium_Grip",
+      "name": "Incline Barbell Bench Press",
+      "aliases": [
+        "incline bench",
+        "incline press",
+        "incline barbell press",
+        "upper chest press"
+      ],
+      "group": "chest",
+      "sub_group": null,
+      "equipment": "barbell",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "very common",
+      "notes": ""
+    },
+    {
+      "id": "decline-barbell-bench-press",
+      "fedb_id": "Decline_Barbell_Bench_Press",
+      "name": "Decline Barbell Bench Press",
+      "aliases": [
+        "decline bench",
+        "decline press",
+        "decline barbell press"
+      ],
+      "group": "chest",
+      "sub_group": null,
+      "equipment": "barbell",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "wide-grip-bench-press",
+      "fedb_id": "Wide-Grip_Barbell_Bench_Press",
+      "name": "Wide-Grip Bench Press",
+      "aliases": [
+        "wide grip bench",
+        "wide bench"
+      ],
+      "group": "chest",
+      "sub_group": null,
+      "equipment": "barbell",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": ""
+    },
+    {
+      "id": "dumbbell-bench-press",
+      "fedb_id": "Dumbbell_Bench_Press",
+      "name": "Dumbbell Bench Press",
+      "aliases": [
+        "db bench",
+        "dumbbell press",
+        "flat dumbbell press",
+        "dumbbell chest press",
+        "flat db press"
+      ],
+      "group": "chest",
+      "sub_group": null,
+      "equipment": "dumbbell",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "very common",
+      "notes": ""
+    },
+    {
+      "id": "incline-dumbbell-press",
+      "fedb_id": "Incline_Dumbbell_Press",
+      "name": "Incline Dumbbell Press",
+      "aliases": [
+        "incline db press",
+        "incline dumbbell bench",
+        "incline dumbell press"
+      ],
+      "group": "chest",
+      "sub_group": null,
+      "equipment": "dumbbell",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "very common",
+      "notes": ""
+    },
+    {
+      "id": "decline-dumbbell-press",
+      "fedb_id": "Decline_Dumbbell_Bench_Press",
+      "name": "Decline Dumbbell Press",
+      "aliases": [
+        "decline db press"
+      ],
+      "group": "chest",
+      "sub_group": null,
+      "equipment": "dumbbell",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": ""
+    },
+    {
+      "id": "dumbbell-fly",
+      "fedb_id": "Dumbbell_Flyes",
+      "name": "Dumbbell Fly",
+      "aliases": [
+        "flat fly",
+        "dumbbell flyes",
+        "db fly",
+        "dumbbell flys",
+        "chest fly"
+      ],
+      "group": "chest",
+      "sub_group": null,
+      "equipment": "dumbbell",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "very common",
+      "notes": ""
+    },
+    {
+      "id": "incline-dumbbell-fly",
+      "fedb_id": "Incline_Dumbbell_Flyes",
+      "name": "Incline Dumbbell Fly",
+      "aliases": [
+        "incline fly",
+        "incline db fly"
+      ],
+      "group": "chest",
+      "sub_group": null,
+      "equipment": "dumbbell",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "pec-deck-fly",
+      "fedb_id": "Butterfly",
+      "name": "Pec Deck Fly",
+      "aliases": [
+        "peck deck",
+        "pec deck",
+        "pec dec",
+        "butterfly",
+        "butterfly machine",
+        "chest fly machine",
+        "fly machine"
+      ],
+      "group": "chest",
+      "sub_group": null,
+      "equipment": "machine",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "very common",
+      "notes": ""
+    },
+    {
+      "id": "cable-crossover",
+      "fedb_id": "Cable_Crossover",
+      "name": "Cable Crossover",
+      "aliases": [
+        "cable cross",
+        "cable fly",
+        "crossover",
+        "cable crossover fly",
+        "standing cable fly"
+      ],
+      "group": "chest",
+      "sub_group": null,
+      "equipment": "cable",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "very common",
+      "notes": ""
+    },
+    {
+      "id": "low-to-high-cable-fly",
+      "fedb_id": "Low_Cable_Crossover",
+      "name": "Low-to-High Cable Fly",
+      "aliases": [
+        "low cable cross",
+        "low cable fly",
+        "low to high fly"
+      ],
+      "group": "chest",
+      "sub_group": null,
+      "equipment": "cable",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "flat-bench-cable-fly",
+      "fedb_id": "Flat_Bench_Cable_Flyes",
+      "name": "Flat Bench Cable Fly",
+      "aliases": [
+        "cable fly on bench"
+      ],
+      "group": "chest",
+      "sub_group": null,
+      "equipment": "cable",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": ""
+    },
+    {
+      "id": "incline-cable-fly",
+      "fedb_id": "Incline_Cable_Flye",
+      "name": "Incline Cable Fly",
+      "aliases": [
+        "incline cable fly"
+      ],
+      "group": "chest",
+      "sub_group": null,
+      "equipment": "cable",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": ""
+    },
+    {
+      "id": "machine-chest-press",
+      "fedb_id": "Machine_Bench_Press",
+      "name": "Machine Chest Press",
+      "aliases": [
+        "chest press",
+        "chest press machine",
+        "seated chest press"
+      ],
+      "group": "chest",
+      "sub_group": null,
+      "equipment": "machine",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "very common",
+      "notes": ""
+    },
+    {
+      "id": "plate-loaded-chest-press",
+      "fedb_id": "Leverage_Chest_Press",
+      "name": "Plate-Loaded Chest Press",
+      "aliases": [
+        "hammer strength chest press",
+        "plate loaded chest press"
+      ],
+      "group": "chest",
+      "sub_group": null,
+      "equipment": "machine",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "incline-chest-press-machine",
+      "fedb_id": "Leverage_Incline_Chest_Press",
+      "name": "Incline Chest Press Machine",
+      "aliases": [
+        "incline machine press",
+        "incline chest press"
+      ],
+      "group": "chest",
+      "sub_group": null,
+      "equipment": "machine",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "smith-machine-bench-press",
+      "fedb_id": "Smith_Machine_Bench_Press",
+      "name": "Smith Machine Bench Press",
+      "aliases": [
+        "smith bench",
+        "smith flat press",
+        "smith machine flat press"
+      ],
+      "group": "chest",
+      "sub_group": null,
+      "equipment": "smith machine",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "smith-machine-incline-press",
+      "fedb_id": "Smith_Machine_Incline_Bench_Press",
+      "name": "Smith Machine Incline Press",
+      "aliases": [
+        "smith incline",
+        "incline smith",
+        "smith incline bench"
+      ],
+      "group": "chest",
+      "sub_group": null,
+      "equipment": "smith machine",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "very common",
+      "notes": ""
+    },
+    {
+      "id": "dumbbell-pullover",
+      "fedb_id": "Straight-Arm_Dumbbell_Pullover",
+      "name": "Dumbbell Pullover",
+      "aliases": [
+        "pullover",
+        "db pullover"
+      ],
+      "group": "chest",
+      "sub_group": null,
+      "equipment": "dumbbell",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "chest-dips",
+      "fedb_id": "Dips_-_Chest_Version",
+      "name": "Chest Dips",
+      "aliases": [
+        "dips",
+        "chest dip",
+        "parallel bar dips"
+      ],
+      "group": "chest",
+      "sub_group": null,
+      "equipment": "bodyweight",
+      "mechanic": "compound",
+      "load_type": "bodyweight",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "push-up",
+      "fedb_id": "Pushups",
+      "name": "Push-Up",
+      "aliases": [
+        "pushup",
+        "push ups",
+        "push-ups",
+        "dand",
+        "press up"
+      ],
+      "group": "chest",
+      "sub_group": null,
+      "equipment": "bodyweight",
+      "mechanic": "compound",
+      "load_type": "bodyweight",
+      "bodyweight_fraction": 0.64,
+      "bodyweight_fraction_source": "ebben2011",
+      "popularity": "very common",
+      "notes": "Fraction = peak vertical GRF as share of body mass (Ebben 2011), regular push-up. Traditional 'dand' (Hindu push-up) is a flowing variant; no measured fraction found for it."
+    },
+    {
+      "id": "decline-push-up-feet-elevated",
+      "fedb_id": "Push-Ups_With_Feet_Elevated",
+      "name": "Decline Push-Up (feet elevated)",
+      "aliases": [
+        "decline pushup",
+        "feet elevated push up"
+      ],
+      "group": "chest",
+      "sub_group": null,
+      "equipment": "bodyweight",
+      "mechanic": "compound",
+      "load_type": "bodyweight",
+      "bodyweight_fraction": 0.7,
+      "bodyweight_fraction_source": "ebben2011",
+      "popularity": "common",
+      "notes": "0.70 with feet on a 30.5 cm box; 0.74 with feet on a 61 cm box (Ebben 2011)."
+    },
+    {
+      "id": "incline-push-up-hands-elevated",
+      "fedb_id": "Incline_Push-Up",
+      "name": "Incline Push-Up (hands elevated)",
+      "aliases": [
+        "incline pushup",
+        "hands elevated push up"
+      ],
+      "group": "chest",
+      "sub_group": null,
+      "equipment": "bodyweight",
+      "mechanic": "compound",
+      "load_type": "bodyweight",
+      "bodyweight_fraction": 0.55,
+      "bodyweight_fraction_source": "ebben2011",
+      "popularity": "common",
+      "notes": "0.55 with hands on a 30.5 cm box; 0.41 with hands on a 61 cm box (Ebben 2011)."
+    },
+    {
+      "id": "wide-push-up",
+      "fedb_id": "Push-Up_Wide",
+      "name": "Wide Push-Up",
+      "aliases": [
+        "wide pushup",
+        "wide grip push up"
+      ],
+      "group": "chest",
+      "sub_group": null,
+      "equipment": "bodyweight",
+      "mechanic": "compound",
+      "load_type": "bodyweight",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": "No specific fraction for wide hand placement; Ebben 2011 cites a 52.9-72.9% range across hand positions from an earlier study, not a single value."
+    },
+    {
+      "id": "lat-pulldown",
+      "fedb_id": "Wide-Grip_Lat_Pulldown",
+      "name": "Lat Pulldown",
+      "aliases": [
+        "lat pull down",
+        "lat pulldown",
+        "lats",
+        "front pulldown",
+        "wide grip pulldown",
+        "lat machine"
+      ],
+      "group": "back",
+      "sub_group": "lats",
+      "equipment": "cable",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "very common",
+      "notes": ""
+    },
+    {
+      "id": "close-grip-lat-pulldown",
+      "fedb_id": "Close-Grip_Front_Lat_Pulldown",
+      "name": "Close-Grip Lat Pulldown",
+      "aliases": [
+        "close grip pulldown",
+        "narrow pulldown"
+      ],
+      "group": "back",
+      "sub_group": "lats",
+      "equipment": "cable",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "v-bar-pulldown",
+      "fedb_id": "V-Bar_Pulldown",
+      "name": "V-Bar Pulldown",
+      "aliases": [
+        "v bar pulldown",
+        "v handle pulldown"
+      ],
+      "group": "back",
+      "sub_group": "lats",
+      "equipment": "cable",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "reverse-grip-lat-pulldown",
+      "fedb_id": "Underhand_Cable_Pulldowns",
+      "name": "Reverse-Grip Lat Pulldown",
+      "aliases": [
+        "underhand pulldown",
+        "reverse grip pulldown",
+        "supinated pulldown"
+      ],
+      "group": "back",
+      "sub_group": "lats",
+      "equipment": "cable",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "behind-the-neck-pulldown",
+      "fedb_id": "Wide-Grip_Pulldown_Behind_The_Neck",
+      "name": "Behind-the-Neck Pulldown",
+      "aliases": [
+        "behind neck lat",
+        "back pulldown"
+      ],
+      "group": "back",
+      "sub_group": "lats",
+      "equipment": "cable",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": ""
+    },
+    {
+      "id": "single-arm-lat-pulldown",
+      "fedb_id": "One_Arm_Lat_Pulldown",
+      "name": "Single-Arm Lat Pulldown",
+      "aliases": [
+        "one arm pulldown"
+      ],
+      "group": "back",
+      "sub_group": "lats",
+      "equipment": "cable",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": ""
+    },
+    {
+      "id": "pull-up",
+      "fedb_id": "Pullups",
+      "name": "Pull-Up",
+      "aliases": [
+        "pull ups",
+        "pullup",
+        "pull-ups",
+        "wide pull up"
+      ],
+      "group": "back",
+      "sub_group": "lats",
+      "equipment": "bodyweight",
+      "mechanic": "compound",
+      "load_type": "bodyweight",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "very common",
+      "notes": "No published fraction of body mass lifted found; left null."
+    },
+    {
+      "id": "chin-up",
+      "fedb_id": "Chin-Up",
+      "name": "Chin-Up",
+      "aliases": [
+        "chin ups",
+        "chinup",
+        "underhand pull up"
+      ],
+      "group": "back",
+      "sub_group": "lats",
+      "equipment": "bodyweight",
+      "mechanic": "compound",
+      "load_type": "bodyweight",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "weighted-pull-up",
+      "fedb_id": "Weighted_Pull_Ups",
+      "name": "Weighted Pull-Up",
+      "aliases": [
+        "weighted pullup",
+        "weighted chin"
+      ],
+      "group": "back",
+      "sub_group": "lats",
+      "equipment": "other",
+      "mechanic": "compound",
+      "load_type": "bodyweight",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": "Bodyweight plus an external load entered separately."
+    },
+    {
+      "id": "band-assisted-pull-up",
+      "fedb_id": "Band_Assisted_Pull-Up",
+      "name": "Band-Assisted Pull-Up",
+      "aliases": [
+        "assisted pull up band",
+        "band pullup"
+      ],
+      "group": "back",
+      "sub_group": "lats",
+      "equipment": "bands",
+      "mechanic": "compound",
+      "load_type": "assisted",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": ""
+    },
+    {
+      "id": "straight-arm-pulldown",
+      "fedb_id": "Straight-Arm_Pulldown",
+      "name": "Straight-Arm Pulldown",
+      "aliases": [
+        "straight arm lat pulldown",
+        "straight arm pushdown",
+        "cable pullover"
+      ],
+      "group": "back",
+      "sub_group": "lats",
+      "equipment": "cable",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "rope-straight-arm-pulldown",
+      "fedb_id": "Rope_Straight-Arm_Pulldown",
+      "name": "Rope Straight-Arm Pulldown",
+      "aliases": [
+        "rope pullover",
+        "rope lat pushdown"
+      ],
+      "group": "back",
+      "sub_group": "lats",
+      "equipment": "cable",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": ""
+    },
+    {
+      "id": "barbell-pullover",
+      "fedb_id": "Bent-Arm_Barbell_Pullover",
+      "name": "Barbell Pullover",
+      "aliases": [
+        "bb pullover"
+      ],
+      "group": "back",
+      "sub_group": "lats",
+      "equipment": "barbell",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": ""
+    },
+    {
+      "id": "barbell-row",
+      "fedb_id": "Bent_Over_Barbell_Row",
+      "name": "Barbell Row",
+      "aliases": [
+        "bent over row",
+        "barbell bent over row",
+        "bb row",
+        "bent row"
+      ],
+      "group": "back",
+      "sub_group": "middle back",
+      "equipment": "barbell",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "very common",
+      "notes": ""
+    },
+    {
+      "id": "underhand-barbell-row",
+      "fedb_id": "Reverse_Grip_Bent-Over_Rows",
+      "name": "Underhand Barbell Row",
+      "aliases": [
+        "yates row",
+        "reverse grip row"
+      ],
+      "group": "back",
+      "sub_group": "middle back",
+      "equipment": "barbell",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": ""
+    },
+    {
+      "id": "one-arm-dumbbell-row",
+      "fedb_id": "One-Arm_Dumbbell_Row",
+      "name": "One-Arm Dumbbell Row",
+      "aliases": [
+        "db row",
+        "dumbbell row",
+        "single arm row",
+        "one arm row",
+        "dumbell row"
+      ],
+      "group": "back",
+      "sub_group": "middle back",
+      "equipment": "dumbbell",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "very common",
+      "notes": ""
+    },
+    {
+      "id": "bent-over-dumbbell-row",
+      "fedb_id": "Bent_Over_Two-Dumbbell_Row",
+      "name": "Bent-Over Dumbbell Row",
+      "aliases": [
+        "two dumbbell row",
+        "double db row"
+      ],
+      "group": "back",
+      "sub_group": "middle back",
+      "equipment": "dumbbell",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "chest-supported-dumbbell-row",
+      "fedb_id": "Dumbbell_Incline_Row",
+      "name": "Chest-Supported Dumbbell Row",
+      "aliases": [
+        "incline dumbbell row",
+        "chest supported row"
+      ],
+      "group": "back",
+      "sub_group": "middle back",
+      "equipment": "dumbbell",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "t-bar-row",
+      "fedb_id": "T-Bar_Row_with_Handle",
+      "name": "T-Bar Row",
+      "aliases": [
+        "t bar",
+        "t-bar",
+        "tbar row",
+        "landmine row"
+      ],
+      "group": "back",
+      "sub_group": "middle back",
+      "equipment": "barbell",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "very common",
+      "notes": ""
+    },
+    {
+      "id": "chest-supported-t-bar-row",
+      "fedb_id": "Lying_T-Bar_Row",
+      "name": "Chest-Supported T-Bar Row",
+      "aliases": [
+        "machine t bar row",
+        "lying t bar"
+      ],
+      "group": "back",
+      "sub_group": "middle back",
+      "equipment": "machine",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "seated-cable-row",
+      "fedb_id": "Seated_Cable_Rows",
+      "name": "Seated Cable Row",
+      "aliases": [
+        "cable row",
+        "low row",
+        "seated row",
+        "v bar row",
+        "rowing machine back"
+      ],
+      "group": "back",
+      "sub_group": "middle back",
+      "equipment": "cable",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "very common",
+      "notes": ""
+    },
+    {
+      "id": "single-arm-seated-cable-row",
+      "fedb_id": "Seated_One-arm_Cable_Pulley_Rows",
+      "name": "Single-Arm Seated Cable Row",
+      "aliases": [
+        "one arm cable row"
+      ],
+      "group": "back",
+      "sub_group": "middle back",
+      "equipment": "cable",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": ""
+    },
+    {
+      "id": "machine-row",
+      "fedb_id": "Leverage_Iso_Row",
+      "name": "Machine Row",
+      "aliases": [
+        "seated row machine",
+        "iso row",
+        "plate loaded row"
+      ],
+      "group": "back",
+      "sub_group": "middle back",
+      "equipment": "machine",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": "free-exercise-db lists lats as primary muscle."
+    },
+    {
+      "id": "high-row-machine",
+      "fedb_id": "Leverage_High_Row",
+      "name": "High Row Machine",
+      "aliases": [
+        "high row"
+      ],
+      "group": "back",
+      "sub_group": "middle back",
+      "equipment": "machine",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "smith-machine-row",
+      "fedb_id": "Smith_Machine_Bent_Over_Row",
+      "name": "Smith Machine Row",
+      "aliases": [
+        "smith row"
+      ],
+      "group": "back",
+      "sub_group": "middle back",
+      "equipment": "smith machine",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": ""
+    },
+    {
+      "id": "inverted-row",
+      "fedb_id": "Inverted_Row",
+      "name": "Inverted Row",
+      "aliases": [
+        "australian pull up",
+        "body row",
+        "bodyweight row"
+      ],
+      "group": "back",
+      "sub_group": "middle back",
+      "equipment": "bodyweight",
+      "mechanic": "compound",
+      "load_type": "bodyweight",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": "No published fraction of body mass found; left null."
+    },
+    {
+      "id": "deadlift",
+      "fedb_id": "Barbell_Deadlift",
+      "name": "Deadlift",
+      "aliases": [
+        "deadlift",
+        "conventional deadlift",
+        "dl",
+        "dead lift",
+        "deadlifts"
+      ],
+      "group": "back",
+      "sub_group": "lower back",
+      "equipment": "barbell",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "very common",
+      "notes": ""
+    },
+    {
+      "id": "rack-pull",
+      "fedb_id": "Rack_Pulls",
+      "name": "Rack Pull",
+      "aliases": [
+        "rack pulls",
+        "block pull"
+      ],
+      "group": "back",
+      "sub_group": "lower back",
+      "equipment": "barbell",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "back-extension",
+      "fedb_id": "Hyperextensions_Back_Extensions",
+      "name": "Back Extension",
+      "aliases": [
+        "hyperextension",
+        "hyper extension",
+        "45 degree back extension",
+        "roman chair",
+        "back extension"
+      ],
+      "group": "back",
+      "sub_group": "lower back",
+      "equipment": "bodyweight",
+      "mechanic": "isolation",
+      "load_type": "bodyweight",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "very common",
+      "notes": "Often done holding a plate; add external load separately. No published fraction of body mass found."
+    },
+    {
+      "id": "good-morning",
+      "fedb_id": "Good_Morning",
+      "name": "Good Morning",
+      "aliases": [
+        "good mornings",
+        "barbell good morning"
+      ],
+      "group": "back",
+      "sub_group": "lower back",
+      "equipment": "barbell",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": "free-exercise-db lists hamstrings as primary muscle."
+    },
+    {
+      "id": "barbell-shrug",
+      "fedb_id": "Barbell_Shrug",
+      "name": "Barbell Shrug",
+      "aliases": [
+        "shrugs",
+        "bb shrug",
+        "shrug"
+      ],
+      "group": "back",
+      "sub_group": "traps",
+      "equipment": "barbell",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "very common",
+      "notes": ""
+    },
+    {
+      "id": "dumbbell-shrug",
+      "fedb_id": "Dumbbell_Shrug",
+      "name": "Dumbbell Shrug",
+      "aliases": [
+        "db shrugs",
+        "dumbbell shrugs"
+      ],
+      "group": "back",
+      "sub_group": "traps",
+      "equipment": "dumbbell",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "very common",
+      "notes": ""
+    },
+    {
+      "id": "machine-shrug",
+      "fedb_id": "Leverage_Shrug",
+      "name": "Machine Shrug",
+      "aliases": [
+        "shrug machine"
+      ],
+      "group": "back",
+      "sub_group": "traps",
+      "equipment": "machine",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": ""
+    },
+    {
+      "id": "cable-shrug",
+      "fedb_id": "Cable_Shrugs",
+      "name": "Cable Shrug",
+      "aliases": [
+        "cable shrugs"
+      ],
+      "group": "back",
+      "sub_group": "traps",
+      "equipment": "cable",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": ""
+    },
+    {
+      "id": "dumbbell-upright-row",
+      "fedb_id": "Standing_Dumbbell_Upright_Row",
+      "name": "Dumbbell Upright Row",
+      "aliases": [
+        "db upright row"
+      ],
+      "group": "back",
+      "sub_group": "traps",
+      "equipment": "dumbbell",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "smith-machine-upright-row",
+      "fedb_id": "Smith_Machine_Upright_Row",
+      "name": "Smith Machine Upright Row",
+      "aliases": [
+        "smith upright row"
+      ],
+      "group": "back",
+      "sub_group": "traps",
+      "equipment": "smith machine",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": ""
+    },
+    {
+      "id": "overhead-press-military-press",
+      "fedb_id": "Standing_Military_Press",
+      "name": "Overhead Press (Military Press)",
+      "aliases": [
+        "ohp",
+        "military press",
+        "overhead press",
+        "barbell shoulder press",
+        "standing press"
+      ],
+      "group": "shoulders",
+      "sub_group": null,
+      "equipment": "barbell",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "very common",
+      "notes": ""
+    },
+    {
+      "id": "seated-barbell-shoulder-press",
+      "fedb_id": "Seated_Barbell_Military_Press",
+      "name": "Seated Barbell Shoulder Press",
+      "aliases": [
+        "seated military press",
+        "seated ohp"
+      ],
+      "group": "shoulders",
+      "sub_group": null,
+      "equipment": "barbell",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "dumbbell-shoulder-press",
+      "fedb_id": "Dumbbell_Shoulder_Press",
+      "name": "Dumbbell Shoulder Press",
+      "aliases": [
+        "db shoulder press",
+        "seated dumbbell press",
+        "dumbbell overhead press",
+        "shoulder press"
+      ],
+      "group": "shoulders",
+      "sub_group": null,
+      "equipment": "dumbbell",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "very common",
+      "notes": ""
+    },
+    {
+      "id": "arnold-press",
+      "fedb_id": "Arnold_Dumbbell_Press",
+      "name": "Arnold Press",
+      "aliases": [
+        "arnold",
+        "arnold dumbbell press"
+      ],
+      "group": "shoulders",
+      "sub_group": null,
+      "equipment": "dumbbell",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "shoulder-press-machine",
+      "fedb_id": "Machine_Shoulder_Military_Press",
+      "name": "Shoulder Press Machine",
+      "aliases": [
+        "machine shoulder press",
+        "shoulder press machine"
+      ],
+      "group": "shoulders",
+      "sub_group": null,
+      "equipment": "machine",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "very common",
+      "notes": ""
+    },
+    {
+      "id": "smith-machine-shoulder-press",
+      "fedb_id": "Smith_Machine_Overhead_Shoulder_Press",
+      "name": "Smith Machine Shoulder Press",
+      "aliases": [
+        "smith shoulder press",
+        "smith ohp"
+      ],
+      "group": "shoulders",
+      "sub_group": null,
+      "equipment": "smith machine",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "behind-the-neck-press",
+      "fedb_id": "Standing_Barbell_Press_Behind_Neck",
+      "name": "Behind-the-Neck Press",
+      "aliases": [
+        "behind neck press"
+      ],
+      "group": "shoulders",
+      "sub_group": null,
+      "equipment": "barbell",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": ""
+    },
+    {
+      "id": "dumbbell-lateral-raise",
+      "fedb_id": "Side_Lateral_Raise",
+      "name": "Dumbbell Lateral Raise",
+      "aliases": [
+        "lateral raise",
+        "side raise",
+        "side lateral",
+        "laterals",
+        "side delt raise",
+        "lateral raises"
+      ],
+      "group": "shoulders",
+      "sub_group": null,
+      "equipment": "dumbbell",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "very common",
+      "notes": ""
+    },
+    {
+      "id": "seated-lateral-raise",
+      "fedb_id": "Seated_Side_Lateral_Raise",
+      "name": "Seated Lateral Raise",
+      "aliases": [
+        "seated side raise"
+      ],
+      "group": "shoulders",
+      "sub_group": null,
+      "equipment": "dumbbell",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "cable-lateral-raise",
+      "fedb_id": "Standing_Low-Pulley_Deltoid_Raise",
+      "name": "Cable Lateral Raise",
+      "aliases": [
+        "cable side raise",
+        "single arm cable lateral"
+      ],
+      "group": "shoulders",
+      "sub_group": null,
+      "equipment": "cable",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "dumbbell-front-raise",
+      "fedb_id": "Front_Dumbbell_Raise",
+      "name": "Dumbbell Front Raise",
+      "aliases": [
+        "front raise",
+        "front raises",
+        "db front raise"
+      ],
+      "group": "shoulders",
+      "sub_group": null,
+      "equipment": "dumbbell",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "very common",
+      "notes": ""
+    },
+    {
+      "id": "plate-front-raise",
+      "fedb_id": "Front_Plate_Raise",
+      "name": "Plate Front Raise",
+      "aliases": [
+        "plate raise"
+      ],
+      "group": "shoulders",
+      "sub_group": null,
+      "equipment": "plate",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "cable-front-raise",
+      "fedb_id": "Front_Cable_Raise",
+      "name": "Cable Front Raise",
+      "aliases": [
+        "cable front raise"
+      ],
+      "group": "shoulders",
+      "sub_group": null,
+      "equipment": "cable",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": ""
+    },
+    {
+      "id": "reverse-pec-deck",
+      "fedb_id": "Reverse_Machine_Flyes",
+      "name": "Reverse Pec Deck",
+      "aliases": [
+        "rear delt machine",
+        "reverse fly machine",
+        "rear delt fly machine",
+        "reverse pec dec"
+      ],
+      "group": "shoulders",
+      "sub_group": null,
+      "equipment": "machine",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "very common",
+      "notes": ""
+    },
+    {
+      "id": "dumbbell-reverse-fly",
+      "fedb_id": "Reverse_Flyes",
+      "name": "Dumbbell Reverse Fly",
+      "aliases": [
+        "rear delt fly",
+        "reverse fly",
+        "bent over lateral raise"
+      ],
+      "group": "shoulders",
+      "sub_group": null,
+      "equipment": "dumbbell",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "seated-rear-delt-raise",
+      "fedb_id": "Seated_Bent-Over_Rear_Delt_Raise",
+      "name": "Seated Rear Delt Raise",
+      "aliases": [
+        "seated bent over raise"
+      ],
+      "group": "shoulders",
+      "sub_group": null,
+      "equipment": "dumbbell",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": ""
+    },
+    {
+      "id": "cable-rear-delt-fly",
+      "fedb_id": "Cable_Rear_Delt_Fly",
+      "name": "Cable Rear Delt Fly",
+      "aliases": [
+        "cable reverse fly"
+      ],
+      "group": "shoulders",
+      "sub_group": null,
+      "equipment": "cable",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": ""
+    },
+    {
+      "id": "face-pull",
+      "fedb_id": "Face_Pull",
+      "name": "Face Pull",
+      "aliases": [
+        "face pulls",
+        "rope face pull"
+      ],
+      "group": "shoulders",
+      "sub_group": null,
+      "equipment": "cable",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "barbell-upright-row",
+      "fedb_id": "Upright_Barbell_Row",
+      "name": "Barbell Upright Row",
+      "aliases": [
+        "upright row",
+        "bb upright row"
+      ],
+      "group": "shoulders",
+      "sub_group": null,
+      "equipment": "barbell",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "band-pull-apart",
+      "fedb_id": "Band_Pull_Apart",
+      "name": "Band Pull-Apart",
+      "aliases": [
+        "pull aparts",
+        "band pull apart"
+      ],
+      "group": "shoulders",
+      "sub_group": null,
+      "equipment": "bands",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": ""
+    },
+    {
+      "id": "band-lateral-raise",
+      "fedb_id": "Lateral_Raise_-_With_Bands",
+      "name": "Band Lateral Raise",
+      "aliases": [
+        "resistance band lateral raise"
+      ],
+      "group": "shoulders",
+      "sub_group": null,
+      "equipment": "bands",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": ""
+    },
+    {
+      "id": "battle-ropes",
+      "fedb_id": "Battling_Ropes",
+      "name": "Battle Ropes",
+      "aliases": [
+        "battling ropes",
+        "battle rope"
+      ],
+      "group": "shoulders",
+      "sub_group": null,
+      "equipment": "other",
+      "mechanic": "compound",
+      "load_type": "timed",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": ""
+    },
+    {
+      "id": "barbell-curl",
+      "fedb_id": "Barbell_Curl",
+      "name": "Barbell Curl",
+      "aliases": [
+        "bicep curl",
+        "biceps curl",
+        "bb curl",
+        "straight bar curl",
+        "barbell bicep curl"
+      ],
+      "group": "biceps",
+      "sub_group": null,
+      "equipment": "barbell",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "very common",
+      "notes": ""
+    },
+    {
+      "id": "ez-bar-curl",
+      "fedb_id": "EZ-Bar_Curl",
+      "name": "EZ-Bar Curl",
+      "aliases": [
+        "ez curl",
+        "zig zag bar curl",
+        "z bar curl",
+        "ez bar bicep curl"
+      ],
+      "group": "biceps",
+      "sub_group": null,
+      "equipment": "ez bar",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "very common",
+      "notes": ""
+    },
+    {
+      "id": "dumbbell-curl",
+      "fedb_id": "Dumbbell_Bicep_Curl",
+      "name": "Dumbbell Curl",
+      "aliases": [
+        "db curl",
+        "dumbbell bicep curl",
+        "dumbbell biceps curl",
+        "dumbell curl"
+      ],
+      "group": "biceps",
+      "sub_group": null,
+      "equipment": "dumbbell",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "very common",
+      "notes": ""
+    },
+    {
+      "id": "alternate-dumbbell-curl",
+      "fedb_id": "Dumbbell_Alternate_Bicep_Curl",
+      "name": "Alternate Dumbbell Curl",
+      "aliases": [
+        "alternate curl",
+        "alternating curl"
+      ],
+      "group": "biceps",
+      "sub_group": null,
+      "equipment": "dumbbell",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "very common",
+      "notes": ""
+    },
+    {
+      "id": "hammer-curl",
+      "fedb_id": "Hammer_Curls",
+      "name": "Hammer Curl",
+      "aliases": [
+        "hammer curls",
+        "hammer",
+        "neutral grip curl"
+      ],
+      "group": "biceps",
+      "sub_group": null,
+      "equipment": "dumbbell",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "very common",
+      "notes": ""
+    },
+    {
+      "id": "cross-body-hammer-curl",
+      "fedb_id": "Cross_Body_Hammer_Curl",
+      "name": "Cross-Body Hammer Curl",
+      "aliases": [
+        "cross body curl"
+      ],
+      "group": "biceps",
+      "sub_group": null,
+      "equipment": "dumbbell",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": ""
+    },
+    {
+      "id": "concentration-curl",
+      "fedb_id": "Concentration_Curls",
+      "name": "Concentration Curl",
+      "aliases": [
+        "concentration curls"
+      ],
+      "group": "biceps",
+      "sub_group": null,
+      "equipment": "dumbbell",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "barbell-preacher-curl",
+      "fedb_id": "Preacher_Curl",
+      "name": "Barbell Preacher Curl",
+      "aliases": [
+        "preacher curl",
+        "scott curl",
+        "preacher"
+      ],
+      "group": "biceps",
+      "sub_group": null,
+      "equipment": "barbell",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "very common",
+      "notes": ""
+    },
+    {
+      "id": "dumbbell-preacher-curl",
+      "fedb_id": "One_Arm_Dumbbell_Preacher_Curl",
+      "name": "Dumbbell Preacher Curl",
+      "aliases": [
+        "single arm preacher"
+      ],
+      "group": "biceps",
+      "sub_group": null,
+      "equipment": "dumbbell",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "preacher-curl-machine",
+      "fedb_id": "Machine_Preacher_Curls",
+      "name": "Preacher Curl Machine",
+      "aliases": [
+        "machine preacher",
+        "bicep machine"
+      ],
+      "group": "biceps",
+      "sub_group": null,
+      "equipment": "machine",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "incline-dumbbell-curl",
+      "fedb_id": "Incline_Dumbbell_Curl",
+      "name": "Incline Dumbbell Curl",
+      "aliases": [
+        "incline curl"
+      ],
+      "group": "biceps",
+      "sub_group": null,
+      "equipment": "dumbbell",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "cable-curl",
+      "fedb_id": "Standing_Biceps_Cable_Curl",
+      "name": "Cable Curl",
+      "aliases": [
+        "cable bicep curl",
+        "cable biceps curl"
+      ],
+      "group": "biceps",
+      "sub_group": null,
+      "equipment": "cable",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "very common",
+      "notes": ""
+    },
+    {
+      "id": "rope-hammer-curl",
+      "fedb_id": "Cable_Hammer_Curls_-_Rope_Attachment",
+      "name": "Rope Hammer Curl",
+      "aliases": [
+        "rope curl",
+        "cable hammer curl"
+      ],
+      "group": "biceps",
+      "sub_group": null,
+      "equipment": "cable",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "spider-curl",
+      "fedb_id": "Spider_Curl",
+      "name": "Spider Curl",
+      "aliases": [
+        "spider curls"
+      ],
+      "group": "biceps",
+      "sub_group": null,
+      "equipment": "ez bar",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": ""
+    },
+    {
+      "id": "reverse-barbell-curl",
+      "fedb_id": "Reverse_Barbell_Curl",
+      "name": "Reverse Barbell Curl",
+      "aliases": [
+        "reverse curl"
+      ],
+      "group": "biceps",
+      "sub_group": null,
+      "equipment": "barbell",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": "Also strongly loads forearms; free-exercise-db lists biceps as primary."
+    },
+    {
+      "id": "zottman-curl",
+      "fedb_id": "Zottman_Curl",
+      "name": "Zottman Curl",
+      "aliases": [
+        "zottman"
+      ],
+      "group": "biceps",
+      "sub_group": null,
+      "equipment": "dumbbell",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": ""
+    },
+    {
+      "id": "triceps-pushdown",
+      "fedb_id": "Triceps_Pushdown",
+      "name": "Triceps Pushdown",
+      "aliases": [
+        "pushdown",
+        "tricep pushdown",
+        "cable pushdown",
+        "bar pushdown",
+        "tricep pressdown"
+      ],
+      "group": "triceps",
+      "sub_group": null,
+      "equipment": "cable",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "very common",
+      "notes": ""
+    },
+    {
+      "id": "rope-pushdown",
+      "fedb_id": "Triceps_Pushdown_-_Rope_Attachment",
+      "name": "Rope Pushdown",
+      "aliases": [
+        "rope pushdown",
+        "rope extension",
+        "tricep rope"
+      ],
+      "group": "triceps",
+      "sub_group": null,
+      "equipment": "cable",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "very common",
+      "notes": ""
+    },
+    {
+      "id": "v-bar-pushdown",
+      "fedb_id": "Triceps_Pushdown_-_V-Bar_Attachment",
+      "name": "V-Bar Pushdown",
+      "aliases": [
+        "v bar pushdown"
+      ],
+      "group": "triceps",
+      "sub_group": null,
+      "equipment": "cable",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "reverse-grip-pushdown",
+      "fedb_id": "Reverse_Grip_Triceps_Pushdown",
+      "name": "Reverse-Grip Pushdown",
+      "aliases": [
+        "underhand pushdown"
+      ],
+      "group": "triceps",
+      "sub_group": null,
+      "equipment": "cable",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": ""
+    },
+    {
+      "id": "overhead-rope-extension",
+      "fedb_id": "Cable_Rope_Overhead_Triceps_Extension",
+      "name": "Overhead Rope Extension",
+      "aliases": [
+        "overhead cable extension",
+        "rope overhead extension"
+      ],
+      "group": "triceps",
+      "sub_group": null,
+      "equipment": "cable",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "single-arm-cable-pushdown",
+      "fedb_id": "Cable_One_Arm_Tricep_Extension",
+      "name": "Single-Arm Cable Pushdown",
+      "aliases": [
+        "one arm pushdown"
+      ],
+      "group": "triceps",
+      "sub_group": null,
+      "equipment": "cable",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "skull-crusher",
+      "fedb_id": "EZ-Bar_Skullcrusher",
+      "name": "Skull Crusher",
+      "aliases": [
+        "skullcrusher",
+        "skull crushers",
+        "lying triceps extension",
+        "nose breaker",
+        "french press lying"
+      ],
+      "group": "triceps",
+      "sub_group": null,
+      "equipment": "ez bar",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "very common",
+      "notes": ""
+    },
+    {
+      "id": "dumbbell-overhead-extension",
+      "fedb_id": "Standing_Dumbbell_Triceps_Extension",
+      "name": "Dumbbell Overhead Extension",
+      "aliases": [
+        "overhead dumbbell extension",
+        "french press",
+        "tricep overhead extension"
+      ],
+      "group": "triceps",
+      "sub_group": null,
+      "equipment": "dumbbell",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "very common",
+      "notes": ""
+    },
+    {
+      "id": "one-arm-overhead-extension",
+      "fedb_id": "Dumbbell_One-Arm_Triceps_Extension",
+      "name": "One-Arm Overhead Extension",
+      "aliases": [
+        "single arm overhead extension"
+      ],
+      "group": "triceps",
+      "sub_group": null,
+      "equipment": "dumbbell",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "dumbbell-kickback",
+      "fedb_id": "Tricep_Dumbbell_Kickback",
+      "name": "Dumbbell Kickback",
+      "aliases": [
+        "kickback",
+        "kickbacks",
+        "tricep kickback"
+      ],
+      "group": "triceps",
+      "sub_group": null,
+      "equipment": "dumbbell",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "very common",
+      "notes": ""
+    },
+    {
+      "id": "close-grip-bench-press",
+      "fedb_id": "Close-Grip_Barbell_Bench_Press",
+      "name": "Close-Grip Bench Press",
+      "aliases": [
+        "cgbp",
+        "close grip bench"
+      ],
+      "group": "triceps",
+      "sub_group": null,
+      "equipment": "barbell",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "triceps-dips",
+      "fedb_id": "Dips_-_Triceps_Version",
+      "name": "Triceps Dips",
+      "aliases": [
+        "dips",
+        "parallel bar dips",
+        "tricep dips"
+      ],
+      "group": "triceps",
+      "sub_group": null,
+      "equipment": "bodyweight",
+      "mechanic": "compound",
+      "load_type": "bodyweight",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": "No published fraction of body mass found; left null."
+    },
+    {
+      "id": "bench-dips",
+      "fedb_id": "Bench_Dips",
+      "name": "Bench Dips",
+      "aliases": [
+        "bench dip",
+        "chair dips"
+      ],
+      "group": "triceps",
+      "sub_group": null,
+      "equipment": "bodyweight",
+      "mechanic": "compound",
+      "load_type": "bodyweight",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "very common",
+      "notes": "No published fraction of body mass found; left null."
+    },
+    {
+      "id": "seated-dip-machine",
+      "fedb_id": "Dip_Machine",
+      "name": "Seated Dip Machine",
+      "aliases": [
+        "dip machine"
+      ],
+      "group": "triceps",
+      "sub_group": null,
+      "equipment": "machine",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "triceps-extension-machine",
+      "fedb_id": "Machine_Triceps_Extension",
+      "name": "Triceps Extension Machine",
+      "aliases": [
+        "tricep machine"
+      ],
+      "group": "triceps",
+      "sub_group": null,
+      "equipment": "machine",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "close-grip-push-up",
+      "fedb_id": "Push-Ups_-_Close_Triceps_Position",
+      "name": "Close-Grip Push-Up",
+      "aliases": [
+        "diamond push up",
+        "close pushup",
+        "tricep pushup"
+      ],
+      "group": "triceps",
+      "sub_group": null,
+      "equipment": "bodyweight",
+      "mechanic": "compound",
+      "load_type": "bodyweight",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": "No specific fraction for this hand position; see notes on Wide Push-Up."
+    },
+    {
+      "id": "barbell-wrist-curl",
+      "fedb_id": "Palms-Up_Barbell_Wrist_Curl_Over_A_Bench",
+      "name": "Barbell Wrist Curl",
+      "aliases": [
+        "wrist curl",
+        "wrist curls"
+      ],
+      "group": "forearms",
+      "sub_group": null,
+      "equipment": "barbell",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "reverse-wrist-curl",
+      "fedb_id": "Palms-Down_Wrist_Curl_Over_A_Bench",
+      "name": "Reverse Wrist Curl",
+      "aliases": [
+        "reverse wrist curl",
+        "wrist extension"
+      ],
+      "group": "forearms",
+      "sub_group": null,
+      "equipment": "barbell",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "dumbbell-wrist-curl",
+      "fedb_id": "Seated_Dumbbell_Palms-Up_Wrist_Curl",
+      "name": "Dumbbell Wrist Curl",
+      "aliases": [
+        "db wrist curl"
+      ],
+      "group": "forearms",
+      "sub_group": null,
+      "equipment": "dumbbell",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "wrist-roller",
+      "fedb_id": "Wrist_Roller",
+      "name": "Wrist Roller",
+      "aliases": [
+        "forearm roller"
+      ],
+      "group": "forearms",
+      "sub_group": null,
+      "equipment": "other",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": ""
+    },
+    {
+      "id": "farmer-s-walk",
+      "fedb_id": "Farmers_Walk",
+      "name": "Farmer's Walk",
+      "aliases": [
+        "farmer walk",
+        "farmers carry",
+        "farmer carry"
+      ],
+      "group": "forearms",
+      "sub_group": null,
+      "equipment": "dumbbell",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": "free-exercise-db category is strongman; usually logged by distance or time with an external load."
+    },
+    {
+      "id": "plate-pinch",
+      "fedb_id": "Plate_Pinch",
+      "name": "Plate Pinch",
+      "aliases": [
+        "plate pinch hold"
+      ],
+      "group": "forearms",
+      "sub_group": null,
+      "equipment": "plate",
+      "mechanic": "isolation",
+      "load_type": "timed",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": ""
+    },
+    {
+      "id": "crunch",
+      "fedb_id": "Crunches",
+      "name": "Crunch",
+      "aliases": [
+        "crunches",
+        "ab crunch",
+        "crunch"
+      ],
+      "group": "abs",
+      "sub_group": null,
+      "equipment": "bodyweight",
+      "mechanic": "isolation",
+      "load_type": "bodyweight",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "very common",
+      "notes": ""
+    },
+    {
+      "id": "sit-up",
+      "fedb_id": "Sit-Up",
+      "name": "Sit-Up",
+      "aliases": [
+        "situps",
+        "sit ups",
+        "situp"
+      ],
+      "group": "abs",
+      "sub_group": null,
+      "equipment": "bodyweight",
+      "mechanic": "isolation",
+      "load_type": "bodyweight",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "very common",
+      "notes": ""
+    },
+    {
+      "id": "bicycle-crunch",
+      "fedb_id": "Air_Bike",
+      "name": "Bicycle Crunch",
+      "aliases": [
+        "bicycle crunch",
+        "cycle crunch",
+        "air bike"
+      ],
+      "group": "abs",
+      "sub_group": null,
+      "equipment": "bodyweight",
+      "mechanic": "compound",
+      "load_type": "bodyweight",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "very common",
+      "notes": ""
+    },
+    {
+      "id": "cable-crunch",
+      "fedb_id": "Cable_Crunch",
+      "name": "Cable Crunch",
+      "aliases": [
+        "rope crunch",
+        "kneeling cable crunch"
+      ],
+      "group": "abs",
+      "sub_group": null,
+      "equipment": "cable",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "ab-crunch-machine",
+      "fedb_id": "Ab_Crunch_Machine",
+      "name": "Ab Crunch Machine",
+      "aliases": [
+        "ab machine",
+        "crunch machine"
+      ],
+      "group": "abs",
+      "sub_group": null,
+      "equipment": "machine",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "decline-crunch",
+      "fedb_id": "Decline_Crunch",
+      "name": "Decline Crunch",
+      "aliases": [
+        "decline bench crunch"
+      ],
+      "group": "abs",
+      "sub_group": null,
+      "equipment": "bodyweight",
+      "mechanic": "isolation",
+      "load_type": "bodyweight",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "oblique-crunch",
+      "fedb_id": "Oblique_Crunches",
+      "name": "Oblique Crunch",
+      "aliases": [
+        "side crunch",
+        "oblique crunches"
+      ],
+      "group": "abs",
+      "sub_group": null,
+      "equipment": "bodyweight",
+      "mechanic": "isolation",
+      "load_type": "bodyweight",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "reverse-crunch",
+      "fedb_id": "Reverse_Crunch",
+      "name": "Reverse Crunch",
+      "aliases": [
+        "reverse crunches"
+      ],
+      "group": "abs",
+      "sub_group": null,
+      "equipment": "bodyweight",
+      "mechanic": "isolation",
+      "load_type": "bodyweight",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "lying-leg-raise",
+      "fedb_id": "Flat_Bench_Lying_Leg_Raise",
+      "name": "Lying Leg Raise",
+      "aliases": [
+        "leg raise",
+        "leg raises",
+        "lying leg raises"
+      ],
+      "group": "abs",
+      "sub_group": null,
+      "equipment": "bodyweight",
+      "mechanic": "isolation",
+      "load_type": "bodyweight",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "very common",
+      "notes": ""
+    },
+    {
+      "id": "hanging-leg-raise",
+      "fedb_id": "Hanging_Leg_Raise",
+      "name": "Hanging Leg Raise",
+      "aliases": [
+        "hanging leg raises",
+        "hanging knee raise"
+      ],
+      "group": "abs",
+      "sub_group": null,
+      "equipment": "bodyweight",
+      "mechanic": "isolation",
+      "load_type": "bodyweight",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "captain-s-chair-knee-raise",
+      "fedb_id": "Knee_Hip_Raise_On_Parallel_Bars",
+      "name": "Captain's Chair Knee Raise",
+      "aliases": [
+        "captain chair",
+        "knee raise",
+        "vertical knee raise"
+      ],
+      "group": "abs",
+      "sub_group": null,
+      "equipment": "other",
+      "mechanic": "isolation",
+      "load_type": "bodyweight",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "russian-twist",
+      "fedb_id": "Russian_Twist",
+      "name": "Russian Twist",
+      "aliases": [
+        "russian twists"
+      ],
+      "group": "abs",
+      "sub_group": null,
+      "equipment": "bodyweight",
+      "mechanic": "compound",
+      "load_type": "bodyweight",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": "Often done holding a plate or dumbbell."
+    },
+    {
+      "id": "plank",
+      "fedb_id": "Plank",
+      "name": "Plank",
+      "aliases": [
+        "plank hold",
+        "front plank",
+        "forearm plank"
+      ],
+      "group": "abs",
+      "sub_group": null,
+      "equipment": "bodyweight",
+      "mechanic": "isolation",
+      "load_type": "timed",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "very common",
+      "notes": ""
+    },
+    {
+      "id": "side-plank",
+      "fedb_id": "Side_Bridge",
+      "name": "Side Plank",
+      "aliases": [
+        "side plank",
+        "side bridge"
+      ],
+      "group": "abs",
+      "sub_group": null,
+      "equipment": "bodyweight",
+      "mechanic": null,
+      "load_type": "timed",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "ab-wheel-rollout",
+      "fedb_id": "Ab_Roller",
+      "name": "Ab Wheel Rollout",
+      "aliases": [
+        "ab roller",
+        "ab wheel",
+        "rollout"
+      ],
+      "group": "abs",
+      "sub_group": null,
+      "equipment": "other",
+      "mechanic": "compound",
+      "load_type": "bodyweight",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "mountain-climber",
+      "fedb_id": "Mountain_Climbers",
+      "name": "Mountain Climber",
+      "aliases": [
+        "mountain climbers",
+        "climbers"
+      ],
+      "group": "abs",
+      "sub_group": null,
+      "equipment": "bodyweight",
+      "mechanic": "compound",
+      "load_type": "bodyweight",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "very common",
+      "notes": "free-exercise-db lists quadriceps as primary muscle; placed in abs because that is how it is usually programmed."
+    },
+    {
+      "id": "flutter-kicks",
+      "fedb_id": "Flutter_Kicks",
+      "name": "Flutter Kicks",
+      "aliases": [
+        "flutter kick",
+        "scissor kicks"
+      ],
+      "group": "abs",
+      "sub_group": null,
+      "equipment": "bodyweight",
+      "mechanic": "compound",
+      "load_type": "bodyweight",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": "free-exercise-db lists glutes as primary muscle."
+    },
+    {
+      "id": "dead-bug",
+      "fedb_id": "Dead_Bug",
+      "name": "Dead Bug",
+      "aliases": [
+        "deadbug"
+      ],
+      "group": "abs",
+      "sub_group": null,
+      "equipment": "bodyweight",
+      "mechanic": "compound",
+      "load_type": "bodyweight",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": ""
+    },
+    {
+      "id": "v-up-jackknife-sit-up",
+      "fedb_id": "Jackknife_Sit-Up",
+      "name": "V-Up (Jackknife Sit-Up)",
+      "aliases": [
+        "v up",
+        "v-ups",
+        "jackknife"
+      ],
+      "group": "abs",
+      "sub_group": null,
+      "equipment": "bodyweight",
+      "mechanic": "compound",
+      "load_type": "bodyweight",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": ""
+    },
+    {
+      "id": "dumbbell-side-bend",
+      "fedb_id": "Dumbbell_Side_Bend",
+      "name": "Dumbbell Side Bend",
+      "aliases": [
+        "side bend",
+        "side bends"
+      ],
+      "group": "abs",
+      "sub_group": null,
+      "equipment": "dumbbell",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "pallof-press",
+      "fedb_id": "Pallof_Press",
+      "name": "Pallof Press",
+      "aliases": [
+        "pallof"
+      ],
+      "group": "abs",
+      "sub_group": null,
+      "equipment": "cable",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": ""
+    },
+    {
+      "id": "cable-woodchop-low-to-high",
+      "fedb_id": "Standing_Cable_Lift",
+      "name": "Cable Woodchop (low to high)",
+      "aliases": [
+        "woodchopper",
+        "wood chop",
+        "cable chop"
+      ],
+      "group": "abs",
+      "sub_group": null,
+      "equipment": "cable",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": ""
+    },
+    {
+      "id": "barbell-back-squat",
+      "fedb_id": "Barbell_Squat",
+      "name": "Barbell Back Squat",
+      "aliases": [
+        "squat",
+        "squats",
+        "back squat",
+        "barbell squat",
+        "bb squat"
+      ],
+      "group": "legs",
+      "sub_group": "quads",
+      "equipment": "barbell",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "very common",
+      "notes": ""
+    },
+    {
+      "id": "full-squat-deep",
+      "fedb_id": "Barbell_Full_Squat",
+      "name": "Full Squat (deep)",
+      "aliases": [
+        "atg squat",
+        "deep squat",
+        "full squat"
+      ],
+      "group": "legs",
+      "sub_group": "quads",
+      "equipment": "barbell",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": ""
+    },
+    {
+      "id": "front-squat",
+      "fedb_id": "Front_Barbell_Squat",
+      "name": "Front Squat",
+      "aliases": [
+        "front squat",
+        "front squats"
+      ],
+      "group": "legs",
+      "sub_group": "quads",
+      "equipment": "barbell",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "smith-machine-squat",
+      "fedb_id": "Smith_Machine_Squat",
+      "name": "Smith Machine Squat",
+      "aliases": [
+        "smith squat"
+      ],
+      "group": "legs",
+      "sub_group": "quads",
+      "equipment": "smith machine",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "very common",
+      "notes": ""
+    },
+    {
+      "id": "hack-squat-machine",
+      "fedb_id": "Hack_Squat",
+      "name": "Hack Squat Machine",
+      "aliases": [
+        "hack squat",
+        "hack machine"
+      ],
+      "group": "legs",
+      "sub_group": "quads",
+      "equipment": "machine",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "leg-press",
+      "fedb_id": "Leg_Press",
+      "name": "Leg Press",
+      "aliases": [
+        "leg press machine",
+        "45 degree leg press",
+        "legpress"
+      ],
+      "group": "legs",
+      "sub_group": "quads",
+      "equipment": "machine",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "very common",
+      "notes": ""
+    },
+    {
+      "id": "leg-extension",
+      "fedb_id": "Leg_Extensions",
+      "name": "Leg Extension",
+      "aliases": [
+        "leg extensions",
+        "quad extension",
+        "leg ext"
+      ],
+      "group": "legs",
+      "sub_group": "quads",
+      "equipment": "machine",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "very common",
+      "notes": ""
+    },
+    {
+      "id": "single-leg-extension",
+      "fedb_id": "Single-Leg_Leg_Extension",
+      "name": "Single-Leg Extension",
+      "aliases": [
+        "one leg extension"
+      ],
+      "group": "legs",
+      "sub_group": "quads",
+      "equipment": "machine",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": ""
+    },
+    {
+      "id": "goblet-squat",
+      "fedb_id": "Goblet_Squat",
+      "name": "Goblet Squat",
+      "aliases": [
+        "goblet squats"
+      ],
+      "group": "legs",
+      "sub_group": "quads",
+      "equipment": "kettlebell",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "dumbbell-squat",
+      "fedb_id": "Dumbbell_Squat",
+      "name": "Dumbbell Squat",
+      "aliases": [
+        "db squat"
+      ],
+      "group": "legs",
+      "sub_group": "quads",
+      "equipment": "dumbbell",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "bodyweight-squat",
+      "fedb_id": "Bodyweight_Squat",
+      "name": "Bodyweight Squat",
+      "aliases": [
+        "baithak",
+        "baithaks",
+        "air squat",
+        "free squat",
+        "squat without weight"
+      ],
+      "group": "legs",
+      "sub_group": "quads",
+      "equipment": "bodyweight",
+      "mechanic": "compound",
+      "load_type": "bodyweight",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "very common",
+      "notes": "No published fraction of body mass found; left null. 'Baithak' traditionally means the Hindu squat, a close variant."
+    },
+    {
+      "id": "jump-squat",
+      "fedb_id": "Freehand_Jump_Squat",
+      "name": "Jump Squat",
+      "aliases": [
+        "squat jump",
+        "jump squats"
+      ],
+      "group": "legs",
+      "sub_group": "quads",
+      "equipment": "bodyweight",
+      "mechanic": "compound",
+      "load_type": "bodyweight",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "dumbbell-lunge",
+      "fedb_id": "Dumbbell_Lunges",
+      "name": "Dumbbell Lunge",
+      "aliases": [
+        "lunges",
+        "lunge",
+        "db lunge"
+      ],
+      "group": "legs",
+      "sub_group": "quads",
+      "equipment": "dumbbell",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "very common",
+      "notes": ""
+    },
+    {
+      "id": "barbell-lunge",
+      "fedb_id": "Barbell_Lunge",
+      "name": "Barbell Lunge",
+      "aliases": [
+        "bb lunge"
+      ],
+      "group": "legs",
+      "sub_group": "quads",
+      "equipment": "barbell",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": ""
+    },
+    {
+      "id": "walking-lunge",
+      "fedb_id": "Bodyweight_Walking_Lunge",
+      "name": "Walking Lunge",
+      "aliases": [
+        "walking lunges",
+        "bodyweight lunge"
+      ],
+      "group": "legs",
+      "sub_group": "quads",
+      "equipment": "bodyweight",
+      "mechanic": "compound",
+      "load_type": "bodyweight",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "reverse-lunge",
+      "fedb_id": "Dumbbell_Rear_Lunge",
+      "name": "Reverse Lunge",
+      "aliases": [
+        "reverse lunges",
+        "back lunge"
+      ],
+      "group": "legs",
+      "sub_group": "quads",
+      "equipment": "dumbbell",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "dumbbell-split-squat",
+      "fedb_id": "Split_Squat_with_Dumbbells",
+      "name": "Dumbbell Split Squat",
+      "aliases": [
+        "split squat",
+        "static lunge"
+      ],
+      "group": "legs",
+      "sub_group": "quads",
+      "equipment": "dumbbell",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": "Not the rear-foot-elevated (Bulgarian) version; see missing list."
+    },
+    {
+      "id": "dumbbell-step-up",
+      "fedb_id": "Dumbbell_Step_Ups",
+      "name": "Dumbbell Step-Up",
+      "aliases": [
+        "step ups",
+        "step up"
+      ],
+      "group": "legs",
+      "sub_group": "quads",
+      "equipment": "dumbbell",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "trap-bar-deadlift",
+      "fedb_id": "Trap_Bar_Deadlift",
+      "name": "Trap Bar Deadlift",
+      "aliases": [
+        "hex bar deadlift",
+        "trap bar"
+      ],
+      "group": "legs",
+      "sub_group": "quads",
+      "equipment": "trap bar",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": ""
+    },
+    {
+      "id": "romanian-deadlift",
+      "fedb_id": "Romanian_Deadlift",
+      "name": "Romanian Deadlift",
+      "aliases": [
+        "rdl",
+        "romanian dl",
+        "romanian deadlifts"
+      ],
+      "group": "legs",
+      "sub_group": "hamstrings",
+      "equipment": "barbell",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "very common",
+      "notes": ""
+    },
+    {
+      "id": "stiff-leg-deadlift",
+      "fedb_id": "Stiff-Legged_Barbell_Deadlift",
+      "name": "Stiff-Leg Deadlift",
+      "aliases": [
+        "sldl",
+        "stiff leg deadlift",
+        "stiff legged deadlift"
+      ],
+      "group": "legs",
+      "sub_group": "hamstrings",
+      "equipment": "barbell",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "dumbbell-stiff-leg-deadlift",
+      "fedb_id": "Stiff-Legged_Dumbbell_Deadlift",
+      "name": "Dumbbell Stiff-Leg Deadlift",
+      "aliases": [
+        "db rdl",
+        "dumbbell rdl"
+      ],
+      "group": "legs",
+      "sub_group": "hamstrings",
+      "equipment": "dumbbell",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "sumo-deadlift",
+      "fedb_id": "Sumo_Deadlift",
+      "name": "Sumo Deadlift",
+      "aliases": [
+        "sumo",
+        "sumo dl"
+      ],
+      "group": "legs",
+      "sub_group": "hamstrings",
+      "equipment": "barbell",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "lying-leg-curl",
+      "fedb_id": "Lying_Leg_Curls",
+      "name": "Lying Leg Curl",
+      "aliases": [
+        "leg curl",
+        "hamstring curl",
+        "lying hamstring curl",
+        "leg curls"
+      ],
+      "group": "legs",
+      "sub_group": "hamstrings",
+      "equipment": "machine",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "very common",
+      "notes": ""
+    },
+    {
+      "id": "seated-leg-curl",
+      "fedb_id": "Seated_Leg_Curl",
+      "name": "Seated Leg Curl",
+      "aliases": [
+        "seated hamstring curl"
+      ],
+      "group": "legs",
+      "sub_group": "hamstrings",
+      "equipment": "machine",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "very common",
+      "notes": ""
+    },
+    {
+      "id": "standing-leg-curl",
+      "fedb_id": "Standing_Leg_Curl",
+      "name": "Standing Leg Curl",
+      "aliases": [
+        "single leg curl standing"
+      ],
+      "group": "legs",
+      "sub_group": "hamstrings",
+      "equipment": "machine",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": ""
+    },
+    {
+      "id": "glute-ham-raise",
+      "fedb_id": "Glute_Ham_Raise",
+      "name": "Glute-Ham Raise",
+      "aliases": [
+        "ghr",
+        "glute ham"
+      ],
+      "group": "legs",
+      "sub_group": "hamstrings",
+      "equipment": "machine",
+      "mechanic": "compound",
+      "load_type": "bodyweight",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": ""
+    },
+    {
+      "id": "single-leg-rdl",
+      "fedb_id": "Kettlebell_One-Legged_Deadlift",
+      "name": "Single-Leg RDL",
+      "aliases": [
+        "single leg deadlift",
+        "one leg rdl"
+      ],
+      "group": "legs",
+      "sub_group": "hamstrings",
+      "equipment": "kettlebell",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": ""
+    },
+    {
+      "id": "barbell-hip-thrust",
+      "fedb_id": "Barbell_Hip_Thrust",
+      "name": "Barbell Hip Thrust",
+      "aliases": [
+        "hip thrust",
+        "hip thrusts",
+        "bb hip thrust"
+      ],
+      "group": "legs",
+      "sub_group": "glutes",
+      "equipment": "barbell",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "very common",
+      "notes": ""
+    },
+    {
+      "id": "barbell-glute-bridge",
+      "fedb_id": "Barbell_Glute_Bridge",
+      "name": "Barbell Glute Bridge",
+      "aliases": [
+        "weighted glute bridge"
+      ],
+      "group": "legs",
+      "sub_group": "glutes",
+      "equipment": "barbell",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "glute-bridge",
+      "fedb_id": "Butt_Lift_Bridge",
+      "name": "Glute Bridge",
+      "aliases": [
+        "bridge",
+        "hip bridge",
+        "glute bridges"
+      ],
+      "group": "legs",
+      "sub_group": "glutes",
+      "equipment": "bodyweight",
+      "mechanic": "isolation",
+      "load_type": "bodyweight",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "single-leg-glute-bridge",
+      "fedb_id": "Single_Leg_Glute_Bridge",
+      "name": "Single-Leg Glute Bridge",
+      "aliases": [
+        "one leg bridge"
+      ],
+      "group": "legs",
+      "sub_group": "glutes",
+      "equipment": "bodyweight",
+      "mechanic": "isolation",
+      "load_type": "bodyweight",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": ""
+    },
+    {
+      "id": "cable-glute-kickback",
+      "fedb_id": "One-Legged_Cable_Kickback",
+      "name": "Cable Glute Kickback",
+      "aliases": [
+        "cable kickback",
+        "glute kickback"
+      ],
+      "group": "legs",
+      "sub_group": "glutes",
+      "equipment": "cable",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "donkey-kick",
+      "fedb_id": "Glute_Kickback",
+      "name": "Donkey Kick",
+      "aliases": [
+        "donkey kicks",
+        "kneeling kickback"
+      ],
+      "group": "legs",
+      "sub_group": "glutes",
+      "equipment": "bodyweight",
+      "mechanic": "compound",
+      "load_type": "bodyweight",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "cable-pull-through",
+      "fedb_id": "Pull_Through",
+      "name": "Cable Pull-Through",
+      "aliases": [
+        "pull through"
+      ],
+      "group": "legs",
+      "sub_group": "glutes",
+      "equipment": "cable",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": ""
+    },
+    {
+      "id": "standing-calf-raise",
+      "fedb_id": "Standing_Calf_Raises",
+      "name": "Standing Calf Raise",
+      "aliases": [
+        "calf raise",
+        "calf raises",
+        "standing calf machine"
+      ],
+      "group": "legs",
+      "sub_group": "calves",
+      "equipment": "machine",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "very common",
+      "notes": ""
+    },
+    {
+      "id": "seated-calf-raise",
+      "fedb_id": "Seated_Calf_Raise",
+      "name": "Seated Calf Raise",
+      "aliases": [
+        "seated calf"
+      ],
+      "group": "legs",
+      "sub_group": "calves",
+      "equipment": "machine",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "leg-press-calf-raise",
+      "fedb_id": "Calf_Press_On_The_Leg_Press_Machine",
+      "name": "Leg Press Calf Raise",
+      "aliases": [
+        "calf press",
+        "calf press on leg press"
+      ],
+      "group": "legs",
+      "sub_group": "calves",
+      "equipment": "machine",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "smith-machine-calf-raise",
+      "fedb_id": "Smith_Machine_Calf_Raise",
+      "name": "Smith Machine Calf Raise",
+      "aliases": [
+        "smith calf raise"
+      ],
+      "group": "legs",
+      "sub_group": "calves",
+      "equipment": "smith machine",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "dumbbell-calf-raise",
+      "fedb_id": "Standing_Dumbbell_Calf_Raise",
+      "name": "Dumbbell Calf Raise",
+      "aliases": [
+        "db calf raise"
+      ],
+      "group": "legs",
+      "sub_group": "calves",
+      "equipment": "dumbbell",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "common",
+      "notes": ""
+    },
+    {
+      "id": "donkey-calf-raise",
+      "fedb_id": "Donkey_Calf_Raises",
+      "name": "Donkey Calf Raise",
+      "aliases": [
+        "donkey calf"
+      ],
+      "group": "legs",
+      "sub_group": "calves",
+      "equipment": "machine",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": ""
+    },
+    {
+      "id": "hip-adduction-machine",
+      "fedb_id": "Thigh_Adductor",
+      "name": "Hip Adduction Machine",
+      "aliases": [
+        "adductor machine",
+        "inner thigh machine",
+        "adductor"
+      ],
+      "group": "legs",
+      "sub_group": "adductors",
+      "equipment": "machine",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "very common",
+      "notes": ""
+    },
+    {
+      "id": "hip-abduction-machine",
+      "fedb_id": "Thigh_Abductor",
+      "name": "Hip Abduction Machine",
+      "aliases": [
+        "abductor machine",
+        "outer thigh machine",
+        "abductor"
+      ],
+      "group": "legs",
+      "sub_group": "abductors",
+      "equipment": "machine",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "very common",
+      "notes": ""
+    },
+    {
+      "id": "cable-hip-adduction",
+      "fedb_id": "Cable_Hip_Adduction",
+      "name": "Cable Hip Adduction",
+      "aliases": [
+        "cable adduction"
+      ],
+      "group": "legs",
+      "sub_group": "adductors",
+      "equipment": "cable",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": "free-exercise-db lists quadriceps as primary muscle."
+    },
+    {
+      "id": "band-hip-adduction",
+      "fedb_id": "Band_Hip_Adductions",
+      "name": "Band Hip Adduction",
+      "aliases": [
+        "band adduction"
+      ],
+      "group": "legs",
+      "sub_group": "adductors",
+      "equipment": "bands",
+      "mechanic": "isolation",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": ""
+    },
+    {
+      "id": "kettlebell-swing-one-arm",
+      "fedb_id": "One-Arm_Kettlebell_Swings",
+      "name": "Kettlebell Swing (one-arm)",
+      "aliases": [
+        "kb swing",
+        "kettlebell swing",
+        "swings"
+      ],
+      "group": "legs",
+      "sub_group": "hamstrings",
+      "equipment": "kettlebell",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": "Compendium 2024 code 02058 covers kettlebell swings."
+    },
+    {
+      "id": "turkish-get-up",
+      "fedb_id": "Kettlebell_Turkish_Get-Up_Squat_style",
+      "name": "Turkish Get-Up",
+      "aliases": [
+        "tgu",
+        "get up"
+      ],
+      "group": "shoulders",
+      "sub_group": null,
+      "equipment": "kettlebell",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": ""
+    },
+    {
+      "id": "kettlebell-clean",
+      "fedb_id": "Two-Arm_Kettlebell_Clean",
+      "name": "Kettlebell Clean",
+      "aliases": [
+        "kb clean"
+      ],
+      "group": "shoulders",
+      "sub_group": null,
+      "equipment": "kettlebell",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": ""
+    },
+    {
+      "id": "kettlebell-thruster",
+      "fedb_id": "Kettlebell_Thruster",
+      "name": "Kettlebell Thruster",
+      "aliases": [
+        "kb thruster"
+      ],
+      "group": "shoulders",
+      "sub_group": null,
+      "equipment": "kettlebell",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": ""
+    },
+    {
+      "id": "kettlebell-row",
+      "fedb_id": "One-Arm_Kettlebell_Row",
+      "name": "Kettlebell Row",
+      "aliases": [
+        "kb row"
+      ],
+      "group": "back",
+      "sub_group": "middle back",
+      "equipment": "kettlebell",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": ""
+    },
+    {
+      "id": "kettlebell-overhead-press",
+      "fedb_id": "Two-Arm_Kettlebell_Military_Press",
+      "name": "Kettlebell Overhead Press",
+      "aliases": [
+        "kb press"
+      ],
+      "group": "shoulders",
+      "sub_group": null,
+      "equipment": "kettlebell",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": ""
+    },
+    {
+      "id": "kettlebell-windmill",
+      "fedb_id": "Kettlebell_Windmill",
+      "name": "Kettlebell Windmill",
+      "aliases": [
+        "windmill"
+      ],
+      "group": "abs",
+      "sub_group": null,
+      "equipment": "kettlebell",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": ""
+    },
+    {
+      "id": "kettlebell-sumo-high-pull",
+      "fedb_id": "Kettlebell_Sumo_High_Pull",
+      "name": "Kettlebell Sumo High Pull",
+      "aliases": [
+        "kb high pull"
+      ],
+      "group": "back",
+      "sub_group": "traps",
+      "equipment": "kettlebell",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": ""
+    },
+    {
+      "id": "band-good-morning",
+      "fedb_id": "Band_Good_Morning",
+      "name": "Band Good Morning",
+      "aliases": [
+        "band good mornings"
+      ],
+      "group": "back",
+      "sub_group": "lower back",
+      "equipment": "bands",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": "free-exercise-db lists hamstrings as primary muscle."
+    },
+    {
+      "id": "box-jump",
+      "fedb_id": "Front_Box_Jump",
+      "name": "Box Jump",
+      "aliases": [
+        "box jumps"
+      ],
+      "group": "legs",
+      "sub_group": "quads",
+      "equipment": "bodyweight",
+      "mechanic": "compound",
+      "load_type": "bodyweight",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": "free-exercise-db lists hamstrings as primary muscle."
+    },
+    {
+      "id": "power-clean",
+      "fedb_id": "Power_Clean",
+      "name": "Power Clean",
+      "aliases": [
+        "clean",
+        "power cleans"
+      ],
+      "group": "legs",
+      "sub_group": "hamstrings",
+      "equipment": "barbell",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": "Olympic-style lift."
+    },
+    {
+      "id": "clean-and-press",
+      "fedb_id": "Clean_and_Press",
+      "name": "Clean and Press",
+      "aliases": [
+        "clean & press"
+      ],
+      "group": "shoulders",
+      "sub_group": null,
+      "equipment": "barbell",
+      "mechanic": "compound",
+      "load_type": "external",
+      "bodyweight_fraction": null,
+      "bodyweight_fraction_source": null,
+      "popularity": "occasional",
+      "notes": ""
+    }
+  ],
+  "activities": [
+    {
+      "id": "treadmill-walk",
+      "name": "Treadmill walk",
+      "aliases": [
+        "treadmill",
+        "treadmill walking",
+        "tm walk"
+      ],
+      "inputs": [
+        "minutes",
+        "speed_kmh",
+        "incline_pct"
+      ],
+      "compendium_codes": [
+        "17340",
+        "17343",
+        "17346",
+        "17349",
+        "17352",
+        "17355",
+        "17358",
+        "17361",
+        "17364",
+        "17367"
+      ],
+      "acsm_equation": "walking",
+      "notes": "Compendium treadmill-walking codes are all 0% grade and use mph bands (1 mph = 1.609344 km/h). For incline > 0 use the ACSM walking equation instead."
+    },
+    {
+      "id": "incline-walk",
+      "name": "Incline treadmill walk",
+      "aliases": [
+        "incline walk",
+        "12-3-30",
+        "uphill walk",
+        "incline walking"
+      ],
+      "inputs": [
+        "minutes",
+        "speed_kmh",
+        "incline_pct"
+      ],
+      "compendium_codes": [
+        "17034",
+        "17035",
+        "17036",
+        "17032"
+      ],
+      "acsm_equation": "walking",
+      "notes": "No Compendium 2024 code for unloaded incline treadmill walking by speed and grade. Codes listed are outdoor hill climbing by grade band (fallback only). Prefer the ACSM walking equation."
+    },
+    {
+      "id": "treadmill-run",
+      "name": "Treadmill run",
+      "aliases": [
+        "treadmill running",
+        "running on treadmill",
+        "jogging treadmill"
+      ],
+      "inputs": [
+        "minutes",
+        "speed_kmh",
+        "incline_pct"
+      ],
+      "compendium_codes": [
+        "12026",
+        "12028",
+        "12029",
+        "12030",
+        "12045",
+        "12050",
+        "12060",
+        "12070",
+        "12080",
+        "12090",
+        "12100",
+        "12110",
+        "12115",
+        "12120",
+        "12130",
+        "12132",
+        "12134",
+        "12135",
+        "12255",
+        "12260",
+        "12265",
+        "12325"
+      ],
+      "acsm_equation": "running",
+      "notes": "12255/12260/12265 are measured uphill runs at 5% incline; 12325 is 15% incline."
+    },
+    {
+      "id": "stationary-cycle",
+      "name": "Stationary cycle",
+      "aliases": [
+        "cycling machine",
+        "exercise bike",
+        "spin bike",
+        "cycle"
+      ],
+      "inputs": [
+        "minutes",
+        "watts|effort"
+      ],
+      "compendium_codes": [
+        "01200",
+        "01210",
+        "01214",
+        "01216",
+        "01218",
+        "01220",
+        "01224",
+        "01228",
+        "01232",
+        "01236",
+        "01240",
+        "01244",
+        "01248",
+        "01270",
+        "01305"
+      ],
+      "acsm_equation": "leg_cycling",
+      "notes": "Use watts codes when the bike shows watts; 01200 when it does not. ACSM cycling constant could not be sourced (see burn-model gaps)."
+    },
+    {
+      "id": "elliptical",
+      "name": "Elliptical / cross trainer",
+      "aliases": [
+        "cross trainer",
+        "elliptical trainer",
+        "crosstrainer"
+      ],
+      "inputs": [
+        "minutes",
+        "effort"
+      ],
+      "compendium_codes": [
+        "02048",
+        "02049"
+      ],
+      "acsm_equation": null,
+      "notes": "Only moderate and vigorous effort codes exist."
+    },
+    {
+      "id": "rowing-machine",
+      "name": "Rowing machine",
+      "aliases": [
+        "rower",
+        "rowing ergometer",
+        "erg"
+      ],
+      "inputs": [
+        "minutes",
+        "watts|effort"
+      ],
+      "compendium_codes": [
+        "02070",
+        "02071",
+        "02072",
+        "02073",
+        "02074"
+      ],
+      "acsm_equation": null,
+      "notes": ""
+    },
+    {
+      "id": "stair-climber",
+      "name": "Stair climber",
+      "aliases": [
+        "stairmaster",
+        "stepmill",
+        "stair machine"
+      ],
+      "inputs": [
+        "minutes",
+        "effort"
+      ],
+      "compendium_codes": [
+        "02065",
+        "17133",
+        "17131",
+        "17134"
+      ],
+      "acsm_equation": null,
+      "notes": "02065 is the stair treadmill ergometer (general). 17131/17133/17134 are real stair climbing by pace; use as effort levels only if the user climbs actual stairs."
+    },
+    {
+      "id": "skipping-rope",
+      "name": "Skipping rope",
+      "aliases": [
+        "skipping",
+        "jump rope",
+        "rope skipping",
+        "rassi kood"
+      ],
+      "inputs": [
+        "minutes",
+        "skips_per_min"
+      ],
+      "compendium_codes": [
+        "02068",
+        "15552",
+        "15551",
+        "15550",
+        "15554"
+      ],
+      "acsm_equation": null,
+      "notes": "15552 <100 skips/min; 15551 100-120; 15550 120-160; 15554 double unders; 02068 general."
+    },
+    {
+      "id": "outdoor-walk",
+      "name": "Walking (outdoor)",
+      "aliases": [
+        "walk",
+        "morning walk",
+        "evening walk",
+        "brisk walk",
+        "tehelna"
+      ],
+      "inputs": [
+        "minutes",
+        "speed_kmh"
+      ],
+      "compendium_codes": [
+        "17151",
+        "17152",
+        "17170",
+        "17190",
+        "17200",
+        "17220",
+        "17230",
+        "17231",
+        "17255"
+      ],
+      "acsm_equation": "walking",
+      "notes": "Level, firm surface codes by speed band."
+    },
+    {
+      "id": "running",
+      "name": "Running (outdoor)",
+      "aliases": [
+        "run",
+        "jog",
+        "jogging",
+        "running"
+      ],
+      "inputs": [
+        "minutes",
+        "speed_kmh|pace_min_per_km"
+      ],
+      "compendium_codes": [
+        "12020",
+        "12026",
+        "12028",
+        "12029",
+        "12030",
+        "12045",
+        "12050",
+        "12060",
+        "12070",
+        "12080",
+        "12090",
+        "12100",
+        "12110",
+        "12115",
+        "12120",
+        "12130",
+        "12132",
+        "12134",
+        "12135"
+      ],
+      "acsm_equation": "running",
+      "notes": "Pace to speed: speed_kmh = 60 / pace_min_per_km."
+    },
+    {
+      "id": "swimming",
+      "name": "Swimming",
+      "aliases": [
+        "swim",
+        "swimming laps"
+      ],
+      "inputs": [
+        "minutes",
+        "stroke",
+        "effort"
+      ],
+      "compendium_codes": [
+        "18240",
+        "18230",
+        "18292",
+        "18290",
+        "18280",
+        "18255",
+        "18250",
+        "18265",
+        "18260",
+        "18270",
+        "18310",
+        "18350"
+      ],
+      "acsm_equation": null,
+      "notes": ""
+    },
+    {
+      "id": "cricket",
+      "name": "Cricket",
+      "aliases": [
+        "cricket match",
+        "cricket practice",
+        "nets"
+      ],
+      "inputs": [
+        "minutes"
+      ],
+      "compendium_codes": [
+        "15150"
+      ],
+      "acsm_equation": null,
+      "notes": "Single code covers batting, bowling and fielding."
+    },
+    {
+      "id": "badminton",
+      "name": "Badminton",
+      "aliases": [
+        "shuttle",
+        "shuttlecock"
+      ],
+      "inputs": [
+        "minutes",
+        "effort"
+      ],
+      "compendium_codes": [
+        "15030",
+        "15020",
+        "15025"
+      ],
+      "acsm_equation": null,
+      "notes": "Social vs competitive vs match play."
+    },
+    {
+      "id": "football",
+      "name": "Football (soccer)",
+      "aliases": [
+        "soccer",
+        "football match",
+        "futsal"
+      ],
+      "inputs": [
+        "minutes",
+        "effort"
+      ],
+      "compendium_codes": [
+        "15610",
+        "15605",
+        "15195"
+      ],
+      "acsm_equation": null,
+      "notes": "15195 is futsal."
+    },
+    {
+      "id": "yoga-hatha",
+      "name": "Yoga (hatha)",
+      "aliases": [
+        "yoga",
+        "hatha yoga"
+      ],
+      "inputs": [
+        "minutes",
+        "effort"
+      ],
+      "compendium_codes": [
+        "02150",
+        "02153",
+        "02175"
+      ],
+      "acsm_equation": null,
+      "notes": "02153 is high-intensity hatha."
+    },
+    {
+      "id": "yoga-power",
+      "name": "Yoga (power / vinyasa)",
+      "aliases": [
+        "power yoga",
+        "vinyasa",
+        "flow yoga"
+      ],
+      "inputs": [
+        "minutes"
+      ],
+      "compendium_codes": [
+        "02160",
+        "02185"
+      ],
+      "acsm_equation": null,
+      "notes": ""
+    },
+    {
+      "id": "pranayama",
+      "name": "Pranayama (nadi shodhana)",
+      "aliases": [
+        "anulom vilom",
+        "nadi shodhan",
+        "breathing exercise"
+      ],
+      "inputs": [
+        "minutes"
+      ],
+      "compendium_codes": [
+        "02170"
+      ],
+      "acsm_equation": null,
+      "notes": "Compendium spells it 'Nadisodhana'."
+    },
+    {
+      "id": "surya-namaskar",
+      "name": "Surya namaskar",
+      "aliases": [
+        "sun salutation",
+        "surya namaskaar",
+        "suryanamaskar"
+      ],
+      "inputs": [
+        "minutes|rounds"
+      ],
+      "compendium_codes": [
+        "02180"
+      ],
+      "acsm_equation": null,
+      "notes": "Code is per minute; rounds-to-minutes conversion is not in the Compendium."
+    },
+    {
+      "id": "hiit",
+      "name": "HIIT / bodyweight circuit",
+      "aliases": [
+        "hiit",
+        "tabata",
+        "burpees workout",
+        "functional training"
+      ],
+      "inputs": [
+        "minutes",
+        "effort"
+      ],
+      "compendium_codes": [
+        "02210",
+        "02214",
+        "02032"
+      ],
+      "acsm_equation": null,
+      "notes": ""
+    },
+    {
+      "id": "zumba",
+      "name": "Zumba",
+      "aliases": [
+        "zumba class",
+        "dance fitness"
+      ],
+      "inputs": [
+        "minutes"
+      ],
+      "compendium_codes": [
+        "02310",
+        "02315"
+      ],
+      "acsm_equation": null,
+      "notes": ""
+    }
+  ],
+  "missing": [
+    {
+      "name": "Assisted Pull-Up / Dip Machine",
+      "description": "Counterweighted machine that reduces the body mass lifted in pull-ups and dips.",
+      "why_needed": "Standard in Indian commercial gyms; load_type 'assisted' (body mass minus counterweight)."
+    },
+    {
+      "name": "Bulgarian Split Squat",
+      "description": "Split squat with the rear foot elevated on a bench.",
+      "why_needed": "Very common leg exercise; free-exercise-db only has the floor split squat."
+    },
+    {
+      "name": "Knee Push-Up",
+      "description": "Push-up performed from the knees.",
+      "why_needed": "Common beginner/home variant. A sourced bodyweight fraction exists: 0.49 (Ebben 2011)."
+    },
+    {
+      "name": "Burpee",
+      "description": "Squat thrust with push-up and jump.",
+      "why_needed": "Very common at home and in HIIT; Compendium 02214/02020 mention burpees but the exercise has no free-exercise-db id."
+    },
+    {
+      "name": "Jumping Jacks",
+      "description": "Star jumps with arm swing.",
+      "why_needed": "Common warm-up; Compendium 02020 mentions jumping jacks."
+    },
+    {
+      "name": "Wall Sit",
+      "description": "Isometric squat hold against a wall (timed).",
+      "why_needed": "Common home exercise; load_type 'timed'."
+    },
+    {
+      "name": "Machine Lateral Raise",
+      "description": "Seated lateral raise machine.",
+      "why_needed": "Present in many commercial gyms."
+    },
+    {
+      "name": "Hip Thrust Machine",
+      "description": "Plate-loaded or selectorised hip thrust machine.",
+      "why_needed": "Increasingly common; barbell version exists in dataset."
+    },
+    {
+      "name": "Pendulum Squat",
+      "description": "Plate-loaded pendulum squat machine.",
+      "why_needed": "Occasional in newer gyms."
+    },
+    {
+      "name": "Lateral Band Walk",
+      "description": "Side steps with a mini band around the legs.",
+      "why_needed": "Common glute activation drill."
+    },
+    {
+      "name": "Bodyweight Calf Raise",
+      "description": "Standing calf raise with no added load.",
+      "why_needed": "Very common at home; dataset versions all use equipment."
+    },
+    {
+      "name": "Hindu Squat / Hindu Push-Up (baithak / dand)",
+      "description": "Traditional Indian akhada variants of the squat and push-up.",
+      "why_needed": "Cultural relevance; currently aliased to the closest standard exercises. No measured energy cost or bodyweight fraction found."
+    }
+  ]
+}

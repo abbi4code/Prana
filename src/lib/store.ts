@@ -4,7 +4,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { getFood, getUnit, setCustomFoods } from "./foods";
 import { DEFAULT_GOALS, portion } from "./nutrition";
-import type { Entry, Food, Goals, Meal, Profile, SavedMeal, ThaliItem, WeightLog } from "./types";
+import type { Entry, Food, Goals, LogSource, Meal, Profile, SavedMeal, ThaliItem, WeightLog } from "./types";
 
 /**
  * Local changes not yet pushed to Supabase (decision D14).
@@ -47,6 +47,8 @@ type Data = {
 type State = Data & {
   hydrated: boolean;
   addEntry: (foodId: string, unitId: string, qty: number, meal: Meal, date: string) => void;
+  /** log several confirmed items at once (natural-language flow); returns the new entry ids */
+  addEntries: (items: { foodId: string; unitId: string; qty: number }[], meal: Meal, date: string, meta: { source: LogSource; rawInput?: string }) => string[];
   updateEntry: (id: string, patch: { unitId: string; qty: number; meal: Meal }) => void;
   removeEntry: (id: string) => void;
   /** undo a delete: put the same entry (same id) back */
@@ -76,13 +78,14 @@ const uid = () => (typeof crypto !== "undefined" && crypto.randomUUID ? crypto.r
 const add = (list: string[], ...items: string[]) => [...new Set([...list, ...items])];
 const drop = (list: string[], item: string) => list.filter((x) => x !== item);
 
-function build(foodId: string, unitId: string, qty: number, meal: Meal, date: string): Entry | null {
+function build(foodId: string, unitId: string, qty: number, meal: Meal, date: string, source: LogSource = "manual", rawInput?: string): Entry | null {
   const food = getFood(foodId);
   if (!food) return null;
   const unit = getUnit(food, unitId);
   return {
     id: uid(), date, meal, foodId, name: food.name, unitId: unit.id,
     unitLabel: unit.label, qty, ...portion(food, unit, qty), createdAt: Date.now(),
+    source, ...(rawInput ? { rawInput: rawInput.slice(0, 500) } : {}),
   };
 }
 
@@ -97,11 +100,19 @@ export const useStore = create<State>()(
           const e = build(foodId, unitId, qty, meal, date);
           return e ? { entries: [...s.entries, e], sync: { ...s.sync, dirtyEntries: add(s.sync.dirtyEntries, e.id) } } : s;
         }),
+      addEntries: (items, meal, date, meta) => {
+        const made = items.map((it) => build(it.foodId, it.unitId, it.qty, meal, date, meta.source, meta.rawInput)).filter(Boolean) as Entry[];
+        set((s) => ({
+          entries: [...s.entries, ...made],
+          sync: { ...s.sync, dirtyEntries: add(s.sync.dirtyEntries, ...made.map((e) => e.id)) },
+        }));
+        return made.map((e) => e.id);
+      },
       updateEntry: (id, patch) =>
         set((s) => ({
           entries: s.entries.map((e) => {
             if (e.id !== id) return e;
-            const next = build(e.foodId, patch.unitId, patch.qty, patch.meal, e.date);
+            const next = build(e.foodId, patch.unitId, patch.qty, patch.meal, e.date, e.source, e.rawInput);
             return next ? { ...next, id: e.id, createdAt: e.createdAt } : e;
           }),
           sync: { ...s.sync, dirtyEntries: add(s.sync.dirtyEntries, id) },

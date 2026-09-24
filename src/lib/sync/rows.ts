@@ -20,6 +20,8 @@ export type LogRow = {
   created_at: string;
   updated_at?: string;
   deleted_at: string | null;
+  source?: string | null;
+  raw_input?: string | null;
 };
 export type WeightRow = { user_id?: string; measured_on: string; kg: number; updated_at?: string; deleted_at: string | null };
 export type WaterRow = { user_id?: string; logged_on: string; glasses: number; updated_at?: string };
@@ -32,12 +34,15 @@ export const entryToRow = (e: Entry, userId: string): LogRow => ({
   id: e.id, user_id: userId, logged_on: e.date, meal: e.meal, food_id: e.foodId, name: e.name,
   unit_id: e.unitId, unit_label: e.unitLabel, qty: e.qty, grams: e.grams, kcal: e.kcal,
   protein_g: e.p, carbs_g: e.c, fat_g: e.f, created_at: new Date(e.createdAt).toISOString(), deleted_at: null,
+  source: e.source ?? null, raw_input: e.rawInput ?? null,
 });
 
 export const rowToEntry = (r: LogRow): Entry => ({
   id: r.id, date: r.logged_on, meal: r.meal, foodId: r.food_id, name: r.name, unitId: r.unit_id,
   unitLabel: r.unit_label, qty: Number(r.qty), grams: Number(r.grams), kcal: Number(r.kcal),
   p: num(r.protein_g), c: num(r.carbs_g), f: num(r.fat_g), createdAt: Date.parse(r.created_at),
+  ...(r.source ? { source: r.source as Entry["source"] } : {}),
+  ...(r.raw_input ? { rawInput: r.raw_input } : {}),
 });
 
 /**

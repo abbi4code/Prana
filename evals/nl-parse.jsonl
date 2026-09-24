@@ -1,0 +1,60 @@
+{"text":"2 roti aur dal for dinner","meal":"dinner","items":[{"food":["chapati-roti"],"qty":2,"unit":"piece"},{"food":["mixed-dal","masoor-dal","moong-dal","moong-dal-tadka","arhar-dal-palak"],"qty":null}]}
+{"text":"half plate biryani","meal":null,"items":[{"food":["veg-biryani","mutton-biryani"],"qty":0.5,"unit":"plate"}]}
+{"text":"ek katori rajma chawal","meal":null,"items":[{"food":["rajma"],"qty":1,"unit":"katori"},{"food":["boiled-rice"]}]}
+{"text":"nashta mein 2 anda aur chai bina chini","meal":"breakfast","items":[{"food":["egg-boiled"],"qty":2,"unit":"piece"},{"food":["chai-no-sugar"]}]}
+{"text":"1 scoop whey with 300ml milk and creatine","meal":null,"items":[{"food":["whey-protein"],"qty":1,"unit":"scoop"},{"food":["milk-cow","milk-buffalo"],"qty":300,"unit":"ml"},{"food":["creatine"]}]}
+{"text":"3 rotii","meal":null,"items":[{"food":["chapati-roti"],"qty":3,"unit":"piece"}]}
+{"text":"do paratha aur dahi","meal":null,"items":[{"food":["plain-paratha"],"qty":2,"unit":"piece"},{"food":["dahi"]}]}
+{"text":"lunch me dal chawal khaya","meal":"lunch","items":[{"food":["mixed-dal","masoor-dal","moong-dal","moong-dal-tadka"]},{"food":["boiled-rice"]}]}
+{"text":"masala dosa with sambar and coconut chutney","meal":null,"items":[{"food":["masala-dosa"]},{"food":["sambar"]},{"food":["coconut-chutney"]}]}
+{"text":"2 idli sambar breakfast","meal":"breakfast","items":[{"food":["idli"],"qty":2,"unit":"piece"},{"food":["sambar"]}]}
+{"text":"1 plate poha","meal":null,"items":[{"food":["veg-poha"],"qty":1,"unit":"plate"}]}
+{"text":"ek glass doodh","meal":null,"items":[{"food":["milk-cow"],"qty":1,"unit":"glass"}]}
+{"text":"chai with 2 biscuits","meal":null,"items":[{"food":["chai"]},{"qty":2}]}
+{"text":"paneer butter masala aur 2 butter naan","meal":null,"items":[{"food":["paneer-butter-masala"]},{"food":["naan"],"qty":2,"unit":"piece"}]}
+{"text":"chole bhature","meal":null,"items":[{"food":["chole"]},{"food":["bhatura"]}]}
+{"text":"aloo paratha with curd","meal":null,"items":[{"food":["aloo-paratha"]},{"food":["dahi"]}]}
+{"text":"200 gram paneer","meal":null,"items":[{"food":["paneer-raw"],"qty":200,"unit":"g"}]}
+{"text":"150g chicken curry","meal":null,"items":[{"food":["chicken-curry"],"qty":150,"unit":"g"}]}
+{"text":"a bowl of oats","meal":null,"items":[{"food":["oats-porridge","yogabar-protein-oats-dark-chocolate","yogabar-protein-oats-filter-kaapi"],"qty":1,"unit":"bowl"}]}
+{"text":"1 banana and 1 apple","meal":null,"items":[{"food":["banana"],"qty":1,"unit":"piece"},{"food":["apple"],"qty":1,"unit":"piece"}]}
+{"text":"dinner: khichdi aur raita","meal":"dinner","items":[{"food":["veg-khichdi","plain-khichdi","palak-khichdi","poshtik-khichdi"]},{"food":["cucumber-raita","aloo-raita","pudina-raita","lauki-raita","tomato-onion-raita"]}]}
+{"text":"evening snack samosa","meal":"snacks","items":[{"food":["samosa","veg-samosa"]}]}
+{"text":"shaam ko 2 samose aur chai","meal":"snacks","items":[{"food":["samosa","veg-samosa"],"qty":2,"unit":"piece"},{"food":["chai"]}]}
+{"text":"raat ko 2 katori dal aur ek plate chawal","meal":"dinner","items":[{"food":["mixed-dal","masoor-dal","moong-dal","moong-dal-tadka"],"qty":2,"unit":"katori"},{"food":["boiled-rice"],"qty":1,"unit":"plate"}]}
+{"text":"dopahar ka khana rajma chawal aur salad","meal":"lunch","items":[{"food":["rajma"]},{"food":["boiled-rice"]},{"food":["green-salad"]}]}
+{"text":"egg bhurji with 2 bread slices","meal":null,"items":[{"food":["egg-bhurji"]},{"food":["white-bread","brown-bread"],"qty":2}]}
+{"text":"omelette and toast","meal":null,"items":[{"food":["plain-omelette"]},{"food":["white-bread","brown-bread"]}]}
+{"text":"1 cup coffee","meal":null,"items":[{"food":["instant-coffee","black-coffee","steeped-coffee"],"qty":1,"unit":"cup"}]}
+{"text":"black coffee","meal":null,"items":[{"food":["black-coffee"]}]}
+{"text":"sweet lassi 1 glass","meal":null,"items":[{"food":["sweet-lassi"],"qty":1,"unit":"glass"}]}
+{"text":"ek glass chaas","meal":null,"items":[{"food":["salted-lassi"],"qty":1,"unit":"glass"}]}
+{"text":"maggi","meal":null,"items":[{"food":["maggi-masala-noodles"]}]}
+{"text":"gulab jamun 2","meal":null,"items":[{"food":["gulab-jamun"],"qty":2,"unit":"piece"}]}
+{"text":"kheer ek katori","meal":null,"items":[{"food":["rice-kheer","seviyan-kheer","suji-kheer","makhana-kheer"],"qty":1,"unit":"katori"}]}
+{"text":"1 tsp ghee on roti","meal":null,"items":[{"food":["ghee"],"qty":1,"unit":"tsp"},{"food":["chapati-roti"]}]}
+{"text":"2 chammach chini","meal":null,"items":[{"food":["sugar"],"qty":2,"unit":"tsp"}]}
+{"text":"a handful of peanuts","meal":null,"items":[{"food":["peanuts"],"qty":1,"unit":"handful"}]}
+{"text":"10 almonds","meal":null,"items":[{"food":["almond"],"qty":10,"unit":"piece"}]}
+{"text":"nariyal pani","meal":null,"items":[{"food":["coconut-water"]}]}
+{"text":"kya roti healthy hai?","meal":null,"items":[]}
+{"text":"hello","meal":null,"items":[]}
+{"text":"i drank 2 glasses of water","meal":null,"items":[]}
+{"text":"rotii dall sabji","meal":null,"items":[{"food":["chapati-roti"]},{"food":["mixed-dal","masoor-dal","moong-dal","moong-dal-tadka"]},{}]}
+{"text":"dal makhani and jeera rice","meal":null,"items":[{"food":["moti-mahal-dal"]},{"food":["jeera-rice"]}]}
+{"text":"veg pulao 1 plate","meal":null,"items":[{"food":["veg-pulao"],"qty":1,"unit":"plate"}]}
+{"text":"sabudana khichdi","meal":null,"items":[{"food":["sabudana-khichdi"]}]}
+{"text":"upma","meal":null,"items":[{"food":["suji-upma"]}]}
+{"text":"2 medu vada","meal":null,"items":[{"food":["medu-vada"],"qty":2,"unit":"piece"}]}
+{"text":"pav bhaji","meal":null,"items":[{"food":["pav-bhaji"]}]}
+{"text":"butter chicken with 1 naan","meal":null,"items":[{"food":["butter-chicken"]},{"food":["naan"],"qty":1,"unit":"piece"}]}
+{"text":"1 whey shake","meal":null,"items":[{"food":["whey-shake-water","whey-shake-milk","whey-protein"],"qty":1}]}
+{"text":"yogabar protein oats 50g","meal":null,"items":[{"food":["yogabar-protein-oats-dark-chocolate","yogabar-protein-oats-filter-kaapi"],"qty":50,"unit":"g"}]}
+{"text":"2 scoop whey in water","meal":null,"items":[{"food":["whey-protein","whey-shake-water"],"qty":2,"unit":"scoop"}]}
+{"text":"aadha katori chawal","meal":null,"items":[{"food":["boiled-rice"],"qty":0.5,"unit":"katori"}]}
+{"text":"dedh roti","meal":null,"items":[{"food":["chapati-roti"],"qty":1.5,"unit":"piece"}]}
+{"text":"3 idly","meal":null,"items":[{"food":["idli"],"qty":3,"unit":"piece"}]}
+{"text":"breakfast was poha and chai","meal":"breakfast","items":[{"food":["veg-poha"]},{"food":["chai"]}]}
+{"text":"tea without sugar","meal":null,"items":[{"food":["chai-no-sugar"]}]}
+{"text":"biryani half plate and raita","meal":null,"items":[{"food":["veg-biryani","mutton-biryani"],"qty":0.5,"unit":"plate"},{"food":["cucumber-raita","aloo-raita","pudina-raita","lauki-raita","tomato-onion-raita"]}]}
+{"text":"aloo gobhi sabzi aur 2 phulka","meal":null,"items":[{"food":["aloo-gobi"]},{"food":["chapati-roti"],"qty":2,"unit":"piece"}]}

@@ -7,17 +7,17 @@ When something changes, mark the old entry **Superseded by Dxx** instead of dele
 
 | ID | Decision | Status | Date |
 |---|---|---|---|
-| D01 | Next.js + Supabase stack | Decided | 2026-09-24 |
+| D01 | Next.js + Supabase stack | Decided (as built: see note in D01) | 2026-09-24 |
 | D02 | Phone app = PWA, no native app | Decided (SW detail superseded by D15) | 2026-09-24 |
-| D03 | Food data from INDB + IFCT 2017 only | Decided | 2026-09-24 |
+| D03 | Food data from INDB + IFCT 2017 (+ labels); no calorie apps | Decided (extended by D22) | 2026-09-24 |
 | D04 | Nutrients per 100 g; unit weights per food | Decided (foods table superseded by D13) | 2026-09-24 |
 | D05 | Log entries snapshot grams + kcal | Decided | 2026-09-24 |
 | D06 | Standard household unit sizes | Decided | 2026-09-24 |
 | D07 | Canonical unit names (normalize dataset) | Decided (built) | 2026-09-24 |
 | D08 | Visual identity "Modern Masala" | Built (dark + light, D20); owner asked for more polish | 2026-09-24 |
 | D09 | UX rules (≤3 taps to log, etc.) | Decided | 2026-09-24 |
-| D10 | Meal slots incl. "Chai & Snacks" | Built; awaiting owner's sign-off | 2026-09-24 |
-| D11 | One consistent illustration style for food images | Proposed | 2026-09-24 |
+| D10 | Meal slots incl. "Chai & Snacks" | Built (in daily use) | 2026-09-24 |
+| D11 | One consistent illustration style for food images | Partly built: category art (D23); per-dish art open | 2026-09-24 |
 | D12 | Project docs live in `.claude/`, one file per topic | Decided | 2026-09-24 |
 | D13 | Food catalog ships inside the app as static JSON | Decided | 2026-09-24 |
 | D14 | Local-first: data lives on the device, Supabase syncs it | Decided | 2026-09-24 |
@@ -32,6 +32,8 @@ When something changes, mark the old entry **Superseded by Dxx** instead of dele
 | D23 | Interaction patterns: swipe-delete + undo, drag katori, celebrate habits only | Decided | 2026-09-24 |
 | D24 | Streak rules: on target = logged + 80–105% of goal; freezes | Decided | 2026-09-24 |
 | D25 | Saved meals ("thalis"), logged in one tap | Decided | 2026-09-24 |
+| D26 | Natural-language + voice logging: server parses, device matches | Decided (built) | 2026-09-25 |
+| D26 | Workouts: exercise library, sets × reps × kg, estimated burn kept separate from food, food/workout/global streaks | Decided (rest-day rule Proposed) | 2026-09-24 |
 
 ---
 
@@ -47,6 +49,8 @@ When something changes, mark the old entry **Superseded by Dxx** instead of dele
 | Hosting | Vercel |
 
 **Why:** one codebase for web + phone; Supabase gives auth, DB and file storage in one place.
+
+**As built (2026-09-24):** no shadcn/ui: custom components on Tailwind v4 tokens, plus `vaul` (sheets), `zustand` (state), `lucide-react`. Supabase Storage is not used yet (food art is inline SVG). Hosting is the owner's call. Details: [architecture.md](architecture.md).
 
 ## D02 — Phone app is a PWA
 Installable via "Add to Home Screen", full-screen, offline shell. Use **Serwist** for the service worker.
@@ -116,11 +120,11 @@ Will be confirmed with a clickable mockup before coding.
 - Skeleton loaders, not spinners.
 - Search matches Hinglish/aliases ("dahi" → curd, "arhar" → toor dal).
 
-## D10 — Meal slots (Proposed)
+## D10 — Meal slots
 Breakfast · Lunch · **Chai & Snacks** · Dinner.
 **Why:** evening chai + snack is a real meal in Indian routines and a big source of unlogged calories.
 
-## D11 — Food images (Proposed)
+## D11 — Food images (partly superseded by D23 category art)
 One consistent illustration style for every food (generated from each food's `image_prompt`), stored in Supabase Storage.
 **Why:** stock photos of Indian dishes are patchy and don't match each other.
 
@@ -129,7 +133,7 @@ One consistent illustration style for every food (generated from each food's `im
 **Why:** instant search with no network round-trip, works fully offline, no DB seeding step. Supersedes the `foods` table in D04; `food_logs.food_id` stores the catalog id. User-created foods will get a DB table later.
 
 ## D14 — Local-first data
-All logs, goals, weights and water are stored on the device (zustand + localStorage, key `ct-v1`), so logging works offline and is instant. Supabase (schema in `supabase/migrations/0001_init.sql`) will sync it across devices once login is added: rows have `updated_at` / `deleted_at` for last-write-wins sync.
+All logs, goals, weights and water are stored on the device (zustand + localStorage, key `ct-v1`), so logging works offline and is instant. Supabase (schema in `supabase/migrations/20260924000000_init.sql` + later migrations) syncs it across devices after Google sign-in (D18): rows have `updated_at` / `deleted_at` for last-write-wins sync.
 
 ## D15 — Service worker
 `public/sw.js`, hand-written: network-first for pages with cached fallback, cache-first for hashed build assets. Registered only in production.
@@ -194,6 +198,23 @@ A saved meal = name + usual meal slot + items `{ foodId, unitId, qty }`. Nutriti
 - Create: **bookmark icon on a meal card** (prefilled with that meal's items) or **New thali** in the add sheet. The builder shows the food drawn on an illustrated steel thali, with live totals.
 - Log: tap a card under **My thalis** in the add sheet (goes to the selected meal), or tap the **⚡ chip on an empty meal card** (thalis saved for that slot). Logging from Today shows an Undo toast.
 - Synced via `saved_meals` (jsonb, RLS), migration `20260924130000_saved_meals`.
+
+## D26 — Workouts and calorie burn
+Workout tracking is no longer parked (future.md). Full plan: [workouts.md](workouts.md).
+- Exercise library curated from **free-exercise-db** (public domain, photos). Photos load on demand and are cached offline.
+- Log sets × reps × kg per exercise. Bodyweight exercises use a published body-weight fraction.
+- Burn = Compendium 2024 MET (corrected for the person's weight, height, age, sex) × time, counting only calories above resting ((MET − 1)). Computed by formula, never a lookup table; shown with "~".
+- **Burn is separate from food:** its own figure and an optional daily burn goal. It does not change the food budget. The food goal default stays (the Me goal calculator) and gets a quick edit on Today.
+- **Streaks:** food streak (D24) and workout streak in their own sections; a global streak lights when both are hit on the same day. Rest-day handling is **Proposed** (see workouts.md).
+
+## D26 — Natural-language + voice logging
+Full spec, architecture and as-built notes: [nl-logging.md](nl-logging.md).
+- **The LLM only turns text into structure** (`{meal, items[{name, qty, unit}]}`); nutrition always comes from the catalog + maths.
+- **Server does only what needs secrets:** `/api/food/parse` (signed-in users only) = auth → Postgres rate limit → shared cache → OpenAI `gpt-6-luna` (Structured Outputs) → Zod. Never returns numbers, never writes logs.
+- **Device does matching + maths + confirm card** (catalog + custom foods live there). Matching is a pure module, so it can move server-side later without a rewrite.
+- Nothing is saved without confirmation; entries get `source` (manual/text/voice) + `raw_input`; corrections go to `parse_corrections`.
+- Voice = Web Speech API filling the same box (en-IN), feature-detected; typing and plain search are always the fallback.
+- Quality gate: `npm run eval:parse` (60 cases) on every prompt/model change.
 
 ## D12 — Project docs
 Decisions, features, future changes and data notes live as separate md files in `.claude/`, indexed in [CLAUDE.md](CLAUDE.md).

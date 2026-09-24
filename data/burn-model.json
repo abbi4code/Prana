@@ -1,0 +1,2330 @@
+{
+  "meta": {
+    "version": "1.0",
+    "generated_on": "2026-09-24",
+    "notes": [
+      "Descriptions in 'mets' are short paraphrased labels, not verbatim Compendium text; each entry has a locator (code) so the exact wording can be pulled from the official PDF.",
+      "Verbatim quotes are omitted throughout (quote: null) to avoid reproducing copyrighted text; 'evidence' fields paraphrase what the source says and 'locator' says where."
+    ],
+    "sources": [
+      {
+        "id": "compendium2024",
+        "citation": "Herrmann SD, Willis EA, Ainsworth BE, et al. 2024 Adult Compendium of Physical Activities: A third update of the energy costs of human activities. J Sport Health Sci 2024. doi:10.1016/j.jshs.2023.10.010",
+        "url": "https://pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf"
+      },
+      {
+        "id": "compendium_corrected",
+        "citation": "Compendium of Physical Activities website: Corrected METs - Adults (published 2024-02-21, modified 2024-04-12)",
+        "url": "https://pacompendium.com/corrected-mets/"
+      },
+      {
+        "id": "kozey2010",
+        "citation": "Kozey S, Lyden K, Staudenmayer J, Freedson P. Errors in MET estimates of physical activities using 3.5 ml/kg/min as the baseline oxygen consumption. J Phys Act Health 2010;7(4):508-516",
+        "url": "https://www.umass.edu/physicalactivity/newsite/publications/Sarah%20Keadle/papers/1.pdf"
+      },
+      {
+        "id": "matthews2024",
+        "citation": "Matthews R, Hochsmann C, Erickson ML, et al. Modulators of Energy Expenditure Accuracy in Adults with Overweight or Obesity: E-MECHANIC Secondary Analyses. Med Sci Sports Exerc 2025;57(3):470-480 (online 2024-10-15)",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11801430/"
+      },
+      {
+        "id": "formenti2015",
+        "citation": "Formenti F, Minetti AE, Borrani F. Pedaling rate is an important determinant of human oxygen uptake during exercise on the cycle ergometer. Physiol Rep 2015;3(9):e12500",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4600374/"
+      },
+      {
+        "id": "acsm_running_pmc",
+        "citation": "Indirect estimation of VO2max in athletes by ACSM's equation: valid or not? (PMC3743617)",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3743617/"
+      },
+      {
+        "id": "acsm2009",
+        "citation": "American College of Sports Medicine position stand. Progression models in resistance training for healthy adults. Med Sci Sports Exerc 2009;41(3):687-708",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/19204579/"
+      },
+      {
+        "id": "reis2017",
+        "citation": "Reis VM, Garrido ND, Vianna J, Sousa AC, Alves JV, Marques MC. Energy cost of isolated resistance exercises across low- to high-intensities. PLoS ONE 2017;12(7):e0181311",
+        "url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0181311"
+      },
+      {
+        "id": "mazzetti2011",
+        "citation": "Mazzetti SA, Wolff C, Collins B, et al. Influence of differences in exercise-intensity and kilograms/set on energy expenditure during and after maximally explosive resistance exercise. Int J Exerc Sci 2011;4(4):273-282",
+        "url": "https://digitalcommons.wku.edu/ijes/vol4/iss4/8"
+      },
+      {
+        "id": "mazzetti2007",
+        "citation": "Mazzetti S, Douglass M, Yocum A, Harber M. Effect of explosive versus slow contractions and exercise intensity on energy expenditure. Med Sci Sports Exerc 2007;39(8):1291-1301",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/17762362/"
+      },
+      {
+        "id": "phillips2003",
+        "citation": "Phillips WT, Ziuraitis JR. Energy cost of the ACSM single-set resistance training protocol. J Strength Cond Res 2003;17(2):350-355",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/12741877/"
+      },
+      {
+        "id": "phillips2004",
+        "citation": "Phillips WT, Ziuraitis JR. Energy cost of single-set resistance training in older adults. J Strength Cond Res 2004;18(3):606-609",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/15320686/"
+      },
+      {
+        "id": "scott2011",
+        "citation": "Scott CB, Leighton BH, Ahearn KJ, McManus JJ. Aerobic, anaerobic, and EPOC energy expenditure of muscular endurance and strength: 1-set of bench press to muscular fatigue. J Strength Cond Res 2011;25(4):903-908",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/20703175/"
+      },
+      {
+        "id": "knausenberger2014",
+        "citation": "Knausenberger A, Luchini A, Scott CB, Steitz A. Total energy cost - aerobic and anaerobic, exercise and recovery - of five resistance exercises. Central European Journal of Sport Sciences and Medicine 2014;8",
+        "url": "https://doaj.org/article/ba144a51e1b446238376a70edc1fc328"
+      },
+      {
+        "id": "benito2016",
+        "citation": "Benito PJ, Alvarez-Sanchez M, Diaz V, et al. Cardiovascular fitness and energy expenditure response during a combined aerobic and circuit weight training protocol. PLoS ONE 2016;11(11):e0164349",
+        "url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0164349"
+      },
+      {
+        "id": "jmir2022",
+        "citation": "Accuracy and acceptability of wrist-wearable activity-tracking devices: systematic review of the literature. J Med Internet Res 2022;24(1):e30791",
+        "url": "https://www.jmir.org/2022/1/e30791"
+      },
+      {
+        "id": "sensors2026",
+        "citation": "Comparative validity of smartwatch-derived heart rate and energy expenditure during endurance and resistance exercise. Sensors 2026;26(8):2526",
+        "url": "https://www.mdpi.com/1424-8220/26/8/2526"
+      },
+      {
+        "id": "wrist2021",
+        "citation": "Wrist-worn devices for the measurement of heart rate and energy expenditure: a validation study for the Apple Watch 6, Polar Vantage V and Fitbit Sense (PubMed 34957939)",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/34957939"
+      }
+    ]
+  },
+  "mets": [
+    {
+      "code": "02050",
+      "description": "Weight lifting (free weights or machines), power lifting or body building, vigorous",
+      "met": 6.0,
+      "category": "resistance",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 02050",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "02052",
+      "description": "Weight training: squats or deadlift, slow or explosive",
+      "met": 5.0,
+      "category": "resistance",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 02052",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "02054",
+      "description": "Weight training: multiple exercises, 8-15 reps, varied resistance",
+      "met": 3.5,
+      "category": "resistance",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 02054",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "02055",
+      "description": "Resistance training circuit: reciprocal supersets / peripheral heart action",
+      "met": 5.8,
+      "category": "resistance",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 02055",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "02056",
+      "description": "Bodyweight resistance exercises (squat, lunge, push-up, crunch), general",
+      "met": 3.0,
+      "category": "resistance",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 02056",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "02057",
+      "description": "Bodyweight resistance exercises (squat, lunge, push-up, crunch), high intensity",
+      "met": 6.5,
+      "category": "resistance",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 02057",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "02058",
+      "description": "Kettlebell swings",
+      "met": 9.8,
+      "category": "resistance",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 02058",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "02020",
+      "description": "Calisthenics (push-ups, sit-ups, pull-ups, jumping jacks, burpees, battle ropes), vigorous",
+      "met": 7.5,
+      "category": "resistance",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 02020",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "02022",
+      "description": "Calisthenics (push-ups, sit-ups, pull-ups, lunges), moderate",
+      "met": 3.8,
+      "category": "resistance",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 02022",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "02024",
+      "description": "Calisthenics (curl-ups, crunches, plank), light",
+      "met": 2.8,
+      "category": "resistance",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 02024",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "02030",
+      "description": "Calisthenics light-moderate, general (e.g. back exercises, up and down from floor)",
+      "met": 3.5,
+      "category": "resistance",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 02030",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "02032",
+      "description": "Circuit training with bodyweight exercises",
+      "met": 6.0,
+      "category": "resistance",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 02032",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "02034",
+      "description": "Circuit training, light",
+      "met": 3.5,
+      "category": "resistance",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 02034",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "02035",
+      "description": "Circuit training, moderate",
+      "met": 5.0,
+      "category": "resistance",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 02035",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "02040",
+      "description": "Circuit training incl. kettlebells, some aerobic work, minimal rest, vigorous",
+      "met": 7.5,
+      "category": "resistance",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 02040",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "02060",
+      "description": "Health club exercise, general",
+      "met": 5.5,
+      "category": "resistance",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 02060",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "02061",
+      "description": "Health club classes plus gym/weight training in one visit",
+      "met": 5.0,
+      "category": "resistance",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 02061",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "02210",
+      "description": "High intensity interval exercise, moderate",
+      "met": 7.0,
+      "category": "resistance",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 02210",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "02214",
+      "description": "High intensity interval exercise (burpees, mountain climbers, squat jumps, Tabata), vigorous",
+      "met": 11.0,
+      "category": "resistance",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 02214",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "02101",
+      "description": "Stretching, mild",
+      "met": 2.3,
+      "category": "resistance",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 02101",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "02000",
+      "description": "Aerobics, general",
+      "met": 7.3,
+      "category": "cardio",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 02000",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "02310",
+      "description": "Zumba, group class",
+      "met": 6.5,
+      "category": "cardio",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 02310",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "02315",
+      "description": "Zumba, home video",
+      "met": 5.5,
+      "category": "cardio",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 02315",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "02048",
+      "description": "Elliptical trainer, moderate",
+      "met": 5.0,
+      "category": "cardio",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 02048",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "02049",
+      "description": "Elliptical trainer, vigorous",
+      "met": 9.0,
+      "category": "cardio",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 02049",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "02065",
+      "description": "Stair treadmill ergometer, general",
+      "met": 9.3,
+      "category": "cardio",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 02065",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "02068",
+      "description": "Rope skipping, general",
+      "met": 11.0,
+      "category": "cardio",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 02068",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "02069",
+      "description": "Jumping rope on Digi-Jump machine, 120 jumps/min",
+      "met": 9.0,
+      "category": "cardio",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 02069",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "02070",
+      "description": "Rowing ergometer, general, vigorous",
+      "met": 7.3,
+      "category": "cardio",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 02070",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "02071",
+      "description": "Rowing ergometer, <100 W, moderate",
+      "met": 5.0,
+      "category": "cardio",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 02071",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "02072",
+      "description": "Rowing ergometer, 100-149 W",
+      "met": 7.5,
+      "category": "cardio",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 02072",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "02073",
+      "description": "Rowing ergometer, 150-199 W",
+      "met": 11.0,
+      "category": "cardio",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 02073",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "02074",
+      "description": "Rowing ergometer, >=200 W",
+      "met": 14.0,
+      "category": "cardio",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 02074",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "02115",
+      "description": "Arm ergometer, general, light",
+      "met": 2.8,
+      "category": "cardio",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 02115",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "02116",
+      "description": "Arm ergometer, 15 W",
+      "met": 2.0,
+      "category": "cardio",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 02116",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "02117",
+      "description": "Arm ergometer, 25-30 W",
+      "met": 2.8,
+      "category": "cardio",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 02117",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "02118",
+      "description": "Arm ergometer, 45 W",
+      "met": 3.5,
+      "category": "cardio",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 02118",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "01200",
+      "description": "Stationary bike, general",
+      "met": 6.8,
+      "category": "cycling",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 01200",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "01210",
+      "description": "Stationary bike, 25-30 W",
+      "met": 3.5,
+      "category": "cycling",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 01210",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "01214",
+      "description": "Stationary bike, 50 W",
+      "met": 4.0,
+      "category": "cycling",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 01214",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "01216",
+      "description": "Stationary bike, 60 W",
+      "met": 5.0,
+      "category": "cycling",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 01216",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "01218",
+      "description": "Stationary bike, 70-80 W",
+      "met": 5.8,
+      "category": "cycling",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 01218",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "01220",
+      "description": "Stationary bike, 90-100 W",
+      "met": 6.0,
+      "category": "cycling",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 01220",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "01224",
+      "description": "Stationary bike, 101-125 W",
+      "met": 6.8,
+      "category": "cycling",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 01224",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "01228",
+      "description": "Stationary bike, 126-150 W",
+      "met": 8.0,
+      "category": "cycling",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 01228",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "01232",
+      "description": "Stationary bike, 151-199 W",
+      "met": 10.3,
+      "category": "cycling",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 01232",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "01236",
+      "description": "Stationary bike, 200-229 W",
+      "met": 10.8,
+      "category": "cycling",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 01236",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "01240",
+      "description": "Stationary bike, 230-250 W",
+      "met": 12.5,
+      "category": "cycling",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 01240",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "01244",
+      "description": "Stationary bike, 270-305 W",
+      "met": 13.8,
+      "category": "cycling",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 01244",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "01248",
+      "description": "Stationary bike, >325 W",
+      "met": 16.3,
+      "category": "cycling",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 01248",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "01270",
+      "description": "Spin / RPM class",
+      "met": 9.0,
+      "category": "cycling",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 01270",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "01305",
+      "description": "Cycling HIIT",
+      "met": 8.8,
+      "category": "cycling",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 01305",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "01010",
+      "description": "Outdoor cycling <10 mph, leisure",
+      "met": 4.0,
+      "category": "cycling",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 01010",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "01015",
+      "description": "Outdoor cycling, self-selected easy",
+      "met": 4.3,
+      "category": "cycling",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 01015",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "01016",
+      "description": "Outdoor cycling, self-selected moderate",
+      "met": 7.0,
+      "category": "cycling",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 01016",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "01017",
+      "description": "Outdoor cycling, self-selected vigorous",
+      "met": 9.0,
+      "category": "cycling",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 01017",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "01020",
+      "description": "Outdoor cycling 10-11.9 mph",
+      "met": 6.8,
+      "category": "cycling",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 01020",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "01030",
+      "description": "Outdoor cycling 12-13.9 mph",
+      "met": 8.0,
+      "category": "cycling",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 01030",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "01040",
+      "description": "Outdoor cycling 14-15.9 mph",
+      "met": 10.0,
+      "category": "cycling",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 01040",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "01050",
+      "description": "Outdoor cycling 16-19 mph",
+      "met": 12.0,
+      "category": "cycling",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 01050",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "17151",
+      "description": "Walking <2.0 mph, level",
+      "met": 2.3,
+      "category": "walking",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 17151",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "17152",
+      "description": "Walking 2.0-2.4 mph, level",
+      "met": 2.8,
+      "category": "walking",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 17152",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "17170",
+      "description": "Walking 2.5 mph, level",
+      "met": 3.0,
+      "category": "walking",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 17170",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "17190",
+      "description": "Walking 2.8-3.4 mph, level",
+      "met": 3.8,
+      "category": "walking",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 17190",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "17200",
+      "description": "Walking 3.5-3.9 mph, level, brisk",
+      "met": 4.8,
+      "category": "walking",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 17200",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "17220",
+      "description": "Walking 4.0-4.4 mph, level",
+      "met": 5.5,
+      "category": "walking",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 17220",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "17230",
+      "description": "Walking 4.5-4.9 mph, level",
+      "met": 7.0,
+      "category": "walking",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 17230",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "17231",
+      "description": "Walking 5.0-5.5 mph, level",
+      "met": 8.5,
+      "category": "walking",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 17231",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "17255",
+      "description": "Walking, self-selected speed",
+      "met": 4.0,
+      "category": "walking",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 17255",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "17340",
+      "description": "Treadmill walk <1.0 mph, 0%",
+      "met": 2.1,
+      "category": "walking",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 17340",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "17343",
+      "description": "Treadmill walk 1.0 mph, 0%",
+      "met": 2.3,
+      "category": "walking",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 17343",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "17346",
+      "description": "Treadmill walk 1.2-1.9 mph, 0%",
+      "met": 2.8,
+      "category": "walking",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 17346",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "17349",
+      "description": "Treadmill walk 2.0-2.4 mph, 0%",
+      "met": 3.0,
+      "category": "walking",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 17349",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "17352",
+      "description": "Treadmill walk 2.5-2.9 mph, 0%",
+      "met": 3.5,
+      "category": "walking",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 17352",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "17355",
+      "description": "Treadmill walk 3.0-3.4 mph, 0%",
+      "met": 3.8,
+      "category": "walking",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 17355",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "17358",
+      "description": "Treadmill walk 3.5-3.9 mph, 0%",
+      "met": 4.8,
+      "category": "walking",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 17358",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "17361",
+      "description": "Treadmill walk 4.0-4.4 mph, 0%",
+      "met": 5.8,
+      "category": "walking",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 17361",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "17364",
+      "description": "Treadmill walk 4.5-4.9 mph, 0%",
+      "met": 6.8,
+      "category": "walking",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 17364",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "17367",
+      "description": "Treadmill walk 5.0-5.5 mph, 0%",
+      "met": 8.3,
+      "category": "walking",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 17367",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "17032",
+      "description": "Hill climbing, no load, 5-20% grade, very slow",
+      "met": 5.0,
+      "category": "walking",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 17032",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "17034",
+      "description": "Hill climbing, no load, 1-5% grade, moderate-brisk",
+      "met": 5.3,
+      "category": "walking",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 17034",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "17035",
+      "description": "Hill climbing, no load, 6-10% grade, moderate-brisk",
+      "met": 7.0,
+      "category": "walking",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 17035",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "17036",
+      "description": "Hill climbing, no load, 11-20% grade, slow-moderate",
+      "met": 8.8,
+      "category": "walking",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 17036",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "17131",
+      "description": "Stair climbing, general",
+      "met": 6.8,
+      "category": "walking",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 17131",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "17133",
+      "description": "Stair climbing, slow",
+      "met": 4.5,
+      "category": "walking",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 17133",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "17134",
+      "description": "Stair climbing, fast, one step at a time",
+      "met": 9.3,
+      "category": "walking",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 17134",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "12020",
+      "description": "Jogging, self-selected pace",
+      "met": 7.5,
+      "category": "running",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 12020",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "12025",
+      "description": "Jogging in place",
+      "met": 4.8,
+      "category": "running",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 12025",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "12026",
+      "description": "Jogging 2.6-3.7 mph",
+      "met": 3.3,
+      "category": "running",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 12026",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "12028",
+      "description": "Running 4-4.2 mph",
+      "met": 6.5,
+      "category": "running",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 12028",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "12029",
+      "description": "Running 4.3-4.8 mph",
+      "met": 7.8,
+      "category": "running",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 12029",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "12030",
+      "description": "Running 5.0-5.2 mph",
+      "met": 8.5,
+      "category": "running",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 12030",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "12045",
+      "description": "Running 5.5-5.8 mph",
+      "met": 9.0,
+      "category": "running",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 12045",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "12050",
+      "description": "Running 6-6.3 mph",
+      "met": 9.3,
+      "category": "running",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 12050",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "12060",
+      "description": "Running 6.7 mph",
+      "met": 10.5,
+      "category": "running",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 12060",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "12070",
+      "description": "Running 7 mph",
+      "met": 11.0,
+      "category": "running",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 12070",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "12080",
+      "description": "Running 7.5 mph",
+      "met": 11.8,
+      "category": "running",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 12080",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "12090",
+      "description": "Running 8 mph",
+      "met": 12.0,
+      "category": "running",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 12090",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "12100",
+      "description": "Running 8.6 mph",
+      "met": 12.5,
+      "category": "running",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 12100",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "12110",
+      "description": "Running 9 mph",
+      "met": 13.0,
+      "category": "running",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 12110",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "12115",
+      "description": "Running 9.3-9.6 mph",
+      "met": 14.8,
+      "category": "running",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 12115",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "12120",
+      "description": "Running 10 mph",
+      "met": 14.8,
+      "category": "running",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 12120",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "12130",
+      "description": "Running 11 mph",
+      "met": 16.8,
+      "category": "running",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 12130",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "12132",
+      "description": "Running 12 mph",
+      "met": 18.5,
+      "category": "running",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 12132",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "12134",
+      "description": "Running 13 mph",
+      "met": 19.8,
+      "category": "running",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 12134",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "12135",
+      "description": "Running 14 mph",
+      "met": 23.0,
+      "category": "running",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 12135",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "12255",
+      "description": "Running uphill 4.5 mph, 5% incline",
+      "met": 10.3,
+      "category": "running",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 12255",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "12260",
+      "description": "Running uphill 6.0 mph, 5% incline",
+      "met": 13.3,
+      "category": "running",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 12260",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "12265",
+      "description": "Running uphill 7.0 mph, 5% incline",
+      "met": 15.5,
+      "category": "running",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 12265",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "12325",
+      "description": "Running uphill 5.0-5.9 mph, 15% incline",
+      "met": 17.5,
+      "category": "running",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 12325",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "12170",
+      "description": "Running up stairs",
+      "met": 15.0,
+      "category": "running",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 12170",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "18230",
+      "description": "Swimming freestyle laps, fast, vigorous",
+      "met": 9.8,
+      "category": "swimming",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 18230",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "18240",
+      "description": "Swimming freestyle laps, slow, recreational",
+      "met": 5.8,
+      "category": "swimming",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 18240",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "18250",
+      "description": "Swimming backstroke, training",
+      "met": 9.5,
+      "category": "swimming",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 18250",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "18255",
+      "description": "Swimming backstroke, recreational",
+      "met": 4.8,
+      "category": "swimming",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 18255",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "18260",
+      "description": "Swimming breaststroke, training",
+      "met": 10.3,
+      "category": "swimming",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 18260",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "18265",
+      "description": "Swimming breaststroke, recreational",
+      "met": 5.3,
+      "category": "swimming",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 18265",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "18270",
+      "description": "Swimming butterfly",
+      "met": 13.8,
+      "category": "swimming",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 18270",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "18280",
+      "description": "Swimming crawl ~75 yd/min",
+      "met": 10.5,
+      "category": "swimming",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 18280",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "18290",
+      "description": "Swimming crawl ~50 yd/min",
+      "met": 8.0,
+      "category": "swimming",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 18290",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "18292",
+      "description": "Swimming crawl 30-45 yd/min",
+      "met": 5.8,
+      "category": "swimming",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 18292",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "18310",
+      "description": "Swimming, leisurely, not laps",
+      "met": 6.0,
+      "category": "swimming",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 18310",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "18350",
+      "description": "Treading water, moderate",
+      "met": 3.5,
+      "category": "swimming",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 18350",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "15150",
+      "description": "Cricket (batting, bowling, fielding)",
+      "met": 4.8,
+      "category": "sport",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 15150",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "15020",
+      "description": "Badminton, competitive",
+      "met": 7.0,
+      "category": "sport",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 15020",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "15025",
+      "description": "Badminton, match play",
+      "met": 9.0,
+      "category": "sport",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 15025",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "15030",
+      "description": "Badminton, social singles/doubles",
+      "met": 5.5,
+      "category": "sport",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 15030",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "15605",
+      "description": "Soccer, competitive",
+      "met": 9.5,
+      "category": "sport",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 15605",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "15610",
+      "description": "Soccer, casual",
+      "met": 7.0,
+      "category": "sport",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 15610",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "15195",
+      "description": "Futsal",
+      "met": 7.8,
+      "category": "sport",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 15195",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "15550",
+      "description": "Rope jumping 120-160 skips/min",
+      "met": 12.3,
+      "category": "sport",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 15550",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "15551",
+      "description": "Rope jumping 100-120 skips/min",
+      "met": 11.8,
+      "category": "sport",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 15551",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "15552",
+      "description": "Rope jumping <100 skips/min",
+      "met": 8.3,
+      "category": "sport",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 15552",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "15554",
+      "description": "Rope jumping, double unders",
+      "met": 10.0,
+      "category": "sport",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 15554",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "02150",
+      "description": "Yoga, hatha",
+      "met": 2.3,
+      "category": "yoga",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 02150",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "02153",
+      "description": "Yoga, hatha, high intensity",
+      "met": 8.0,
+      "category": "yoga",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 02153",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "02155",
+      "description": "Yoga, hot",
+      "met": 3.0,
+      "category": "yoga",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 02155",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "02160",
+      "description": "Yoga, power",
+      "met": 4.0,
+      "category": "yoga",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 02160",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "02170",
+      "description": "Yoga, nadi shodhana (breathing)",
+      "met": 2.0,
+      "category": "yoga",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 02170",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "02175",
+      "description": "Yoga, general",
+      "met": 2.3,
+      "category": "yoga",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 02175",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "02180",
+      "description": "Yoga, surya namaskar",
+      "met": 3.5,
+      "category": "yoga",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 02180",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "code": "02185",
+      "description": "Yoga, vinyasa",
+      "met": 2.7,
+      "category": "yoga",
+      "source": "compendium2024",
+      "locator": "2024 Adult Compendium PDF (pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf), code 02185",
+      "quote": null,
+      "confidence": "high"
+    }
+  ],
+  "corrected_met": {
+    "formula": "corrected_MET = standard_MET * 3.5 / RMR_mlkgmin",
+    "rmr_equation": "Harris-Benedict (kcal/day). Male: 66.4730 + 5.0033*height_cm + 13.7516*weight_kg - 6.7550*age_yr. Female: 655.0955 + 1.8496*height_cm + 9.5634*weight_kg - 4.6756*age_yr",
+    "rmr_unit_conversion": "RMR_mlkgmin = (RMR_kcal_day / 1440) / 5 / weight_kg * 1000   [kcal/day -> kcal/min -> L O2/min (5 kcal per L) -> mL/kg/min]",
+    "constants": {
+      "standard_met_mlkgmin": 3.5,
+      "kcal_per_L_O2": 5,
+      "minutes_per_day": 1440,
+      "hb_male": {
+        "intercept": 66.473,
+        "height_cm": 5.0033,
+        "weight_kg": 13.7516,
+        "age_yr": -6.755
+      },
+      "hb_female": {
+        "intercept": 655.0955,
+        "height_cm": 1.8496,
+        "weight_kg": 9.5634,
+        "age_yr": -4.6756
+      }
+    },
+    "units": "standard_MET dimensionless (multiples of 3.5 mL O2/kg/min); RMR_mlkgmin in mL O2/kg/min; height cm, weight kg, age years",
+    "source": "compendium_corrected",
+    "locator": "pacompendium.com/corrected-mets, 'Figure 1' section and the Harris-Benedict / conversion lines under it",
+    "evidence": "The page divides the standard 3.5 mL/kg/min by a Harris-Benedict predicted RMR (age, height, mass, sex) to get a 'corrected MET', citing Kozey 2010 and Byrne 2005. It says corrected METs may suit individual estimates by clinicians/fitness professionals but should not replace standard METs for population/survey use, and that neither removes all error.",
+    "quote": null,
+    "confidence": "high",
+    "interpretation_note": "The page does not state how to turn a corrected MET into kcal. Algebra check (not from the source): if you compute kcal/min = corrected_MET * RMR_mlkgmin * kg * 5 / 1000, the RMR terms cancel and you get the standard MET*3.5*kg*5/1000 result. The correction only changes kcal if you multiply corrected MET by a fixed 1 kcal/kg/h, which mixes the individual and standard RMR. Decide deliberately which you want."
+  },
+  "acsm_equations": [
+    {
+      "name": "walking",
+      "formula": "VO2_mlkgmin = 3.5 + 0.1*S + 1.8*S*G",
+      "constants": {
+        "horizontal": 0.1,
+        "vertical": 1.8,
+        "resting": 3.5,
+        "kcal_per_L_O2": 5
+      },
+      "variables": {
+        "S": "speed, m/min",
+        "G": "grade as a fraction (5% = 0.05)"
+      },
+      "kcal_conversion": "kcal/min = VO2_mlkgmin * weight_kg / 1000 * 5",
+      "valid_range": null,
+      "valid_range_note": "Speed range of validity is not stated in the allowed source reached; ACSM Guidelines itself was not accessible.",
+      "source": "matthews2024",
+      "locator": "Methods, 'EE calculations' section (equation displayed; cites ACSM Guidelines 9th ed. 2014; 5 kcal per L O2 assumption)",
+      "edition": "ACSM's Guidelines for Exercise Testing and Prescription, 9th ed. (2014), as cited",
+      "confidence": "high"
+    },
+    {
+      "name": "running",
+      "formula": "VO2_mlkgmin = 0.2*S + 0.9*S*G + 3.5",
+      "constants": {
+        "horizontal": 0.2,
+        "vertical": 0.9,
+        "resting": 3.5
+      },
+      "variables": {
+        "S": "speed, m/min",
+        "G": "grade fraction"
+      },
+      "valid_range": null,
+      "valid_range_note": "Not stated in the source reached.",
+      "source": "acsm_running_pmc",
+      "locator": "Methods, equation A (cites ACSM Guidelines; edition not visible in the text reached)",
+      "edition": null,
+      "confidence": "medium"
+    },
+    {
+      "name": "leg_cycling",
+      "formula": "VO2_mlkgmin = k * WR / BM + 3.5 + 3.5",
+      "constants": {
+        "k": null,
+        "resting": 3.5,
+        "unloaded_pedalling": 3.5
+      },
+      "variables": {
+        "WR": "external work rate, W",
+        "BM": "body mass, kg"
+      },
+      "valid_range": "50-200 W (described as generally accepted)",
+      "k_note": "The published coefficient could not be read in any allowed source reached (the equation is an image in Formenti 2015). Widely reproduced teaching material gives 1.8 per kg*m/min (10.8 per W) but those are not permitted sources. Verify in the ACSM Guidelines before use.",
+      "source": "formenti2015",
+      "locator": "Introduction, equation 1 and the paragraph below it (cites ACSM Guidelines 2009)",
+      "edition": "ACSM's Guidelines (2009), as cited",
+      "confidence": "medium"
+    },
+    {
+      "name": "arm_ergometry",
+      "formula": null,
+      "constants": {},
+      "valid_range": null,
+      "source": null,
+      "edition": null,
+      "confidence": null,
+      "note": "Not sourced."
+    }
+  ],
+  "measured_studies": [
+    {
+      "id": "reis2017",
+      "citation": "Reis et al. 2017, PLoS ONE 12(7):e0181311",
+      "url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0181311",
+      "subjects": {
+        "n": 58,
+        "n_per_exercise": 14,
+        "sex": "male",
+        "age": 27.5,
+        "body_mass_kg": 78.67,
+        "height_cm": 178,
+        "training": "resistance-trained >=1 yr, >=3 sessions/wk"
+      },
+      "protocol": {
+        "exercise": "8 machine exercises: half squat, 45-deg leg press, leg extension, horizontal bench press, 45-deg incline bench press, lat pulldown, triceps extension (high pulley), biceps curl (Scott bench, EZ bar)",
+        "load_kg": null,
+        "pct_1rm": [
+          12,
+          16,
+          20,
+          24,
+          80
+        ],
+        "sets": null,
+        "reps": "4-5 min continuous bouts at 15 reps/min for 12-24% 1RM; 80% bout to exhaustion",
+        "rest_s": null,
+        "tempo_s": {
+          "eccentric": 2,
+          "concentric": 2
+        }
+      },
+      "measured": {
+        "values": [
+          {
+            "exercise": "half squat",
+            "pct_1rm": 24,
+            "kcal_per_min": 11.7
+          },
+          {
+            "exercise": "horizontal bench press",
+            "pct_1rm": 24,
+            "kcal_per_min": 4.8
+          },
+          {
+            "exercise": "45-deg incline bench press",
+            "pct_1rm": 24,
+            "kcal_per_min": 6.5
+          },
+          {
+            "exercise": "all 8 exercises",
+            "pct_1rm": 24,
+            "kcal_per_min_range": [
+              3.87,
+              11.7
+            ]
+          }
+        ],
+        "per": "minute",
+        "includes_recovery": false,
+        "method": "Breath-by-breath VO2 (Cosmed K4b2); anaerobic share by accumulated O2 deficit; 1 mL O2 = 5 cal"
+      },
+      "key_findings": "Energy cost rose linearly with %1RM in every exercise; lowest in biceps curl, highest in half squat. At 80% 1RM leg exercises exceeded 20 kcal/min and upper-body exercises were less anaerobic than lower-body.",
+      "locator": "Abstract; Discussion paragraph 2 (24% 1RM values); Results (range 3.87-11.70). Per-exercise loads are in Table 1 (image, not read).",
+      "confidence": "high"
+    },
+    {
+      "id": "mazzetti2011",
+      "citation": "Mazzetti et al. 2011, Int J Exerc Sci 4(4):273-282",
+      "url": "https://digitalcommons.wku.edu/ijes/vol4/iss4/8",
+      "subjects": {
+        "n": 10,
+        "sex": "male",
+        "age": 22,
+        "body_mass_kg": 84,
+        "height_cm": 180,
+        "training": "resistance-trained"
+      },
+      "protocol": {
+        "exercise": "maximally explosive squat and bench press",
+        "load_kg": null,
+        "pct_1rm": [
+          48,
+          60,
+          72,
+          "72 matched kg/set"
+        ],
+        "sets": null,
+        "reps": null,
+        "rest_s": null,
+        "tempo_s": "maximally explosive"
+      },
+      "measured": {
+        "values": [
+          {
+            "exercise": "squat",
+            "protocol": "48% 1RM",
+            "kcal_per_min": 7.3
+          },
+          {
+            "exercise": "squat",
+            "protocol": "72% 1RM matched kg/set",
+            "kcal_per_min": 6.9
+          },
+          {
+            "exercise": "squat",
+            "protocol": "72% 1RM",
+            "kcal_per_min": 6.1
+          },
+          {
+            "exercise": "bench press",
+            "protocol": "48% 1RM",
+            "kcal_per_min": 4.8
+          },
+          {
+            "exercise": "bench press",
+            "protocol": "72% 1RM matched kg/set",
+            "kcal_per_min": 4.7
+          },
+          {
+            "exercise": "bench press",
+            "protocol": "72% 1RM",
+            "kcal_per_min": 4.0
+          },
+          {
+            "exercise": "+5 min after",
+            "protocol": "48 / 72-matched / 72",
+            "kcal_per_min": [
+              3.7,
+              3.7,
+              3.3
+            ]
+          }
+        ],
+        "per": "minute",
+        "includes_recovery": "reported separately",
+        "method": "Expired-gas indirect calorimetry during and 60 min after; blood lactate"
+      },
+      "key_findings": "Rates were higher with lighter loads and with matched kg per set, but total kcal did not differ among protocols. 60% 1RM rates not in the abstract.",
+      "locator": "Abstract (sets and reps per protocol are in the full text, not read)",
+      "confidence": "high"
+    },
+    {
+      "id": "mazzetti2007",
+      "citation": "Mazzetti et al. 2007, Med Sci Sports Exerc 39(8):1291-1301",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/17762362/",
+      "subjects": {
+        "n": 9,
+        "sex": "male",
+        "age": 20,
+        "body_mass_kg": null,
+        "height_cm": null
+      },
+      "protocol": {
+        "exercise": "plate-loaded squat machine",
+        "load_kg": null,
+        "pct_1rm": "60 (SLOW, EXPL) and 80 (HEAVYEXPL)",
+        "sets": "4 (SLOW, EXPL); 6 (HEAVYEXPL)",
+        "reps": "8 (SLOW, EXPL); 4 (HEAVYEXPL)",
+        "rest_s": 90,
+        "tempo_s": {
+          "eccentric": 2,
+          "concentric": "2 (SLOW) or explosive"
+        }
+      },
+      "measured": {
+        "values": [
+          {
+            "protocol": "EXPL",
+            "during_kcal_per_min": 7.27,
+            "after_kcal_per_min": 2.54
+          },
+          {
+            "protocol": "SLOW",
+            "during_kcal_per_min": 6.43,
+            "after_kcal_per_min": 2.38
+          },
+          {
+            "protocol": "HEAVYEXPL",
+            "during_kcal_per_min": 6.25,
+            "after_kcal_per_min": 2.21
+          }
+        ],
+        "per": "minute",
+        "includes_recovery": "reported separately (1 h)",
+        "method": "Continuous expired-air collection; blood lactate"
+      },
+      "locator": "PubMed abstract, Results",
+      "confidence": "high"
+    },
+    {
+      "id": "phillips2003",
+      "citation": "Phillips & Ziuraitis 2003, J Strength Cond Res 17(2):350-355",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/12741877/",
+      "subjects": {
+        "n": 12,
+        "sex": "mixed",
+        "age": 26.7,
+        "body_mass_kg": null,
+        "height_cm": null
+      },
+      "protocol": {
+        "exercise": "8-exercise ACSM single-set routine",
+        "load_kg": null,
+        "pct_1rm": null,
+        "load_note": "15RM",
+        "sets": 1,
+        "reps": 15,
+        "rest_s": null,
+        "tempo_s": null
+      },
+      "measured": {
+        "values": [
+          {
+            "sex": "male",
+            "kcal": 135.2,
+            "mets": 3.9
+          },
+          {
+            "sex": "female",
+            "kcal": 81.7,
+            "mets": 4.2
+          }
+        ],
+        "per": "session",
+        "includes_recovery": null,
+        "method": "Portable calorimetric system"
+      },
+      "locator": "PubMed abstract",
+      "confidence": "high"
+    },
+    {
+      "id": "phillips2004",
+      "citation": "Phillips & Ziuraitis 2004, J Strength Cond Res 18(3):606-609",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/15320686/",
+      "subjects": {
+        "n": 10,
+        "sex": "5 male, 5 female",
+        "age": 73.1,
+        "body_mass_kg": null,
+        "height_cm": null
+      },
+      "protocol": {
+        "exercise": "8-exercise single-set routine",
+        "load_kg": null,
+        "pct_1rm": null,
+        "sets": 1,
+        "reps": 15,
+        "rest_s": null,
+        "tempo_s": null
+      },
+      "measured": {
+        "values": [
+          {
+            "sex": "male",
+            "kcal": 84.2,
+            "mets": 3.3
+          },
+          {
+            "sex": "female",
+            "kcal": 69.7,
+            "mets": 3.0
+          }
+        ],
+        "per": "session",
+        "includes_recovery": null,
+        "method": "Portable metabolic unit (CosMed K4b2)"
+      },
+      "locator": "PubMed abstract",
+      "confidence": "high"
+    },
+    {
+      "id": "scott2011",
+      "citation": "Scott et al. 2011, J Strength Cond Res 25(4):903-908",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/20703175/",
+      "subjects": {
+        "n": null,
+        "sex": null,
+        "age": null,
+        "body_mass_kg": null,
+        "height_cm": null
+      },
+      "protocol": {
+        "exercise": "bench press, single set to failure",
+        "load_kg": null,
+        "pct_1rm": [
+          37,
+          46,
+          56,
+          70,
+          80,
+          90
+        ],
+        "sets": 1,
+        "reps": "to failure",
+        "rest_s": null,
+        "tempo_s": null
+      },
+      "measured": {
+        "values": [
+          {
+            "group": "muscular endurance lifts (~37-56% 1RM)",
+            "kJ": 60.2
+          },
+          {
+            "group": "strength lifts (70-90% 1RM)",
+            "kJ": 43.2
+          }
+        ],
+        "kcal": null,
+        "per": "set",
+        "includes_recovery": true,
+        "method": "Exercise VO2 + blood lactate (anaerobic) + recovery VO2; work measured as weight x displacement",
+        "unit_note": "Published in kJ (1 kcal = 4.184 kJ)"
+      },
+      "key_findings": "Total cost tracked mechanical work (r = 0.87). For strength lifts, anaerobic and recovery components each exceeded aerobic exercise cost.",
+      "locator": "PubMed abstract",
+      "confidence": "high"
+    },
+    {
+      "id": "knausenberger2014",
+      "citation": "Knausenberger, Luchini, Scott, Steitz 2014, CEJSSM 8",
+      "url": "https://doaj.org/article/ba144a51e1b446238376a70edc1fc328",
+      "subjects": [
+        {
+          "n": 16,
+          "sex": "female",
+          "age": 21.8,
+          "body_mass_kg": 61.1,
+          "height_cm": 165
+        },
+        {
+          "n": 22,
+          "sex": "male",
+          "age": 23.7,
+          "body_mass_kg": 83,
+          "height_cm": 180.5
+        }
+      ],
+      "protocol": {
+        "exercise": "Smith machine incline bench press, squat, deadlift, shoulder shrug, calf raise",
+        "load_kg": null,
+        "pct_1rm": null,
+        "sets": 1,
+        "reps": null,
+        "rest_s": null,
+        "tempo_s": null
+      },
+      "measured": {
+        "values": null,
+        "per": "set",
+        "includes_recovery": true,
+        "method": "Exercise O2 + anaerobic estimate + EPOC; work = bar vertical distance x load",
+        "components_share": {
+          "exercise_O2": 0.18,
+          "anaerobic": 0.31,
+          "EPOC": 0.51
+        },
+        "work_cost_correlation_r": {
+          "deadlift": 0.997,
+          "squat": 0.977,
+          "incline_press": 0.947,
+          "shoulder_shrug": 0.921,
+          "calf_raise": 0.941
+        }
+      },
+      "key_findings": "Cost per set is predictable from mechanical work within each exercise, but the work-to-cost slope differs by exercise. Per-set kJ values are in the full text (not read).",
+      "locator": "DOAJ abstract",
+      "confidence": "high"
+    },
+    {
+      "id": "benito2016",
+      "citation": "Benito et al. 2016, PLoS ONE 11(11):e0164349",
+      "url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0164349",
+      "subjects": {
+        "n": 29,
+        "sex": "15 male, 14 female",
+        "age": "18-28",
+        "body_mass_kg": null,
+        "height_cm": null,
+        "note": "Anthropometrics in Table 1 (image, not read)"
+      },
+      "protocol": {
+        "exercise": "circuit weight training, 8 stations x 3 laps (machine, free-weight, or free-weight + running)",
+        "load_kg": null,
+        "pct_1rm": 42.8,
+        "load_note": "70% of 15RM (authors equate to 42.8% 1RM)",
+        "sets": "3 laps",
+        "reps": 15,
+        "rest_s": 15,
+        "rest_note": "15 s transition between stations",
+        "tempo_s": {
+          "concentric": 2,
+          "eccentric": 1
+        },
+        "duration_per_exercise_s": 45
+      },
+      "measured": {
+        "values": [
+          {
+            "protocol": "machine circuit",
+            "VO2_mlkgmin": 20.4,
+            "anaerobic_share": 0.062
+          },
+          {
+            "protocol": "free-weight circuit",
+            "VO2_mlkgmin": 24.2,
+            "anaerobic_share": 0.046
+          },
+          {
+            "protocol": "free weights + running",
+            "VO2_mlkgmin": 29.9,
+            "anaerobic_share": 0.023
+          }
+        ],
+        "per": "minute (mean VO2 over circuit)",
+        "includes_recovery": true,
+        "method": "Portable gas analysis (Oxycon Mobile) + blood lactate; exercise 5.0 kcal/L O2, EPOC 4.64 kcal/L"
+      },
+      "locator": "Abstract; Methods 'Circuit weight training' and 'Energy expenditure estimations'",
+      "confidence": "high"
+    },
+    {
+      "id": "matthews2024",
+      "citation": "Matthews et al. 2024, Med Sci Sports Exerc 57(3):470-480",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11801430/",
+      "subjects": {
+        "n": 103,
+        "sex": "71% female",
+        "age": 48.7,
+        "body_mass_kg": 88.0,
+        "height_cm": null,
+        "note": "sedentary adults with overweight/obesity"
+      },
+      "protocol": {
+        "exercise": "treadmill walking",
+        "speed": "2 mph",
+        "grade_pct": 0
+      },
+      "measured": {
+        "values": [
+          {
+            "group": "8 KKW (mean 89.4 kg)",
+            "kcal_per_min": 3.92
+          },
+          {
+            "group": "20 KKW (mean 86.5 kg)",
+            "kcal_per_min": 3.83
+          }
+        ],
+        "per": "minute",
+        "includes_recovery": false,
+        "method": "Indirect calorimetry (ParvoMedics TrueMax 2400)"
+      },
+      "locator": "Table 2, baseline absolute EE",
+      "confidence": "high",
+      "category": "walking"
+    }
+  ],
+  "validation_cases": [
+    {
+      "study_id": "mazzetti2011",
+      "body_mass_kg": 84,
+      "height_cm": 180,
+      "sex": "male",
+      "age": 22,
+      "exercise": "explosive squat",
+      "pct_1rm": 48,
+      "load_kg": null,
+      "sets": null,
+      "reps": null,
+      "rest_s": null,
+      "measured_kcal": 7.3,
+      "per": "minute (during exercise)"
+    },
+    {
+      "study_id": "mazzetti2011",
+      "body_mass_kg": 84,
+      "height_cm": 180,
+      "sex": "male",
+      "age": 22,
+      "exercise": "explosive squat",
+      "pct_1rm": "72 (matched kg/set)",
+      "load_kg": null,
+      "sets": null,
+      "reps": null,
+      "rest_s": null,
+      "measured_kcal": 6.9,
+      "per": "minute (during exercise)"
+    },
+    {
+      "study_id": "mazzetti2011",
+      "body_mass_kg": 84,
+      "height_cm": 180,
+      "sex": "male",
+      "age": 22,
+      "exercise": "explosive squat",
+      "pct_1rm": 72,
+      "load_kg": null,
+      "sets": null,
+      "reps": null,
+      "rest_s": null,
+      "measured_kcal": 6.1,
+      "per": "minute (during exercise)"
+    },
+    {
+      "study_id": "mazzetti2011",
+      "body_mass_kg": 84,
+      "height_cm": 180,
+      "sex": "male",
+      "age": 22,
+      "exercise": "explosive bench press",
+      "pct_1rm": 48,
+      "load_kg": null,
+      "sets": null,
+      "reps": null,
+      "rest_s": null,
+      "measured_kcal": 4.8,
+      "per": "minute (during exercise)"
+    },
+    {
+      "study_id": "mazzetti2011",
+      "body_mass_kg": 84,
+      "height_cm": 180,
+      "sex": "male",
+      "age": 22,
+      "exercise": "explosive bench press",
+      "pct_1rm": "72 (matched kg/set)",
+      "load_kg": null,
+      "sets": null,
+      "reps": null,
+      "rest_s": null,
+      "measured_kcal": 4.7,
+      "per": "minute (during exercise)"
+    },
+    {
+      "study_id": "mazzetti2011",
+      "body_mass_kg": 84,
+      "height_cm": 180,
+      "sex": "male",
+      "age": 22,
+      "exercise": "explosive bench press",
+      "pct_1rm": 72,
+      "load_kg": null,
+      "sets": null,
+      "reps": null,
+      "rest_s": null,
+      "measured_kcal": 4.0,
+      "per": "minute (during exercise)"
+    },
+    {
+      "study_id": "reis2017",
+      "body_mass_kg": 78.67,
+      "height_cm": 178,
+      "sex": "male",
+      "age": 27.5,
+      "exercise": "half squat (machine)",
+      "pct_1rm": 24,
+      "load_kg": null,
+      "sets": 1,
+      "reps": "15/min for 4-5 min",
+      "rest_s": null,
+      "measured_kcal": 11.7,
+      "per": "minute"
+    },
+    {
+      "study_id": "reis2017",
+      "body_mass_kg": 78.67,
+      "height_cm": 178,
+      "sex": "male",
+      "age": 27.5,
+      "exercise": "horizontal bench press (machine)",
+      "pct_1rm": 24,
+      "load_kg": null,
+      "sets": 1,
+      "reps": "15/min for 4-5 min",
+      "rest_s": null,
+      "measured_kcal": 4.8,
+      "per": "minute"
+    },
+    {
+      "study_id": "reis2017",
+      "body_mass_kg": 78.67,
+      "height_cm": 178,
+      "sex": "male",
+      "age": 27.5,
+      "exercise": "45-deg incline bench press (machine)",
+      "pct_1rm": 24,
+      "load_kg": null,
+      "sets": 1,
+      "reps": "15/min for 4-5 min",
+      "rest_s": null,
+      "measured_kcal": 6.5,
+      "per": "minute"
+    },
+    {
+      "study_id": "reis2017",
+      "body_mass_kg": 78.67,
+      "height_cm": 178,
+      "sex": "male",
+      "age": 27.5,
+      "exercise": "biceps curl (Scott bench, EZ bar)",
+      "pct_1rm": 24,
+      "load_kg": null,
+      "sets": 1,
+      "reps": "15/min for 4-5 min",
+      "rest_s": null,
+      "measured_kcal": 3.87,
+      "per": "minute",
+      "confidence": "medium",
+      "note": "Paper states the 24% 1RM range was 3.87-11.70 and that biceps curl had the lowest values; assigning 3.87 to biceps curl is an interpretation."
+    }
+  ],
+  "timing": {
+    "rep_seconds": {
+      "value": null,
+      "concentric_s": "1-2",
+      "eccentric_s": "1-2",
+      "label": "moderate velocity",
+      "source": "acsm2009",
+      "locator": "Abstract (strength recommendations for intermediate/advanced)",
+      "study_protocol_examples": [
+        {
+          "source": "reis2017",
+          "eccentric_s": 2,
+          "concentric_s": 2
+        },
+        {
+          "source": "benito2016",
+          "concentric_s": 2,
+          "eccentric_s": 1
+        },
+        {
+          "source": "mazzetti2007",
+          "eccentric_s": 2
+        }
+      ],
+      "note": "ACSM gives component ranges, not a single per-rep default; a 2-4 s total follows from summing them."
+    },
+    "rest_seconds": {
+      "strength": {
+        "min": 180,
+        "max": 300,
+        "note": "3-5 min for heavy (1-6 RM) intermediate/advanced training; full text also gives >=2-3 min for core lifts and 1-2 min for assistance exercises"
+      },
+      "hypertrophy": {
+        "min": 60,
+        "max": 120
+      },
+      "endurance": {
+        "max": 90,
+        "note": "<90 s with 40-60% 1RM, >15 reps"
+      },
+      "power": {
+        "min": 180,
+        "max": 300
+      },
+      "source": "acsm2009",
+      "locator": "Abstract"
+    }
+  },
+  "accuracy": [
+    {
+      "what": "Standard Compendium METs vs measured",
+      "error_range": "Standard METs averaged 0.51 MET below measured METs; 12.2% of activities misclassified vs 8.6% with RMR-corrected METs; corrected METs not significantly different from measured (-0.02 MET)",
+      "n": "252 subjects, 2555 activity bouts",
+      "source": "kozey2010",
+      "confidence": "high"
+    },
+    {
+      "what": "ACSM walking equation vs indirect calorimetry (overweight/obese adults)",
+      "error_range": "Overestimated EE by 0.44% at 2 mph/0%, 9.2% at relative workload, 20.3% at maximal; resting component overestimated by 30.4%",
+      "source": "matthews2024",
+      "confidence": "high"
+    },
+    {
+      "what": "ACSM leg cycling equation vs measured",
+      "error_range": "Bias 3.2 mL/kg/min, 95% limits of agreement -7.7 to 14.1 mL/kg/min (10 men, 0-150 W, 50-110 rpm)",
+      "source": "formenti2015",
+      "confidence": "high"
+    },
+    {
+      "what": "Aerobic-only estimates of resistance exercise",
+      "error_range": "During-exercise O2 was only ~18% of total cost per set (anaerobic ~31%, EPOC ~51%) in single Smith machine lifts; in circuits the anaerobic share was 1.9-7.1%",
+      "source": "knausenberger2014; benito2016",
+      "confidence": "high"
+    },
+    {
+      "what": "Wrist wearables, energy expenditure (general)",
+      "error_range": "MAPE > 30% for all brands in a systematic review",
+      "source": "jmir2022",
+      "confidence": "high"
+    },
+    {
+      "what": "Wrist wearables during resistance exercise",
+      "error_range": "Mean bias vs calorimetry: Apple -158 kcal, Samsung Galaxy -117 kcal, Garmin -164 kcal (consistent underestimation); Fitbit -5 kcal but wide limits of agreement",
+      "source": "sensors2026",
+      "confidence": "high"
+    },
+    {
+      "what": "Wrist wearables during resistance exercise (Apple Watch 6, Polar Vantage V, Fitbit Sense)",
+      "error_range": "Described as poor accuracy for EE in all 5 activities incl. resistance exercise; numeric range not in abstract",
+      "source": "wrist2021",
+      "confidence": "medium"
+    }
+  ]
+}

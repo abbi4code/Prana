@@ -7,6 +7,8 @@
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 
 const SOURCES = ["data/foods.json", "data/foods-extra.json"];
+const ALIASES = JSON.parse(readFileSync("data/aliases.json", "utf8")); // reviewed search names (nl-logging.md)
+const PREFER_OUT = "src/data/food-prefer.generated.json";
 const OUT = "src/data/foods.generated.json";
 
 // Rows flagged in the v2 review as unreliable. Excluded until re-verified.
@@ -38,6 +40,14 @@ const all = SOURCES.flatMap((f) => JSON.parse(readFileSync(f, "utf8")).foods);
 const dupes = all.map((f) => f.id).filter((id, i, ids) => ids.indexOf(id) !== i);
 if (dupes.length) throw new Error(`duplicate food ids: ${dupes.join(", ")}`);
 const out = [];
+const ids = new Set(all.map((f) => f.id));
+for (const id of [...Object.keys(ALIASES.add), ...Object.keys(ALIASES.remove), ...Object.values(ALIASES.prefer)])
+  if (!ids.has(id)) throw new Error(`data/aliases.json refers to unknown food id: ${id}`);
+const aliasesFor = (f) => {
+  const drop = new Set((ALIASES.remove[f.id] ?? []).map((a) => a.toLowerCase()));
+  const merged = [...(f.aliases ?? []), ...(ALIASES.add[f.id] ?? [])].map((a) => a.toLowerCase().trim());
+  return [...new Set(merged)].filter((a) => a && !drop.has(a));
+};
 const report = { excluded: [], macroNulled: [], fried: [], unitsDropped: 0 };
 
 for (const f of all) {
@@ -79,7 +89,7 @@ for (const f of all) {
     id: f.id,
     name: f.name,
     hi: f.name_hi || null,
-    aliases: f.aliases ?? [],
+    aliases: aliasesFor(f),
     cat: f.category,
     diet: f.diet,
     kcal: round(p.kcal),
@@ -100,6 +110,7 @@ for (const f of all) {
 out.sort((a, b) => a.name.localeCompare(b.name));
 mkdirSync("src/data", { recursive: true });
 writeFileSync(OUT, JSON.stringify(out));
+writeFileSync(PREFER_OUT, JSON.stringify(ALIASES.prefer));
 
 console.log(`foods: ${out.length} written to ${OUT}`);
 console.log(`excluded (${report.excluded.length}):\n  ${report.excluded.join("\n  ")}`);

@@ -51,7 +51,13 @@ export type Entry = {
   c: number | null;
   f: number | null;
   createdAt: number;
+  /** how it was logged; absent on entries made before natural-language logging */
+  source?: LogSource;
+  /** the sentence it came from (text/voice) */
+  rawInput?: string;
 };
+
+export type LogSource = "manual" | "text" | "voice";
 
 export type Goals = { kcal: number; p: number; c: number; f: number };
 

@@ -1,4 +1,9 @@
 import data from "@/data/foods.generated.json";
+import prefer from "@/data/food-prefer.generated.json";
+import { buildMatcher, type Candidate } from "./nl/match";
+import { STARTER_IDS, matchBoost } from "./nl/ranking";
+
+export { STARTER_IDS };
 import type { Category, Food, FoodUnit } from "./types";
 
 export const FOODS = data as Food[];
@@ -13,6 +18,25 @@ export function setCustomFoods(list: Food[]) {
   CUSTOM_INDEX = list.map(indexFood);
   CUSTOM_BY_ID.clear();
   for (const f of list) CUSTOM_BY_ID.set(f.id, f);
+  matcher = null; // rebuilt lazily with the new custom foods
+}
+
+// typo-tolerant matcher over catalog + custom foods (nl-logging.md); built on first use
+let matcher: ReturnType<typeof buildMatcher> | null = null;
+/**
+ * Best candidates for a free-text food name ("rotii", "anda bhurji"), highest score first.
+ * `history` = food ids this user logs; they win ties, so ambiguous words learn the user's habits.
+ * Veg wins remaining ties by a hair (still ambiguous, so "Did you mean?" is shown).
+ */
+export function matchFood(name: string, limit = 3, history?: ReadonlySet<string>): Candidate[] {
+  matcher ??= buildMatcher([...CUSTOM, ...FOODS], {
+    prefer: prefer as Record<string, string>,
+    boost: matchBoost,
+  });
+  const cands = matcher.match(name, limit + 4);
+  if (history?.size)
+    for (const c of cands) if (history.has(c.food.id)) c.score = Math.min(1, c.score + 0.04);
+  return cands.sort((a, b) => b.score - a.score).slice(0, limit);
 }
 export const getCustomFoods = () => CUSTOM;
 
@@ -20,11 +44,6 @@ export const getFood = (id: string) => BY_ID.get(id) ?? CUSTOM_BY_ID.get(id);
 export const getUnit = (food: Food, unitId: string): FoodUnit =>
   food.units.find((u) => u.id === unitId) ?? food.units[0];
 
-/** Shown before the user has any history; also nudged up in search. */
-export const STARTER_IDS = [
-  "chapati-roti", "boiled-rice", "moong-dal-tadka", "rajma", "aloo-gobi", "veg-poha",
-  "idli", "egg-boiled", "dahi", "chai", "banana", "jeera-rice", "white-bread",
-];
 const STARTER = new Set(STARTER_IDS);
 
 export const CATEGORY_LABEL: Record<Category, string> = {
@@ -75,6 +94,12 @@ export function searchFoods(query: string, limit = 40): Food[] {
     // your own foods first: you made them because you eat them
     if (s) scored.push({ food: it.food, s: s - it.name.length * 0.1 - (it.food.uncooked ? 30 : 0) + (it.food.conf === "user" ? 20 : 0) });
   }
-  return scored.sort((a, b) => b.s - a.s).slice(0, limit).map((x) => x.food);
+  const found = scored.sort((a, b) => b.s - a.s).slice(0, limit).map((x) => x.food);
+  // few or no hits (typos, spelling variants like "daal", "fulka"): add fuzzy matches after them
+  if (found.length < 4) {
+    const seen = new Set(found.map((f) => f.id));
+    for (const c of matchFood(query, 8)) if (c.score >= 0.45 && !seen.has(c.food.id)) found.push(c.food);
+  }
+  return found.slice(0, limit);
 }
 

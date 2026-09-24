@@ -3,7 +3,12 @@
 import { useMemo, useState } from "react";
 import { Drawer } from "vaul";
 import { AnimatePresence, motion } from "motion/react";
-import { Check, Flame, Pencil, Plus, Search, X } from "lucide-react";
+import Link from "next/link";
+import { Check, CornerDownLeft, Flame, LoaderCircle, Mic, Pencil, Plus, Search, Sparkles, X } from "lucide-react";
+import { useSpeech } from "@/lib/nl/useSpeech";
+import { useAuth } from "@/lib/auth";
+import { parseSentence } from "@/lib/nl/client";
+import type { ParsedLog } from "@/lib/nl/schema";
 import { ThaliBuilder } from "@/components/thali/ThaliBuilder";
 import { ThaliPlate } from "@/components/thali/ThaliPlate";
 import { mealKcal } from "@/lib/thali";
@@ -13,7 +18,8 @@ import { addDays, dayKey } from "@/lib/dates";
 import { MEALS } from "@/lib/nutrition";
 import { useStore, useUI } from "@/lib/store";
 import { useIsDesktop } from "@/lib/useMediaQuery";
-import type { Food, Meal, SavedMeal } from "@/lib/types";
+import type { Food, LogSource, Meal, SavedMeal } from "@/lib/types";
+import { ConfirmParse } from "./ConfirmParse";
 import { CreateFood } from "./CreateFood";
 import { FoodDetail } from "./FoodDetail";
 
@@ -63,6 +69,11 @@ function AddFlow({ meal: initialMeal }: { meal: Meal }) {
   const [selected, setSelected] = useState<Food | null>(null);
   const [creating, setCreating] = useState<string | null>(null);
   const [building, setBuilding] = useState<{ thaliId?: string } | null>(null);
+  // natural-language logging (nl-logging.md): parsing → confirm card
+  const signedIn = useAuth((s) => s.status === "signedIn");
+  const [nlBusy, setNlBusy] = useState(false);
+  const [draft, setDraft] = useState<{ text: string; source: Exclude<LogSource, "manual">; parsed: ParsedLog } | null>(null);
+  const removeEntry = useStore((s) => s.removeEntry);
   const [added, setAdded] = useState<{ name: string; kcal: number }[]>([]);
   const savedMeals = useStore((s) => s.savedMeals);
   const logSavedMeal = useStore((s) => s.logSavedMeal);
@@ -95,7 +106,55 @@ function AddFlow({ meal: initialMeal }: { meal: Meal }) {
   }, [entries, date]);
 
   const results = useMemo(() => searchFoods(query), [query]);
+  const trimmed = query.trim();
+  // a sentence (several words, or a number) is worth sending to the AI; single words use plain search
+  const sentenceLike = trimmed.length >= 3 && (/\s/.test(trimmed) || /\d/.test(trimmed));
+
+  // voice fills the same box; a finished sentence goes through the exact same pipeline as typing
+  const speech = useSpeech({
+    onInterim: setQuery,
+    onFinal: (text) => {
+      setQuery(text);
+      if (signedIn) void understand(text, "voice");
+    },
+    onError: (msg) => showToast(msg),
+  });
+
+  const understand = async (text: string, source: Exclude<LogSource, "manual">) => {
+    if (nlBusy || !text.trim()) return;
+    setNlBusy(true);
+    const out = await parseSentence(text.trim());
+    setNlBusy(false);
+    if (out.ok && out.data.items.length) return setDraft({ text: text.trim(), source, parsed: out.data });
+    if (out.ok) return showToast("Didn't catch a food in that. Try “2 roti aur dal”.");
+    if (out.reason === "rate_limited")
+      return showToast(`AI logging limit reached. Try again in ${Math.max(1, Math.round((out.retryAfterS ?? 60) / 60))} min, or pick below.`);
+    if (out.reason === "signed_out") return showToast("Sign in to log whole sentences.");
+    showToast(out.reason === "offline" ? "You're offline. Pick from the list below." : "Couldn't read that. Pick from the list below.");
+  };
   const lastFor = (id: string) => recent.find((r) => r.food.id === id)?.last;
+
+  if (draft)
+    return (
+      <>
+        <Drawer.Title className="sr-only">Check and log</Drawer.Title>
+        <ConfirmParse
+          text={draft.text}
+          source={draft.source}
+          parsed={draft.parsed}
+          initialMeal={meal}
+          date={date}
+          onBack={() => setDraft(null)}
+          onLogged={(ids, m) => {
+            close();
+            showToast(`Logged ${ids.length} item${ids.length === 1 ? "" : "s"} to ${MEALS.find((x) => x.id === m)!.label}`, {
+              label: "Undo",
+              run: () => ids.forEach((id) => removeEntry(id)),
+            });
+          }}
+        />
+      </>
+    );
 
   if (building)
     return (
@@ -189,16 +248,44 @@ function AddFlow({ meal: initialMeal }: { meal: Meal }) {
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="dal, roti, dahi, chai…"
+            placeholder={speech.listening ? "Listening… say what you ate" : signedIn ? "2 roti aur dal, or search a food" : "dal, roti, dahi, chai…"}
             className="w-full bg-transparent text-base outline-none placeholder:text-faint"
             autoComplete="off"
             autoFocus={desktop}
-            enterKeyHint="search"
+            enterKeyHint={signedIn && sentenceLike ? "go" : "search"}
+            onKeyDown={(e) => {
+              if (e.key !== "Enter" || e.nativeEvent.isComposing) return;
+              e.preventDefault();
+              if (signedIn && sentenceLike) void understand(query, "text");
+              else if (results[0]) setSelected(results[0]);
+            }}
           />
-          {query && (
+          {query && !speech.listening && (
             <button onClick={() => setQuery("")} aria-label="Clear" className="text-muted">
               <X size={18} />
             </button>
+          )}
+          {speech.supported && (
+            <motion.button
+              type="button"
+              whileTap={{ scale: 0.88 }}
+              onClick={() => (speech.listening ? speech.stop() : (setQuery(""), speech.start()))}
+              aria-label={speech.listening ? "Stop listening" : "Speak what you ate"}
+              aria-pressed={speech.listening}
+              className={`relative grid size-9 shrink-0 place-items-center rounded-full transition-colors ${
+                speech.listening ? "bg-chilli text-white" : "text-muted hover:bg-surface-2 hover:text-text"
+              }`}
+            >
+              {speech.listening && (
+                <motion.span
+                  aria-hidden
+                  className="absolute inset-0 rounded-full bg-chilli"
+                  animate={{ scale: [1, 1.6], opacity: [0.45, 0] }}
+                  transition={{ duration: 1.2, repeat: Infinity, ease: "easeOut" }}
+                />
+              )}
+              <Mic size={18} className="relative" />
+            </motion.button>
           )}
         </label>
 
@@ -227,12 +314,24 @@ function AddFlow({ meal: initialMeal }: { meal: Meal }) {
       <div className="no-scrollbar mt-2 min-h-0 flex-1 overflow-y-auto px-3 pb-[calc(1.5rem+var(--safe-bottom))]">
         {showingSearch ? (
           <>
-            {results.length ? (
-              <FoodList foods={results} onPick={setSelected} />
+            {sentenceLike && (signedIn ? (
+              <UnderstandRow text={trimmed} busy={nlBusy} desktop={desktop} onClick={() => void understand(query, "text")} />
             ) : (
-              <p className="px-2 pb-2 pt-8 text-center text-sm text-muted">No match for “{query}”. Try another name, or add it yourself:</p>
+              <Link href="/login" className="mb-2 mt-1 flex items-center gap-2 rounded-2xl border border-dashed border-line-strong px-3 py-2.5 text-[13px] text-muted hover:text-text">
+                <Sparkles size={15} className="shrink-0 text-turmeric" />
+                Sign in to log a whole meal in one sentence
+              </Link>
+            ))}
+            {results.length > 0 && <FoodList foods={results} onPick={setSelected} />}
+            {/* a sentence isn't a food name: skip "no match / create it" when the AI row is offered */}
+            {!(signedIn && sentenceLike) && (
+              <>
+                {!results.length && (
+                  <p className="px-2 pb-2 pt-8 text-center text-sm text-muted">No match for “{query}”. Try another name, or add it yourself:</p>
+                )}
+                <CreateRow label={`Create “${query.trim()}”`} onClick={() => setCreating(query.trim())} />
+              </>
             )}
-            <CreateRow label={`Create “${query.trim()}”`} onClick={() => setCreating(query.trim())} />
           </>
         ) : (
           <>
@@ -304,6 +403,34 @@ function ThaliFlow({ slot, thaliId, prefill }: { slot: Meal; thaliId?: string; p
         }}
       />
     </>
+  );
+}
+
+/** "✨ Log “2 roti aur dal”": sends the sentence to the AI parser (signed-in users). */
+function UnderstandRow({ text, busy, desktop, onClick }: { text: string; busy: boolean; desktop: boolean; onClick: () => void }) {
+  return (
+    <motion.button
+      initial={{ opacity: 0, y: -6 }}
+      animate={{ opacity: 1, y: 0 }}
+      whileTap={{ scale: 0.98 }}
+      disabled={busy}
+      onClick={onClick}
+      className="relative mb-2 mt-1 flex w-full items-center gap-3 overflow-hidden rounded-2xl border border-turmeric/40 bg-gradient-to-r from-turmeric/15 via-saffron/10 to-transparent px-3 py-3 text-left"
+    >
+      <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-turmeric to-saffron text-on-accent">
+        {busy ? <LoaderCircle size={19} className="animate-spin" /> : <Sparkles size={19} />}
+      </span>
+      <span className="min-w-0 flex-1">
+        <span className="block truncate font-semibold">{busy ? "Reading your meal…" : `Log “${text}”`}</span>
+        <span className="block text-xs text-muted">AI reads it, you confirm before anything is saved</span>
+      </span>
+      {desktop && !busy && (
+        <kbd className="flex items-center gap-1 rounded-md border border-line-strong px-1.5 py-0.5 text-[11px] text-muted">
+          <CornerDownLeft size={11} /> Enter
+        </kbd>
+      )}
+      {busy && <span aria-hidden className="absolute inset-0 animate-pulse bg-turmeric/5" />}
+    </motion.button>
   );
 }
 

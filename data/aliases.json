@@ -1,0 +1,137 @@
+{
+  "_about": "Hand-reviewed search names for natural-language logging (nl-logging.md). `add`: extra names per food id. `remove`: names too generic to belong to one food. `prefer`: what a generic word means when several foods match it equally. Improve from parse_corrections over time. Rebuild with `npm run foods`.",
+  "add": {
+    "chapati-roti": [
+      "fulka",
+      "rotli",
+      "poli",
+      "wheat roti",
+      "atta roti"
+    ],
+    "boiled-rice": [
+      "sada chawal",
+      "white rice",
+      "plain chawal"
+    ],
+    "egg-boiled": [
+      "ubla anda",
+      "boiled eggs",
+      "egg"
+    ],
+    "egg-bhurji": [
+      "anda bhurji",
+      "scrambled egg",
+      "scrambled eggs"
+    ],
+    "plain-omelette": [
+      "omelet",
+      "anda omelette",
+      "egg omelette"
+    ],
+    "banana": [
+      "kela"
+    ],
+    "apple": [
+      "seb"
+    ],
+    "milk-cow": [
+      "doodh",
+      "milk",
+      "glass of milk"
+    ],
+    "chai": [
+      "tea",
+      "doodh chai",
+      "adrak chai",
+      "elaichi chai"
+    ],
+    "dahi": [
+      "yoghurt",
+      "yogurt"
+    ],
+    "mixed-dal": [
+      "dal",
+      "daal"
+    ],
+    "white-bread": [
+      "bread",
+      "double roti",
+      "pav bread",
+      "toast",
+      "bread toast",
+      "toasted bread"
+    ],
+    "veg-khichdi": [
+      "khichdi"
+    ],
+    "sugar": [
+      "chini",
+      "shakkar"
+    ],
+    "whey-shake-water": [
+      "protein shake",
+      "whey shake"
+    ],
+    "green-salad": [
+      "salad",
+      "kachumber"
+    ],
+    "mango-kesar": [
+      "mango"
+    ]
+  },
+  "remove": {
+    "chole": [
+      "curry"
+    ],
+    "milk-cow": [
+      "cow"
+    ],
+    "egg-boiled": [
+      "boiled"
+    ],
+    "soya-roti": [
+      "roti"
+    ],
+    "makki-roti": [
+      "roti",
+      "ki roti"
+    ],
+    "paushtik-roti": [
+      "roti"
+    ]
+  },
+  "prefer": {
+    "roti": "chapati-roti",
+    "chapati": "chapati-roti",
+    "rice": "boiled-rice",
+    "chawal": "boiled-rice",
+    "dal": "mixed-dal",
+    "egg": "egg-boiled",
+    "anda": "egg-boiled",
+    "milk": "milk-cow",
+    "doodh": "milk-cow",
+    "chai": "chai",
+    "tea": "chai",
+    "curd": "dahi",
+    "dahi": "dahi",
+    "poha": "veg-poha",
+    "upma": "suji-upma",
+    "dosa": "masala-dosa",
+    "paratha": "plain-paratha",
+    "samosa": "samosa",
+    "khichdi": "veg-khichdi",
+    "kheer": "rice-kheer",
+    "halwa": "suji-halwa",
+    "lassi": "sweet-lassi",
+    "coffee": "instant-coffee",
+    "bread": "white-bread",
+    "salad": "green-salad",
+    "raita": "cucumber-raita",
+    "omelette": "plain-omelette",
+    "protein shake": "whey-shake-water",
+    "whey": "whey-protein",
+    "paneer": "paneer-raw",
+    "toast": "white-bread"
+  }
+}

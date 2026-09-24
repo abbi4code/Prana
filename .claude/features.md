@@ -8,7 +8,7 @@ Guiding rule: **logging fast beats everything.** People quit trackers because lo
 
 | Feature | Notes | Status |
 |---|---|---|
-| Auth + sync | Google sign-in, login screen, guest mode, offline-first sync, sync status in Me/sidebar | built + backend live; needs a real sign-in test |
+| Auth + sync | Google sign-in, login screen, guest mode, offline-first sync, sync status in Me/sidebar | done (owner confirmed sign-in works) |
 | Today screen | Calories-left ring, macro bars, week date strip, meals listed below | done |
 | Meal slots | Breakfast · Lunch · Chai & Snacks · Dinner (D10); defaults by time of day | done |
 | Food search | Hinglish + aliases + Hindi names; category-aware ranking | done |
@@ -18,7 +18,7 @@ Guiding rule: **logging fast beats everything.** People quit trackers because lo
 | Daily goals | Manual, or suggested from profile (Mifflin–St Jeor) | done |
 | Weight log | Daily entry, 7-day average trend line | done |
 | Water | Tap to add a glass | done |
-| PWA install | Manifest, icons, service worker, offline logging | done (verify on a real phone after deploy) |
+| PWA install | Manifest, icons, service worker, offline logging | built; owner verifies on a phone after deploying |
 
 ## v1.5: Features for Indian food (what makes it unique)
 
@@ -40,9 +40,21 @@ Guiding rule: **logging fast beats everything.** People quit trackers because lo
 | Weekly calorie bank | Save calories on weekdays for weekends/festivals | planned |
 | Festival / shaadi mode | Celebration days don't break streaks | planned |
 | Fasting mode | Navratri, Ekadashi, intermittent fasting; vrat foods first in search | planned |
-| Hinglish voice logging | "do roti, ek katori dal" → parsed and logged | planned |
+| Hinglish voice + text logging | "2 roti aur dal for dinner" → confirm card → log; mic fills the same box (D26, nl-logging.md) | done (voice: verify on real phones) |
 | Thali photo logging | Photo → suggested items + katori counts, confirm in one tap | planned |
 | Barcode scan | Packaged foods | planned |
+
+## v2.5: Workouts (D26, see workouts.md)
+
+| Feature | Notes | Status |
+|---|---|---|
+| Exercise library | ~150–200 exercises with photos (free-exercise-db), muscle + equipment filters, alias search; cardio + sports | planned |
+| Workout log | Sets × reps × kg per exercise; bodyweight exercises by body-weight fraction | planned |
+| Calorie burn | Compendium MET × time, corrected for the person; own bar + optional daily burn goal; separate from food | planned |
+| Quick food-goal edit on Today | Default stays the goal calculator's suggestion | planned |
+| Workout + global streaks | Global lights when food and workout are both hit | planned |
+| Routines, last-session hints, rest timer, PRs | Phase 2 | planned |
+| Weekly volume + body heatmap, measurements, progress photos | Phase 3 | planned |
 
 ## Also built
 | Feature | Status |
@@ -64,12 +76,14 @@ Guiding rule: **logging fast beats everything.** People quit trackers because lo
 | Supplements: whey protein (scoop), creatine, whey shake with water / milk (whey + creatine findable) | done |
 | Packaged breakfast: Yogabar protein oats (Dark Chocolate, Filter Kaapi) + muesli (Choco Almond protein, Dark Choco Cranberry), dry and with milk | done |
 
-## Screens
+## Screens (as built)
 
-- **Today**: ring, macros, meal sections, chai counter, water
-- **Log sheet** (from the + button): search, recents, katori picker, thali builder
-- **Progress**: weight trend, calorie history, heatmap, Wrapped
-- **Me**: goals, profile, units, settings
+- **Today** `/`: week strip + streak flame, calorie ring (rolling digits), macro bars, chai + water cards, 4 meal cards (swipe rows, save-as-thali, ⚡ thali chips, "same as yesterday").
+- **Log sheet** (+ button, or N / on desktop): meal chips, search, My thalis, recent/frequent/popular, create food → food detail (drag katori, units, meal) · thali builder · create food.
+- **Progress** `/progress`: streak card, year heatmap, weight (7-day avg), calories last 14 days.
+- **Me** `/me`: goal calculator, daily goals, appearance, my foods, account/sync, backup.
+- **Login** `/login`, **OAuth return** `/auth/callback`.
+- Planned: Weekly Wrapped (Progress), voice logging (log sheet).
 
 ## Explicitly not building (for now)
 
