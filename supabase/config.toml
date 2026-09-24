@@ -1,0 +1,16 @@
+# Only what this app manages. `npm run auth:push` updates exactly these settings on the hosted project;
+# anything not declared here is left as-is in the dashboard (the CLI's full template would silently
+# overwrite unrelated settings like email confirmations and MFA, so don't regenerate it with `init --force`).
+project_id = "prana"
+
+[auth]
+site_url = "http://localhost:3000"
+# the app returns from Google to /auth/callback (src/app/auth/callback); add the deployed URL here later
+additional_redirect_urls = ["http://localhost:3000/**"]
+
+# Google sign-in (decision D18). Values come from .env via scripts/supabase.sh.
+[auth.external.google]
+enabled = true
+client_id = "env(GOOGLE_CLIENT_ID)"
+secret = "env(GOOGLE_CLIENT_SECRET)"
+skip_nonce_check = false

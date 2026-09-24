@@ -1,0 +1,112 @@
+@import "tailwindcss";
+
+/* "Modern Masala" (decision D08): warm charcoal base, spice accents with fixed meanings. */
+@theme {
+  --color-bg: #15100d;
+  --color-surface: #201813;
+  --color-surface-2: #2a2019;
+  --color-surface-3: #352a21;
+  --color-line: rgb(255 236 214 / 0.08);
+  --color-line-strong: rgb(255 236 214 / 0.16);
+  --color-text: #f7ecdf;
+  --color-muted: #a89484;
+  --color-faint: #6f5f52;
+
+  --color-turmeric: #f6c343; /* carbs */
+  --color-saffron: #ff8a3d; /* fat */
+  --color-chilli: #ff5a6e; /* protein, over-goal */
+  --color-leaf: #6cc46f; /* on target */
+  --color-brass: #c9974c;
+  --color-cream: #fff4e4;
+
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
+
+  --radius-card: 1.5rem;
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+:root {
+  color-scheme: dark;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-top: env(safe-area-inset-top, 0px);
+}
+
+html {
+  background: var(--color-bg);
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background:
+    radial-gradient(120% 60% at 50% -10%, rgb(255 138 61 / 0.13), transparent 60%),
+    radial-gradient(80% 40% at 100% 0%, rgb(246 195 67 / 0.06), transparent 60%),
+    var(--color-bg);
+  background-attachment: fixed;
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  overscroll-behavior-y: none;
+}
+
+/* film grain, keeps the dark surfaces from looking flat */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 60;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@utility card {
+  background: linear-gradient(180deg, rgb(255 236 214 / 0.035), transparent 40%), var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-card);
+  box-shadow: inset 0 1px 0 rgb(255 236 214 / 0.05), 0 10px 30px -12px rgb(0 0 0 / 0.6);
+}
+
+@utility tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Tailwind v4 resets buttons to cursor: default; desktop users expect a pointer */
+button:not(:disabled),
+[role="button"]:not(:disabled) {
+  cursor: pointer;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+@keyframes shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+@utility skeleton {
+  background: linear-gradient(90deg, var(--color-surface) 0%, var(--color-surface-2) 50%, var(--color-surface) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s linear infinite;
+  border-radius: var(--radius-card);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
