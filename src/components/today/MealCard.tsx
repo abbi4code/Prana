@@ -2,7 +2,9 @@
 
 import { useRef } from "react";
 import { AnimatePresence, motion, useMotionValue, useTransform } from "motion/react";
-import { Copy, Plus, Trash } from "lucide-react";
+import { BookmarkPlus, Copy, Plus, Trash, Zap } from "lucide-react";
+import { ThaliPlate } from "@/components/thali/ThaliPlate";
+import { mealKcal } from "@/lib/thali";
 import { FoodIcon } from "@/components/FoodIcon";
 import { getFood } from "@/lib/foods";
 import { fmtQty } from "@/lib/nutrition";
@@ -22,7 +24,18 @@ export function MealCard({ meal, label, entries, yesterday, date, prevDate }: {
   const removeEntry = useStore((s) => s.removeEntry);
   const restoreEntry = useStore((s) => s.restoreEntry);
   const showToast = useUI((s) => s.showToast);
+  const openThali = useUI((s) => s.openThali);
+  const allSaved = useStore((s) => s.savedMeals);
+  const logSavedMeal = useStore((s) => s.logSavedMeal);
+  const saved = allSaved.filter((m) => m.meal === meal);
   const kcal = entries.reduce((t, e) => t + e.kcal, 0);
+
+  const logThali = (id: string, name: string) => {
+    const ids = logSavedMeal(id, meal, date);
+    ids.forEach((x) => useUI.getState().markFresh(x));
+    navigator.vibrate?.(12);
+    showToast(`Logged ${name}`, { label: "Undo", run: () => ids.forEach((x) => removeEntry(x)) });
+  };
 
   const remove = (e: Entry) => {
     removeEntry(e.id);
@@ -37,14 +50,27 @@ export function MealCard({ meal, label, entries, yesterday, date, prevDate }: {
           <h3 className="font-display text-lg font-semibold">{label}</h3>
           <p className="text-xs text-muted tabular">{entries.length ? `${kcal.toLocaleString("en-IN")} kcal` : "Nothing yet"}</p>
         </div>
-        <motion.button
-          whileTap={{ scale: 0.88 }}
-          onClick={() => openAdd(meal)}
-          aria-label={`Add to ${label}`}
-          className="grid size-10 place-items-center rounded-full border border-line-strong bg-surface-2 text-text transition-colors hover:border-turmeric/50 hover:text-turmeric"
-        >
-          <Plus size={20} />
-        </motion.button>
+        <div className="flex items-center gap-1.5">
+          {entries.length > 0 && (
+            <motion.button
+              whileTap={{ scale: 0.88 }}
+              onClick={() => openThali({ slot: meal, prefill: entries.map((e) => ({ foodId: e.foodId, unitId: e.unitId, qty: e.qty })) })}
+              aria-label={`Save ${label} as a thali`}
+              title="Save as a thali"
+              className="grid size-10 place-items-center rounded-full text-muted transition-colors hover:bg-surface-2 hover:text-turmeric"
+            >
+              <BookmarkPlus size={18} />
+            </motion.button>
+          )}
+          <motion.button
+            whileTap={{ scale: 0.88 }}
+            onClick={() => openAdd(meal)}
+            aria-label={`Add to ${label}`}
+            className="grid size-10 place-items-center rounded-full border border-line-strong bg-surface-2 text-text transition-colors hover:border-turmeric/50 hover:text-turmeric"
+          >
+            <Plus size={20} />
+          </motion.button>
+        </div>
       </header>
 
       <ul className="px-2 pb-2">
@@ -62,6 +88,25 @@ export function MealCard({ meal, label, entries, yesterday, date, prevDate }: {
           ))}
         </AnimatePresence>
       </ul>
+
+      {!entries.length && saved.length > 0 && (
+        <div className="no-scrollbar flex gap-2 overflow-x-auto px-4 pb-3">
+          {saved.map((m) => (
+            <motion.button
+              key={m.id}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => logThali(m.id, m.name)}
+              className="flex shrink-0 items-center gap-2 rounded-2xl border border-line-strong bg-surface-2 py-1.5 pl-1.5 pr-3 text-left transition-colors hover:border-turmeric/50"
+            >
+              <ThaliPlate items={m.items} size={34} badges={false} />
+              <span>
+                <span className="flex items-center gap-1 text-[13px] font-semibold"><Zap size={12} className="text-turmeric" />{m.name}</span>
+                <span className="block text-[11px] text-muted tabular">{mealKcal(m)} kcal</span>
+              </span>
+            </motion.button>
+          ))}
+        </div>
+      )}
 
       {!entries.length && yesterday.length > 0 && (
         <button

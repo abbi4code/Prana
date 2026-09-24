@@ -3,14 +3,17 @@
 import { useMemo, useState } from "react";
 import { Drawer } from "vaul";
 import { AnimatePresence, motion } from "motion/react";
-import { Check, Flame, Plus, Search, X } from "lucide-react";
+import { Check, Flame, Pencil, Plus, Search, X } from "lucide-react";
+import { ThaliBuilder } from "@/components/thali/ThaliBuilder";
+import { ThaliPlate } from "@/components/thali/ThaliPlate";
+import { mealKcal } from "@/lib/thali";
 import { FoodIcon } from "@/components/FoodIcon";
 import { STARTER_IDS, getFood, searchFoods } from "@/lib/foods";
 import { addDays, dayKey } from "@/lib/dates";
 import { MEALS } from "@/lib/nutrition";
 import { useStore, useUI } from "@/lib/store";
 import { useIsDesktop } from "@/lib/useMediaQuery";
-import type { Food, Meal } from "@/lib/types";
+import type { Food, Meal, SavedMeal } from "@/lib/types";
 import { CreateFood } from "./CreateFood";
 import { FoodDetail } from "./FoodDetail";
 
@@ -41,6 +44,7 @@ export function LogSheet() {
           {!desktop && <div className="mx-auto mb-2 mt-3 h-1.5 w-10 shrink-0 rounded-full bg-line-strong" />}
           {sheet?.mode === "add" && <AddFlow key="add" meal={sheet.meal} />}
           {sheet?.mode === "edit" && <EditFlow key={sheet.entryId} entryId={sheet.entryId} />}
+          {sheet?.mode === "thali" && <ThaliFlow key={sheet.thaliId ?? "new"} slot={sheet.slot} thaliId={sheet.thaliId} prefill={sheet.prefill} />}
         </Drawer.Content>
       </Drawer.Portal>
     </Drawer.Root>
@@ -58,7 +62,18 @@ function AddFlow({ meal: initialMeal }: { meal: Meal }) {
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState<Food | null>(null);
   const [creating, setCreating] = useState<string | null>(null);
+  const [building, setBuilding] = useState<{ thaliId?: string } | null>(null);
   const [added, setAdded] = useState<{ name: string; kcal: number }[]>([]);
+  const savedMeals = useStore((s) => s.savedMeals);
+  const logSavedMeal = useStore((s) => s.logSavedMeal);
+  const showToast = useUI((s) => s.showToast);
+
+  const logThali = (m: SavedMeal) => {
+    const ids = logSavedMeal(m.id, meal, date);
+    ids.forEach((id) => useUI.getState().markFresh(id));
+    setAdded((a) => [...a, { name: m.name, kcal: mealKcal(m) }]);
+    navigator.vibrate?.(12);
+  };
 
   // recents: last distinct foods; frequent: most logged in the last 30 days
   const { recent, frequent } = useMemo(() => {
@@ -81,6 +96,22 @@ function AddFlow({ meal: initialMeal }: { meal: Meal }) {
 
   const results = useMemo(() => searchFoods(query), [query]);
   const lastFor = (id: string) => recent.find((r) => r.food.id === id)?.last;
+
+  if (building)
+    return (
+      <>
+        <Drawer.Title className="sr-only">Thali</Drawer.Title>
+        <ThaliBuilder
+          thaliId={building.thaliId}
+          slot={meal}
+          onBack={() => setBuilding(null)}
+          onSaved={(name) => {
+            setBuilding(null);
+            showToast(`Saved “${name}”`);
+          }}
+        />
+      </>
+    );
 
   if (creating !== null)
     return (
@@ -205,6 +236,7 @@ function AddFlow({ meal: initialMeal }: { meal: Meal }) {
           </>
         ) : (
           <>
+            <ThaliStrip meals={savedMeals} onLog={logThali} onEdit={(id) => setBuilding({ thaliId: id })} onNew={() => setBuilding({})} />
             {recent.length > 0 && <Section title="Recent" foods={recent.map((r) => r.food)} onPick={setSelected} />}
             {frequent.length > 0 && <Section title="You eat these often" foods={frequent} onPick={setSelected} />}
             {recent.length === 0 && <Section title="Popular" foods={starter} onPick={setSelected} />}
@@ -213,6 +245,65 @@ function AddFlow({ meal: initialMeal }: { meal: Meal }) {
         )}
       </div>
     </div>
+  );
+}
+
+/** "My thalis": saved meals as cards; tap logs every item into the chosen meal. */
+function ThaliStrip({ meals, onLog, onEdit, onNew }: { meals: SavedMeal[]; onLog: (m: SavedMeal) => void; onEdit: (id: string) => void; onNew: () => void }) {
+  return (
+    <div className="mt-3">
+      <p className="px-2 pb-2 text-[11px] font-bold uppercase tracking-[0.14em] text-faint">My thalis</p>
+      <div className="no-scrollbar -mx-3 flex gap-3 overflow-x-auto px-3 pb-1">
+        {meals.map((m) => (
+          <div key={m.id} className="relative shrink-0">
+            <motion.button
+              whileTap={{ scale: 0.96 }}
+              onClick={() => onLog(m)}
+              className="flex w-36 flex-col items-center rounded-3xl border border-line bg-surface-2 px-3 pb-3 pt-3 text-center transition-colors hover:border-turmeric/40"
+            >
+              <ThaliPlate items={m.items} size={88} badges={false} />
+              <span className="mt-2 w-full truncate text-sm font-semibold">{m.name}</span>
+              <span className="text-xs text-muted tabular">{mealKcal(m)} kcal · tap to log</span>
+            </motion.button>
+            <button
+              onClick={() => onEdit(m.id)}
+              aria-label={`Edit ${m.name}`}
+              className="absolute right-2 top-2 grid size-7 place-items-center rounded-full bg-surface/90 text-muted shadow hover:text-text"
+            >
+              <Pencil size={13} />
+            </button>
+          </div>
+        ))}
+        <button
+          onClick={onNew}
+          className="flex w-36 shrink-0 flex-col items-center justify-center gap-2 rounded-3xl border border-dashed border-line-strong px-3 py-6 text-center text-sm font-semibold text-muted transition-colors hover:border-turmeric/50 hover:text-text"
+        >
+          <span className="grid size-10 place-items-center rounded-full bg-surface-2 text-turmeric"><Plus size={20} /></span>
+          {meals.length ? "New thali" : "Save a meal you eat often"}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/** Thali builder opened from outside the add flow (e.g. "Save as thali" on a meal card). */
+function ThaliFlow({ slot, thaliId, prefill }: { slot: Meal; thaliId?: string; prefill?: SavedMeal["items"] }) {
+  const close = useUI((s) => s.close);
+  const showToast = useUI((s) => s.showToast);
+  return (
+    <>
+      <Drawer.Title className="sr-only">Thali</Drawer.Title>
+      <ThaliBuilder
+        thaliId={thaliId}
+        prefill={prefill}
+        slot={slot}
+        onBack={close}
+        onSaved={(name) => {
+          close();
+          showToast(`Saved “${name}”. Find it under My thalis.`);
+        }}
+      />
+    </>
   );
 }
 

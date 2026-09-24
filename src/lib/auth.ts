@@ -40,6 +40,7 @@ function adoptLocalData(userId: string) {
         dirtyWeights: s.weights.map((w) => w.date),
         dirtyWater: Object.keys(s.water),
         dirtyFoods: s.customFoods.map((f) => f.id),
+        dirtyMeals: s.savedMeals.map((m) => m.id),
         // only if edited as a guest, so a fresh device doesn't overwrite the account's goals with defaults
         goalsDirty: s.sync.goalsDirty,
       },

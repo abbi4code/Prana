@@ -14,7 +14,7 @@ Guiding rule: **logging fast beats everything.** People quit trackers because lo
 | Food search | Hinglish + aliases + Hindi names; category-aware ranking | done |
 | Recent & frequent foods | Shown before typing; remembers your last portion per food | done |
 | Visual katori picker | Brass katori fills and heaps past 1; glass for drinks; stack for pieces; kcal counts up live; grams input | done |
-| Copy yesterday / "My usual" | "Same as yesterday" per meal: done. "My usual" saved meals: planned | partly done |
+| Copy yesterday / "My usual" | "Same as yesterday" per meal + saved thalis (D25) | done |
 | Daily goals | Manual, or suggested from profile (Mifflin–St Jeor) | done |
 | Weight log | Daily entry, 7-day average trend line | done |
 | Water | Tap to add a glass | done |
@@ -24,12 +24,12 @@ Guiding rule: **logging fast beats everything.** People quit trackers because lo
 
 | Feature | Notes | Status |
 |---|---|---|
-| Thali builder | Drop roti/dal/sabzi/rice into an illustrated thali; save as a named thali; log in one tap. **Signature feature.** | planned |
+| Thali builder | Illustrated steel thali, save a named meal, one-tap log from the add sheet or an empty meal card (D25) | done |
 | Home vs restaurant toggle | Oil/ghee multiplier (~1.5–2×) for dhaba/restaurant food | planned |
 | Hidden-calorie chips | "+ ghee on roti", "+ tadka", "+ sugar in chai" | planned |
 | Chai counter | One-tap card on Today; home chai derived from IFCT milk + sugar (89 kcal/cup) | done |
-| Year heatmap | GitHub-style grid of on-target days | planned |
-| Forgiving streaks | Streak freezes included | planned |
+| Year heatmap | 53-week grid, tap a day for details (D24) | done |
+| Forgiving streaks | Flame badge on Today, streak card, freezes every 7 days (max 2) (D24) | done |
 | Smart swaps | e.g. "2 phulka instead of puri saves ~140 kcal" | planned |
 
 ## v2: Engagement + AI
@@ -62,6 +62,7 @@ Guiding rule: **logging fast beats everything.** People quit trackers because lo
 | Odometer numbers, shared icon transition, new-item glow, page transitions | done |
 | Celebrations: protein goal, water goal | done |
 | Supplements: whey protein (scoop), creatine, whey shake with water / milk (whey + creatine findable) | done |
+| Packaged breakfast: Yogabar protein oats (Dark Chocolate, Filter Kaapi) + muesli (Choco Almond protein, Dark Choco Cranberry), dry and with milk | done |
 
 ## Screens
 

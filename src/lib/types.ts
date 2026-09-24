@@ -1,6 +1,6 @@
 export type Category =
   | "breakfast" | "roti_bread" | "rice" | "dal" | "sabzi" | "paneer" | "egg" | "non_veg"
-  | "snack" | "sweet" | "dairy" | "fruit" | "beverage" | "condiment" | "nuts" | "soup" | "supplement";
+  | "snack" | "sweet" | "dairy" | "fruit" | "beverage" | "condiment" | "nuts" | "soup" | "supplement" | "cereal";
 
 export type UnitKind =
   | "g" | "katori" | "bowl" | "plate" | "piece" | "glass" | "cup" | "tbsp" | "tsp" | "handful" | "pack" | "scoop";
@@ -54,6 +54,12 @@ export type Entry = {
 };
 
 export type Goals = { kcal: number; p: number; c: number; f: number };
+
+/** One line of a saved meal. Nutrition is computed when it's logged (entries snapshot, D05). */
+export type ThaliItem = { foodId: string; unitId: string; qty: number };
+
+/** A named meal you eat often ("Office lunch"), logged in one tap. */
+export type SavedMeal = { id: string; name: string; meal: Meal; items: ThaliItem[]; createdAt: number };
 
 export type Profile = {
   sex: "male" | "female";

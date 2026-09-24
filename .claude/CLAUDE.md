@@ -29,6 +29,8 @@ Logs food in Indian household measures (katori, roti, plate) as well as grams.
 | `src/components/RollingNumber.tsx`, `Burst.tsx`, `Toaster.tsx` | Odometer digits, goal celebrations, undo toasts (D23) |
 | `src/lib/useTokens.ts` | Theme colours for SVG/Recharts (D20) |
 | `scripts/import-extra.mjs` | Builds `data/foods-extra.json` from INDB/USDA/derived (D22) |
+| `src/components/thali/`, `src/lib/thali.ts` | Thali plate art, builder, saved-meal helpers (D25) |
+| `src/lib/streaks.ts`, `useStreaks.ts`, `src/components/progress/` | Streak rules, streak card, year heatmap (D24) |
 | `scripts/build-foods.mjs` | `data/foods.json` → `src/data/foods.generated.json` (`npm run foods`) |
 | `src/lib/supabase.ts` | Browser Supabase client (PKCE); `supabaseEnabled` is false without env keys |
 | `src/lib/auth.ts` | Auth state, Google sign-in/out, attaching local data to the account |

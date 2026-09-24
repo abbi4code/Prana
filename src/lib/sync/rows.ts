@@ -1,6 +1,6 @@
 // Row mapping + merge rules between the local store and Supabase tables.
 // Pure functions (no imports with side effects) so they can be tested in isolation.
-import type { Entry, Food, WeightLog } from "../types";
+import type { Entry, Food, SavedMeal, WeightLog } from "../types";
 
 export type LogRow = {
   id: string;
@@ -24,6 +24,7 @@ export type LogRow = {
 export type WeightRow = { user_id?: string; measured_on: string; kg: number; updated_at?: string; deleted_at: string | null };
 export type WaterRow = { user_id?: string; logged_on: string; glasses: number; updated_at?: string };
 export type FoodRow = { id: string; user_id?: string; data: Food; updated_at?: string; deleted_at: string | null };
+export type MealRow = { id: string; user_id?: string; data: SavedMeal; updated_at?: string; deleted_at: string | null };
 
 const num = (v: unknown) => (v == null ? null : Number(v));
 
@@ -69,7 +70,8 @@ export function mergeWater(local: Record<string, number>, rows: WaterRow[], skip
   return out;
 }
 
-export function mergeFoods(local: Food[], rows: FoodRow[], skip: Set<string>): Food[] {
+/** For jsonb tables (custom_foods, saved_meals): same rules as entries. */
+export function mergeDocs<T extends { id: string }>(local: T[], rows: { id: string; data: T; deleted_at: string | null }[], skip: Set<string>): T[] {
   const byId = new Map(local.map((f) => [f.id, f]));
   for (const r of rows) {
     if (skip.has(r.id)) continue;
@@ -78,6 +80,7 @@ export function mergeFoods(local: Food[], rows: FoodRow[], skip: Set<string>): F
   }
   return [...byId.values()];
 }
+export const mergeFoods = (local: Food[], rows: FoodRow[], skip: Set<string>) => mergeDocs(local, rows, skip);
 
 /** Latest server timestamp seen, used as the next pull's lower bound. */
 export function maxUpdated(current: string | null, ...lists: { updated_at?: string }[][]) {

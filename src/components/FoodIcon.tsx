@@ -6,7 +6,7 @@ const HUE: Record<Category, string> = {
   breakfast: "#f6c343", roti_bread: "#d9a15b", rice: "#e9dcc6", dal: "#f2b134", sabzi: "#7cc36e",
   paneer: "#f08a4b", egg: "#ffd166", non_veg: "#ff7a59", snack: "#ff9f45", sweet: "#ff7aa2",
   dairy: "#cfe3ff", fruit: "#ffb347", beverage: "#c08457", condiment: "#9ccc65", nuts: "#c9974c", soup: "#ff8a3d",
-  supplement: "#d6ad80",
+  supplement: "#d6ad80", cereal: "#b98a5a",
 };
 
 export const categoryHue = (cat: Category) => HUE[cat];
@@ -180,6 +180,22 @@ const ART: Record<Category, React.ReactNode> = {
       <Steam y={13} />
     </>
   ),
+  cereal: (
+    <>
+      <ellipse cx="24" cy="41" rx="13" ry="2" fill="#000" opacity="0.2" />
+      <path d="M8,24 C8,34 15,40 24,40 C33,40 40,34 40,24 Z" fill="#f4f1ea" />
+      <path d="M8,24 C9,32 13,37 18,39 C13,35 10,30 10,24 Z" fill="#d9d3c6" />
+      <ellipse cx="24" cy="24" rx="16" ry="4.6" fill="#fbfaf6" />
+      <path d="M11,24 C12,15 36,15 37,24 Z" fill="#c9965e" />
+      <g fill="#a8733e">
+        <ellipse cx="17" cy="20" rx="2.4" ry="1.3" transform="rotate(-20 17 20)" /><ellipse cx="25" cy="17" rx="2.2" ry="1.2" transform="rotate(15 25 17)" />
+        <ellipse cx="30" cy="21" rx="2.4" ry="1.3" transform="rotate(25 30 21)" /><ellipse cx="21" cy="22" rx="2" ry="1.1" />
+      </g>
+      <circle cx="28" cy="18.5" r="1.4" fill="#b3263a" /><circle cx="19" cy="17.5" r="1.3" fill="#b3263a" />
+      <rect x="22.5" y="20.5" width="3" height="2.2" rx="0.5" fill="#4a2c1d" /><rect x="32" y="19" width="2.6" height="2" rx="0.5" fill="#4a2c1d" />
+      <ellipse cx="24" cy="24.2" rx="13.6" ry="2.2" fill="#fbfaf6" opacity="0.85" />
+    </>
+  ),
   supplement: (
     <>
       <ellipse cx="24" cy="42" rx="10" ry="1.8" fill="#000" opacity="0.2" />
@@ -206,8 +222,15 @@ const ART: Record<Category, React.ReactNode> = {
   ),
 };
 
-export function FoodIcon({ cat, size = 44 }: { cat: Category; size?: number }) {
+/** `bare` drops the tile: just the art, e.g. sitting on a thali. */
+export function FoodIcon({ cat, size = 44, bare = false }: { cat: Category; size?: number; bare?: boolean }) {
   const hue = HUE[cat];
+  if (bare)
+    return (
+      <svg viewBox="0 0 48 48" width={size} height={size} aria-hidden className="drop-shadow-[0_3px_3px_rgb(0_0_0/0.3)]">
+        {ART[cat]}
+      </svg>
+    );
   return (
     <div
       className="grid shrink-0 place-items-center rounded-2xl"

@@ -1,11 +1,19 @@
 "use client";
 
 import { motion } from "motion/react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import Link from "next/link";
+import { ChevronLeft, ChevronRight, Flame } from "lucide-react";
 import { addDays, dayKey, dayLabel, parseDay } from "@/lib/dates";
 
 /** Week strip (Mon–Sun) around the selected day; dots mark days with logs. */
-export function DateStrip({ date, onChange, logged }: { date: string; onChange: (d: string) => void; logged: Set<string> }) {
+export function DateStrip({ date, onChange, logged, streak, streakLive }: {
+  date: string;
+  onChange: (d: string) => void;
+  logged: Set<string>;
+  streak: number;
+  /** today is already on target */
+  streakLive: boolean;
+}) {
   const today = dayKey();
   const dow = (parseDay(date).getDay() + 6) % 7; // Monday = 0
   const monday = addDays(date, -dow);
@@ -20,7 +28,23 @@ export function DateStrip({ date, onChange, logged }: { date: string; onChange: 
           </p>
           <h1 className="font-display text-[2rem] font-semibold leading-tight">{dayLabel(date)}</h1>
         </div>
-        <div className="flex gap-1">
+        <div className="flex items-center gap-1">
+          <Link
+            href="/progress"
+            aria-label={`${streak} day streak`}
+            className={`mr-1 flex h-10 items-center gap-1 rounded-full border px-3 text-sm font-bold tabular transition-colors ${
+              streak ? "border-saffron/40 bg-saffron/10 text-saffron" : "border-line text-faint"
+            }`}
+          >
+            <motion.span
+              animate={streakLive ? { scale: [1, 1.25, 1] } : { scale: 1 }}
+              transition={{ duration: 1.2, repeat: streakLive ? Infinity : 0, repeatDelay: 1.8 }}
+              className="grid place-items-center"
+            >
+              <Flame size={16} strokeWidth={2.4} />
+            </motion.span>
+            {streak}
+          </Link>
           <NavBtn onClick={() => onChange(addDays(date, -7))} label="Previous week"><ChevronLeft size={20} /></NavBtn>
           <NavBtn onClick={() => onChange(addDays(date, 7))} label="Next week" disabled={addDays(monday, 7) > today}>
             <ChevronRight size={20} />

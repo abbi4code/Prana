@@ -143,6 +143,70 @@ out.push({
   image_prompt: "A scoop of white creatine powder",
 });
 
+// Yogabar (Sproutlife Foods): values transcribed from the official nutrition-facts label images on yogabars.in,
+// 2026-09-24. Per 100 g of the dry product; "with milk" rows use the label's own per-serve-with-milk column
+// (the label itself uses IFCT whole cow milk), converted to per 100 g of the finished bowl.
+const YB = "https://www.yogabars.in/products/";
+const YB_IMG = "https://cdn.shopify.com/s/files/1/0267/5245/files/";
+const MILK_G = (ml) => Math.round(ml * 1.03); // whole milk density
+const yogabar = [
+  {
+    id: "yogabar-protein-muesli-choco-almond", name: "Choco Almond Protein Muesli (Yogabar)", hi: "योगाबार प्रोटीन म्यूसली",
+    aliases: ["yogabar muesli", "protein muesli", "choco almond muesli", "yoga bar muesli", "muesli"],
+    per100: { kcal: 386, p: 23.0, c: 53.1, f: 10.7, fib: 7.5 }, serve: 50,
+    milk: { ml: 200, kcal: 339, p: 18.5, c: 36.6, f: 14.4 },
+    page: "choco-almond-high-protein-muesli-850g", img: "yogabar-high-protein-muesli-850g-nutrition-facts.jpg",
+    note: "Label: serving 50 g, added sugar 15 g/100 g (chocolate, dates, jaggery, cranberry). 350 g packs may differ slightly.",
+  },
+  {
+    id: "yogabar-protein-oats-dark-chocolate", name: "Dark Chocolate Protein Oats (Yogabar)", hi: "योगाबार प्रोटीन ओट्स",
+    aliases: ["yogabar oats", "protein oats", "dark chocolate oats", "yoga bar oats", "oats"],
+    per100: { kcal: 364, p: 26.0, c: 57.3, f: 5.9, fib: 11.1 }, serve: 50,
+    milk: { ml: 250, kcal: 364, p: 21.2, c: 41.0, f: 14.2 },
+    page: "26g-high-protein-oats-dark-chocolate", img: "yogabar-26g-protein-oats-dark-chocolate-nutrition-facts.jpg",
+    note: "Label: serving 50 g, no added sugar. Dry values; cooked-with-milk is a separate entry.",
+  },
+  {
+    id: "yogabar-protein-oats-filter-kaapi", name: "Filter Kaapi Protein Oats (Yogabar)", hi: "योगाबार प्रोटीन ओट्स फ़िल्टर कॉफ़ी",
+    aliases: ["yogabar oats", "filter kaapi oats", "filter coffee oats", "coffee protein oats", "protein oats"],
+    per100: { kcal: 364, p: 26.0, c: 53.4, f: 7.6, fib: 11.2 }, serve: 50,
+    milk: { ml: 250, kcal: 364, p: 21.2, c: 39.1, f: 15.0 },
+    page: "26g-high-protein-oats-filter-kappi", img: "yogabar-high-protein-oats-nutritional-facts-calories.jpg",
+    note: "Label: serving 50 g, no added sugar. Dry values; cooked-with-milk is a separate entry.",
+  },
+  {
+    id: "yogabar-super-muesli-dark-choco-cranberry", name: "Dark Choco Cranberry Muesli (Yogabar)", hi: "योगाबार सुपर म्यूसली",
+    aliases: ["yogabar super muesli", "super muesli", "dark chocolate muesli", "chocolate cranberry muesli", "muesli"],
+    per100: { kcal: 408, p: 12.0, c: 69.0, f: 11.6, fib: 10.0 }, serve: 40,
+    page: "dark-chocolate-cranberry-muesli-400g", img: "yogabar-super-muesli-400g-nutrition-facts.jpg",
+    note: "Label: serving 40 g, added sugar 8.8 g/100 g. Not the high-protein line (12 g vs 23 g protein). Log milk separately.",
+  },
+];
+for (const y of yogabar) {
+  const source = { id: "MFR_LABEL", ref: `Yogabar official nutrition label (${y.img})`, url: YB + y.page };
+  out.push({
+    id: y.id, name: y.name, name_hi: y.hi, aliases: y.aliases, category: "cereal", diet: "veg", form: "packaged",
+    per_100g: { kcal: y.per100.kcal, protein_g: y.per100.p, carbs_g: y.per100.c, fat_g: y.per100.f, fiber_g: y.per100.fib },
+    units: [std("serve", `1 serve (${y.serve} g)`, y.serve, "manufacturer serving size (label)"), std("katori", "1 katori dry (150 ml)", 50)],
+    default_unit: "serve", source, confidence: "high", notes: `${y.note} Image: ${YB_IMG}${y.img}`,
+    image_prompt: `${y.name} in a bowl`,
+  });
+  if (y.milk) {
+    const total = y.serve + MILK_G(y.milk.ml);
+    const per = (v) => r1((v / total) * 100);
+    out.push({
+      id: `${y.id}-with-milk`, name: `${y.name.replace(" (Yogabar)", "")} with milk (Yogabar)`, name_hi: y.hi,
+      aliases: [...y.aliases, "with milk", `${y.aliases[0]} milk`],
+      category: "cereal", diet: "veg", form: "cooked",
+      per_100g: { kcal: per(y.milk.kcal), protein_g: per(y.milk.p), carbs_g: per(y.milk.c), fat_g: per(y.milk.f), fiber_g: null },
+      units: [std("bowl", `1 bowl (${y.serve} g + ${y.milk.ml} ml milk)`, total, "manufacturer per-serve-with-milk values (label)")],
+      default_unit: "bowl", source, confidence: "high",
+      notes: `Label's own "${y.serve} g with ${y.milk.ml} ml cow milk" column (whole milk). With toned milk it's lower in fat.`,
+      image_prompt: `${y.name} with milk in a bowl`,
+    });
+  }
+}
+
 // DERIVED: protein shakes = USDA whey (173180) + water or IFCT whole cow milk (L002). Creatine adds 0 kcal, so
 // "whey + creatine" shakes are the same numbers (aliases below make them findable).
 const whey = USDA.find((u) => u.id === "whey-protein");

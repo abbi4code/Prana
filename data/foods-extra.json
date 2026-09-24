@@ -1661,6 +1661,309 @@
    "image_prompt": "A scoop of white creatine powder"
   },
   {
+   "id": "yogabar-protein-muesli-choco-almond",
+   "name": "Choco Almond Protein Muesli (Yogabar)",
+   "name_hi": "योगाबार प्रोटीन म्यूसली",
+   "aliases": [
+    "yogabar muesli",
+    "protein muesli",
+    "choco almond muesli",
+    "yoga bar muesli",
+    "muesli"
+   ],
+   "category": "cereal",
+   "diet": "veg",
+   "form": "packaged",
+   "per_100g": {
+    "kcal": 386,
+    "protein_g": 23,
+    "carbs_g": 53.1,
+    "fat_g": 10.7,
+    "fiber_g": 7.5
+   },
+   "units": [
+    {
+     "unit": "serve",
+     "label": "1 serve (50 g)",
+     "grams": 50,
+     "basis": "manufacturer serving size (label)"
+    },
+    {
+     "unit": "katori",
+     "label": "1 katori dry (150 ml)",
+     "grams": 50,
+     "basis": "estimated standard household measure"
+    }
+   ],
+   "default_unit": "serve",
+   "source": {
+    "id": "MFR_LABEL",
+    "ref": "Yogabar official nutrition label (yogabar-high-protein-muesli-850g-nutrition-facts.jpg)",
+    "url": "https://www.yogabars.in/products/choco-almond-high-protein-muesli-850g"
+   },
+   "confidence": "high",
+   "notes": "Label: serving 50 g, added sugar 15 g/100 g (chocolate, dates, jaggery, cranberry). 350 g packs may differ slightly. Image: https://cdn.shopify.com/s/files/1/0267/5245/files/yogabar-high-protein-muesli-850g-nutrition-facts.jpg",
+   "image_prompt": "Choco Almond Protein Muesli (Yogabar) in a bowl"
+  },
+  {
+   "id": "yogabar-protein-muesli-choco-almond-with-milk",
+   "name": "Choco Almond Protein Muesli with milk (Yogabar)",
+   "name_hi": "योगाबार प्रोटीन म्यूसली",
+   "aliases": [
+    "yogabar muesli",
+    "protein muesli",
+    "choco almond muesli",
+    "yoga bar muesli",
+    "muesli",
+    "with milk",
+    "yogabar muesli milk"
+   ],
+   "category": "cereal",
+   "diet": "veg",
+   "form": "cooked",
+   "per_100g": {
+    "kcal": 132.42,
+    "protein_g": 7.23,
+    "carbs_g": 14.3,
+    "fat_g": 5.63,
+    "fiber_g": null
+   },
+   "units": [
+    {
+     "unit": "bowl",
+     "label": "1 bowl (50 g + 200 ml milk)",
+     "grams": 256,
+     "basis": "manufacturer per-serve-with-milk values (label)"
+    }
+   ],
+   "default_unit": "bowl",
+   "source": {
+    "id": "MFR_LABEL",
+    "ref": "Yogabar official nutrition label (yogabar-high-protein-muesli-850g-nutrition-facts.jpg)",
+    "url": "https://www.yogabars.in/products/choco-almond-high-protein-muesli-850g"
+   },
+   "confidence": "high",
+   "notes": "Label's own \"50 g with 200 ml cow milk\" column (whole milk). With toned milk it's lower in fat.",
+   "image_prompt": "Choco Almond Protein Muesli (Yogabar) with milk in a bowl"
+  },
+  {
+   "id": "yogabar-protein-oats-dark-chocolate",
+   "name": "Dark Chocolate Protein Oats (Yogabar)",
+   "name_hi": "योगाबार प्रोटीन ओट्स",
+   "aliases": [
+    "yogabar oats",
+    "protein oats",
+    "dark chocolate oats",
+    "yoga bar oats",
+    "oats"
+   ],
+   "category": "cereal",
+   "diet": "veg",
+   "form": "packaged",
+   "per_100g": {
+    "kcal": 364,
+    "protein_g": 26,
+    "carbs_g": 57.3,
+    "fat_g": 5.9,
+    "fiber_g": 11.1
+   },
+   "units": [
+    {
+     "unit": "serve",
+     "label": "1 serve (50 g)",
+     "grams": 50,
+     "basis": "manufacturer serving size (label)"
+    },
+    {
+     "unit": "katori",
+     "label": "1 katori dry (150 ml)",
+     "grams": 50,
+     "basis": "estimated standard household measure"
+    }
+   ],
+   "default_unit": "serve",
+   "source": {
+    "id": "MFR_LABEL",
+    "ref": "Yogabar official nutrition label (yogabar-26g-protein-oats-dark-chocolate-nutrition-facts.jpg)",
+    "url": "https://www.yogabars.in/products/26g-high-protein-oats-dark-chocolate"
+   },
+   "confidence": "high",
+   "notes": "Label: serving 50 g, no added sugar. Dry values; cooked-with-milk is a separate entry. Image: https://cdn.shopify.com/s/files/1/0267/5245/files/yogabar-26g-protein-oats-dark-chocolate-nutrition-facts.jpg",
+   "image_prompt": "Dark Chocolate Protein Oats (Yogabar) in a bowl"
+  },
+  {
+   "id": "yogabar-protein-oats-dark-chocolate-with-milk",
+   "name": "Dark Chocolate Protein Oats with milk (Yogabar)",
+   "name_hi": "योगाबार प्रोटीन ओट्स",
+   "aliases": [
+    "yogabar oats",
+    "protein oats",
+    "dark chocolate oats",
+    "yoga bar oats",
+    "oats",
+    "with milk",
+    "yogabar oats milk"
+   ],
+   "category": "cereal",
+   "diet": "veg",
+   "form": "cooked",
+   "per_100g": {
+    "kcal": 118.18,
+    "protein_g": 6.88,
+    "carbs_g": 13.31,
+    "fat_g": 4.61,
+    "fiber_g": null
+   },
+   "units": [
+    {
+     "unit": "bowl",
+     "label": "1 bowl (50 g + 250 ml milk)",
+     "grams": 308,
+     "basis": "manufacturer per-serve-with-milk values (label)"
+    }
+   ],
+   "default_unit": "bowl",
+   "source": {
+    "id": "MFR_LABEL",
+    "ref": "Yogabar official nutrition label (yogabar-26g-protein-oats-dark-chocolate-nutrition-facts.jpg)",
+    "url": "https://www.yogabars.in/products/26g-high-protein-oats-dark-chocolate"
+   },
+   "confidence": "high",
+   "notes": "Label's own \"50 g with 250 ml cow milk\" column (whole milk). With toned milk it's lower in fat.",
+   "image_prompt": "Dark Chocolate Protein Oats (Yogabar) with milk in a bowl"
+  },
+  {
+   "id": "yogabar-protein-oats-filter-kaapi",
+   "name": "Filter Kaapi Protein Oats (Yogabar)",
+   "name_hi": "योगाबार प्रोटीन ओट्स फ़िल्टर कॉफ़ी",
+   "aliases": [
+    "yogabar oats",
+    "filter kaapi oats",
+    "filter coffee oats",
+    "coffee protein oats",
+    "protein oats"
+   ],
+   "category": "cereal",
+   "diet": "veg",
+   "form": "packaged",
+   "per_100g": {
+    "kcal": 364,
+    "protein_g": 26,
+    "carbs_g": 53.4,
+    "fat_g": 7.6,
+    "fiber_g": 11.2
+   },
+   "units": [
+    {
+     "unit": "serve",
+     "label": "1 serve (50 g)",
+     "grams": 50,
+     "basis": "manufacturer serving size (label)"
+    },
+    {
+     "unit": "katori",
+     "label": "1 katori dry (150 ml)",
+     "grams": 50,
+     "basis": "estimated standard household measure"
+    }
+   ],
+   "default_unit": "serve",
+   "source": {
+    "id": "MFR_LABEL",
+    "ref": "Yogabar official nutrition label (yogabar-high-protein-oats-nutritional-facts-calories.jpg)",
+    "url": "https://www.yogabars.in/products/26g-high-protein-oats-filter-kappi"
+   },
+   "confidence": "high",
+   "notes": "Label: serving 50 g, no added sugar. Dry values; cooked-with-milk is a separate entry. Image: https://cdn.shopify.com/s/files/1/0267/5245/files/yogabar-high-protein-oats-nutritional-facts-calories.jpg",
+   "image_prompt": "Filter Kaapi Protein Oats (Yogabar) in a bowl"
+  },
+  {
+   "id": "yogabar-protein-oats-filter-kaapi-with-milk",
+   "name": "Filter Kaapi Protein Oats with milk (Yogabar)",
+   "name_hi": "योगाबार प्रोटीन ओट्स फ़िल्टर कॉफ़ी",
+   "aliases": [
+    "yogabar oats",
+    "filter kaapi oats",
+    "filter coffee oats",
+    "coffee protein oats",
+    "protein oats",
+    "with milk",
+    "yogabar oats milk"
+   ],
+   "category": "cereal",
+   "diet": "veg",
+   "form": "cooked",
+   "per_100g": {
+    "kcal": 118.18,
+    "protein_g": 6.88,
+    "carbs_g": 12.69,
+    "fat_g": 4.87,
+    "fiber_g": null
+   },
+   "units": [
+    {
+     "unit": "bowl",
+     "label": "1 bowl (50 g + 250 ml milk)",
+     "grams": 308,
+     "basis": "manufacturer per-serve-with-milk values (label)"
+    }
+   ],
+   "default_unit": "bowl",
+   "source": {
+    "id": "MFR_LABEL",
+    "ref": "Yogabar official nutrition label (yogabar-high-protein-oats-nutritional-facts-calories.jpg)",
+    "url": "https://www.yogabars.in/products/26g-high-protein-oats-filter-kappi"
+   },
+   "confidence": "high",
+   "notes": "Label's own \"50 g with 250 ml cow milk\" column (whole milk). With toned milk it's lower in fat.",
+   "image_prompt": "Filter Kaapi Protein Oats (Yogabar) with milk in a bowl"
+  },
+  {
+   "id": "yogabar-super-muesli-dark-choco-cranberry",
+   "name": "Dark Choco Cranberry Muesli (Yogabar)",
+   "name_hi": "योगाबार सुपर म्यूसली",
+   "aliases": [
+    "yogabar super muesli",
+    "super muesli",
+    "dark chocolate muesli",
+    "chocolate cranberry muesli",
+    "muesli"
+   ],
+   "category": "cereal",
+   "diet": "veg",
+   "form": "packaged",
+   "per_100g": {
+    "kcal": 408,
+    "protein_g": 12,
+    "carbs_g": 69,
+    "fat_g": 11.6,
+    "fiber_g": 10
+   },
+   "units": [
+    {
+     "unit": "serve",
+     "label": "1 serve (40 g)",
+     "grams": 40,
+     "basis": "manufacturer serving size (label)"
+    },
+    {
+     "unit": "katori",
+     "label": "1 katori dry (150 ml)",
+     "grams": 50,
+     "basis": "estimated standard household measure"
+    }
+   ],
+   "default_unit": "serve",
+   "source": {
+    "id": "MFR_LABEL",
+    "ref": "Yogabar official nutrition label (yogabar-super-muesli-400g-nutrition-facts.jpg)",
+    "url": "https://www.yogabars.in/products/dark-chocolate-cranberry-muesli-400g"
+   },
+   "confidence": "high",
+   "notes": "Label: serving 40 g, added sugar 8.8 g/100 g. Not the high-protein line (12 g vs 23 g protein). Log milk separately. Image: https://cdn.shopify.com/s/files/1/0267/5245/files/yogabar-super-muesli-400g-nutrition-facts.jpg",
+   "image_prompt": "Dark Choco Cranberry Muesli (Yogabar) in a bowl"
+  },
+  {
    "id": "whey-shake-water",
    "name": "Whey Shake with Water",
    "name_hi": "प्रोटीन शेक",

@@ -30,6 +30,8 @@ When something changes, mark the old entry **Superseded by Dxx** instead of dele
 | D21 | User-created ("custom") foods, synced | Decided | 2026-09-24 |
 | D22 | Extra food sources: INDB import, USDA fallback, derived recipes | Decided | 2026-09-24 |
 | D23 | Interaction patterns: swipe-delete + undo, drag katori, celebrate habits only | Decided | 2026-09-24 |
+| D24 | Streak rules: on target = logged + 80–105% of goal; freezes | Decided | 2026-09-24 |
+| D25 | Saved meals ("thalis"), logged in one tap | Decided | 2026-09-24 |
 
 ---
 
@@ -177,6 +179,21 @@ Rules: all colours are CSS tokens (`globals.css`); `--ink` is the RGB used for h
 - Celebrate **habits**, not eating: particle burst + toast when protein goal or 8 glasses of water is reached, never for hitting the calorie number.
 - Big numbers roll like an odometer (`RollingNumber`); the icon glides from the result list into the detail (`layoutId`); new items glow once on Today; pages rise-and-fade (`app/template.tsx`).
 - Category illustrations (brass katori, kulhad, roti stack…) replace icon tiles until per-dish art exists (D11).
+
+## D24 — Streaks
+One definition, `dayStatus()` in `src/lib/streaks.ts`, used everywhere (streak, heatmap, "days on target"):
+**on target = logged and 80–105% of the calorie goal**. Under 80% doesn't count: starving isn't discipline.
+- Streak = consecutive on-target days. Today counts once it's on target and never breaks it while in progress.
+- Every 7 on-target days earns a **freeze** (max 2). An off day (not logged / under / over) spends one instead of resetting.
+- History is judged against the *current* goal (goal changes aren't stored per day).
+- Shown as a flame badge on Today (links to Progress), a streak card, and a 53-week heatmap (tap a day for kcal + status).
+- Rules are pure and covered by a Node test (scratch; see `computeStreaks`).
+
+## D25 — Thalis (saved meals)
+A saved meal = name + usual meal slot + items `{ foodId, unitId, qty }`. Nutrition is computed when logged (entries snapshot, D05), so editing a food or thali never rewrites history.
+- Create: **bookmark icon on a meal card** (prefilled with that meal's items) or **New thali** in the add sheet. The builder shows the food drawn on an illustrated steel thali, with live totals.
+- Log: tap a card under **My thalis** in the add sheet (goes to the selected meal), or tap the **⚡ chip on an empty meal card** (thalis saved for that slot). Logging from Today shows an Undo toast.
+- Synced via `saved_meals` (jsonb, RLS), migration `20260924130000_saved_meals`.
 
 ## D12 — Project docs
 Decisions, features, future changes and data notes live as separate md files in `.claude/`, indexed in [CLAUDE.md](CLAUDE.md).

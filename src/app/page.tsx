@@ -9,6 +9,7 @@ import { CHAI_ID, QuickRow } from "@/components/today/QuickRow";
 import { addDays, dayKey } from "@/lib/dates";
 import { MEALS, totals } from "@/lib/nutrition";
 import { useStore, useUI } from "@/lib/store";
+import { useStreaks } from "@/lib/useStreaks";
 
 export default function TodayPage() {
   const hydrated = useStore((s) => s.hydrated);
@@ -16,6 +17,7 @@ export default function TodayPage() {
   const goals = useStore((s) => s.goals);
   const date = useUI((s) => s.date) ?? dayKey();
   const setDate = useUI((s) => s.setDate);
+  const streak = useStreaks();
   const prev = addDays(date, -1);
 
   const { day, yesterday, logged } = useMemo(
@@ -34,7 +36,7 @@ export default function TodayPage() {
   return (
     <div className="space-y-4 lg:grid lg:grid-cols-[400px_minmax(0,1fr)] lg:items-start lg:gap-8 lg:space-y-0">
       <div className="space-y-4 lg:sticky lg:top-10">
-        <DateStrip date={date} onChange={setDate} logged={logged} />
+        <DateStrip date={date} onChange={setDate} logged={logged} streak={streak.current} streakLive={streak.status.get(streak.today) === "on"} />
 
         <section className="card px-5 pb-5 pt-6">
           <CalorieRing eaten={t.kcal} goal={goals.kcal} />

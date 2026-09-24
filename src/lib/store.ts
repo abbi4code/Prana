@@ -4,7 +4,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { getFood, getUnit, setCustomFoods } from "./foods";
 import { DEFAULT_GOALS, portion } from "./nutrition";
-import type { Entry, Food, Goals, Meal, Profile, WeightLog } from "./types";
+import type { Entry, Food, Goals, Meal, Profile, SavedMeal, ThaliItem, WeightLog } from "./types";
 
 /**
  * Local changes not yet pushed to Supabase (decision D14).
@@ -20,12 +20,14 @@ export type SyncQueue = {
   dirtyWater: string[]; // dates
   dirtyFoods: string[]; // custom food ids
   deletedFoods: string[];
+  dirtyMeals: string[]; // saved meal ids
+  deletedMeals: string[];
   goalsDirty: boolean;
 };
 
 export const EMPTY_QUEUE: SyncQueue = {
   userId: null, lastPulledAt: null, dirtyEntries: [], deletedEntries: [],
-  dirtyWeights: [], deletedWeights: [], dirtyWater: [], dirtyFoods: [], deletedFoods: [], goalsDirty: false,
+  dirtyWeights: [], deletedWeights: [], dirtyWater: [], dirtyFoods: [], deletedFoods: [], dirtyMeals: [], deletedMeals: [], goalsDirty: false,
 };
 
 type Data = {
@@ -36,6 +38,7 @@ type Data = {
   water: Record<string, number>;
   /** user-created foods (same shape as catalog foods, conf "user") */
   customFoods: Food[];
+  savedMeals: SavedMeal[];
   sync: SyncQueue;
   /** chose "use without account" on the login screen */
   guest: boolean;
@@ -56,13 +59,17 @@ type State = Data & {
   addWater: (date: string, delta: number) => void;
   addCustomFood: (food: Food) => void;
   removeCustomFood: (id: string) => void;
+  saveMeal: (m: SavedMeal) => void;
+  deleteSavedMeal: (id: string) => void;
+  /** log every item of a saved meal; returns the new entry ids */
+  logSavedMeal: (id: string, meal: Meal, date: string) => string[];
   setGuest: (guest: boolean) => void;
   /** wipe everything on this device (sign-out); server data is untouched */
   resetLocal: () => void;
 };
 
 const INITIAL: Data = {
-  entries: [], goals: DEFAULT_GOALS, profile: null, weights: [], water: {}, customFoods: [], sync: EMPTY_QUEUE, guest: false,
+  entries: [], goals: DEFAULT_GOALS, profile: null, weights: [], water: {}, customFoods: [], savedMeals: [], sync: EMPTY_QUEUE, guest: false,
 };
 
 const uid = () => (typeof crypto !== "undefined" && crypto.randomUUID ? crypto.randomUUID() : String(Math.random()).slice(2));
@@ -81,7 +88,7 @@ function build(foodId: string, unitId: string, qty: number, meal: Meal, date: st
 
 export const useStore = create<State>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       ...INITIAL,
       hydrated: false,
 
@@ -146,13 +153,34 @@ export const useStore = create<State>()(
           customFoods: s.customFoods.filter((f) => f.id !== id),
           sync: { ...s.sync, dirtyFoods: drop(s.sync.dirtyFoods, id), deletedFoods: add(s.sync.deletedFoods, id) },
         })),
+      saveMeal: (m) =>
+        set((s) => ({
+          savedMeals: [...s.savedMeals.filter((x) => x.id !== m.id), m],
+          sync: { ...s.sync, dirtyMeals: add(s.sync.dirtyMeals, m.id), deletedMeals: drop(s.sync.deletedMeals, m.id) },
+        })),
+      deleteSavedMeal: (id) =>
+        set((s) => ({
+          savedMeals: s.savedMeals.filter((x) => x.id !== id),
+          sync: { ...s.sync, dirtyMeals: drop(s.sync.dirtyMeals, id), deletedMeals: add(s.sync.deletedMeals, id) },
+        })),
+      logSavedMeal: (id, meal, date) => {
+        const saved = get().savedMeals.find((m) => m.id === id);
+        if (!saved) return [];
+        const made = saved.items.map((it) => build(it.foodId, it.unitId, it.qty, meal, date)).filter(Boolean) as Entry[];
+        set((s) => ({
+          entries: [...s.entries, ...made],
+          sync: { ...s.sync, dirtyEntries: add(s.sync.dirtyEntries, ...made.map((e) => e.id)) },
+        }));
+        return made.map((e) => e.id);
+      },
       setGuest: (guest) => set({ guest }),
       resetLocal: () => set({ ...INITIAL }),
     }),
     {
       name: "ct-v1",
       version: 1, // new fields fall back to INITIAL via the default shallow merge
-      partialize: ({ entries, goals, profile, weights, water, customFoods, sync, guest }) => ({ entries, goals, profile, weights, water, customFoods, sync, guest }),
+      partialize: ({ entries, goals, profile, weights, water, customFoods, savedMeals, sync, guest }) =>
+        ({ entries, goals, profile, weights, water, customFoods, savedMeals, sync, guest }),
       // queues persisted before a field existed would lack it
       merge: (persisted, current) => {
         const p = persisted as Partial<State>;
@@ -177,7 +205,7 @@ useStore.subscribe((s, prev) => {
 /** Changes waiting to be pushed. */
 export const pendingCount = (q: SyncQueue) =>
   q.dirtyEntries.length + q.deletedEntries.length + q.dirtyWeights.length + q.deletedWeights.length + q.dirtyWater.length +
-  q.dirtyFoods.length + q.deletedFoods.length + (q.goalsDirty ? 1 : 0);
+  q.dirtyFoods.length + q.deletedFoods.length + q.dirtyMeals.length + q.deletedMeals.length + (q.goalsDirty ? 1 : 0);
 
 export type Toast = { id: number; text: string; action?: { label: string; run: () => void } };
 
@@ -191,10 +219,11 @@ type UI = {
   clearFresh: (id: string) => void;
   showToast: (text: string, action?: Toast["action"]) => void;
   dismissToast: () => void;
-  sheet: null | { mode: "add"; meal: Meal } | { mode: "edit"; entryId: string };
+  sheet: null | { mode: "add"; meal: Meal } | { mode: "edit"; entryId: string } | { mode: "thali"; slot: Meal; thaliId?: string; prefill?: ThaliItem[] };
   setDate: (d: string) => void;
   openAdd: (meal: Meal) => void;
   openEdit: (entryId: string) => void;
+  openThali: (opts: { slot: Meal; thaliId?: string; prefill?: ThaliItem[] }) => void;
   close: () => void;
 };
 
@@ -210,5 +239,6 @@ export const useUI = create<UI>((set) => ({
   setDate: (date) => set({ date }),
   openAdd: (meal) => set({ sheet: { mode: "add", meal } }),
   openEdit: (entryId) => set({ sheet: { mode: "edit", entryId } }),
+  openThali: (opts) => set({ sheet: { mode: "thali", ...opts } }),
   close: () => set({ sheet: null }),
 }));

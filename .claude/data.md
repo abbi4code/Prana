@@ -5,8 +5,8 @@
 | File | What |
 |---|---|
 | `data/foods.json` | Research dataset v2 (227 foods). Source of truth; edit this, not the generated file |
-| `data/foods-extra.json` | 45 foods added later (INDB codes, USDA fdcIds, derived chai). Built by `node scripts/import-extra.mjs <INDB.xlsx>` (D22) |
-| `src/data/foods.generated.json` | App catalog built by `npm run foods` from both files (269 foods after exclusions) |
+| `data/foods-extra.json` | 52 foods added later (INDB codes, USDA fdcIds, derived chai). Built by `node scripts/import-extra.mjs <INDB.xlsx>` (D22) |
+| `src/data/foods.generated.json` | App catalog built by `npm run foods` from both files (276 foods after exclusions) |
 
 Older files (`foods.json` v1, `foods (1).json`) were deleted on 2026-09-24.
 
@@ -19,6 +19,8 @@ All were produced by browser Claude from the research prompt. Schema: `meta` + `
 - **USDA 173180** "Protein powder, whey based": Whey Protein Powder (352 kcal, 78 g protein per 100 g; scoop 30 g = 106 kcal, 23 g protein). Brand scoops vary (30–36 g): users can create their brand from its label.
 - **DERIVED** (4): chai with / without sugar = IFCT whole cow milk (L002) + USDA sugar, per 150 ml cup; whey shake with water (1 scoop + 250 ml = 106 kcal) and with milk (1 scoop + 250 ml whole milk ≈ 258 g = 294 kcal, 32 g protein). Creatine adds 0 kcal, so "whey + creatine" searches land on the shakes.
 - **Manufacturer label** (creatine): Optimum Nutrition Micronized Creatine, India site: 3 g scoop, 0 kcal, 0 carbs.
+- **Manufacturer label, read from the official nutrition-facts images** (Yogabar / Sproutlife Foods, yogabars.in): Choco Almond Protein Muesli, Dark Chocolate & Filter Kaapi Protein Oats, Dark Choco Cranberry Muesli, plus "with milk" rows from the label's own per-serve-with-milk column. The pasted research had kcal = null (panel only exists as images); the label images were downloaded from the Shopify CDN and transcribed. Corrections vs that research: muesli serving is 50 g (not 40), the Dark Choco Cranberry muesli *does* have added sugar (8.8 g/100 g). Method for other brands: `yogabars.in/products/<handle>.json` → nutrition-facts image → read.
+- New category `cereal` ("Oats & muesli", cereal-bowl art).
 - **Manufacturer label** (1 food): Maggi, from maggi.in. Amul, Parle, Coca-Cola and Haldiram's pages couldn't be read, so those items were omitted.
 - Not accessible: the ICMR-NIN household-measures table, so **all katori/serving weights are estimates**.
 

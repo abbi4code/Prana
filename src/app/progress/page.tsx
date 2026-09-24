@@ -5,7 +5,10 @@ import { motion } from "motion/react";
 import { Scale, X } from "lucide-react";
 import { Bar, BarChart, CartesianGrid, Cell, Line, LineChart, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { addDays, dayKey, parseDay } from "@/lib/dates";
+import { StreakCard } from "@/components/progress/StreakCard";
+import { YearHeatmap } from "@/components/progress/YearHeatmap";
 import { useStore } from "@/lib/store";
+import { dayStatus } from "@/lib/streaks";
 import { useTokens } from "@/lib/useTokens";
 
 const short = (k: string) => parseDay(k).toLocaleDateString("en-IN", { day: "numeric", month: "short" });
@@ -43,7 +46,7 @@ export default function ProgressPage() {
 
   const logged = calories.filter((c) => c.kcal > 0);
   const avgKcal = logged.length ? Math.round(logged.reduce((t, c) => t + c.kcal, 0) / logged.length) : 0;
-  const onTarget = logged.filter((c) => c.kcal <= goals.kcal * 1.05 && c.kcal >= goals.kcal * 0.8).length;
+  const onTarget = logged.filter((c) => dayStatus(c.kcal, goals.kcal) === "on").length;
   const latest = weightSeries.at(-1);
   const first = weightSeries[0];
 
@@ -52,6 +55,11 @@ export default function ProgressPage() {
   return (
     <div className="space-y-4">
       <h1 className="font-display text-[2rem] font-semibold lg:text-4xl">Progress</h1>
+
+      <div className="space-y-4 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)] lg:items-start lg:gap-6 lg:space-y-0">
+        <StreakCard />
+        <YearHeatmap />
+      </div>
 
       <div className="space-y-4 lg:grid lg:grid-cols-2 lg:items-start lg:gap-6 lg:space-y-0">
         <section className="card p-5">
