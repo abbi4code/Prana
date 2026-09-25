@@ -47,5 +47,16 @@ export const Verdict = z.object({
 });
 export type Verdict = z.infer<typeof Verdict>;
 /** No visit + a verdict = the check-in waits for the user ("Try again" / "Check in anyway"). */
-export const GymResponse = z.object({ visit: Visit.nullable(), serverNow: z.number(), created: z.boolean().optional(), verdict: Verdict.optional() });
+export const GymResponse = z.object({
+  visit: Visit.nullable(),
+  serverNow: z.number(),
+  created: z.boolean().optional(),
+  verdict: Verdict.optional(),
+  /** a forgotten visit this call closed (phase 4), so the device can say so and offer to fix the end */
+  autoClosed: Visit.optional(),
+});
+
+/** Fix the guessed end of an auto-closed visit. */
+export const SetEndBody = z.object({ id: z.uuid(), endedAt: Iso });
+export type SetEndBody = z.infer<typeof SetEndBody>;
 export type GymResponse = z.infer<typeof GymResponse>;

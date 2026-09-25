@@ -14,7 +14,7 @@ Status: **phase 1 built 2026-09-24** (library, set logger, cardio, burn, Today/W
 ## As built
 
 **Screens**
-- **Workout tab** `/workout` (4th nav tab; phone nav shows the label only on the active tab so four fit): week strip with the workout-streak flame, Burned card (big number, bar to burn goal, minutes, sets, rest-day badge), Exercise / Cardio buttons, Session list (photo thumb, sets summary, ~kcal; tap = edit, swipe left = delete + undo), Workout streak card, Workout goals card (daily burn goal + rest-day picker).
+- **Workout tab** `/workout` (4th nav tab; phone nav shows the label only on the active tab so four fit): **week strip** (`WorkoutWeek`, full width on desktop) where each day shows how it went for the workout streak: 🔥 workout day, 🌙 rest day, ❄️ saved by a freeze, 🥲 missed, dashed ring = today, not yet; a band joins neighbouring streak days; "3/6 workout days · ~kcal" for the week; an **Exercises** toggle (remembered per device, `localStorage["prana-week-exercises"]`) opens what was done each day: phone = a list (emoji, muscle groups, exercises, photo stack, ~kcal; tap = that day), desktop = a week calendar with up to 4 exercises per day. Then Burned card (big number, bar to burn goal, minutes, sets, rest-day badge), Exercise / Cardio buttons, Session list (photo thumb, sets summary, ~kcal; tap = edit, swipe left = delete + undo), Workout streak card, Workout goals card (daily burn goal + rest-day picker).
 - **Workout sheet** (`components/workout/WorkoutSheet.tsx`, `useUI.gym`): bottom sheet on phones; on desktop a centred **two-pane modal** (D28): library left, logger right (before picking: today's session, tap to edit). Strength tab: search (aliases), muscle chips (+ sub-chips for Back/Legs, jamun), equipment chips, Recent row, 2-col photo grid. Cardio tab: activity list. Lift detail: start/end photos cross-fading (`animate-flip`), muscles, "Last time" (pre-fills sets), kg × reps steppers (typing works; kg step 2.5, 1 for dumbbell/kettlebell/bands; empty bar = 20 kg default), add/remove set, rest 60/90/120/180 s, pace Normal/Intense, "How to do it" (steps lazy-loaded), live ~kcal footer. Cardio detail: minutes (+ quick picks), speed/incline for walk/run (pace shown for runs), effort chips for the rest. Sheet stays open after logging ("Done · n") so a whole session can be logged in one go.
 - **Today**: stats row Eaten · **Burned** · **Net** · **Goal (tap to edit kcal inline;** macros stay as set in Me), plus a Burned card under chai/water (opens /workout, + opens the sheet). Flame = **global streak** once any workout exists, else the food streak.
 - **Progress**: "Prana streak" card (global; shows food + workout current streaks), "Food streak" card (was "Discipline streak"), heatmap with Food / Workout / Both toggle (toggle appears once workouts exist).
@@ -56,6 +56,7 @@ Gaps (known, accepted):
 - `mets[].description` is paraphrased; the UI uses our own labels (`OPTIONS` in the build script).
 
 ## Calculation (as built, `lib/burn.ts`)
+- **Since 2026-09-25 (step 1 of v2):** the rest you pick only changes the time shown; kcal are always charged with the standard 90 s rest (Farinatti 2011: rest length doesn't change total energy). Weight still doesn't count until v2 lands.
 - **Gross** kcal/min = MET × 3.5 × kg × 5 / 1000 (the Compendium's own conversion). **Net** = gross − resting burn/min from **Mifflin–St Jeor** (same equation as the food goal). Only net is counted, never below 0. This is where height, age and sex come in (~1 kcal per exercise; body weight is the big factor).
 - The Compendium's corrected MET cancels out when converted back to kcal, so it isn't used.
 - Weight lifted (kg) doesn't scale kcal: heavier sets burn *less* per minute (Mazzetti 2011, Scott 2011). kg is for progress (last time, later PRs).
@@ -63,6 +64,53 @@ Gaps (known, accepted):
 - MET per exercise (`metFor` in the build script): squat/deadlift family 02052 (5.0); kettlebell swings 02058 (9.8); burpee/jumping jacks/battle ropes 02020 (7.5); jump squat/box jump/mountain climber 02057 (6.5); power clean, clean & press 02050 (6.0); other loaded lifts 02054 (3.5); abs bodyweight + timed holds 02024 (2.8); other bodyweight 02022 (3.8). **Intense** pace: 02050 (6.0) for loaded lifts, 02020 (7.5) for bodyweight.
 - Cardio: walking/running = ACSM equations from speed (+ incline); everything else = the chosen Compendium code.
 - Owner's example (bench 50 kg, 4×8, 90 s rest, 75 kg / 170 cm / 30 y male): 7.6 min → **~26 kcal**.
+
+## Lifting burn model v2 (decided 2026-09-25, research pending)
+Owner found two real flaws in the v1 time × MET model for lifting: **weight lifted doesn't change kcal**, and **longer rest adds kcal** (3 × 3 min rest ≈ 41 kcal vs 60 s ≈ 21 kcal for the same sets). Both come from treating a set like cardio: Compendium weight-lifting METs are session averages, so every minute (rest included) is charged at the same rate, and load isn't an input.
+Decision (owner: "do A, long-term plan"): replace lifting kcal with a **per-set mechanical-work model**: work = load × g × vertical displacement × reps (bodyweight exercises: body-mass fraction), energy = work × a published energy-per-work factor that includes recovery (Scott 2011, Knausenberger 2014 found set energy tracks work, r 0.87–0.997). Rest length no longer drives kcal (only what the research supports). Cardio stays time × MET.
+Research prompt given to browser Claude → expected file `data/lift-energy.json`. Until it lands, v1 stays.
+
+**Research received 2026-09-25 (`data/lift-energy.json`), reviewed:**
+- **Rest length doesn't change total energy** (Farinatti 2011: leg press 5×10 at 15RM, 1-min vs 3-min rest = 88.7 vs 91.1 kcal incl. 90 min recovery; chest fly 50.3 vs 54.1). So kcal must not grow with the rest chosen.
+- **Within one exercise, set energy tracks mechanical work** (Scott/Knausenberger 2014, 40 measured sets incl. recovery + anaerobic part): slopes in kJ per kg·m of bar travel (Scott's "J" are kg·m, the unit check holds: incline press 208.6/(40.8×10) = 0.51 m): bench 0.0937 (Scott 2009, r 0.97), incline 0.0911, squat 0.0942, deadlift 0.102 (3 points only), shrug 0.246, calf raise 0.296. Big-range lifts cost ~0.09–0.10 kJ per kg·m; short-range ones (~0.12 m) ~3× more per unit of work.
+- **Bar travel per rep** measured only for squat 0.71 / front squat 0.68 / overhead press 0.56 / stiff-leg deadlift 0.55 (Hornsby 2018, weightlifters) and implied by the Smith-machine data (incline 0.43, deadlift 0.60, squat 0.36 self-selected depth, shrug 0.12, calf 0.11). **Missing:** bench, rows, pulldown, pull-up, curls, triceps, raises, hip thrust, lunge, leg press, cables, machines.
+- **One pooled formula doesn't transfer** to exercises it hasn't seen: fitting on 4 exercises and predicting the 5th misses by 25–117% (pooled in-sample error ~30–41%). Farinatti's chest fly (≈50 kcal for 5×10) is far above what the bench slope would give, i.e. isolation/machine work costs more per unit of work.
+- **Validation:** 40 of 49 cases are the same Knausenberger sets (not independent); the rest lack loads in kg. No independent check yet.
+
+**Plan (owner, 2026-09-25):** step 1 done: rest no longer changes kcal (`liftBurn` charges `DEFAULT_REST`; the UI says rest changes the time, not the calories). Step 2: second research pass for bar travel per movement, energy of machine/cable/isolation exercises with loads in kg, and independent sessions. (Prompt given 2026-09-25 → expected `data/lift-energy-2.json`.)
+
+**Second research received (`data/lift-energy-2.json`), reviewed 2026-09-25:**
+- **Reis 2017** (14 men, 78.7 kg): 8 machine exercises at 12/16/20/24 % 1RM **with loads in kg**, continuous reps at 15/min, exercise O2 only (no recovery). Net per-rep cost (gross − 1 MET, ÷ 15) is linear in load: bench 0.107 + 0.0055·kg kcal/rep, incline 0.171 + 0.0082·kg, half squat 0.461 + 0.0090·kg, leg press 0.112 + 0.0039·kg, leg extension 0.206 + 0.0086·kg, lat pulldown 0.040 + 0.0074·kg, curl 0.021 + 0.0155·kg, triceps 0.011 + 0.0193·kg. Doubling the load at the same pace raises energy only 18–48 % (elasticity 0.24–0.55): **weight matters, but the exercise (muscle mass) matters more.**
+- **Cross-lab check** where Reis and Scott overlap: bench 22.7 kg × 15 = 3.5 vs 3.9 kcal, bench 40 × 10 = 3.3 vs 4.5, incline 20.4 × 15 = 5.1 vs 3.6, squat 28.3 × 15 = 10.7 vs 8.3 → agreement within about ±30 %.
+- **Bar travel:** only Smith bench 0.415 m (SD 0.052) and Smith squat 0.501 m (Montoro 2025, 40 people) added. Rows, pulldowns, curls, raises, leg press, hip thrust, lunges, cables still unmeasured; pulley ratios not found (only blogs/sellers).
+- **Rustaden 2020:** total kg lifted did not predict session energy across formats (BodyPump 19,485 kg ≈ 302 kcal vs heavy 8RM 15,616 kg ≈ 289 kcal). Bodyweight fractions (squat/lunge 0.9, push-up 0.65, dip 0.5, sit-up 0.4) are the authors' pilot constants (medium confidence).
+- **Excluded:** Adeel 2021 (180–290 kcal for 3 × 10 dumbbell sets, 680–840 kcal for 9 sets: implausible, marked low confidence).
+- Implication: a displacement-based model can't cover most exercises; a **per-rep model by movement group** (per-rep cost = a + b × kg, from Reis/Scott) needs no bar travel and covers the library once every exercise is mapped to its nearest measured movement.
+ Step 3: switch all lifts to the per-set work model and validate before shipping. **Done 2026-09-25 (see "v2 as built").** Past logs keep their snapshot kcal (D05).
+
+
+### v2 as built (2026-09-25)
+- **Formula** (`repBurn` in `lib/burn.ts`, one entry point `exerciseBurn` in `lib/exercises.ts` used by the workout sheet, the confirm card and "Add anything"): kcal = Σ sets [reps × (a + b × load_kg) + set]. Rest length and pace don't change it; the rest you pick only changes the time shown.
+- **Coefficients are computed in `scripts/build-exercises.mjs`** from the research files (never typed in) and shipped as `repGroups` in `exercises.generated.json`:
+
+| Group | Per rep | Per set | Source |
+|---|---|---|---|
+| bench | 0.00929·kg | 0.757 | Scott 2009 regression × 0.415 m (Montoro 2025 Smith bench) |
+| incline (incl. overhead presses) | 0.00928·kg | 0.767 | Knausenberger 2014 × 0.426 m (their data) |
+| squat (loaded squats, lunges, split squats, step-ups) | 0.00817·kg | 3.569 | Knausenberger 2014 × 0.363 m |
+| deadlift / hinge | 0.01457·kg | 13.526 | Knausenberger 2014 × 0.598 m (**3 sets only, medium confidence**) |
+| shrug | 0.00698·kg | 0.011 | Knausenberger 2014 × 0.119 m |
+| calf | 0.00791·kg | 0.465 | Knausenberger 2014 × 0.112 m |
+| legpress (incl. hip thrust, bridges, pull-through) | 0.1117 + 0.00394·kg | 0 | Reis 2017, net of 1 MET |
+| legext (incl. leg curls, adductor/abductor, cable kickback) | 0.2065 + 0.00858·kg | 0 | Reis 2017 |
+| pulldown (incl. all rows, pull-ups) | 0.0399 + 0.00737·kg | 0 | Reis 2017 |
+| curl (incl. wrist curls, raises, rear-delt, face pull, upright rows) | 0.0211 + 0.01546·kg | 0 | Reis 2017 |
+| triceps (extensions, pushdowns, kickbacks, skull crushers) | 0.0111 + 0.01927·kg | 0 | Reis 2017 |
+
+- **Loads:** dumbbells/kettlebells in both hands: kg is per dumbbell (UI says "kg each") and doubled; single-arm moves aren't. Bodyweight moves: body mass × share (push-up 0.64 / feet raised 0.70 / hands raised 0.55 / knees 0.49, Ebben 2011; dips 0.5, Rustaden 2020 pilot; pull-up 0.956 = body minus both forearms + hands, Winter) + added kg, or minus the counterweight when assisted.
+- **Still on time × MET (54 exercises):** core and ab moves, planks/timed holds, conditioning (burpees, jumping jacks, kettlebell swings/cleans, battle ropes, box/jump squats), carries, bands, bodyweight squats/lunges/bridges, inverted rows, back extensions: no per-rep data. Their Pace chip still shows.
+- **Checks:** reproduces the sets it came from within 2–29 % (deadlift 2 %, calf 9 %, incline 12 %, squat 17 %, shrug 29 %); against Reis's independent measurements: bench +3 %, incline −35 %, squat −37 %. Owner's bench sets = 29 kcal at any rest, 35 kcal with +10 kg each. Workouts store `burn: "rep"`; past logs keep their snapshot.
+- **Known weak spots:** deadlift per-set cost (3 measured sets) makes hinges high (3 × 5 @ 80 kg ≈ 58 kcal); Reis coefficients are extrapolated beyond their 12–24 % 1RM loads; mapped exercises (rows→pulldown, raises→curl, hip thrust→leg press…) are judgement.
 
 ## Next (phases 2–3)
 2. Routines ("thalis for the gym": Push/Pull/Legs), rest timer (would give real durations), PRs (estimated 1RM) with celebration, last-session numbers beside each set.

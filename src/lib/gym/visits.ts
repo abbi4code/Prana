@@ -12,15 +12,20 @@ export function activeVisit(visits: GymVisit[], local: LocalVisit[], pendingChec
   return { id: v.id, gymId: v.gymId, startedAt: Date.parse(v.startedAt), offline: false, unverified: v.startVerification !== "verified", verification: v.startVerification };
 }
 
-/** Finished visits from both sources as [start, end] ms, local ones not yet uploaded included. */
-export function finishedVisits(visits: GymVisit[], local: LocalVisit[], pendingCheckout: { visitId: string; endedAt: number } | null) {
-  const out: { id: string; start: number; end: number }[] = [];
+/** A finished visit from either source (server copy, or saved on this phone and not yet uploaded). */
+export type FinishedVisit = { id: string; start: number; end: number; verified: boolean; auto: boolean; local: boolean };
+
+/** Finished visits from both sources, newest first. A check-out waiting to sync counts as finished. */
+export function finishedVisits(visits: GymVisit[], local: LocalVisit[], pendingCheckout: { visitId: string; endedAt: number } | null): FinishedVisit[] {
+  const out: FinishedVisit[] = [];
   const serverIds = new Set(visits.map((v) => v.id));
   for (const v of visits) {
     const end = v.endedAt ? Date.parse(v.endedAt) : pendingCheckout?.visitId === v.id ? pendingCheckout.endedAt : null;
-    if (end != null) out.push({ id: v.id, start: Date.parse(v.startedAt), end });
+    if (end != null)
+      out.push({ id: v.id, start: Date.parse(v.startedAt), end, verified: v.startVerification === "verified", auto: v.status === "auto_closed", local: false });
   }
-  for (const v of local) if (v.endedAt != null && !serverIds.has(v.id)) out.push({ id: v.id, start: v.startedAt, end: v.endedAt });
+  for (const v of local)
+    if (v.endedAt != null && !serverIds.has(v.id)) out.push({ id: v.id, start: v.startedAt, end: v.endedAt, verified: false, auto: false, local: true });
   return out.sort((a, b) => b.start - a.start);
 }
 
@@ -37,3 +42,6 @@ export function duration(ms: number) {
   const min = Math.max(0, Math.round(ms / 60000));
   return min < 60 ? `${min} min` : `${Math.floor(min / 60)} h ${min % 60 ? `${min % 60} min` : ""}`.trim();
 }
+
+/** Visits long enough to count (counter, workout day). Unverified ones count too, with a tag in the UI. */
+export const counted = (v: { start: number; end: number }, minMinutes: number) => v.end - v.start >= minMinutes * 60_000;

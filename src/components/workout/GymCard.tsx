@@ -1,16 +1,18 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { AnimatePresence, motion } from "motion/react";
-import { Building2, Check, CloudOff, Crosshair, LoaderCircle, MapPin, MapPinOff, RotateCcw, Settings2, ShieldCheck, ShieldQuestion } from "lucide-react";
+import { Building2, Check, CloudOff, Crosshair, LoaderCircle, MapPin, MapPinOff, Pencil, RotateCcw, Settings2, ShieldCheck, ShieldQuestion, Timer } from "lucide-react";
 import { useAuth } from "@/lib/auth";
 import { dayKey } from "@/lib/dates";
-import { checkIn, checkOut, type CheckInResult, type Loc } from "@/lib/gym/actions";
+import { checkIn, checkOut, fixEnd, type CheckInResult, type Loc } from "@/lib/gym/actions";
+import { AUTO_CLOSE_HOURS, MIN_VISIT_MINUTES } from "@/lib/gym/config";
 import { isIosChrome, permissionState, readLocation, unblockSteps, type Reading } from "@/lib/gym/location";
 import type { Verdict } from "@/lib/gym/schema";
-import { activeVisit, clock, duration, finishedVisits } from "@/lib/gym/visits";
+import { activeVisit, clock, counted, duration, finishedVisits, type FinishedVisit } from "@/lib/gym/visits";
 import { useStore, useUI } from "@/lib/store";
+import type { Gym } from "@/lib/types";
 
 // the map (Leaflet) loads only when the gym sheet is opened
 const GymSheet = dynamic(() => import("./GymSheet"), { ssr: false });
@@ -55,6 +57,12 @@ type Step =
  */
 export function GymCard() {
   const gym = useStore((s) => s.gyms[0] ?? null);
+  const [editing, setEditing] = useState(false);
+  if (!gym) return <SetupGym onOpen={() => setEditing(true)} sheet={<GymSheet open={editing} onClose={() => setEditing(false)} />} />;
+  return <GymCardBody gym={gym} />;
+}
+
+function GymCardBody({ gym }: { gym: Gym }) {
   const visits = useStore((s) => s.visits);
   const local = useStore((s) => s.localVisits);
   const pending = useStore((s) => s.pendingCheckout);
@@ -70,12 +78,21 @@ export function GymCard() {
   const [editing, setEditing] = useState(false);
 
   const month = dayKey().slice(0, 7);
-  const thisMonth = useMemo(
-    () => finishedVisits(visits, local, pending).filter((v) => dayKey(new Date(v.start)).slice(0, 7) === month).length,
-    [visits, local, pending, month],
-  );
+  const finished = useMemo(() => finishedVisits(visits, local, pending), [visits, local, pending]);
+  // only visits of MIN_VISIT_MINUTES+ count (unverified ones too, with a tag)
+  const thisMonth = finished.filter((v) => counted(v, MIN_VISIT_MINUTES) && dayKey(new Date(v.start)).slice(0, 7) === month).length;
 
-  if (!gym) return <SetupGym onOpen={() => setEditing(true)} sheet={<GymSheet open={editing} onClose={() => setEditing(false)} />} />;
+  // the nearby banner's "Check in" lands here and runs the normal (server-verified) flow
+  const startRef = useRef<() => void>(() => {});
+  const autoCheckIn = useUI((s) => s.autoCheckIn);
+  useEffect(() => {
+    if (!autoCheckIn) return;
+    const t = setTimeout(() => {
+      useUI.setState({ autoCheckIn: false });
+      startRef.current();
+    }, 350);
+    return () => clearTimeout(t);
+  }, [autoCheckIn]);
 
   const hasLocation = gym.lat != null && gym.lng != null;
   // verification needs: signed in, a gym location, and the app setting on (layer 1). Guests: phone-only timer.
@@ -115,11 +132,15 @@ export function GymCard() {
   };
 
   const start = () => {
-    if (busy) return;
+    if (busy || active) return;
     if (!canVerify) return void plain({ status: "off" });
     if (consent === null) return setStep({ s: "explain" }); // first time: explain before the browser asks
     void attempt();
   };
+
+  useEffect(() => {
+    startRef.current = start;
+  });
 
   const done = async () => {
     if (busy || !active) return;
@@ -239,6 +260,7 @@ export function GymCard() {
                   <MapPin size={15} className="shrink-0 text-jamun" /> Add your gym&apos;s location to verify visits
                 </button>
               )}
+              {finished.length > 0 && <RecentVisits list={finished.slice(0, 3)} />}
             </>
           )}
         </motion.div>
@@ -247,6 +269,125 @@ export function GymCard() {
     </section>
   );
 }
+
+const hhmm = (ms: number) => new Date(ms).toLocaleTimeString("en-IN", { hour: "numeric", minute: "2-digit" });
+const dayName = (ms: number) => {
+  const d = dayKey(new Date(ms));
+  if (d === dayKey()) return "Today";
+  const y = new Date();
+  y.setDate(y.getDate() - 1);
+  if (d === dayKey(y)) return "Yesterday";
+  return new Date(ms).toLocaleDateString("en-IN", { weekday: "short", day: "numeric", month: "short" });
+};
+
+/** Last few visits with their tags. Auto-closed ones have a guessed end the user can fix. */
+function RecentVisits({ list }: { list: FinishedVisit[] }) {
+  const fixVisitId = useUI((s) => s.fixVisitId);
+  const showToast = useUI((s) => s.showToast);
+  const [open, setOpen] = useState<string | null>(null);
+  const [time, setTime] = useState("");
+  const [saving, setSaving] = useState(false);
+  const box = useRef<HTMLDivElement>(null);
+
+  // arriving from the "Fix end" toast: open that visit's editor
+  useEffect(() => {
+    if (!fixVisitId) return;
+    const v = list.find((x) => x.id === fixVisitId);
+    const t = setTimeout(() => {
+      useUI.setState({ fixVisitId: null });
+      if (!v) return;
+      setOpen(v.id);
+      setTime(toInput(v.end));
+      box.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }, 300);
+    return () => clearTimeout(t);
+  }, [fixVisitId, list]);
+
+  const save = async (v: FinishedVisit) => {
+    const [h, m] = time.split(":").map(Number);
+    const end = new Date(v.start);
+    end.setHours(h, m, 0, 0);
+    if (end.getTime() <= v.start) end.setDate(end.getDate() + 1); // past midnight
+    if (end.getTime() - v.start > AUTO_CLOSE_HOURS * 3600_000 || end.getTime() > Date.now())
+      return showToast(`Pick a time after ${hhmm(v.start)}, within ${AUTO_CLOSE_HOURS} hours and not in the future.`);
+    setSaving(true);
+    const r = await fixEnd(v.id, end.getTime());
+    setSaving(false);
+    if (!r.ok) return showToast(r.message);
+    setOpen(null);
+    showToast(`Updated · ${duration(end.getTime() - v.start)}`);
+  };
+
+  return (
+    <div ref={box} className="mt-4 border-t border-line pt-3">
+      <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-faint">Recent visits</p>
+      <ul className="mt-1.5 space-y-1">
+        {list.map((v) => {
+          const short = !counted(v, MIN_VISIT_MINUTES);
+          return (
+            <li key={v.id} className="rounded-2xl px-1 py-1.5">
+              <div className="flex items-center gap-2.5">
+                <span className={`grid size-8 shrink-0 place-items-center rounded-xl ${v.verified ? "bg-leaf/15 text-leaf" : "bg-surface-2 text-faint"}`}>
+                  {v.verified ? <ShieldCheck size={15} /> : v.auto ? <Timer size={15} /> : <ShieldQuestion size={15} />}
+                </span>
+                <div className="min-w-0 flex-1">
+                  <p className="flex items-baseline gap-1.5 text-sm font-semibold">
+                    <span className="truncate">{dayName(v.start)}</span>
+                    <span className={`shrink-0 font-display tabular ${short ? "text-faint line-through" : "text-jamun"}`}>{duration(v.end - v.start)}</span>
+                  </p>
+                  <p className="text-[11px] leading-snug text-faint">
+                    {hhmm(v.start)} – {hhmm(v.end)} · {v.verified ? "verified" : "not verified"}
+                    {v.auto && " · auto-closed"}
+                    {v.local && " · on this phone"}
+                    {short && ` · under ${MIN_VISIT_MINUTES} min, doesn't count`}
+                  </p>
+                </div>
+                {v.auto && !v.local && (
+                  <button
+                    onClick={() => { setOpen(open === v.id ? null : v.id); setTime(toInput(v.end)); }}
+                    aria-label="Fix end time"
+                    className="grid size-8 shrink-0 place-items-center rounded-full text-faint hover:bg-surface-2 hover:text-text"
+                  >
+                    <Pencil size={14} />
+                  </button>
+                )}
+              </div>
+              <AnimatePresence initial={false}>
+                {open === v.id && (
+                  <motion.form
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    onSubmit={(e) => { e.preventDefault(); void save(v); }}
+                    className="overflow-hidden"
+                  >
+                    <div className="mt-2 flex items-center gap-2 rounded-2xl bg-surface-2 p-2 pl-3">
+                      <span className="text-xs text-muted">Left at</span>
+                      <input
+                        type="time"
+                        value={time}
+                        onChange={(e) => setTime(e.target.value)}
+                        aria-label="Time you left the gym"
+                        className="h-9 min-w-0 flex-1 rounded-xl border border-line-strong bg-surface px-2 font-display font-semibold outline-none tabular focus:border-jamun/60"
+                      />
+                      <motion.button whileTap={{ scale: 0.95 }} disabled={saving || !time} className="h-9 rounded-xl bg-cream px-3 text-sm font-bold text-bg disabled:opacity-50">
+                        {saving ? <LoaderCircle size={15} className="animate-spin" /> : "Save"}
+                      </motion.button>
+                    </div>
+                  </motion.form>
+                )}
+              </AnimatePresence>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+}
+const toInput = (ms: number) => {
+  const d = new Date(ms);
+  return `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
+};
 
 const fmtDistance = (m: number | null) => (m == null ? "?" : m >= 1000 ? `${(m / 1000).toFixed(1)} km` : `${m} m`);
 

@@ -108,7 +108,12 @@ export type Exercise = {
   met: Met;
   /** short rest / supersets */
   metIntense: Met;
+  /** lifting burn v2: which measured movement this uses; null = time × MET model (core, conditioning, bands…) */
+  rep: { g: string; perSide: boolean; bw: number | null } | null;
 };
+
+/** Measured per-rep cost of a movement (net kcal): per rep a + b × load_kg, plus `set` once per set. */
+export type RepGroup = { label: string; a: number; b: number; set: number; src: string };
 
 /** Cardio or sport. walk/run use the ACSM equations; "met" picks one of `options`. */
 export type Activity = {
@@ -146,6 +151,8 @@ export type Workout = {
   /** estimated kcal above resting */
   kcal: number;
   createdAt: number;
+  /** "rep" = lifting burn v2 (per-rep costs); absent = time × MET (v1 or cardio) */
+  burn?: "rep";
   /** gym visit this was logged during (D30); calories never come from the visit itself */
   visitId?: string;
 };

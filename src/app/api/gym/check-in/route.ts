@@ -6,7 +6,7 @@ import { CheckInBody } from "@/lib/gym/schema";
 import type { VisitRow } from "@/lib/sync/rows";
 import { requestUser } from "@/server/auth";
 import { needsConfirm } from "@/lib/gym/verify";
-import { activeVisitRow, callGym, json, logFailedAttempt, rateLimited, reply, serverError, serverJudge } from "@/server/gym/visits";
+import { activeVisitRow, autoClose, callGym, json, logFailedAttempt, rateLimited, reply, serverError, serverJudge } from "@/server/gym/visits";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -34,20 +34,22 @@ export async function POST(req: Request) {
       return reply(out.data.visit, { created: out.data.created });
     }
 
+    // a visit forgotten for hours is closed first, so a fresh check-in can start
+    const autoClosed = await autoClose(user.id);
     // already checked in (double tap / another device): no need to measure anything
     const active = await activeVisitRow(user.id);
-    if (active) return reply(active, { created: false });
+    if (active) return reply(active, { created: false, autoClosed });
 
     const j = await serverJudge(user.id, gymId, locationStatus, location);
     if (needsConfirm(j.verification) && !force) {
       await logFailedAttempt(user.id, gymId, j);
-      return reply(null, { verdict: { ...j } });
+      return reply(null, { verdict: { ...j }, autoClosed });
     }
     const out = await callGym<{ visit: VisitRow; created: boolean }>("gym_check_in", {
       p_user: user.id, p_gym: gymId, p_verification: j.verification, p_distance: j.distanceM, p_accuracy: j.accuracyM, p_source: "web_manual",
     });
     if ("res" in out) return out.res;
-    return reply(out.data.visit, { created: out.data.created, verdict: { ...j } });
+    return reply(out.data.visit, { created: out.data.created, verdict: { ...j }, autoClosed });
   } catch (err) {
     return serverError("gym/check-in", err);
   }

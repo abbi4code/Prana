@@ -1,0 +1,3639 @@
+{
+  "meta": {
+    "version": "1.0",
+    "generated_on": "2026-09-25",
+    "notes": [
+      "Second pass; nothing from pass 1 is repeated.",
+      "Units reported as published; where cm are also shown in m this is stated in units_note.",
+      "No Scott-lab 'J' values appear in this pass."
+    ],
+    "sources": [
+      {
+        "id": "reis2017",
+        "citation": "Reis VM, Garrido ND, Vianna J, Sousa AC, Alves JV, Marques MC. Energy cost of isolated resistance exercises across low- to high-intensities. PLoS ONE 2017;12(7):e0181311",
+        "url": "https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0181311&type=printable"
+      },
+      {
+        "id": "montoro2025",
+        "citation": "Montoro-Bombu R, Costa A, Sousa PM, et al. Reliability and accuracy of linear position transducers during the bench press and back squat. J Funct Morphol Kinesiol 2025;10(2):109",
+        "url": "https://www.mdpi.com/2411-5142/10/2/109"
+      },
+      {
+        "id": "balsalobre2019",
+        "citation": "Balsalobre-Fernandez C, Cardiel-Garcia M, Jimenez SL. Bilateral and unilateral load-velocity profiling in a machine-based, single-joint, lower body exercise. PLoS ONE 2019;14(9):e0222632",
+        "url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0222632"
+      },
+      {
+        "id": "rustaden2020",
+        "citation": "Rustaden AM, Gjestvang C, Bo K, Haakstad LAH, Paulsen G. Similar energy expenditure during BodyPump and heavy load resistance exercise in overweight women. Front Physiol 2020;11:570",
+        "url": "https://www.frontiersin.org/journals/physiology/articles/10.3389/fphys.2020.00570/full"
+      },
+      {
+        "id": "adeel2021",
+        "citation": "Adeel M, Lai C-H, Wu C-W, et al. Energy expenditure during acute weight training exercises in healthy participants: a preliminary study. Appl Sci 2021;11(15):6687",
+        "url": "https://www.mdpi.com/2076-3417/11/15/6687"
+      }
+    ]
+  },
+  "displacement": [
+    {
+      "pattern": "bench_press_smith",
+      "vertical_m": 0.415,
+      "value_as_published": {
+        "value": 41.5,
+        "sd": 5.2,
+        "unit": "cm"
+      },
+      "sd_m": 0.052,
+      "per_height": null,
+      "subjects": {
+        "n": 40,
+        "sex": "13 F (171 cm, 74.9 kg) + 27 M (174 cm, 84.76 kg), pooled",
+        "height_cm": null,
+        "body_mass_kg": null,
+        "training": ">1 yr regular exercise, familiar with BP/SQ"
+      },
+      "device": "Chronojump LPT (1 mm, 1000 Hz), 3 units in parallel",
+      "method": "Concentric bar displacement; bar lowered to nipple line, 1 s pause, max-velocity concentric; Smith machine (22 kg bar+guide)",
+      "source": "montoro2025",
+      "locator": "Table 1, row dS, Encoder-1 (encoders 2/3: 41.2 / 41.4 cm)",
+      "units_note": "Published in cm; vertical_m is the same value in metres (cm/100).",
+      "confidence": "high"
+    },
+    {
+      "pattern": "squat_smith",
+      "vertical_m": 0.501,
+      "value_as_published": {
+        "value": 50.1,
+        "sd": 10.4,
+        "unit": "cm"
+      },
+      "sd_m": 0.104,
+      "per_height": null,
+      "subjects": {
+        "n": 40,
+        "sex": "13 F + 27 M, pooled (as above)",
+        "height_cm": null,
+        "body_mass_kg": null,
+        "training": "as above"
+      },
+      "device": "Chronojump LPT",
+      "method": "Concentric bar displacement; depth to tibiofemoral angle 35-45 deg (thighs below horizontal); Smith machine",
+      "source": "montoro2025",
+      "locator": "Table 1, row dS, Encoder-1 (encoders 2/3: 49.8 / 50.0 cm)",
+      "units_note": "Published in cm.",
+      "confidence": "high",
+      "notes": "Shallower than Hornsby 2018 free back squat (0.71 m, weightlifters). Large SD (10.4 cm) reflects depth/mobility differences the authors mention."
+    },
+    {
+      "pattern": "leg_extension_weight_stack",
+      "vertical_m": null,
+      "sd_m": null,
+      "per_height": null,
+      "subjects": {
+        "n": 15,
+        "sex": "male",
+        "height_cm": null,
+        "body_mass_kg": null,
+        "training": ">=2 yr leg extension experience"
+      },
+      "device": "metric tape + 240 fps smartphone video (My Lift app)",
+      "method": "Vertical travel of the weight plates from rest to full knee extension (start at 90 deg knee flexion), marked per subject",
+      "source": "balsalobre2019",
+      "locator": "Methods 'Testing procedures'; per-subject ROM in Figshare dataset (not read)",
+      "units_note": null,
+      "confidence": null,
+      "notes": "Method sourced; numeric stack travel not read. Figshare data linked from the article."
+    },
+    {
+      "pattern": "bench_press_barbell",
+      "vertical_m": null,
+      "sd_m": null,
+      "per_height": null,
+      "subjects": {
+        "n": null,
+        "sex": null,
+        "height_cm": null,
+        "body_mass_kg": null,
+        "training": null
+      },
+      "device": null,
+      "method": null,
+      "source": null,
+      "locator": null,
+      "units_note": null,
+      "confidence": null,
+      "notes": "No measured value found in an allowed source in this pass."
+    },
+    {
+      "pattern": "dumbbell_bench_press",
+      "vertical_m": null,
+      "sd_m": null,
+      "per_height": null,
+      "subjects": {
+        "n": null,
+        "sex": null,
+        "height_cm": null,
+        "body_mass_kg": null,
+        "training": null
+      },
+      "device": null,
+      "method": null,
+      "source": null,
+      "locator": null,
+      "units_note": null,
+      "confidence": null,
+      "notes": "No measured value found in an allowed source in this pass."
+    },
+    {
+      "pattern": "incline_dumbbell_press",
+      "vertical_m": null,
+      "sd_m": null,
+      "per_height": null,
+      "subjects": {
+        "n": null,
+        "sex": null,
+        "height_cm": null,
+        "body_mass_kg": null,
+        "training": null
+      },
+      "device": null,
+      "method": null,
+      "source": null,
+      "locator": null,
+      "units_note": null,
+      "confidence": null,
+      "notes": "No measured value found in an allowed source in this pass."
+    },
+    {
+      "pattern": "barbell_row",
+      "vertical_m": null,
+      "sd_m": null,
+      "per_height": null,
+      "subjects": {
+        "n": null,
+        "sex": null,
+        "height_cm": null,
+        "body_mass_kg": null,
+        "training": null
+      },
+      "device": null,
+      "method": null,
+      "source": null,
+      "locator": null,
+      "units_note": null,
+      "confidence": null,
+      "notes": "No measured value found in an allowed source in this pass."
+    },
+    {
+      "pattern": "seated_cable_row",
+      "vertical_m": null,
+      "sd_m": null,
+      "per_height": null,
+      "subjects": {
+        "n": null,
+        "sex": null,
+        "height_cm": null,
+        "body_mass_kg": null,
+        "training": null
+      },
+      "device": null,
+      "method": null,
+      "source": null,
+      "locator": null,
+      "units_note": null,
+      "confidence": null,
+      "notes": "No measured value found in an allowed source in this pass."
+    },
+    {
+      "pattern": "lat_pulldown",
+      "vertical_m": null,
+      "sd_m": null,
+      "per_height": null,
+      "subjects": {
+        "n": null,
+        "sex": null,
+        "height_cm": null,
+        "body_mass_kg": null,
+        "training": null
+      },
+      "device": null,
+      "method": null,
+      "source": null,
+      "locator": null,
+      "units_note": null,
+      "confidence": null,
+      "notes": "No measured value found in an allowed source in this pass."
+    },
+    {
+      "pattern": "pull_up_chin_up",
+      "vertical_m": null,
+      "sd_m": null,
+      "per_height": null,
+      "subjects": {
+        "n": null,
+        "sex": null,
+        "height_cm": null,
+        "body_mass_kg": null,
+        "training": null
+      },
+      "device": null,
+      "method": null,
+      "source": null,
+      "locator": null,
+      "units_note": null,
+      "confidence": null,
+      "notes": "No measured value found in an allowed source in this pass."
+    },
+    {
+      "pattern": "biceps_curl",
+      "vertical_m": null,
+      "sd_m": null,
+      "per_height": null,
+      "subjects": {
+        "n": null,
+        "sex": null,
+        "height_cm": null,
+        "body_mass_kg": null,
+        "training": null
+      },
+      "device": null,
+      "method": null,
+      "source": null,
+      "locator": null,
+      "units_note": null,
+      "confidence": null,
+      "notes": "No measured value found in an allowed source in this pass."
+    },
+    {
+      "pattern": "triceps_pushdown",
+      "vertical_m": null,
+      "sd_m": null,
+      "per_height": null,
+      "subjects": {
+        "n": null,
+        "sex": null,
+        "height_cm": null,
+        "body_mass_kg": null,
+        "training": null
+      },
+      "device": null,
+      "method": null,
+      "source": null,
+      "locator": null,
+      "units_note": null,
+      "confidence": null,
+      "notes": "No measured value found in an allowed source in this pass."
+    },
+    {
+      "pattern": "overhead_triceps_extension",
+      "vertical_m": null,
+      "sd_m": null,
+      "per_height": null,
+      "subjects": {
+        "n": null,
+        "sex": null,
+        "height_cm": null,
+        "body_mass_kg": null,
+        "training": null
+      },
+      "device": null,
+      "method": null,
+      "source": null,
+      "locator": null,
+      "units_note": null,
+      "confidence": null,
+      "notes": "No measured value found in an allowed source in this pass."
+    },
+    {
+      "pattern": "lateral_raise",
+      "vertical_m": null,
+      "sd_m": null,
+      "per_height": null,
+      "subjects": {
+        "n": null,
+        "sex": null,
+        "height_cm": null,
+        "body_mass_kg": null,
+        "training": null
+      },
+      "device": null,
+      "method": null,
+      "source": null,
+      "locator": null,
+      "units_note": null,
+      "confidence": null,
+      "notes": "No measured value found in an allowed source in this pass."
+    },
+    {
+      "pattern": "front_raise",
+      "vertical_m": null,
+      "sd_m": null,
+      "per_height": null,
+      "subjects": {
+        "n": null,
+        "sex": null,
+        "height_cm": null,
+        "body_mass_kg": null,
+        "training": null
+      },
+      "device": null,
+      "method": null,
+      "source": null,
+      "locator": null,
+      "units_note": null,
+      "confidence": null,
+      "notes": "No measured value found in an allowed source in this pass."
+    },
+    {
+      "pattern": "rear_delt_fly",
+      "vertical_m": null,
+      "sd_m": null,
+      "per_height": null,
+      "subjects": {
+        "n": null,
+        "sex": null,
+        "height_cm": null,
+        "body_mass_kg": null,
+        "training": null
+      },
+      "device": null,
+      "method": null,
+      "source": null,
+      "locator": null,
+      "units_note": null,
+      "confidence": null,
+      "notes": "No measured value found in an allowed source in this pass."
+    },
+    {
+      "pattern": "chest_fly",
+      "vertical_m": null,
+      "sd_m": null,
+      "per_height": null,
+      "subjects": {
+        "n": null,
+        "sex": null,
+        "height_cm": null,
+        "body_mass_kg": null,
+        "training": null
+      },
+      "device": null,
+      "method": null,
+      "source": null,
+      "locator": null,
+      "units_note": null,
+      "confidence": null,
+      "notes": "No measured value found in an allowed source in this pass."
+    },
+    {
+      "pattern": "leg_press",
+      "vertical_m": null,
+      "sd_m": null,
+      "per_height": null,
+      "subjects": {
+        "n": null,
+        "sex": null,
+        "height_cm": null,
+        "body_mass_kg": null,
+        "training": null
+      },
+      "device": null,
+      "method": null,
+      "source": null,
+      "locator": null,
+      "units_note": null,
+      "confidence": null,
+      "notes": "No measured value found in an allowed source in this pass."
+    },
+    {
+      "pattern": "leg_curl",
+      "vertical_m": null,
+      "sd_m": null,
+      "per_height": null,
+      "subjects": {
+        "n": null,
+        "sex": null,
+        "height_cm": null,
+        "body_mass_kg": null,
+        "training": null
+      },
+      "device": null,
+      "method": null,
+      "source": null,
+      "locator": null,
+      "units_note": null,
+      "confidence": null,
+      "notes": "No measured value found in an allowed source in this pass."
+    },
+    {
+      "pattern": "hip_thrust",
+      "vertical_m": null,
+      "sd_m": null,
+      "per_height": null,
+      "subjects": {
+        "n": null,
+        "sex": null,
+        "height_cm": null,
+        "body_mass_kg": null,
+        "training": null
+      },
+      "device": null,
+      "method": null,
+      "source": null,
+      "locator": null,
+      "units_note": null,
+      "confidence": null,
+      "notes": "No measured value found in an allowed source in this pass."
+    },
+    {
+      "pattern": "romanian_deadlift",
+      "vertical_m": null,
+      "sd_m": null,
+      "per_height": null,
+      "subjects": {
+        "n": null,
+        "sex": null,
+        "height_cm": null,
+        "body_mass_kg": null,
+        "training": null
+      },
+      "device": null,
+      "method": null,
+      "source": null,
+      "locator": null,
+      "units_note": null,
+      "confidence": null,
+      "notes": "No measured value found in an allowed source in this pass."
+    },
+    {
+      "pattern": "conventional_deadlift",
+      "vertical_m": null,
+      "sd_m": null,
+      "per_height": null,
+      "subjects": {
+        "n": null,
+        "sex": null,
+        "height_cm": null,
+        "body_mass_kg": null,
+        "training": null
+      },
+      "device": null,
+      "method": null,
+      "source": null,
+      "locator": null,
+      "units_note": null,
+      "confidence": null,
+      "notes": "No measured value found in an allowed source in this pass."
+    },
+    {
+      "pattern": "lunge",
+      "vertical_m": null,
+      "sd_m": null,
+      "per_height": null,
+      "subjects": {
+        "n": null,
+        "sex": null,
+        "height_cm": null,
+        "body_mass_kg": null,
+        "training": null
+      },
+      "device": null,
+      "method": null,
+      "source": null,
+      "locator": null,
+      "units_note": null,
+      "confidence": null,
+      "notes": "No measured value found in an allowed source in this pass."
+    },
+    {
+      "pattern": "step_up",
+      "vertical_m": null,
+      "sd_m": null,
+      "per_height": null,
+      "subjects": {
+        "n": null,
+        "sex": null,
+        "height_cm": null,
+        "body_mass_kg": null,
+        "training": null
+      },
+      "device": null,
+      "method": null,
+      "source": null,
+      "locator": null,
+      "units_note": null,
+      "confidence": null,
+      "notes": "No measured value found in an allowed source in this pass."
+    },
+    {
+      "pattern": "bulgarian_split_squat",
+      "vertical_m": null,
+      "sd_m": null,
+      "per_height": null,
+      "subjects": {
+        "n": null,
+        "sex": null,
+        "height_cm": null,
+        "body_mass_kg": null,
+        "training": null
+      },
+      "device": null,
+      "method": null,
+      "source": null,
+      "locator": null,
+      "units_note": null,
+      "confidence": null,
+      "notes": "No measured value found in an allowed source in this pass."
+    },
+    {
+      "pattern": "dips",
+      "vertical_m": null,
+      "sd_m": null,
+      "per_height": null,
+      "subjects": {
+        "n": null,
+        "sex": null,
+        "height_cm": null,
+        "body_mass_kg": null,
+        "training": null
+      },
+      "device": null,
+      "method": null,
+      "source": null,
+      "locator": null,
+      "units_note": null,
+      "confidence": null,
+      "notes": "No measured value found in an allowed source in this pass."
+    },
+    {
+      "pattern": "push_up",
+      "vertical_m": null,
+      "sd_m": null,
+      "per_height": null,
+      "subjects": {
+        "n": null,
+        "sex": null,
+        "height_cm": null,
+        "body_mass_kg": null,
+        "training": null
+      },
+      "device": null,
+      "method": null,
+      "source": null,
+      "locator": null,
+      "units_note": null,
+      "confidence": null,
+      "notes": "No measured value found in an allowed source in this pass."
+    },
+    {
+      "pattern": "hanging_leg_raise",
+      "vertical_m": null,
+      "sd_m": null,
+      "per_height": null,
+      "subjects": {
+        "n": null,
+        "sex": null,
+        "height_cm": null,
+        "body_mass_kg": null,
+        "training": null
+      },
+      "device": null,
+      "method": null,
+      "source": null,
+      "locator": null,
+      "units_note": null,
+      "confidence": null,
+      "notes": "No measured value found in an allowed source in this pass."
+    },
+    {
+      "pattern": "cable_crunch",
+      "vertical_m": null,
+      "sd_m": null,
+      "per_height": null,
+      "subjects": {
+        "n": null,
+        "sex": null,
+        "height_cm": null,
+        "body_mass_kg": null,
+        "training": null
+      },
+      "device": null,
+      "method": null,
+      "source": null,
+      "locator": null,
+      "units_note": null,
+      "confidence": null,
+      "notes": "No measured value found in an allowed source in this pass."
+    }
+  ],
+  "machines": [
+    {
+      "topic": "work on selectorised machines",
+      "finding": "Researchers measure the vertical travel of the weight plates (not the handle) and treat plate mass x plate travel as the external work; leg extension stack travel measured with a tape to a per-subject mark at full extension, velocity = travel / concentric time.",
+      "values": {},
+      "source": "balsalobre2019",
+      "locator": "Methods, Eq 1 and surrounding text",
+      "confidence": "high"
+    },
+    {
+      "topic": "lat pulldown / seated cable row",
+      "finding": "Load-velocity studies of these two exercises also recorded vertical ascent of the weight plates (reported by Balsalobre-Fernandez 2019, citing Perez-Castilla 2019).",
+      "values": {},
+      "source": "balsalobre2019",
+      "locator": "Introduction, refs 3 and 12",
+      "confidence": "medium"
+    },
+    {
+      "topic": "pulley ratio / cam",
+      "finding": null,
+      "values": {},
+      "source": null,
+      "locator": null,
+      "confidence": null,
+      "notes": "No peer-reviewed measurement found. Search results were blogs, equipment sellers, calculators and a patent, all excluded."
+    },
+    {
+      "topic": "45-degree leg press vertical component",
+      "finding": "Geometric identity only: vertical rise = sled travel x sin(sled angle). Not a sourced measurement; sled travel and sled mass vary by machine and were not found in allowed sources.",
+      "values": {
+        "sin_45": null
+      },
+      "source": null,
+      "locator": null,
+      "confidence": "low",
+      "notes": "Reis 2017 used a 45-deg leg press and gives loads (Table 1-2) but not sled mass or travel."
+    }
+  ],
+  "energy_sets": [
+    {
+      "study_id": "reis2017",
+      "exercise": "horizontal bench press",
+      "equipment": "machine",
+      "subjects": {
+        "n": 14,
+        "n_note": "58 men recruited; 14 valid per exercise (each subject did 2 exercises)",
+        "sex": "male",
+        "age": 27.5,
+        "body_mass_kg": 78.67,
+        "height_cm": 178,
+        "training": ">=1 yr resistance training, >=3 sessions/wk"
+      },
+      "load": {
+        "kg": 11.35,
+        "kg_sd": 2.57,
+        "pct_1rm": 12,
+        "one_rm_kg": null,
+        "rm_note": "1RM kg not tabulated; loads in kg and %1RM are both given, so 1RM is derivable by code"
+      },
+      "reps": "15 per minute, continuous",
+      "sets": 1,
+      "rest_s": null,
+      "tempo_s": {
+        "eccentric": 2,
+        "concentric": 2
+      },
+      "bout_minutes": "4 (Methods; abstract says 5)",
+      "energy": {
+        "value": 3.99,
+        "sd": 0.56,
+        "unit": "kcal/min",
+        "per": "minute",
+        "exercise_o2": null,
+        "anaerobic": null,
+        "epoc": null,
+        "epoc_minutes": null,
+        "resting_subtracted": false,
+        "basis": "steady-state VO2, mean of last 30 s (gross; resting VO2 used as zero-load point in the per-subject regression, not subtracted)",
+        "o2_to_energy": "1 mL O2 = 5 cal"
+      },
+      "work_reported": {
+        "value": null,
+        "unit": null,
+        "units_note": null
+      },
+      "source": "reis2017",
+      "locator": "Table 1 (PDF p.5)",
+      "confidence": "high"
+    },
+    {
+      "study_id": "reis2017",
+      "exercise": "horizontal bench press",
+      "equipment": "machine",
+      "subjects": {
+        "n": 14,
+        "n_note": "58 men recruited; 14 valid per exercise (each subject did 2 exercises)",
+        "sex": "male",
+        "age": 27.5,
+        "body_mass_kg": 78.67,
+        "height_cm": 178,
+        "training": ">=1 yr resistance training, >=3 sessions/wk"
+      },
+      "load": {
+        "kg": 15.18,
+        "kg_sd": 3.82,
+        "pct_1rm": 16,
+        "one_rm_kg": null,
+        "rm_note": "1RM kg not tabulated; loads in kg and %1RM are both given, so 1RM is derivable by code"
+      },
+      "reps": "15 per minute, continuous",
+      "sets": 1,
+      "rest_s": null,
+      "tempo_s": {
+        "eccentric": 2,
+        "concentric": 2
+      },
+      "bout_minutes": "4 (Methods; abstract says 5)",
+      "energy": {
+        "value": 4.07,
+        "sd": 0.57,
+        "unit": "kcal/min",
+        "per": "minute",
+        "exercise_o2": null,
+        "anaerobic": null,
+        "epoc": null,
+        "epoc_minutes": null,
+        "resting_subtracted": false,
+        "basis": "steady-state VO2, mean of last 30 s (gross; resting VO2 used as zero-load point in the per-subject regression, not subtracted)",
+        "o2_to_energy": "1 mL O2 = 5 cal"
+      },
+      "work_reported": {
+        "value": null,
+        "unit": null,
+        "units_note": null
+      },
+      "source": "reis2017",
+      "locator": "Table 1 (PDF p.5)",
+      "confidence": "high"
+    },
+    {
+      "study_id": "reis2017",
+      "exercise": "horizontal bench press",
+      "equipment": "machine",
+      "subjects": {
+        "n": 14,
+        "n_note": "58 men recruited; 14 valid per exercise (each subject did 2 exercises)",
+        "sex": "male",
+        "age": 27.5,
+        "body_mass_kg": 78.67,
+        "height_cm": 178,
+        "training": ">=1 yr resistance training, >=3 sessions/wk"
+      },
+      "load": {
+        "kg": 18.94,
+        "kg_sd": 4.28,
+        "pct_1rm": 20,
+        "one_rm_kg": null,
+        "rm_note": "1RM kg not tabulated; loads in kg and %1RM are both given, so 1RM is derivable by code"
+      },
+      "reps": "15 per minute, continuous",
+      "sets": 1,
+      "rest_s": null,
+      "tempo_s": {
+        "eccentric": 2,
+        "concentric": 2
+      },
+      "bout_minutes": "4 (Methods; abstract says 5)",
+      "energy": {
+        "value": 4.67,
+        "sd": 0.65,
+        "unit": "kcal/min",
+        "per": "minute",
+        "exercise_o2": null,
+        "anaerobic": null,
+        "epoc": null,
+        "epoc_minutes": null,
+        "resting_subtracted": false,
+        "basis": "steady-state VO2, mean of last 30 s (gross; resting VO2 used as zero-load point in the per-subject regression, not subtracted)",
+        "o2_to_energy": "1 mL O2 = 5 cal"
+      },
+      "work_reported": {
+        "value": null,
+        "unit": null,
+        "units_note": null
+      },
+      "source": "reis2017",
+      "locator": "Table 1 (PDF p.5)",
+      "confidence": "high"
+    },
+    {
+      "study_id": "reis2017",
+      "exercise": "horizontal bench press",
+      "equipment": "machine",
+      "subjects": {
+        "n": 14,
+        "n_note": "58 men recruited; 14 valid per exercise (each subject did 2 exercises)",
+        "sex": "male",
+        "age": 27.5,
+        "body_mass_kg": 78.67,
+        "height_cm": 178,
+        "training": ">=1 yr resistance training, >=3 sessions/wk"
+      },
+      "load": {
+        "kg": 22.65,
+        "kg_sd": 4.97,
+        "pct_1rm": 24,
+        "one_rm_kg": null,
+        "rm_note": "1RM kg not tabulated; loads in kg and %1RM are both given, so 1RM is derivable by code"
+      },
+      "reps": "15 per minute, continuous",
+      "sets": 1,
+      "rest_s": null,
+      "tempo_s": {
+        "eccentric": 2,
+        "concentric": 2
+      },
+      "bout_minutes": "4 (Methods; abstract says 5)",
+      "energy": {
+        "value": 4.83,
+        "sd": 0.67,
+        "unit": "kcal/min",
+        "per": "minute",
+        "exercise_o2": null,
+        "anaerobic": null,
+        "epoc": null,
+        "epoc_minutes": null,
+        "resting_subtracted": false,
+        "basis": "steady-state VO2, mean of last 30 s (gross; resting VO2 used as zero-load point in the per-subject regression, not subtracted)",
+        "o2_to_energy": "1 mL O2 = 5 cal"
+      },
+      "work_reported": {
+        "value": null,
+        "unit": null,
+        "units_note": null
+      },
+      "source": "reis2017",
+      "locator": "Table 1 (PDF p.5)",
+      "confidence": "high"
+    },
+    {
+      "study_id": "reis2017",
+      "exercise": "horizontal bench press",
+      "equipment": "machine",
+      "subjects": {
+        "n": 14,
+        "n_note": "58 men recruited; 14 valid per exercise (each subject did 2 exercises)",
+        "sex": "male",
+        "age": 27.5,
+        "body_mass_kg": 78.67,
+        "height_cm": 178,
+        "training": ">=1 yr resistance training, >=3 sessions/wk"
+      },
+      "load": {
+        "kg": 75.18,
+        "kg_sd": 16.37,
+        "pct_1rm": 80,
+        "one_rm_kg": null,
+        "rm_note": "1RM derivable as load/0.80"
+      },
+      "reps": 8.64,
+      "sets": 1,
+      "rest_s": null,
+      "tempo_s": "self-selected",
+      "time_to_exhaustion_min": 0.44,
+      "volume_kg_reported": 649.6,
+      "energy": {
+        "value": 11.41,
+        "sd": 2.35,
+        "unit": "kcal/min",
+        "per": "minute",
+        "exercise_o2": null,
+        "anaerobic": "fraction shown in Fig 4 (image, not read); >50% except biceps curl and lat pulldown",
+        "epoc": null,
+        "epoc_minutes": null,
+        "resting_subtracted": false,
+        "basis": "NOT directly measured: O2 demand extrapolated from the 12-24% regression, plus anaerobic share via accumulated O2 deficit",
+        "o2_to_energy": "1 mL O2 = 5 cal"
+      },
+      "work_reported": {
+        "value": null,
+        "unit": null,
+        "units_note": "'Volume (kg)' column = load x reps; note it does not equal the table's mean load x mean reps, because it is a mean of individual products"
+      },
+      "source": "reis2017",
+      "locator": "Table 2 (PDF p.6)",
+      "confidence": "medium"
+    },
+    {
+      "study_id": "reis2017",
+      "exercise": "45-deg inclined bench press",
+      "equipment": "machine",
+      "subjects": {
+        "n": 14,
+        "n_note": "58 men recruited; 14 valid per exercise (each subject did 2 exercises)",
+        "sex": "male",
+        "age": 27.5,
+        "body_mass_kg": 78.67,
+        "height_cm": 178,
+        "training": ">=1 yr resistance training, >=3 sessions/wk"
+      },
+      "load": {
+        "kg": 10.21,
+        "kg_sd": 2.12,
+        "pct_1rm": 12,
+        "one_rm_kg": null,
+        "rm_note": "1RM kg not tabulated; loads in kg and %1RM are both given, so 1RM is derivable by code"
+      },
+      "reps": "15 per minute, continuous",
+      "sets": 1,
+      "rest_s": null,
+      "tempo_s": {
+        "eccentric": 2,
+        "concentric": 2
+      },
+      "bout_minutes": "4 (Methods; abstract says 5)",
+      "energy": {
+        "value": 5.21,
+        "sd": 0.75,
+        "unit": "kcal/min",
+        "per": "minute",
+        "exercise_o2": null,
+        "anaerobic": null,
+        "epoc": null,
+        "epoc_minutes": null,
+        "resting_subtracted": false,
+        "basis": "steady-state VO2, mean of last 30 s (gross; resting VO2 used as zero-load point in the per-subject regression, not subtracted)",
+        "o2_to_energy": "1 mL O2 = 5 cal"
+      },
+      "work_reported": {
+        "value": null,
+        "unit": null,
+        "units_note": null
+      },
+      "source": "reis2017",
+      "locator": "Table 1 (PDF p.5)",
+      "confidence": "high"
+    },
+    {
+      "study_id": "reis2017",
+      "exercise": "45-deg inclined bench press",
+      "equipment": "machine",
+      "subjects": {
+        "n": 14,
+        "n_note": "58 men recruited; 14 valid per exercise (each subject did 2 exercises)",
+        "sex": "male",
+        "age": 27.5,
+        "body_mass_kg": 78.67,
+        "height_cm": 178,
+        "training": ">=1 yr resistance training, >=3 sessions/wk"
+      },
+      "load": {
+        "kg": 13.62,
+        "kg_sd": 2.82,
+        "pct_1rm": 16,
+        "one_rm_kg": null,
+        "rm_note": "1RM kg not tabulated; loads in kg and %1RM are both given, so 1RM is derivable by code"
+      },
+      "reps": "15 per minute, continuous",
+      "sets": 1,
+      "rest_s": null,
+      "tempo_s": {
+        "eccentric": 2,
+        "concentric": 2
+      },
+      "bout_minutes": "4 (Methods; abstract says 5)",
+      "energy": {
+        "value": 5.65,
+        "sd": 0.81,
+        "unit": "kcal/min",
+        "per": "minute",
+        "exercise_o2": null,
+        "anaerobic": null,
+        "epoc": null,
+        "epoc_minutes": null,
+        "resting_subtracted": false,
+        "basis": "steady-state VO2, mean of last 30 s (gross; resting VO2 used as zero-load point in the per-subject regression, not subtracted)",
+        "o2_to_energy": "1 mL O2 = 5 cal"
+      },
+      "work_reported": {
+        "value": null,
+        "unit": null,
+        "units_note": null
+      },
+      "source": "reis2017",
+      "locator": "Table 1 (PDF p.5)",
+      "confidence": "high"
+    },
+    {
+      "study_id": "reis2017",
+      "exercise": "45-deg inclined bench press",
+      "equipment": "machine",
+      "subjects": {
+        "n": 14,
+        "n_note": "58 men recruited; 14 valid per exercise (each subject did 2 exercises)",
+        "sex": "male",
+        "age": 27.5,
+        "body_mass_kg": 78.67,
+        "height_cm": 178,
+        "training": ">=1 yr resistance training, >=3 sessions/wk"
+      },
+      "load": {
+        "kg": 17.02,
+        "kg_sd": 3.52,
+        "pct_1rm": 20,
+        "one_rm_kg": null,
+        "rm_note": "1RM kg not tabulated; loads in kg and %1RM are both given, so 1RM is derivable by code"
+      },
+      "reps": "15 per minute, continuous",
+      "sets": 1,
+      "rest_s": null,
+      "tempo_s": {
+        "eccentric": 2,
+        "concentric": 2
+      },
+      "bout_minutes": "4 (Methods; abstract says 5)",
+      "energy": {
+        "value": 5.91,
+        "sd": 0.85,
+        "unit": "kcal/min",
+        "per": "minute",
+        "exercise_o2": null,
+        "anaerobic": null,
+        "epoc": null,
+        "epoc_minutes": null,
+        "resting_subtracted": false,
+        "basis": "steady-state VO2, mean of last 30 s (gross; resting VO2 used as zero-load point in the per-subject regression, not subtracted)",
+        "o2_to_energy": "1 mL O2 = 5 cal"
+      },
+      "work_reported": {
+        "value": null,
+        "unit": null,
+        "units_note": null
+      },
+      "source": "reis2017",
+      "locator": "Table 1 (PDF p.5)",
+      "confidence": "high"
+    },
+    {
+      "study_id": "reis2017",
+      "exercise": "45-deg inclined bench press",
+      "equipment": "machine",
+      "subjects": {
+        "n": 14,
+        "n_note": "58 men recruited; 14 valid per exercise (each subject did 2 exercises)",
+        "sex": "male",
+        "age": 27.5,
+        "body_mass_kg": 78.67,
+        "height_cm": 178,
+        "training": ">=1 yr resistance training, >=3 sessions/wk"
+      },
+      "load": {
+        "kg": 20.43,
+        "kg_sd": 4.23,
+        "pct_1rm": 24,
+        "one_rm_kg": null,
+        "rm_note": "1RM kg not tabulated; loads in kg and %1RM are both given, so 1RM is derivable by code"
+      },
+      "reps": "15 per minute, continuous",
+      "sets": 1,
+      "rest_s": null,
+      "tempo_s": {
+        "eccentric": 2,
+        "concentric": 2
+      },
+      "bout_minutes": "4 (Methods; abstract says 5)",
+      "energy": {
+        "value": 6.52,
+        "sd": 0.94,
+        "unit": "kcal/min",
+        "per": "minute",
+        "exercise_o2": null,
+        "anaerobic": null,
+        "epoc": null,
+        "epoc_minutes": null,
+        "resting_subtracted": false,
+        "basis": "steady-state VO2, mean of last 30 s (gross; resting VO2 used as zero-load point in the per-subject regression, not subtracted)",
+        "o2_to_energy": "1 mL O2 = 5 cal"
+      },
+      "work_reported": {
+        "value": null,
+        "unit": null,
+        "units_note": null
+      },
+      "source": "reis2017",
+      "locator": "Table 1 (PDF p.5)",
+      "confidence": "high"
+    },
+    {
+      "study_id": "reis2017",
+      "exercise": "45-deg inclined bench press",
+      "equipment": "machine",
+      "subjects": {
+        "n": 14,
+        "n_note": "58 men recruited; 14 valid per exercise (each subject did 2 exercises)",
+        "sex": "male",
+        "age": 27.5,
+        "body_mass_kg": 78.67,
+        "height_cm": 178,
+        "training": ">=1 yr resistance training, >=3 sessions/wk"
+      },
+      "load": {
+        "kg": 68.08,
+        "kg_sd": 15.02,
+        "pct_1rm": 80,
+        "one_rm_kg": null,
+        "rm_note": "1RM derivable as load/0.80"
+      },
+      "reps": 11.0,
+      "sets": 1,
+      "rest_s": null,
+      "tempo_s": "self-selected",
+      "time_to_exhaustion_min": 0.73,
+      "volume_kg_reported": 748.9,
+      "energy": {
+        "value": 16.77,
+        "sd": 6.06,
+        "unit": "kcal/min",
+        "per": "minute",
+        "exercise_o2": null,
+        "anaerobic": "fraction shown in Fig 4 (image, not read); >50% except biceps curl and lat pulldown",
+        "epoc": null,
+        "epoc_minutes": null,
+        "resting_subtracted": false,
+        "basis": "NOT directly measured: O2 demand extrapolated from the 12-24% regression, plus anaerobic share via accumulated O2 deficit",
+        "o2_to_energy": "1 mL O2 = 5 cal"
+      },
+      "work_reported": {
+        "value": null,
+        "unit": null,
+        "units_note": "'Volume (kg)' column = load x reps; note it does not equal the table's mean load x mean reps, because it is a mean of individual products"
+      },
+      "source": "reis2017",
+      "locator": "Table 2 (PDF p.6)",
+      "confidence": "medium"
+    },
+    {
+      "study_id": "reis2017",
+      "exercise": "half squat",
+      "equipment": "machine",
+      "subjects": {
+        "n": 14,
+        "n_note": "58 men recruited; 14 valid per exercise (each subject did 2 exercises)",
+        "sex": "male",
+        "age": 27.5,
+        "body_mass_kg": 78.67,
+        "height_cm": 178,
+        "training": ">=1 yr resistance training, >=3 sessions/wk"
+      },
+      "load": {
+        "kg": 13.88,
+        "kg_sd": 3.24,
+        "pct_1rm": 12,
+        "one_rm_kg": null,
+        "rm_note": "1RM kg not tabulated; loads in kg and %1RM are both given, so 1RM is derivable by code"
+      },
+      "reps": "15 per minute, continuous",
+      "sets": 1,
+      "rest_s": null,
+      "tempo_s": {
+        "eccentric": 2,
+        "concentric": 2
+      },
+      "bout_minutes": "4 (Methods; abstract says 5)",
+      "energy": {
+        "value": 10.06,
+        "sd": 1.55,
+        "unit": "kcal/min",
+        "per": "minute",
+        "exercise_o2": null,
+        "anaerobic": null,
+        "epoc": null,
+        "epoc_minutes": null,
+        "resting_subtracted": false,
+        "basis": "steady-state VO2, mean of last 30 s (gross; resting VO2 used as zero-load point in the per-subject regression, not subtracted)",
+        "o2_to_energy": "1 mL O2 = 5 cal"
+      },
+      "work_reported": {
+        "value": null,
+        "unit": null,
+        "units_note": null
+      },
+      "source": "reis2017",
+      "locator": "Table 1 (PDF p.5)",
+      "confidence": "high"
+    },
+    {
+      "study_id": "reis2017",
+      "exercise": "half squat",
+      "equipment": "machine",
+      "subjects": {
+        "n": 14,
+        "n_note": "58 men recruited; 14 valid per exercise (each subject did 2 exercises)",
+        "sex": "male",
+        "age": 27.5,
+        "body_mass_kg": 78.67,
+        "height_cm": 178,
+        "training": ">=1 yr resistance training, >=3 sessions/wk"
+      },
+      "load": {
+        "kg": 18.82,
+        "kg_sd": 4.02,
+        "pct_1rm": 16,
+        "one_rm_kg": null,
+        "rm_note": "1RM kg not tabulated; loads in kg and %1RM are both given, so 1RM is derivable by code"
+      },
+      "reps": "15 per minute, continuous",
+      "sets": 1,
+      "rest_s": null,
+      "tempo_s": {
+        "eccentric": 2,
+        "concentric": 2
+      },
+      "bout_minutes": "4 (Methods; abstract says 5)",
+      "energy": {
+        "value": 10.78,
+        "sd": 1.51,
+        "unit": "kcal/min",
+        "per": "minute",
+        "exercise_o2": null,
+        "anaerobic": null,
+        "epoc": null,
+        "epoc_minutes": null,
+        "resting_subtracted": false,
+        "basis": "steady-state VO2, mean of last 30 s (gross; resting VO2 used as zero-load point in the per-subject regression, not subtracted)",
+        "o2_to_energy": "1 mL O2 = 5 cal"
+      },
+      "work_reported": {
+        "value": null,
+        "unit": null,
+        "units_note": null
+      },
+      "source": "reis2017",
+      "locator": "Table 1 (PDF p.5)",
+      "confidence": "high"
+    },
+    {
+      "study_id": "reis2017",
+      "exercise": "half squat",
+      "equipment": "machine",
+      "subjects": {
+        "n": 14,
+        "n_note": "58 men recruited; 14 valid per exercise (each subject did 2 exercises)",
+        "sex": "male",
+        "age": 27.5,
+        "body_mass_kg": 78.67,
+        "height_cm": 178,
+        "training": ">=1 yr resistance training, >=3 sessions/wk"
+      },
+      "load": {
+        "kg": 23.05,
+        "kg_sd": 5.01,
+        "pct_1rm": 20,
+        "one_rm_kg": null,
+        "rm_note": "1RM kg not tabulated; loads in kg and %1RM are both given, so 1RM is derivable by code"
+      },
+      "reps": "15 per minute, continuous",
+      "sets": 1,
+      "rest_s": null,
+      "tempo_s": {
+        "eccentric": 2,
+        "concentric": 2
+      },
+      "bout_minutes": "4 (Methods; abstract says 5)",
+      "energy": {
+        "value": 11.7,
+        "sd": 1.67,
+        "unit": "kcal/min",
+        "per": "minute",
+        "exercise_o2": null,
+        "anaerobic": null,
+        "epoc": null,
+        "epoc_minutes": null,
+        "resting_subtracted": false,
+        "basis": "steady-state VO2, mean of last 30 s (gross; resting VO2 used as zero-load point in the per-subject regression, not subtracted)",
+        "o2_to_energy": "1 mL O2 = 5 cal"
+      },
+      "work_reported": {
+        "value": null,
+        "unit": null,
+        "units_note": null
+      },
+      "source": "reis2017",
+      "locator": "Table 1 (PDF p.5)",
+      "confidence": "high"
+    },
+    {
+      "study_id": "reis2017",
+      "exercise": "half squat",
+      "equipment": "machine",
+      "subjects": {
+        "n": 14,
+        "n_note": "58 men recruited; 14 valid per exercise (each subject did 2 exercises)",
+        "sex": "male",
+        "age": 27.5,
+        "body_mass_kg": 78.67,
+        "height_cm": 178,
+        "training": ">=1 yr resistance training, >=3 sessions/wk"
+      },
+      "load": {
+        "kg": 28.29,
+        "kg_sd": 6.21,
+        "pct_1rm": 24,
+        "one_rm_kg": null,
+        "rm_note": "1RM kg not tabulated; loads in kg and %1RM are both given, so 1RM is derivable by code"
+      },
+      "reps": "15 per minute, continuous",
+      "sets": 1,
+      "rest_s": null,
+      "tempo_s": {
+        "eccentric": 2,
+        "concentric": 2
+      },
+      "bout_minutes": "4 (Methods; abstract says 5)",
+      "energy": {
+        "value": 11.9,
+        "sd": 1.64,
+        "unit": "kcal/min",
+        "per": "minute",
+        "exercise_o2": null,
+        "anaerobic": null,
+        "epoc": null,
+        "epoc_minutes": null,
+        "resting_subtracted": false,
+        "basis": "steady-state VO2, mean of last 30 s (gross; resting VO2 used as zero-load point in the per-subject regression, not subtracted)",
+        "o2_to_energy": "1 mL O2 = 5 cal"
+      },
+      "work_reported": {
+        "value": null,
+        "unit": null,
+        "units_note": null
+      },
+      "source": "reis2017",
+      "locator": "Table 1 (PDF p.5)",
+      "confidence": "high"
+    },
+    {
+      "study_id": "reis2017",
+      "exercise": "half squat",
+      "equipment": "machine",
+      "subjects": {
+        "n": 14,
+        "n_note": "58 men recruited; 14 valid per exercise (each subject did 2 exercises)",
+        "sex": "male",
+        "age": 27.5,
+        "body_mass_kg": 78.67,
+        "height_cm": 178,
+        "training": ">=1 yr resistance training, >=3 sessions/wk"
+      },
+      "load": {
+        "kg": 94.59,
+        "kg_sd": 20.43,
+        "pct_1rm": 80,
+        "one_rm_kg": null,
+        "rm_note": "1RM derivable as load/0.80"
+      },
+      "reps": 11.55,
+      "sets": 1,
+      "rest_s": null,
+      "tempo_s": "self-selected",
+      "time_to_exhaustion_min": 0.47,
+      "volume_kg_reported": 1092.5,
+      "energy": {
+        "value": 35.94,
+        "sd": 4.98,
+        "unit": "kcal/min",
+        "per": "minute",
+        "exercise_o2": null,
+        "anaerobic": "fraction shown in Fig 4 (image, not read); >50% except biceps curl and lat pulldown",
+        "epoc": null,
+        "epoc_minutes": null,
+        "resting_subtracted": false,
+        "basis": "NOT directly measured: O2 demand extrapolated from the 12-24% regression, plus anaerobic share via accumulated O2 deficit",
+        "o2_to_energy": "1 mL O2 = 5 cal"
+      },
+      "work_reported": {
+        "value": null,
+        "unit": null,
+        "units_note": "'Volume (kg)' column = load x reps; note it does not equal the table's mean load x mean reps, because it is a mean of individual products"
+      },
+      "source": "reis2017",
+      "locator": "Table 2 (PDF p.6)",
+      "confidence": "medium"
+    },
+    {
+      "study_id": "reis2017",
+      "exercise": "45-deg inclined leg press",
+      "equipment": "machine",
+      "subjects": {
+        "n": 14,
+        "n_note": "58 men recruited; 14 valid per exercise (each subject did 2 exercises)",
+        "sex": "male",
+        "age": 27.5,
+        "body_mass_kg": 78.67,
+        "height_cm": 178,
+        "training": ">=1 yr resistance training, >=3 sessions/wk"
+      },
+      "load": {
+        "kg": 33.6,
+        "kg_sd": 4.62,
+        "pct_1rm": 12,
+        "one_rm_kg": null,
+        "rm_note": "1RM kg not tabulated; loads in kg and %1RM are both given, so 1RM is derivable by code"
+      },
+      "reps": "15 per minute, continuous",
+      "sets": 1,
+      "rest_s": null,
+      "tempo_s": {
+        "eccentric": 2,
+        "concentric": 2
+      },
+      "bout_minutes": "4 (Methods; abstract says 5)",
+      "energy": {
+        "value": 5.02,
+        "sd": 0.6,
+        "unit": "kcal/min",
+        "per": "minute",
+        "exercise_o2": null,
+        "anaerobic": null,
+        "epoc": null,
+        "epoc_minutes": null,
+        "resting_subtracted": false,
+        "basis": "steady-state VO2, mean of last 30 s (gross; resting VO2 used as zero-load point in the per-subject regression, not subtracted)",
+        "o2_to_energy": "1 mL O2 = 5 cal"
+      },
+      "work_reported": {
+        "value": null,
+        "unit": null,
+        "units_note": null
+      },
+      "source": "reis2017",
+      "locator": "Table 1 (PDF p.5)",
+      "confidence": "high"
+    },
+    {
+      "study_id": "reis2017",
+      "exercise": "45-deg inclined leg press",
+      "equipment": "machine",
+      "subjects": {
+        "n": 14,
+        "n_note": "58 men recruited; 14 valid per exercise (each subject did 2 exercises)",
+        "sex": "male",
+        "age": 27.5,
+        "body_mass_kg": 78.67,
+        "height_cm": 178,
+        "training": ">=1 yr resistance training, >=3 sessions/wk"
+      },
+      "load": {
+        "kg": 48.12,
+        "kg_sd": 7.43,
+        "pct_1rm": 16,
+        "one_rm_kg": null,
+        "rm_note": "1RM kg not tabulated; loads in kg and %1RM are both given, so 1RM is derivable by code"
+      },
+      "reps": "15 per minute, continuous",
+      "sets": 1,
+      "rest_s": null,
+      "tempo_s": {
+        "eccentric": 2,
+        "concentric": 2
+      },
+      "bout_minutes": "4 (Methods; abstract says 5)",
+      "energy": {
+        "value": 5.91,
+        "sd": 0.71,
+        "unit": "kcal/min",
+        "per": "minute",
+        "exercise_o2": null,
+        "anaerobic": null,
+        "epoc": null,
+        "epoc_minutes": null,
+        "resting_subtracted": false,
+        "basis": "steady-state VO2, mean of last 30 s (gross; resting VO2 used as zero-load point in the per-subject regression, not subtracted)",
+        "o2_to_energy": "1 mL O2 = 5 cal"
+      },
+      "work_reported": {
+        "value": null,
+        "unit": null,
+        "units_note": null
+      },
+      "source": "reis2017",
+      "locator": "Table 1 (PDF p.5)",
+      "confidence": "high"
+    },
+    {
+      "study_id": "reis2017",
+      "exercise": "45-deg inclined leg press",
+      "equipment": "machine",
+      "subjects": {
+        "n": 14,
+        "n_note": "58 men recruited; 14 valid per exercise (each subject did 2 exercises)",
+        "sex": "male",
+        "age": 27.5,
+        "body_mass_kg": 78.67,
+        "height_cm": 178,
+        "training": ">=1 yr resistance training, >=3 sessions/wk"
+      },
+      "load": {
+        "kg": 61.66,
+        "kg_sd": 9.02,
+        "pct_1rm": 20,
+        "one_rm_kg": null,
+        "rm_note": "1RM kg not tabulated; loads in kg and %1RM are both given, so 1RM is derivable by code"
+      },
+      "reps": "15 per minute, continuous",
+      "sets": 1,
+      "rest_s": null,
+      "tempo_s": {
+        "eccentric": 2,
+        "concentric": 2
+      },
+      "bout_minutes": "4 (Methods; abstract says 5)",
+      "energy": {
+        "value": 6.74,
+        "sd": 0.81,
+        "unit": "kcal/min",
+        "per": "minute",
+        "exercise_o2": null,
+        "anaerobic": null,
+        "epoc": null,
+        "epoc_minutes": null,
+        "resting_subtracted": false,
+        "basis": "steady-state VO2, mean of last 30 s (gross; resting VO2 used as zero-load point in the per-subject regression, not subtracted)",
+        "o2_to_energy": "1 mL O2 = 5 cal"
+      },
+      "work_reported": {
+        "value": null,
+        "unit": null,
+        "units_note": null
+      },
+      "source": "reis2017",
+      "locator": "Table 1 (PDF p.5)",
+      "confidence": "high"
+    },
+    {
+      "study_id": "reis2017",
+      "exercise": "45-deg inclined leg press",
+      "equipment": "machine",
+      "subjects": {
+        "n": 14,
+        "n_note": "58 men recruited; 14 valid per exercise (each subject did 2 exercises)",
+        "sex": "male",
+        "age": 27.5,
+        "body_mass_kg": 78.67,
+        "height_cm": 178,
+        "training": ">=1 yr resistance training, >=3 sessions/wk"
+      },
+      "load": {
+        "kg": 72.73,
+        "kg_sd": 10.96,
+        "pct_1rm": 24,
+        "one_rm_kg": null,
+        "rm_note": "1RM kg not tabulated; loads in kg and %1RM are both given, so 1RM is derivable by code"
+      },
+      "reps": "15 per minute, continuous",
+      "sets": 1,
+      "rest_s": null,
+      "tempo_s": {
+        "eccentric": 2,
+        "concentric": 2
+      },
+      "bout_minutes": "4 (Methods; abstract says 5)",
+      "energy": {
+        "value": 7.32,
+        "sd": 0.88,
+        "unit": "kcal/min",
+        "per": "minute",
+        "exercise_o2": null,
+        "anaerobic": null,
+        "epoc": null,
+        "epoc_minutes": null,
+        "resting_subtracted": false,
+        "basis": "steady-state VO2, mean of last 30 s (gross; resting VO2 used as zero-load point in the per-subject regression, not subtracted)",
+        "o2_to_energy": "1 mL O2 = 5 cal"
+      },
+      "work_reported": {
+        "value": null,
+        "unit": null,
+        "units_note": null
+      },
+      "source": "reis2017",
+      "locator": "Table 1 (PDF p.5)",
+      "confidence": "high"
+    },
+    {
+      "study_id": "reis2017",
+      "exercise": "45-deg inclined leg press",
+      "equipment": "machine",
+      "subjects": {
+        "n": 14,
+        "n_note": "58 men recruited; 14 valid per exercise (each subject did 2 exercises)",
+        "sex": "male",
+        "age": 27.5,
+        "body_mass_kg": 78.67,
+        "height_cm": 178,
+        "training": ">=1 yr resistance training, >=3 sessions/wk"
+      },
+      "load": {
+        "kg": 242.69,
+        "kg_sd": 39.84,
+        "pct_1rm": 80,
+        "one_rm_kg": null,
+        "rm_note": "1RM derivable as load/0.80"
+      },
+      "reps": 14.11,
+      "sets": 1,
+      "rest_s": null,
+      "tempo_s": "self-selected",
+      "time_to_exhaustion_min": 0.94,
+      "volume_kg_reported": 3424.4,
+      "energy": {
+        "value": 19.86,
+        "sd": 4.83,
+        "unit": "kcal/min",
+        "per": "minute",
+        "exercise_o2": null,
+        "anaerobic": "fraction shown in Fig 4 (image, not read); >50% except biceps curl and lat pulldown",
+        "epoc": null,
+        "epoc_minutes": null,
+        "resting_subtracted": false,
+        "basis": "NOT directly measured: O2 demand extrapolated from the 12-24% regression, plus anaerobic share via accumulated O2 deficit",
+        "o2_to_energy": "1 mL O2 = 5 cal"
+      },
+      "work_reported": {
+        "value": null,
+        "unit": null,
+        "units_note": "'Volume (kg)' column = load x reps; note it does not equal the table's mean load x mean reps, because it is a mean of individual products"
+      },
+      "source": "reis2017",
+      "locator": "Table 2 (PDF p.6)",
+      "confidence": "medium"
+    },
+    {
+      "study_id": "reis2017",
+      "exercise": "seated leg extension",
+      "equipment": "machine",
+      "subjects": {
+        "n": 14,
+        "n_note": "58 men recruited; 14 valid per exercise (each subject did 2 exercises)",
+        "sex": "male",
+        "age": 27.5,
+        "body_mass_kg": 78.67,
+        "height_cm": 178,
+        "training": ">=1 yr resistance training, >=3 sessions/wk"
+      },
+      "load": {
+        "kg": 17.88,
+        "kg_sd": 2.97,
+        "pct_1rm": 12,
+        "one_rm_kg": null,
+        "rm_note": "1RM kg not tabulated; loads in kg and %1RM are both given, so 1RM is derivable by code"
+      },
+      "reps": "15 per minute, continuous",
+      "sets": 1,
+      "rest_s": null,
+      "tempo_s": {
+        "eccentric": 2,
+        "concentric": 2
+      },
+      "bout_minutes": "4 (Methods; abstract says 5)",
+      "energy": {
+        "value": 6.51,
+        "sd": 0.94,
+        "unit": "kcal/min",
+        "per": "minute",
+        "exercise_o2": null,
+        "anaerobic": null,
+        "epoc": null,
+        "epoc_minutes": null,
+        "resting_subtracted": false,
+        "basis": "steady-state VO2, mean of last 30 s (gross; resting VO2 used as zero-load point in the per-subject regression, not subtracted)",
+        "o2_to_energy": "1 mL O2 = 5 cal"
+      },
+      "work_reported": {
+        "value": null,
+        "unit": null,
+        "units_note": null
+      },
+      "source": "reis2017",
+      "locator": "Table 1 (PDF p.5)",
+      "confidence": "high"
+    },
+    {
+      "study_id": "reis2017",
+      "exercise": "seated leg extension",
+      "equipment": "machine",
+      "subjects": {
+        "n": 14,
+        "n_note": "58 men recruited; 14 valid per exercise (each subject did 2 exercises)",
+        "sex": "male",
+        "age": 27.5,
+        "body_mass_kg": 78.67,
+        "height_cm": 178,
+        "training": ">=1 yr resistance training, >=3 sessions/wk"
+      },
+      "load": {
+        "kg": 23.83,
+        "kg_sd": 2.93,
+        "pct_1rm": 16,
+        "one_rm_kg": null,
+        "rm_note": "1RM kg not tabulated; loads in kg and %1RM are both given, so 1RM is derivable by code"
+      },
+      "reps": "15 per minute, continuous",
+      "sets": 1,
+      "rest_s": null,
+      "tempo_s": {
+        "eccentric": 2,
+        "concentric": 2
+      },
+      "bout_minutes": "4 (Methods; abstract says 5)",
+      "energy": {
+        "value": 7.82,
+        "sd": 1.12,
+        "unit": "kcal/min",
+        "per": "minute",
+        "exercise_o2": null,
+        "anaerobic": null,
+        "epoc": null,
+        "epoc_minutes": null,
+        "resting_subtracted": false,
+        "basis": "steady-state VO2, mean of last 30 s (gross; resting VO2 used as zero-load point in the per-subject regression, not subtracted)",
+        "o2_to_energy": "1 mL O2 = 5 cal"
+      },
+      "work_reported": {
+        "value": null,
+        "unit": null,
+        "units_note": null
+      },
+      "source": "reis2017",
+      "locator": "Table 1 (PDF p.5)",
+      "confidence": "high"
+    },
+    {
+      "study_id": "reis2017",
+      "exercise": "seated leg extension",
+      "equipment": "machine",
+      "subjects": {
+        "n": 14,
+        "n_note": "58 men recruited; 14 valid per exercise (each subject did 2 exercises)",
+        "sex": "male",
+        "age": 27.5,
+        "body_mass_kg": 78.67,
+        "height_cm": 178,
+        "training": ">=1 yr resistance training, >=3 sessions/wk"
+      },
+      "load": {
+        "kg": 28.42,
+        "kg_sd": 4.35,
+        "pct_1rm": 20,
+        "one_rm_kg": null,
+        "rm_note": "1RM kg not tabulated; loads in kg and %1RM are both given, so 1RM is derivable by code"
+      },
+      "reps": "15 per minute, continuous",
+      "sets": 1,
+      "rest_s": null,
+      "tempo_s": {
+        "eccentric": 2,
+        "concentric": 2
+      },
+      "bout_minutes": "4 (Methods; abstract says 5)",
+      "energy": {
+        "value": 8.31,
+        "sd": 1.2,
+        "unit": "kcal/min",
+        "per": "minute",
+        "exercise_o2": null,
+        "anaerobic": null,
+        "epoc": null,
+        "epoc_minutes": null,
+        "resting_subtracted": false,
+        "basis": "steady-state VO2, mean of last 30 s (gross; resting VO2 used as zero-load point in the per-subject regression, not subtracted)",
+        "o2_to_energy": "1 mL O2 = 5 cal"
+      },
+      "work_reported": {
+        "value": null,
+        "unit": null,
+        "units_note": null
+      },
+      "source": "reis2017",
+      "locator": "Table 1 (PDF p.5)",
+      "confidence": "high"
+    },
+    {
+      "study_id": "reis2017",
+      "exercise": "seated leg extension",
+      "equipment": "machine",
+      "subjects": {
+        "n": 14,
+        "n_note": "58 men recruited; 14 valid per exercise (each subject did 2 exercises)",
+        "sex": "male",
+        "age": 27.5,
+        "body_mass_kg": 78.67,
+        "height_cm": 178,
+        "training": ">=1 yr resistance training, >=3 sessions/wk"
+      },
+      "load": {
+        "kg": 36.08,
+        "kg_sd": 6.51,
+        "pct_1rm": 24,
+        "one_rm_kg": null,
+        "rm_note": "1RM kg not tabulated; loads in kg and %1RM are both given, so 1RM is derivable by code"
+      },
+      "reps": "15 per minute, continuous",
+      "sets": 1,
+      "rest_s": null,
+      "tempo_s": {
+        "eccentric": 2,
+        "concentric": 2
+      },
+      "bout_minutes": "4 (Methods; abstract says 5)",
+      "energy": {
+        "value": 8.92,
+        "sd": 1.28,
+        "unit": "kcal/min",
+        "per": "minute",
+        "exercise_o2": null,
+        "anaerobic": null,
+        "epoc": null,
+        "epoc_minutes": null,
+        "resting_subtracted": false,
+        "basis": "steady-state VO2, mean of last 30 s (gross; resting VO2 used as zero-load point in the per-subject regression, not subtracted)",
+        "o2_to_energy": "1 mL O2 = 5 cal"
+      },
+      "work_reported": {
+        "value": null,
+        "unit": null,
+        "units_note": null
+      },
+      "source": "reis2017",
+      "locator": "Table 1 (PDF p.5)",
+      "confidence": "high"
+    },
+    {
+      "study_id": "reis2017",
+      "exercise": "seated leg extension",
+      "equipment": "machine",
+      "subjects": {
+        "n": 14,
+        "n_note": "58 men recruited; 14 valid per exercise (each subject did 2 exercises)",
+        "sex": "male",
+        "age": 27.5,
+        "body_mass_kg": 78.67,
+        "height_cm": 178,
+        "training": ">=1 yr resistance training, >=3 sessions/wk"
+      },
+      "load": {
+        "kg": 119.17,
+        "kg_sd": 19.79,
+        "pct_1rm": 80,
+        "one_rm_kg": null,
+        "rm_note": "1RM derivable as load/0.80"
+      },
+      "reps": 8.0,
+      "sets": 1,
+      "rest_s": null,
+      "tempo_s": "self-selected",
+      "time_to_exhaustion_min": 0.55,
+      "volume_kg_reported": 953.4,
+      "energy": {
+        "value": 25.7,
+        "sd": 9.23,
+        "unit": "kcal/min",
+        "per": "minute",
+        "exercise_o2": null,
+        "anaerobic": "fraction shown in Fig 4 (image, not read); >50% except biceps curl and lat pulldown",
+        "epoc": null,
+        "epoc_minutes": null,
+        "resting_subtracted": false,
+        "basis": "NOT directly measured: O2 demand extrapolated from the 12-24% regression, plus anaerobic share via accumulated O2 deficit",
+        "o2_to_energy": "1 mL O2 = 5 cal"
+      },
+      "work_reported": {
+        "value": null,
+        "unit": null,
+        "units_note": "'Volume (kg)' column = load x reps; note it does not equal the table's mean load x mean reps, because it is a mean of individual products"
+      },
+      "source": "reis2017",
+      "locator": "Table 2 (PDF p.6)",
+      "confidence": "medium"
+    },
+    {
+      "study_id": "reis2017",
+      "exercise": "wide-grip front lat pulldown",
+      "equipment": "machine",
+      "subjects": {
+        "n": 14,
+        "n_note": "58 men recruited; 14 valid per exercise (each subject did 2 exercises)",
+        "sex": "male",
+        "age": 27.5,
+        "body_mass_kg": 78.67,
+        "height_cm": 178,
+        "training": ">=1 yr resistance training, >=3 sessions/wk"
+      },
+      "load": {
+        "kg": 11.24,
+        "kg_sd": 1.6,
+        "pct_1rm": 12,
+        "one_rm_kg": null,
+        "rm_note": "1RM kg not tabulated; loads in kg and %1RM are both given, so 1RM is derivable by code"
+      },
+      "reps": "15 per minute, continuous",
+      "sets": 1,
+      "rest_s": null,
+      "tempo_s": {
+        "eccentric": 2,
+        "concentric": 2
+      },
+      "bout_minutes": "4 (Methods; abstract says 5)",
+      "energy": {
+        "value": 3.39,
+        "sd": 0.47,
+        "unit": "kcal/min",
+        "per": "minute",
+        "exercise_o2": null,
+        "anaerobic": null,
+        "epoc": null,
+        "epoc_minutes": null,
+        "resting_subtracted": false,
+        "basis": "steady-state VO2, mean of last 30 s (gross; resting VO2 used as zero-load point in the per-subject regression, not subtracted)",
+        "o2_to_energy": "1 mL O2 = 5 cal"
+      },
+      "work_reported": {
+        "value": null,
+        "unit": null,
+        "units_note": null
+      },
+      "source": "reis2017",
+      "locator": "Table 1 (PDF p.5)",
+      "confidence": "high"
+    },
+    {
+      "study_id": "reis2017",
+      "exercise": "wide-grip front lat pulldown",
+      "equipment": "machine",
+      "subjects": {
+        "n": 14,
+        "n_note": "58 men recruited; 14 valid per exercise (each subject did 2 exercises)",
+        "sex": "male",
+        "age": 27.5,
+        "body_mass_kg": 78.67,
+        "height_cm": 178,
+        "training": ">=1 yr resistance training, >=3 sessions/wk"
+      },
+      "load": {
+        "kg": 14.82,
+        "kg_sd": 2.1,
+        "pct_1rm": 16,
+        "one_rm_kg": null,
+        "rm_note": "1RM kg not tabulated; loads in kg and %1RM are both given, so 1RM is derivable by code"
+      },
+      "reps": "15 per minute, continuous",
+      "sets": 1,
+      "rest_s": null,
+      "tempo_s": {
+        "eccentric": 2,
+        "concentric": 2
+      },
+      "bout_minutes": "4 (Methods; abstract says 5)",
+      "energy": {
+        "value": 3.35,
+        "sd": 0.46,
+        "unit": "kcal/min",
+        "per": "minute",
+        "exercise_o2": null,
+        "anaerobic": null,
+        "epoc": null,
+        "epoc_minutes": null,
+        "resting_subtracted": false,
+        "basis": "steady-state VO2, mean of last 30 s (gross; resting VO2 used as zero-load point in the per-subject regression, not subtracted)",
+        "o2_to_energy": "1 mL O2 = 5 cal"
+      },
+      "work_reported": {
+        "value": null,
+        "unit": null,
+        "units_note": null
+      },
+      "source": "reis2017",
+      "locator": "Table 1 (PDF p.5)",
+      "confidence": "high"
+    },
+    {
+      "study_id": "reis2017",
+      "exercise": "wide-grip front lat pulldown",
+      "equipment": "machine",
+      "subjects": {
+        "n": 14,
+        "n_note": "58 men recruited; 14 valid per exercise (each subject did 2 exercises)",
+        "sex": "male",
+        "age": 27.5,
+        "body_mass_kg": 78.67,
+        "height_cm": 178,
+        "training": ">=1 yr resistance training, >=3 sessions/wk"
+      },
+      "load": {
+        "kg": 18.47,
+        "kg_sd": 2.83,
+        "pct_1rm": 20,
+        "one_rm_kg": null,
+        "rm_note": "1RM kg not tabulated; loads in kg and %1RM are both given, so 1RM is derivable by code"
+      },
+      "reps": "15 per minute, continuous",
+      "sets": 1,
+      "rest_s": null,
+      "tempo_s": {
+        "eccentric": 2,
+        "concentric": 2
+      },
+      "bout_minutes": "4 (Methods; abstract says 5)",
+      "energy": {
+        "value": 4.03,
+        "sd": 0.56,
+        "unit": "kcal/min",
+        "per": "minute",
+        "exercise_o2": null,
+        "anaerobic": null,
+        "epoc": null,
+        "epoc_minutes": null,
+        "resting_subtracted": false,
+        "basis": "steady-state VO2, mean of last 30 s (gross; resting VO2 used as zero-load point in the per-subject regression, not subtracted)",
+        "o2_to_energy": "1 mL O2 = 5 cal"
+      },
+      "work_reported": {
+        "value": null,
+        "unit": null,
+        "units_note": null
+      },
+      "source": "reis2017",
+      "locator": "Table 1 (PDF p.5)",
+      "confidence": "high"
+    },
+    {
+      "study_id": "reis2017",
+      "exercise": "wide-grip front lat pulldown",
+      "equipment": "machine",
+      "subjects": {
+        "n": 14,
+        "n_note": "58 men recruited; 14 valid per exercise (each subject did 2 exercises)",
+        "sex": "male",
+        "age": 27.5,
+        "body_mass_kg": 78.67,
+        "height_cm": 178,
+        "training": ">=1 yr resistance training, >=3 sessions/wk"
+      },
+      "load": {
+        "kg": 22.24,
+        "kg_sd": 3.44,
+        "pct_1rm": 24,
+        "one_rm_kg": null,
+        "rm_note": "1RM kg not tabulated; loads in kg and %1RM are both given, so 1RM is derivable by code"
+      },
+      "reps": "15 per minute, continuous",
+      "sets": 1,
+      "rest_s": null,
+      "tempo_s": {
+        "eccentric": 2,
+        "concentric": 2
+      },
+      "bout_minutes": "4 (Methods; abstract says 5)",
+      "energy": {
+        "value": 4.51,
+        "sd": 0.63,
+        "unit": "kcal/min",
+        "per": "minute",
+        "exercise_o2": null,
+        "anaerobic": null,
+        "epoc": null,
+        "epoc_minutes": null,
+        "resting_subtracted": false,
+        "basis": "steady-state VO2, mean of last 30 s (gross; resting VO2 used as zero-load point in the per-subject regression, not subtracted)",
+        "o2_to_energy": "1 mL O2 = 5 cal"
+      },
+      "work_reported": {
+        "value": null,
+        "unit": null,
+        "units_note": null
+      },
+      "source": "reis2017",
+      "locator": "Table 1 (PDF p.5)",
+      "confidence": "high"
+    },
+    {
+      "study_id": "reis2017",
+      "exercise": "wide-grip front lat pulldown",
+      "equipment": "machine",
+      "subjects": {
+        "n": 14,
+        "n_note": "58 men recruited; 14 valid per exercise (each subject did 2 exercises)",
+        "sex": "male",
+        "age": 27.5,
+        "body_mass_kg": 78.67,
+        "height_cm": 178,
+        "training": ">=1 yr resistance training, >=3 sessions/wk"
+      },
+      "load": {
+        "kg": 74.24,
+        "kg_sd": 10.87,
+        "pct_1rm": 80,
+        "one_rm_kg": null,
+        "rm_note": "1RM derivable as load/0.80"
+      },
+      "reps": 11.09,
+      "sets": 1,
+      "rest_s": null,
+      "tempo_s": "self-selected",
+      "time_to_exhaustion_min": 0.5,
+      "volume_kg_reported": 823.3,
+      "energy": {
+        "value": 9.58,
+        "sd": 2.76,
+        "unit": "kcal/min",
+        "per": "minute",
+        "exercise_o2": null,
+        "anaerobic": "fraction shown in Fig 4 (image, not read); >50% except biceps curl and lat pulldown",
+        "epoc": null,
+        "epoc_minutes": null,
+        "resting_subtracted": false,
+        "basis": "NOT directly measured: O2 demand extrapolated from the 12-24% regression, plus anaerobic share via accumulated O2 deficit",
+        "o2_to_energy": "1 mL O2 = 5 cal"
+      },
+      "work_reported": {
+        "value": null,
+        "unit": null,
+        "units_note": "'Volume (kg)' column = load x reps; note it does not equal the table's mean load x mean reps, because it is a mean of individual products"
+      },
+      "source": "reis2017",
+      "locator": "Table 2 (PDF p.6)",
+      "confidence": "medium"
+    },
+    {
+      "study_id": "reis2017",
+      "exercise": "arm curl, Scott bench, EZ bar",
+      "equipment": "machine",
+      "subjects": {
+        "n": 14,
+        "n_note": "58 men recruited; 14 valid per exercise (each subject did 2 exercises)",
+        "sex": "male",
+        "age": 27.5,
+        "body_mass_kg": 78.67,
+        "height_cm": 178,
+        "training": ">=1 yr resistance training, >=3 sessions/wk"
+      },
+      "load": {
+        "kg": 4.27,
+        "kg_sd": 0.32,
+        "pct_1rm": 12,
+        "one_rm_kg": null,
+        "rm_note": "1RM kg not tabulated; loads in kg and %1RM are both given, so 1RM is derivable by code"
+      },
+      "reps": "15 per minute, continuous",
+      "sets": 1,
+      "rest_s": null,
+      "tempo_s": {
+        "eccentric": 2,
+        "concentric": 2
+      },
+      "bout_minutes": "4 (Methods; abstract says 5)",
+      "energy": {
+        "value": 2.68,
+        "sd": 0.33,
+        "unit": "kcal/min",
+        "per": "minute",
+        "exercise_o2": null,
+        "anaerobic": null,
+        "epoc": null,
+        "epoc_minutes": null,
+        "resting_subtracted": false,
+        "basis": "steady-state VO2, mean of last 30 s (gross; resting VO2 used as zero-load point in the per-subject regression, not subtracted)",
+        "o2_to_energy": "1 mL O2 = 5 cal"
+      },
+      "work_reported": {
+        "value": null,
+        "unit": null,
+        "units_note": null
+      },
+      "source": "reis2017",
+      "locator": "Table 1 (PDF p.5)",
+      "confidence": "high"
+    },
+    {
+      "study_id": "reis2017",
+      "exercise": "arm curl, Scott bench, EZ bar",
+      "equipment": "machine",
+      "subjects": {
+        "n": 14,
+        "n_note": "58 men recruited; 14 valid per exercise (each subject did 2 exercises)",
+        "sex": "male",
+        "age": 27.5,
+        "body_mass_kg": 78.67,
+        "height_cm": 178,
+        "training": ">=1 yr resistance training, >=3 sessions/wk"
+      },
+      "load": {
+        "kg": 6.15,
+        "kg_sd": 0.93,
+        "pct_1rm": 16,
+        "one_rm_kg": null,
+        "rm_note": "1RM kg not tabulated; loads in kg and %1RM are both given, so 1RM is derivable by code"
+      },
+      "reps": "15 per minute, continuous",
+      "sets": 1,
+      "rest_s": null,
+      "tempo_s": {
+        "eccentric": 2,
+        "concentric": 2
+      },
+      "bout_minutes": "4 (Methods; abstract says 5)",
+      "energy": {
+        "value": 3.15,
+        "sd": 0.37,
+        "unit": "kcal/min",
+        "per": "minute",
+        "exercise_o2": null,
+        "anaerobic": null,
+        "epoc": null,
+        "epoc_minutes": null,
+        "resting_subtracted": false,
+        "basis": "steady-state VO2, mean of last 30 s (gross; resting VO2 used as zero-load point in the per-subject regression, not subtracted)",
+        "o2_to_energy": "1 mL O2 = 5 cal"
+      },
+      "work_reported": {
+        "value": null,
+        "unit": null,
+        "units_note": null
+      },
+      "source": "reis2017",
+      "locator": "Table 1 (PDF p.5)",
+      "confidence": "high"
+    },
+    {
+      "study_id": "reis2017",
+      "exercise": "arm curl, Scott bench, EZ bar",
+      "equipment": "machine",
+      "subjects": {
+        "n": 14,
+        "n_note": "58 men recruited; 14 valid per exercise (each subject did 2 exercises)",
+        "sex": "male",
+        "age": 27.5,
+        "body_mass_kg": 78.67,
+        "height_cm": 178,
+        "training": ">=1 yr resistance training, >=3 sessions/wk"
+      },
+      "load": {
+        "kg": 7.67,
+        "kg_sd": 1.26,
+        "pct_1rm": 20,
+        "one_rm_kg": null,
+        "rm_note": "1RM kg not tabulated; loads in kg and %1RM are both given, so 1RM is derivable by code"
+      },
+      "reps": "15 per minute, continuous",
+      "sets": 1,
+      "rest_s": null,
+      "tempo_s": {
+        "eccentric": 2,
+        "concentric": 2
+      },
+      "bout_minutes": "4 (Methods; abstract says 5)",
+      "energy": {
+        "value": 3.42,
+        "sd": 0.41,
+        "unit": "kcal/min",
+        "per": "minute",
+        "exercise_o2": null,
+        "anaerobic": null,
+        "epoc": null,
+        "epoc_minutes": null,
+        "resting_subtracted": false,
+        "basis": "steady-state VO2, mean of last 30 s (gross; resting VO2 used as zero-load point in the per-subject regression, not subtracted)",
+        "o2_to_energy": "1 mL O2 = 5 cal"
+      },
+      "work_reported": {
+        "value": null,
+        "unit": null,
+        "units_note": null
+      },
+      "source": "reis2017",
+      "locator": "Table 1 (PDF p.5)",
+      "confidence": "high"
+    },
+    {
+      "study_id": "reis2017",
+      "exercise": "arm curl, Scott bench, EZ bar",
+      "equipment": "machine",
+      "subjects": {
+        "n": 14,
+        "n_note": "58 men recruited; 14 valid per exercise (each subject did 2 exercises)",
+        "sex": "male",
+        "age": 27.5,
+        "body_mass_kg": 78.67,
+        "height_cm": 178,
+        "training": ">=1 yr resistance training, >=3 sessions/wk"
+      },
+      "load": {
+        "kg": 9.29,
+        "kg_sd": 1.51,
+        "pct_1rm": 24,
+        "one_rm_kg": null,
+        "rm_note": "1RM kg not tabulated; loads in kg and %1RM are both given, so 1RM is derivable by code"
+      },
+      "reps": "15 per minute, continuous",
+      "sets": 1,
+      "rest_s": null,
+      "tempo_s": {
+        "eccentric": 2,
+        "concentric": 2
+      },
+      "bout_minutes": "4 (Methods; abstract says 5)",
+      "energy": {
+        "value": 3.87,
+        "sd": 0.46,
+        "unit": "kcal/min",
+        "per": "minute",
+        "exercise_o2": null,
+        "anaerobic": null,
+        "epoc": null,
+        "epoc_minutes": null,
+        "resting_subtracted": false,
+        "basis": "steady-state VO2, mean of last 30 s (gross; resting VO2 used as zero-load point in the per-subject regression, not subtracted)",
+        "o2_to_energy": "1 mL O2 = 5 cal"
+      },
+      "work_reported": {
+        "value": null,
+        "unit": null,
+        "units_note": null
+      },
+      "source": "reis2017",
+      "locator": "Table 1 (PDF p.5)",
+      "confidence": "high"
+    },
+    {
+      "study_id": "reis2017",
+      "exercise": "arm curl, Scott bench, EZ bar",
+      "equipment": "machine",
+      "subjects": {
+        "n": 14,
+        "n_note": "58 men recruited; 14 valid per exercise (each subject did 2 exercises)",
+        "sex": "male",
+        "age": 27.5,
+        "body_mass_kg": 78.67,
+        "height_cm": 178,
+        "training": ">=1 yr resistance training, >=3 sessions/wk"
+      },
+      "load": {
+        "kg": 30.76,
+        "kg_sd": 4.97,
+        "pct_1rm": 80,
+        "one_rm_kg": null,
+        "rm_note": "1RM derivable as load/0.80"
+      },
+      "reps": 12.7,
+      "sets": 1,
+      "rest_s": null,
+      "tempo_s": "self-selected",
+      "time_to_exhaustion_min": 0.85,
+      "volume_kg_reported": 390.7,
+      "energy": {
+        "value": 8.53,
+        "sd": 2.25,
+        "unit": "kcal/min",
+        "per": "minute",
+        "exercise_o2": null,
+        "anaerobic": "fraction shown in Fig 4 (image, not read); >50% except biceps curl and lat pulldown",
+        "epoc": null,
+        "epoc_minutes": null,
+        "resting_subtracted": false,
+        "basis": "NOT directly measured: O2 demand extrapolated from the 12-24% regression, plus anaerobic share via accumulated O2 deficit",
+        "o2_to_energy": "1 mL O2 = 5 cal"
+      },
+      "work_reported": {
+        "value": null,
+        "unit": null,
+        "units_note": "'Volume (kg)' column = load x reps; note it does not equal the table's mean load x mean reps, because it is a mean of individual products"
+      },
+      "source": "reis2017",
+      "locator": "Table 2 (PDF p.6)",
+      "confidence": "medium"
+    },
+    {
+      "study_id": "reis2017",
+      "exercise": "standing triceps extension, high pulley",
+      "equipment": "cable",
+      "subjects": {
+        "n": 14,
+        "n_note": "58 men recruited; 14 valid per exercise (each subject did 2 exercises)",
+        "sex": "male",
+        "age": 27.5,
+        "body_mass_kg": 78.67,
+        "height_cm": 178,
+        "training": ">=1 yr resistance training, >=3 sessions/wk"
+      },
+      "load": {
+        "kg": 5.53,
+        "kg_sd": 1.12,
+        "pct_1rm": 12,
+        "one_rm_kg": null,
+        "rm_note": "1RM kg not tabulated; loads in kg and %1RM are both given, so 1RM is derivable by code"
+      },
+      "reps": "15 per minute, continuous",
+      "sets": 1,
+      "rest_s": null,
+      "tempo_s": {
+        "eccentric": 2,
+        "concentric": 2
+      },
+      "bout_minutes": "4 (Methods; abstract says 5)",
+      "energy": {
+        "value": 3.27,
+        "sd": 0.45,
+        "unit": "kcal/min",
+        "per": "minute",
+        "exercise_o2": null,
+        "anaerobic": null,
+        "epoc": null,
+        "epoc_minutes": null,
+        "resting_subtracted": false,
+        "basis": "steady-state VO2, mean of last 30 s (gross; resting VO2 used as zero-load point in the per-subject regression, not subtracted)",
+        "o2_to_energy": "1 mL O2 = 5 cal"
+      },
+      "work_reported": {
+        "value": null,
+        "unit": null,
+        "units_note": null
+      },
+      "source": "reis2017",
+      "locator": "Table 1 (PDF p.5)",
+      "confidence": "high"
+    },
+    {
+      "study_id": "reis2017",
+      "exercise": "standing triceps extension, high pulley",
+      "equipment": "cable",
+      "subjects": {
+        "n": 14,
+        "n_note": "58 men recruited; 14 valid per exercise (each subject did 2 exercises)",
+        "sex": "male",
+        "age": 27.5,
+        "body_mass_kg": 78.67,
+        "height_cm": 178,
+        "training": ">=1 yr resistance training, >=3 sessions/wk"
+      },
+      "load": {
+        "kg": 7.41,
+        "kg_sd": 1.58,
+        "pct_1rm": 16,
+        "one_rm_kg": null,
+        "rm_note": "1RM kg not tabulated; loads in kg and %1RM are both given, so 1RM is derivable by code"
+      },
+      "reps": "15 per minute, continuous",
+      "sets": 1,
+      "rest_s": null,
+      "tempo_s": {
+        "eccentric": 2,
+        "concentric": 2
+      },
+      "bout_minutes": "4 (Methods; abstract says 5)",
+      "energy": {
+        "value": 3.47,
+        "sd": 0.48,
+        "unit": "kcal/min",
+        "per": "minute",
+        "exercise_o2": null,
+        "anaerobic": null,
+        "epoc": null,
+        "epoc_minutes": null,
+        "resting_subtracted": false,
+        "basis": "steady-state VO2, mean of last 30 s (gross; resting VO2 used as zero-load point in the per-subject regression, not subtracted)",
+        "o2_to_energy": "1 mL O2 = 5 cal"
+      },
+      "work_reported": {
+        "value": null,
+        "unit": null,
+        "units_note": null
+      },
+      "source": "reis2017",
+      "locator": "Table 1 (PDF p.5)",
+      "confidence": "high"
+    },
+    {
+      "study_id": "reis2017",
+      "exercise": "standing triceps extension, high pulley",
+      "equipment": "cable",
+      "subjects": {
+        "n": 14,
+        "n_note": "58 men recruited; 14 valid per exercise (each subject did 2 exercises)",
+        "sex": "male",
+        "age": 27.5,
+        "body_mass_kg": 78.67,
+        "height_cm": 178,
+        "training": ">=1 yr resistance training, >=3 sessions/wk"
+      },
+      "load": {
+        "kg": 9.41,
+        "kg_sd": 1.87,
+        "pct_1rm": 20,
+        "one_rm_kg": null,
+        "rm_note": "1RM kg not tabulated; loads in kg and %1RM are both given, so 1RM is derivable by code"
+      },
+      "reps": "15 per minute, continuous",
+      "sets": 1,
+      "rest_s": null,
+      "tempo_s": {
+        "eccentric": 2,
+        "concentric": 2
+      },
+      "bout_minutes": "4 (Methods; abstract says 5)",
+      "energy": {
+        "value": 4.31,
+        "sd": 0.6,
+        "unit": "kcal/min",
+        "per": "minute",
+        "exercise_o2": null,
+        "anaerobic": null,
+        "epoc": null,
+        "epoc_minutes": null,
+        "resting_subtracted": false,
+        "basis": "steady-state VO2, mean of last 30 s (gross; resting VO2 used as zero-load point in the per-subject regression, not subtracted)",
+        "o2_to_energy": "1 mL O2 = 5 cal"
+      },
+      "work_reported": {
+        "value": null,
+        "unit": null,
+        "units_note": null
+      },
+      "source": "reis2017",
+      "locator": "Table 1 (PDF p.5)",
+      "confidence": "high"
+    },
+    {
+      "study_id": "reis2017",
+      "exercise": "standing triceps extension, high pulley",
+      "equipment": "cable",
+      "subjects": {
+        "n": 14,
+        "n_note": "58 men recruited; 14 valid per exercise (each subject did 2 exercises)",
+        "sex": "male",
+        "age": 27.5,
+        "body_mass_kg": 78.67,
+        "height_cm": 178,
+        "training": ">=1 yr resistance training, >=3 sessions/wk"
+      },
+      "load": {
+        "kg": 11.24,
+        "kg_sd": 2.39,
+        "pct_1rm": 24,
+        "one_rm_kg": null,
+        "rm_note": "1RM kg not tabulated; loads in kg and %1RM are both given, so 1RM is derivable by code"
+      },
+      "reps": "15 per minute, continuous",
+      "sets": 1,
+      "rest_s": null,
+      "tempo_s": {
+        "eccentric": 2,
+        "concentric": 2
+      },
+      "bout_minutes": "4 (Methods; abstract says 5)",
+      "energy": {
+        "value": 4.83,
+        "sd": 0.67,
+        "unit": "kcal/min",
+        "per": "minute",
+        "exercise_o2": null,
+        "anaerobic": null,
+        "epoc": null,
+        "epoc_minutes": null,
+        "resting_subtracted": false,
+        "basis": "steady-state VO2, mean of last 30 s (gross; resting VO2 used as zero-load point in the per-subject regression, not subtracted)",
+        "o2_to_energy": "1 mL O2 = 5 cal"
+      },
+      "work_reported": {
+        "value": null,
+        "unit": null,
+        "units_note": null
+      },
+      "source": "reis2017",
+      "locator": "Table 1 (PDF p.5)",
+      "confidence": "high"
+    },
+    {
+      "study_id": "reis2017",
+      "exercise": "standing triceps extension, high pulley",
+      "equipment": "cable",
+      "subjects": {
+        "n": 14,
+        "n_note": "58 men recruited; 14 valid per exercise (each subject did 2 exercises)",
+        "sex": "male",
+        "age": 27.5,
+        "body_mass_kg": 78.67,
+        "height_cm": 178,
+        "training": ">=1 yr resistance training, >=3 sessions/wk"
+      },
+      "load": {
+        "kg": 37.07,
+        "kg_sd": 7.77,
+        "pct_1rm": 80,
+        "one_rm_kg": null,
+        "rm_note": "1RM derivable as load/0.80"
+      },
+      "reps": 11.55,
+      "sets": 1,
+      "rest_s": null,
+      "tempo_s": "self-selected",
+      "time_to_exhaustion_min": 0.48,
+      "volume_kg_reported": 428.2,
+      "energy": {
+        "value": 10.86,
+        "sd": 3.29,
+        "unit": "kcal/min",
+        "per": "minute",
+        "exercise_o2": null,
+        "anaerobic": "fraction shown in Fig 4 (image, not read); >50% except biceps curl and lat pulldown",
+        "epoc": null,
+        "epoc_minutes": null,
+        "resting_subtracted": false,
+        "basis": "NOT directly measured: O2 demand extrapolated from the 12-24% regression, plus anaerobic share via accumulated O2 deficit",
+        "o2_to_energy": "1 mL O2 = 5 cal"
+      },
+      "work_reported": {
+        "value": null,
+        "unit": null,
+        "units_note": "'Volume (kg)' column = load x reps; note it does not equal the table's mean load x mean reps, because it is a mean of individual products"
+      },
+      "source": "reis2017",
+      "locator": "Table 2 (PDF p.6)",
+      "confidence": "medium"
+    },
+    {
+      "study_id": "adeel2021",
+      "exercise": "dumbbell bent-over row",
+      "equipment": "dumbbell",
+      "subjects": {
+        "n": 5,
+        "sex": "male",
+        "age": 24.8,
+        "body_mass_kg": 78.66,
+        "height_cm": 174.6,
+        "training": "no weight-training experience"
+      },
+      "load": {
+        "kg": 28.5,
+        "pct_1rm": 60,
+        "one_rm_kg": null,
+        "rm_note": "load is total of both dumbbells"
+      },
+      "reps": 10,
+      "sets": 3,
+      "rest_s": 180,
+      "tempo_s": {
+        "concentric": 2,
+        "eccentric": 2
+      },
+      "energy": {
+        "value": [
+          186.26,
+          187.35,
+          179.61
+        ],
+        "unit": "kcal",
+        "per": "exercise (3 sets + following rest), sessions 1-3",
+        "mets_exercise_only": 2.44,
+        "exercise_o2": null,
+        "anaerobic": null,
+        "epoc": null,
+        "epoc_minutes": "rest periods after sets included (3 min between sets, 10 min between exercises)",
+        "resting_subtracted": false,
+        "o2_to_energy": "5 kcal/L during exercise, 4.7 kcal/L during rest"
+      },
+      "work_reported": {
+        "value": null,
+        "unit": null,
+        "units_note": null
+      },
+      "source": "adeel2021",
+      "locator": "Table 1 (loads), Table 3 (kcal), Fig 2 / Results 3.2 (METs)",
+      "confidence": "low",
+      "notes": "INTERNAL INCONSISTENCY (flagged, not corrected): the reported METs (2.4-3.9) for ~49-min sessions imply far fewer kcal than the reported 179-291 kcal per exercise and 679-840 kcal per session (~3x apart). Treat these kcal values as unreliable until resolved."
+    },
+    {
+      "study_id": "adeel2021",
+      "exercise": "dumbbell deadlift",
+      "equipment": "dumbbell",
+      "subjects": {
+        "n": 5,
+        "sex": "male",
+        "age": 24.8,
+        "body_mass_kg": 78.66,
+        "height_cm": 174.6,
+        "training": "no weight-training experience"
+      },
+      "load": {
+        "kg": 31.5,
+        "pct_1rm": 60,
+        "one_rm_kg": null,
+        "rm_note": "load is total of both dumbbells"
+      },
+      "reps": 10,
+      "sets": 3,
+      "rest_s": 180,
+      "tempo_s": {
+        "concentric": 2,
+        "eccentric": 2
+      },
+      "energy": {
+        "value": [
+          238.48,
+          238.75,
+          245.61
+        ],
+        "unit": "kcal",
+        "per": "exercise (3 sets + following rest), sessions 1-3",
+        "mets_exercise_only": 3.4,
+        "exercise_o2": null,
+        "anaerobic": null,
+        "epoc": null,
+        "epoc_minutes": "rest periods after sets included (3 min between sets, 10 min between exercises)",
+        "resting_subtracted": false,
+        "o2_to_energy": "5 kcal/L during exercise, 4.7 kcal/L during rest"
+      },
+      "work_reported": {
+        "value": null,
+        "unit": null,
+        "units_note": null
+      },
+      "source": "adeel2021",
+      "locator": "Table 1 (loads), Table 3 (kcal), Fig 2 / Results 3.2 (METs)",
+      "confidence": "low",
+      "notes": "INTERNAL INCONSISTENCY (flagged, not corrected): the reported METs (2.4-3.9) for ~49-min sessions imply far fewer kcal than the reported 179-291 kcal per exercise and 679-840 kcal per session (~3x apart). Treat these kcal values as unreliable until resolved."
+    },
+    {
+      "study_id": "adeel2021",
+      "exercise": "dumbbell lunge",
+      "equipment": "dumbbell",
+      "subjects": {
+        "n": 5,
+        "sex": "male",
+        "age": 24.8,
+        "body_mass_kg": 78.66,
+        "height_cm": 174.6,
+        "training": "no weight-training experience"
+      },
+      "load": {
+        "kg": 19.35,
+        "pct_1rm": 60,
+        "one_rm_kg": null,
+        "rm_note": "load is total of both dumbbells"
+      },
+      "reps": 10,
+      "sets": 3,
+      "rest_s": 180,
+      "tempo_s": {
+        "concentric": 2,
+        "eccentric": 2
+      },
+      "energy": {
+        "value": [
+          259.04,
+          253.28,
+          263.61
+        ],
+        "unit": "kcal",
+        "per": "exercise (3 sets + following rest), sessions 1-3",
+        "mets_exercise_only": 3.94,
+        "exercise_o2": null,
+        "anaerobic": null,
+        "epoc": null,
+        "epoc_minutes": "rest periods after sets included (3 min between sets, 10 min between exercises)",
+        "resting_subtracted": false,
+        "o2_to_energy": "5 kcal/L during exercise, 4.7 kcal/L during rest"
+      },
+      "work_reported": {
+        "value": null,
+        "unit": null,
+        "units_note": null
+      },
+      "source": "adeel2021",
+      "locator": "Table 1 (loads), Table 3 (kcal), Fig 2 / Results 3.2 (METs)",
+      "confidence": "low",
+      "notes": "INTERNAL INCONSISTENCY (flagged, not corrected): the reported METs (2.4-3.9) for ~49-min sessions imply far fewer kcal than the reported 179-291 kcal per exercise and 679-840 kcal per session (~3x apart). Treat these kcal values as unreliable until resolved."
+    },
+    {
+      "study_id": "adeel2021",
+      "exercise": "dumbbell bent-over row",
+      "equipment": "dumbbell",
+      "subjects": {
+        "n": 5,
+        "sex": "male",
+        "age": 28.4,
+        "body_mass_kg": 80.72,
+        "height_cm": 173.6,
+        "training": "2 months weight training"
+      },
+      "load": {
+        "kg": 43.0,
+        "pct_1rm": 60,
+        "one_rm_kg": null,
+        "rm_note": "load is total of both dumbbells"
+      },
+      "reps": 10,
+      "sets": 3,
+      "rest_s": 180,
+      "tempo_s": {
+        "concentric": 2,
+        "eccentric": 2
+      },
+      "energy": {
+        "value": [
+          277.25,
+          226.98,
+          213.05
+        ],
+        "unit": "kcal",
+        "per": "exercise (3 sets + following rest), sessions 1-3",
+        "mets_exercise_only": 2.6,
+        "exercise_o2": null,
+        "anaerobic": null,
+        "epoc": null,
+        "epoc_minutes": "rest periods after sets included (3 min between sets, 10 min between exercises)",
+        "resting_subtracted": false,
+        "o2_to_energy": "5 kcal/L during exercise, 4.7 kcal/L during rest"
+      },
+      "work_reported": {
+        "value": null,
+        "unit": null,
+        "units_note": null
+      },
+      "source": "adeel2021",
+      "locator": "Table 1 (loads), Table 3 (kcal), Fig 2 / Results 3.2 (METs)",
+      "confidence": "low",
+      "notes": "INTERNAL INCONSISTENCY (flagged, not corrected): the reported METs (2.4-3.9) for ~49-min sessions imply far fewer kcal than the reported 179-291 kcal per exercise and 679-840 kcal per session (~3x apart). Treat these kcal values as unreliable until resolved."
+    },
+    {
+      "study_id": "adeel2021",
+      "exercise": "dumbbell deadlift",
+      "equipment": "dumbbell",
+      "subjects": {
+        "n": 5,
+        "sex": "male",
+        "age": 28.4,
+        "body_mass_kg": 80.72,
+        "height_cm": 173.6,
+        "training": "2 months weight training"
+      },
+      "load": {
+        "kg": 56.0,
+        "pct_1rm": 60,
+        "one_rm_kg": null,
+        "rm_note": "load is total of both dumbbells"
+      },
+      "reps": 10,
+      "sets": 3,
+      "rest_s": 180,
+      "tempo_s": {
+        "concentric": 2,
+        "eccentric": 2
+      },
+      "energy": {
+        "value": [
+          271.82,
+          276.73,
+          282.85
+        ],
+        "unit": "kcal",
+        "per": "exercise (3 sets + following rest), sessions 1-3",
+        "mets_exercise_only": 3.53,
+        "exercise_o2": null,
+        "anaerobic": null,
+        "epoc": null,
+        "epoc_minutes": "rest periods after sets included (3 min between sets, 10 min between exercises)",
+        "resting_subtracted": false,
+        "o2_to_energy": "5 kcal/L during exercise, 4.7 kcal/L during rest"
+      },
+      "work_reported": {
+        "value": null,
+        "unit": null,
+        "units_note": null
+      },
+      "source": "adeel2021",
+      "locator": "Table 1 (loads), Table 3 (kcal), Fig 2 / Results 3.2 (METs)",
+      "confidence": "low",
+      "notes": "INTERNAL INCONSISTENCY (flagged, not corrected): the reported METs (2.4-3.9) for ~49-min sessions imply far fewer kcal than the reported 179-291 kcal per exercise and 679-840 kcal per session (~3x apart). Treat these kcal values as unreliable until resolved."
+    },
+    {
+      "study_id": "adeel2021",
+      "exercise": "dumbbell lunge",
+      "equipment": "dumbbell",
+      "subjects": {
+        "n": 5,
+        "sex": "male",
+        "age": 28.4,
+        "body_mass_kg": 80.72,
+        "height_cm": 173.6,
+        "training": "2 months weight training"
+      },
+      "load": {
+        "kg": 31.0,
+        "pct_1rm": 60,
+        "one_rm_kg": null,
+        "rm_note": "load is total of both dumbbells"
+      },
+      "reps": 10,
+      "sets": 3,
+      "rest_s": 180,
+      "tempo_s": {
+        "concentric": 2,
+        "eccentric": 2
+      },
+      "energy": {
+        "value": [
+          291.17,
+          278.62,
+          283.33
+        ],
+        "unit": "kcal",
+        "per": "exercise (3 sets + following rest), sessions 1-3",
+        "mets_exercise_only": 3.92,
+        "exercise_o2": null,
+        "anaerobic": null,
+        "epoc": null,
+        "epoc_minutes": "rest periods after sets included (3 min between sets, 10 min between exercises)",
+        "resting_subtracted": false,
+        "o2_to_energy": "5 kcal/L during exercise, 4.7 kcal/L during rest"
+      },
+      "work_reported": {
+        "value": null,
+        "unit": null,
+        "units_note": null
+      },
+      "source": "adeel2021",
+      "locator": "Table 1 (loads), Table 3 (kcal), Fig 2 / Results 3.2 (METs)",
+      "confidence": "low",
+      "notes": "INTERNAL INCONSISTENCY (flagged, not corrected): the reported METs (2.4-3.9) for ~49-min sessions imply far fewer kcal than the reported 179-291 kcal per exercise and 679-840 kcal per session (~3x apart). Treat these kcal values as unreliable until resolved."
+    }
+  ],
+  "muscle_mass_scaling": [
+    {
+      "finding": "At the same relative load (12-24% 1RM, 15 reps/min), energy rate was highest for half squat and lowest for biceps curl; lower-body > upper-body at every intensity.",
+      "values": {
+        "kcal_per_min_at_24pct": {
+          "half squat": 11.9,
+          "leg extension": 8.92,
+          "leg press": 7.32,
+          "inclined bench": 6.52,
+          "horizontal bench": 4.83,
+          "triceps extension": 4.83,
+          "lat pulldown": 4.51,
+          "biceps curl": 3.87
+        }
+      },
+      "source": "reis2017",
+      "locator": "Table 1",
+      "confidence": "high",
+      "notes": "Per-minute rates at fixed cadence; not normalised to work. Loads in kg are in energy_sets so code can compute cost per kg-rep."
+    },
+    {
+      "finding": "At 80% 1RM, anaerobic share of energy was above 50% for most exercises but below 50% for biceps curl and lat pulldown; authors link a larger aerobic share to smaller muscle mass.",
+      "values": {},
+      "source": "reis2017",
+      "locator": "Discussion; Fig 4 (image)",
+      "confidence": "medium"
+    },
+    {
+      "finding": "Total external load lifted did not predict session energy across formats: BodyPump women lifted more (19,485 vs 15,616 kg incl. body-mass fractions) yet energy was similar (302 vs 289 kcal). Authors suggest smaller range of motion at ~1 rep/s in BodyPump.",
+      "values": {
+        "bodypump": {
+          "total_load_kg": 19485,
+          "kcal": 302
+        },
+        "heavy_8RM": {
+          "total_load_kg": 15616,
+          "kcal": 289
+        }
+      },
+      "source": "rustaden2020",
+      "locator": "Results 'Total Workload'; Table 4; Discussion",
+      "confidence": "high",
+      "notes": "Their 'workload' is load x reps (no displacement), which is exactly the gap a displacement term is meant to close."
+    }
+  ],
+  "bodyweight_fractions_new": [
+    {
+      "exercise": "squat",
+      "fraction": 0.9,
+      "measure": "not specified (pilot force-plate testing)",
+      "source": "rustaden2020",
+      "locator": "Methods 'Total Workload'",
+      "confidence": "medium",
+      "notes": "Authors' pilot values used as modelling constants; the force-plate data themselves are not published."
+    },
+    {
+      "exercise": "lunge",
+      "fraction": 0.9,
+      "measure": "not specified (pilot force-plate testing)",
+      "source": "rustaden2020",
+      "locator": "Methods 'Total Workload'",
+      "confidence": "medium",
+      "notes": "Authors' pilot values used as modelling constants; the force-plate data themselves are not published."
+    },
+    {
+      "exercise": "push_up",
+      "fraction": 0.65,
+      "measure": "not specified (pilot force-plate testing)",
+      "source": "rustaden2020",
+      "locator": "Methods 'Total Workload'",
+      "confidence": "medium",
+      "notes": "Authors' pilot values used as modelling constants; the force-plate data themselves are not published."
+    },
+    {
+      "exercise": "dip",
+      "fraction": 0.5,
+      "measure": "not specified (pilot force-plate testing)",
+      "source": "rustaden2020",
+      "locator": "Methods 'Total Workload'",
+      "confidence": "medium",
+      "notes": "Authors' pilot values used as modelling constants; the force-plate data themselves are not published."
+    },
+    {
+      "exercise": "sit_up",
+      "fraction": 0.4,
+      "measure": "not specified (pilot force-plate testing)",
+      "source": "rustaden2020",
+      "locator": "Methods 'Total Workload'",
+      "confidence": "medium",
+      "notes": "Authors' pilot values used as modelling constants; the force-plate data themselves are not published."
+    }
+  ],
+  "validation_sessions": [
+    {
+      "study_id": "rustaden2020",
+      "subjects": {
+        "n": 8,
+        "sex": "female",
+        "body_mass_kg": 87.1,
+        "height_cm": 168.9,
+        "age": 34.1
+      },
+      "exercises": [
+        {
+          "name": "squat",
+          "equipment": "free weights / bodyweight",
+          "load_kg": null,
+          "pct_1rm": null,
+          "one_rm_kg": null,
+          "sets": 3,
+          "reps": 8,
+          "rest_s": 45
+        },
+        {
+          "name": "lunges",
+          "equipment": "free weights / bodyweight",
+          "load_kg": null,
+          "pct_1rm": null,
+          "one_rm_kg": null,
+          "sets": 4,
+          "reps": 8,
+          "rest_s": 45
+        },
+        {
+          "name": "stiff-legged deadlift",
+          "equipment": "free weights / bodyweight",
+          "load_kg": null,
+          "pct_1rm": null,
+          "one_rm_kg": null,
+          "sets": 3,
+          "reps": 8,
+          "rest_s": 45
+        },
+        {
+          "name": "forward rowing",
+          "equipment": "free weights / bodyweight",
+          "load_kg": null,
+          "pct_1rm": null,
+          "one_rm_kg": null,
+          "sets": 3,
+          "reps": 8,
+          "rest_s": 45
+        },
+        {
+          "name": "bench press",
+          "equipment": "free weights / bodyweight",
+          "load_kg": null,
+          "pct_1rm": null,
+          "one_rm_kg": null,
+          "sets": 3,
+          "reps": 8,
+          "rest_s": 45
+        },
+        {
+          "name": "dips",
+          "equipment": "free weights / bodyweight",
+          "load_kg": null,
+          "pct_1rm": null,
+          "one_rm_kg": null,
+          "sets": 2,
+          "reps": 8,
+          "rest_s": 45
+        },
+        {
+          "name": "shoulder press",
+          "equipment": "free weights / bodyweight",
+          "load_kg": null,
+          "pct_1rm": null,
+          "one_rm_kg": null,
+          "sets": 2,
+          "reps": 8,
+          "rest_s": 45
+        },
+        {
+          "name": "lateral raise",
+          "equipment": "free weights / bodyweight",
+          "load_kg": null,
+          "pct_1rm": null,
+          "one_rm_kg": null,
+          "sets": 2,
+          "reps": 8,
+          "rest_s": 45
+        },
+        {
+          "name": "clean and press",
+          "equipment": "free weights / bodyweight",
+          "load_kg": null,
+          "pct_1rm": null,
+          "one_rm_kg": null,
+          "sets": 2,
+          "reps": 8,
+          "rest_s": 45
+        },
+        {
+          "name": "triceps press overhead",
+          "equipment": "free weights / bodyweight",
+          "load_kg": null,
+          "pct_1rm": null,
+          "one_rm_kg": null,
+          "sets": 2,
+          "reps": 8,
+          "rest_s": 45
+        },
+        {
+          "name": "biceps curl",
+          "equipment": "free weights / bodyweight",
+          "load_kg": null,
+          "pct_1rm": null,
+          "one_rm_kg": null,
+          "sets": 2,
+          "reps": 8,
+          "rest_s": 45
+        },
+        {
+          "name": "sit-ups",
+          "equipment": "free weights / bodyweight",
+          "load_kg": null,
+          "pct_1rm": null,
+          "one_rm_kg": null,
+          "sets": 3,
+          "reps": 8,
+          "rest_s": 45
+        }
+      ],
+      "session_totals": {
+        "total_load_kg_incl_bodyweight_fractions": 15616,
+        "duration_min": 57.7,
+        "rest_between_exercises_s": 60,
+        "relative_load": "8RM; squat ~77% and bench ~80% 1RM"
+      },
+      "measured": {
+        "value": 289,
+        "sd": 69,
+        "unit": "kcal",
+        "per": "session",
+        "includes_epoc": false,
+        "resting_subtracted": false,
+        "epoc_note": "RMR +33% at 0-20 min and +15% at 120-140 min after; not integrated"
+      },
+      "method": "Mixing-chamber indirect calorimetry during session (Oxycon Pro), accumulated O2 x 5 kcal/L",
+      "source": "rustaden2020",
+      "locator": "Tables 2-4; Results",
+      "confidence": "high",
+      "notes": "Per-exercise loads in kg not published; only session total. Overweight, recently trained (3-4 wk) women."
+    },
+    {
+      "study_id": "rustaden2020",
+      "subjects": {
+        "n": 10,
+        "sex": "female",
+        "body_mass_kg": 84.7,
+        "height_cm": 167.1,
+        "age": 36.4
+      },
+      "exercises": [
+        {
+          "name": "BodyPump release 83 (full body, ~800 reps)",
+          "equipment": "barbell 1.25 kg + 1/2.5/5 kg plates, step",
+          "load_kg": null,
+          "pct_1rm": "~14% squat, ~18% bench",
+          "one_rm_kg": null,
+          "sets": null,
+          "reps": 800,
+          "rest_s": "<20 within tracks, ~60 between"
+        }
+      ],
+      "session_totals": {
+        "total_load_kg_incl_bodyweight_fractions": 19485,
+        "duration_min": 53.0
+      },
+      "measured": {
+        "value": 302,
+        "sd": 67,
+        "unit": "kcal",
+        "per": "session",
+        "includes_epoc": false,
+        "resting_subtracted": false
+      },
+      "method": "As above",
+      "source": "rustaden2020",
+      "locator": "Tables 1, 3, 4",
+      "confidence": "high"
+    },
+    {
+      "study_id": "reis2017",
+      "subjects": {
+        "n": 14,
+        "sex": "male",
+        "body_mass_kg": 78.67,
+        "height_cm": 178,
+        "age": 27.5
+      },
+      "exercises": [
+        {
+          "name": "horizontal bench press",
+          "equipment": "machine",
+          "load_kg": 75.18,
+          "pct_1rm": 80,
+          "one_rm_kg": null,
+          "sets": 1,
+          "reps": 8.64,
+          "rest_s": null,
+          "duration_min": 0.44
+        }
+      ],
+      "measured": {
+        "value": 11.41,
+        "unit": "kcal/min",
+        "per": "exercise bout (rate)",
+        "includes_epoc": false,
+        "resting_subtracted": false
+      },
+      "method": "Extrapolated O2 demand + accumulated O2 deficit (see energy_sets)",
+      "source": "reis2017",
+      "locator": "Table 2",
+      "confidence": "medium",
+      "notes": "Rate x duration gives bout energy; values are model-based, not directly measured."
+    },
+    {
+      "study_id": "reis2017",
+      "subjects": {
+        "n": 14,
+        "sex": "male",
+        "body_mass_kg": 78.67,
+        "height_cm": 178,
+        "age": 27.5
+      },
+      "exercises": [
+        {
+          "name": "45-deg inclined bench press",
+          "equipment": "machine",
+          "load_kg": 68.08,
+          "pct_1rm": 80,
+          "one_rm_kg": null,
+          "sets": 1,
+          "reps": 11.0,
+          "rest_s": null,
+          "duration_min": 0.73
+        }
+      ],
+      "measured": {
+        "value": 16.77,
+        "unit": "kcal/min",
+        "per": "exercise bout (rate)",
+        "includes_epoc": false,
+        "resting_subtracted": false
+      },
+      "method": "Extrapolated O2 demand + accumulated O2 deficit (see energy_sets)",
+      "source": "reis2017",
+      "locator": "Table 2",
+      "confidence": "medium",
+      "notes": "Rate x duration gives bout energy; values are model-based, not directly measured."
+    },
+    {
+      "study_id": "reis2017",
+      "subjects": {
+        "n": 14,
+        "sex": "male",
+        "body_mass_kg": 78.67,
+        "height_cm": 178,
+        "age": 27.5
+      },
+      "exercises": [
+        {
+          "name": "half squat",
+          "equipment": "machine",
+          "load_kg": 94.59,
+          "pct_1rm": 80,
+          "one_rm_kg": null,
+          "sets": 1,
+          "reps": 11.55,
+          "rest_s": null,
+          "duration_min": 0.47
+        }
+      ],
+      "measured": {
+        "value": 35.94,
+        "unit": "kcal/min",
+        "per": "exercise bout (rate)",
+        "includes_epoc": false,
+        "resting_subtracted": false
+      },
+      "method": "Extrapolated O2 demand + accumulated O2 deficit (see energy_sets)",
+      "source": "reis2017",
+      "locator": "Table 2",
+      "confidence": "medium",
+      "notes": "Rate x duration gives bout energy; values are model-based, not directly measured."
+    },
+    {
+      "study_id": "reis2017",
+      "subjects": {
+        "n": 14,
+        "sex": "male",
+        "body_mass_kg": 78.67,
+        "height_cm": 178,
+        "age": 27.5
+      },
+      "exercises": [
+        {
+          "name": "45-deg inclined leg press",
+          "equipment": "machine",
+          "load_kg": 242.69,
+          "pct_1rm": 80,
+          "one_rm_kg": null,
+          "sets": 1,
+          "reps": 14.11,
+          "rest_s": null,
+          "duration_min": 0.94
+        }
+      ],
+      "measured": {
+        "value": 19.86,
+        "unit": "kcal/min",
+        "per": "exercise bout (rate)",
+        "includes_epoc": false,
+        "resting_subtracted": false
+      },
+      "method": "Extrapolated O2 demand + accumulated O2 deficit (see energy_sets)",
+      "source": "reis2017",
+      "locator": "Table 2",
+      "confidence": "medium",
+      "notes": "Rate x duration gives bout energy; values are model-based, not directly measured."
+    },
+    {
+      "study_id": "reis2017",
+      "subjects": {
+        "n": 14,
+        "sex": "male",
+        "body_mass_kg": 78.67,
+        "height_cm": 178,
+        "age": 27.5
+      },
+      "exercises": [
+        {
+          "name": "seated leg extension",
+          "equipment": "machine",
+          "load_kg": 119.17,
+          "pct_1rm": 80,
+          "one_rm_kg": null,
+          "sets": 1,
+          "reps": 8.0,
+          "rest_s": null,
+          "duration_min": 0.55
+        }
+      ],
+      "measured": {
+        "value": 25.7,
+        "unit": "kcal/min",
+        "per": "exercise bout (rate)",
+        "includes_epoc": false,
+        "resting_subtracted": false
+      },
+      "method": "Extrapolated O2 demand + accumulated O2 deficit (see energy_sets)",
+      "source": "reis2017",
+      "locator": "Table 2",
+      "confidence": "medium",
+      "notes": "Rate x duration gives bout energy; values are model-based, not directly measured."
+    },
+    {
+      "study_id": "reis2017",
+      "subjects": {
+        "n": 14,
+        "sex": "male",
+        "body_mass_kg": 78.67,
+        "height_cm": 178,
+        "age": 27.5
+      },
+      "exercises": [
+        {
+          "name": "wide-grip front lat pulldown",
+          "equipment": "machine",
+          "load_kg": 74.24,
+          "pct_1rm": 80,
+          "one_rm_kg": null,
+          "sets": 1,
+          "reps": 11.09,
+          "rest_s": null,
+          "duration_min": 0.5
+        }
+      ],
+      "measured": {
+        "value": 9.58,
+        "unit": "kcal/min",
+        "per": "exercise bout (rate)",
+        "includes_epoc": false,
+        "resting_subtracted": false
+      },
+      "method": "Extrapolated O2 demand + accumulated O2 deficit (see energy_sets)",
+      "source": "reis2017",
+      "locator": "Table 2",
+      "confidence": "medium",
+      "notes": "Rate x duration gives bout energy; values are model-based, not directly measured."
+    },
+    {
+      "study_id": "reis2017",
+      "subjects": {
+        "n": 14,
+        "sex": "male",
+        "body_mass_kg": 78.67,
+        "height_cm": 178,
+        "age": 27.5
+      },
+      "exercises": [
+        {
+          "name": "arm curl, Scott bench, EZ bar",
+          "equipment": "machine",
+          "load_kg": 30.76,
+          "pct_1rm": 80,
+          "one_rm_kg": null,
+          "sets": 1,
+          "reps": 12.7,
+          "rest_s": null,
+          "duration_min": 0.85
+        }
+      ],
+      "measured": {
+        "value": 8.53,
+        "unit": "kcal/min",
+        "per": "exercise bout (rate)",
+        "includes_epoc": false,
+        "resting_subtracted": false
+      },
+      "method": "Extrapolated O2 demand + accumulated O2 deficit (see energy_sets)",
+      "source": "reis2017",
+      "locator": "Table 2",
+      "confidence": "medium",
+      "notes": "Rate x duration gives bout energy; values are model-based, not directly measured."
+    },
+    {
+      "study_id": "reis2017",
+      "subjects": {
+        "n": 14,
+        "sex": "male",
+        "body_mass_kg": 78.67,
+        "height_cm": 178,
+        "age": 27.5
+      },
+      "exercises": [
+        {
+          "name": "standing triceps extension, high pulley",
+          "equipment": "cable",
+          "load_kg": 37.07,
+          "pct_1rm": 80,
+          "one_rm_kg": null,
+          "sets": 1,
+          "reps": 11.55,
+          "rest_s": null,
+          "duration_min": 0.48
+        }
+      ],
+      "measured": {
+        "value": 10.86,
+        "unit": "kcal/min",
+        "per": "exercise bout (rate)",
+        "includes_epoc": false,
+        "resting_subtracted": false
+      },
+      "method": "Extrapolated O2 demand + accumulated O2 deficit (see energy_sets)",
+      "source": "reis2017",
+      "locator": "Table 2",
+      "confidence": "medium",
+      "notes": "Rate x duration gives bout energy; values are model-based, not directly measured."
+    },
+    {
+      "study_id": "adeel2021",
+      "subjects": {
+        "n": 5,
+        "sex": "male",
+        "body_mass_kg": 78.66,
+        "height_cm": 174.6,
+        "age": 24.8
+      },
+      "exercises": [
+        {
+          "name": "dumbbell bent-over row",
+          "equipment": "dumbbell",
+          "load_kg": 28.5,
+          "pct_1rm": 60,
+          "one_rm_kg": null,
+          "sets": 3,
+          "reps": 10,
+          "rest_s": 180
+        },
+        {
+          "name": "dumbbell deadlift",
+          "equipment": "dumbbell",
+          "load_kg": 31.5,
+          "pct_1rm": 60,
+          "one_rm_kg": null,
+          "sets": 3,
+          "reps": 10,
+          "rest_s": 180
+        },
+        {
+          "name": "dumbbell lunge",
+          "equipment": "dumbbell",
+          "load_kg": 19.35,
+          "pct_1rm": 60,
+          "one_rm_kg": null,
+          "sets": 3,
+          "reps": 10,
+          "rest_s": 180
+        }
+      ],
+      "measured": {
+        "value": [
+          683.78,
+          679.38,
+          688.83
+        ],
+        "unit": "kcal",
+        "per": "session (x3 sessions)",
+        "includes_epoc": "inter-set and inter-exercise rest only",
+        "resting_subtracted": false
+      },
+      "method": "Breath-by-breath VO2 (Cortex Metalyzer 3B); 5 kcal/L exercise, 4.7 kcal/L rest",
+      "source": "adeel2021",
+      "locator": "Table 3",
+      "confidence": "low",
+      "notes": "INTERNAL INCONSISTENCY (flagged, not corrected): the reported METs (2.4-3.9) for ~49-min sessions imply far fewer kcal than the reported 179-291 kcal per exercise and 679-840 kcal per session (~3x apart). Treat these kcal values as unreliable until resolved."
+    },
+    {
+      "study_id": "adeel2021",
+      "subjects": {
+        "n": 5,
+        "sex": "male",
+        "body_mass_kg": 80.72,
+        "height_cm": 173.6,
+        "age": 28.4
+      },
+      "exercises": [
+        {
+          "name": "dumbbell bent-over row",
+          "equipment": "dumbbell",
+          "load_kg": 43.0,
+          "pct_1rm": 60,
+          "one_rm_kg": null,
+          "sets": 3,
+          "reps": 10,
+          "rest_s": 180
+        },
+        {
+          "name": "dumbbell deadlift",
+          "equipment": "dumbbell",
+          "load_kg": 56.0,
+          "pct_1rm": 60,
+          "one_rm_kg": null,
+          "sets": 3,
+          "reps": 10,
+          "rest_s": 180
+        },
+        {
+          "name": "dumbbell lunge",
+          "equipment": "dumbbell",
+          "load_kg": 31.0,
+          "pct_1rm": 60,
+          "one_rm_kg": null,
+          "sets": 3,
+          "reps": 10,
+          "rest_s": 180
+        }
+      ],
+      "measured": {
+        "value": [
+          840.25,
+          782.33,
+          779.23
+        ],
+        "unit": "kcal",
+        "per": "session (x3 sessions)",
+        "includes_epoc": "inter-set and inter-exercise rest only",
+        "resting_subtracted": false
+      },
+      "method": "Breath-by-breath VO2 (Cortex Metalyzer 3B); 5 kcal/L exercise, 4.7 kcal/L rest",
+      "source": "adeel2021",
+      "locator": "Table 3",
+      "confidence": "low",
+      "notes": "INTERNAL INCONSISTENCY (flagged, not corrected): the reported METs (2.4-3.9) for ~49-min sessions imply far fewer kcal than the reported 179-291 kcal per exercise and 679-840 kcal per session (~3x apart). Treat these kcal values as unreliable until resolved."
+    }
+  ]
+}

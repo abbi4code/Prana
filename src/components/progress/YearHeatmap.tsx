@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "motion/react";
 import { addDays, parseDay } from "@/lib/dates";
+import { useStore } from "@/lib/store";
 import type { DayStatus, Judged } from "@/lib/streaks";
 import { useStreaks } from "@/lib/useStreaks";
 import { useFitnessStreaks } from "@/lib/useWorkouts";
@@ -31,7 +32,10 @@ const BOTH: Record<"hit" | "frozen" | "miss", Cell> = {
 };
 const EMPTY: Cell = { cls: "bg-surface-2", label: "before you started" };
 
-/** GitHub-style year of days, Monday rows, newest week on the right. Food, workout or both. Tap a day for details. */
+/**
+ * GitHub-style year of days, Monday rows, newest week on the right. Food, workout or both. Tap a day for details.
+ * Squares stretch to fill the card on wide screens and keep a minimum size (scrolling sideways) on phones.
+ */
 export function YearHeatmap() {
   const food = useStreaks();
   const fit = useFitnessStreaks();
@@ -39,6 +43,8 @@ export function YearHeatmap() {
   const scroller = useRef<HTMLDivElement>(null);
   const [picked, setPicked] = useState<string | null>(null);
   const [mode, setMode] = useState<Mode>("food");
+  const workouts = useStore((s) => s.workouts);
+  const pickedWorkouts = useMemo(() => (picked ? workouts.filter((w) => w.date === picked).sort((a, b) => a.createdAt - b.createdAt) : []), [workouts, picked]);
 
   const dow = (parseDay(today).getDay() + 6) % 7;
   const start = addDays(today, -dow - (WEEKS - 1) * 7); // Monday, 52 weeks back
@@ -81,13 +87,13 @@ export function YearHeatmap() {
       </div>
 
       <div ref={scroller} className="no-scrollbar -mx-5 mt-3 overflow-x-auto px-5">
-        <div className="flex w-max gap-[3px]">
+        <div className="grid w-full min-w-fit gap-[3px]" style={{ gridTemplateColumns: `repeat(${WEEKS}, minmax(11px, 1fr))` }}>
           {weeks.map((week, w) => {
             const first = parseDay(week[0]);
             const showMonth = first.getDate() <= 7;
             return (
               <div key={w} className="flex flex-col gap-[3px]">
-                <span className="h-4 text-[10px] leading-4 text-faint">
+                <span className="h-4 whitespace-nowrap text-[10px] leading-4 text-faint">
                   {showMonth ? first.toLocaleDateString("en-IN", { month: "short" }) : ""}
                 </span>
                 {week.map((d) => {
@@ -102,7 +108,7 @@ export function YearHeatmap() {
                       animate={{ opacity: future ? 0.25 : 1, scale: 1 }}
                       transition={{ delay: Math.min(w * 0.012, 0.6), duration: 0.25 }}
                       aria-label={`${d}: ${c.label}`}
-                      className={`size-[13px] rounded-[4px] transition-colors duration-300 ${c.cls} ${d === today ? "ring-2 ring-turmeric/70 ring-offset-1 ring-offset-surface" : ""} ${picked === d ? "outline-2 outline-text" : ""}`}
+                      className={`aspect-square w-full rounded-[4px] transition-colors duration-300 ${c.cls} ${d === today ? "ring-2 ring-turmeric/70 ring-offset-1 ring-offset-surface" : ""} ${picked === d ? "outline-2 outline-text" : ""}`}
                     />
                   );
                 })}
@@ -112,19 +118,26 @@ export function YearHeatmap() {
         </div>
       </div>
 
-      <p className="mt-3 min-h-5 text-sm">
+      <div className="mt-3 min-h-10 text-sm">
         {picked ? (
           <>
-            <span className="font-semibold">{parseDay(picked).toLocaleDateString("en-IN", { weekday: "short", day: "numeric", month: "short" })}</span>
-            <span className="text-muted">
-              {" · "}{(food.kcalByDay.get(picked) ?? 0).toLocaleString("en-IN")} kcal eaten
-              {fit.started ? ` · ${(fit.burnByDay.get(picked) ?? 0).toLocaleString("en-IN")} burned` : ""} · {cell(picked).label}
-            </span>
+            <p>
+              <span className="font-semibold">{parseDay(picked).toLocaleDateString("en-IN", { weekday: "short", day: "numeric", month: "short" })}</span>
+              <span className="text-muted">
+                {" · "}{(food.kcalByDay.get(picked) ?? 0).toLocaleString("en-IN")} kcal eaten
+                {fit.started ? ` · ${(fit.burnByDay.get(picked) ?? 0).toLocaleString("en-IN")} burned` : ""} · {cell(picked).label}
+              </span>
+            </p>
+            {pickedWorkouts.length > 0 && (
+              <p className="mt-0.5 truncate text-xs text-faint">
+                <span className="text-jamun">●</span> {pickedWorkouts.map((w) => w.name).join(", ")}
+              </p>
+            )}
           </>
         ) : (
-          <span className="text-faint">Tap a day to see it.</span>
+          <p className="text-faint">Tap a day to see it.</p>
         )}
-      </p>
+      </div>
 
       <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[11px] text-muted">
         {legend.map((c) => (

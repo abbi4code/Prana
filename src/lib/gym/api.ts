@@ -3,7 +3,9 @@
 import { getSupabase } from "../supabase";
 import { useStore, useUI } from "../store";
 import { AUTO_CLOSE_HOURS } from "./config";
-import { GymResponse, type CheckInBody, type CheckOutBody } from "./schema";
+import { GymResponse, type CheckInBody, type CheckOutBody, type SetEndBody } from "./schema";
+import { duration } from "./visits";
+import type { GymVisit } from "../types";
 
 // Device side of the gym API (D30). No sync-engine import here, so the engine can call flushGym().
 
@@ -11,7 +13,11 @@ export type GymCall =
   | { ok: true; data: GymResponse }
   | { ok: false; reason: "signed_out" | "offline" | "rate_limited" | "gym_not_found" | "bad_time" | "failed"; retryAfterS?: number };
 
-type Route = { path: "/api/gym/check-in"; body: CheckInBody } | { path: "/api/gym/check-out"; body: CheckOutBody } | { path: "/api/gym/active" };
+type Route =
+  | { path: "/api/gym/check-in"; body: CheckInBody }
+  | { path: "/api/gym/check-out"; body: CheckOutBody }
+  | { path: "/api/gym/visit"; body: SetEndBody; method: "PATCH" }
+  | { path: "/api/gym/active" };
 
 export async function gymApi(route: Route): Promise<GymCall> {
   if (typeof navigator !== "undefined" && !navigator.onLine) return { ok: false, reason: "offline" };
@@ -20,7 +26,7 @@ export async function gymApi(route: Route): Promise<GymCall> {
   const sent = Date.now();
   try {
     const res = await fetch(route.path, {
-      method: "body" in route ? "POST" : "GET",
+      method: "method" in route ? route.method : "body" in route ? "POST" : "GET",
       headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
       body: "body" in route ? JSON.stringify(route.body) : undefined,
     });
@@ -34,6 +40,7 @@ export async function gymApi(route: Route): Promise<GymCall> {
     // timer skew: the server's clock at roughly the middle of the round trip
     useUI.setState({ clockSkew: parsed.data.serverNow - (sent + Date.now()) / 2 });
     if (parsed.data.visit) useStore.getState().putVisit(parsed.data.visit);
+    if (parsed.data.autoClosed) announceAutoClosed(parsed.data.autoClosed);
     return { ok: true, data: parsed.data };
   } catch {
     return { ok: false, reason: typeof navigator !== "undefined" && !navigator.onLine ? "offline" : "failed" };
@@ -69,4 +76,16 @@ export async function flushGym() {
     const out = await gymApi({ path: "/api/gym/check-out", body: { offline: { endedAt: iso(pc.endedAt) } } });
     if (out.ok || out.reason === "bad_time") useStore.getState().setPendingCheckout(null);
   }
+}
+
+/** "Your visit from 7:04 pm was closed automatically (1 h 30 min)" + Fix end. */
+function announceAutoClosed(v: GymVisit) {
+  useStore.getState().putVisit(v);
+  const start = Date.parse(v.startedAt);
+  const ms = v.endedAt ? Date.parse(v.endedAt) - start : 0;
+  const at = new Date(start).toLocaleTimeString("en-IN", { hour: "numeric", minute: "2-digit" });
+  useUI.getState().showToast(`Your gym visit from ${at} was closed automatically (${duration(ms)})`, {
+    label: "Fix end",
+    run: () => useUI.setState({ navTo: "/workout", fixVisitId: v.id }),
+  });
 }

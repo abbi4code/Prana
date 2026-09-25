@@ -328,6 +328,14 @@ type UI = {
   closeGym: () => void;
   /** server clock − device clock, ms (from gym API replies), so the visit timer is right on a wrong phone clock */
   clockSkew: number;
+  /** nearby banner (D30 phase 4): set by the on-phone check when you're within your gym's radius */
+  nearby: { gymId: string; name: string; distanceM: number } | null;
+  /** the banner's "Check in": the Gym card starts the normal check-in flow when it sees this */
+  autoCheckIn: boolean;
+  /** ask the app shell to navigate (for actions started outside a page, e.g. a toast button) */
+  navTo: string | null;
+  /** open the end-time fixer for this auto-closed visit */
+  fixVisitId: string | null;
   /** "Add anything" sheet (D29): one search for food + workouts, opened from the Today bar or / and ⌘K */
   quick: boolean;
   openQuick: () => void;
@@ -353,6 +361,10 @@ export const useUI = create<UI>((set) => ({
   editWorkout: (workoutId) => set({ gym: { mode: "edit", workoutId } }),
   closeGym: () => set({ gym: null }),
   clockSkew: 0,
+  nearby: null,
+  autoCheckIn: false,
+  navTo: null,
+  fixVisitId: null,
   quick: false,
   openQuick: () => set({ quick: true }),
   closeQuick: () => set({ quick: false }),

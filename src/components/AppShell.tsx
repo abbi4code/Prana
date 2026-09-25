@@ -11,6 +11,7 @@ import { LogSheet } from "./log/LogSheet";
 import { QuickAddSheet, openQuickAdd } from "./log/QuickAdd";
 import { Sidebar } from "./Sidebar";
 import { Toaster } from "./Toaster";
+import { NearbyBanner } from "./workout/NearbyBanner";
 import { WorkoutSheet } from "./workout/WorkoutSheet";
 
 export function AppShell({ children }: { children: React.ReactNode }) {
@@ -32,6 +33,14 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       navigator.serviceWorker.register("/sw.js", { scope: "/", updateViaCache: "none" }).catch(() => {});
     }
   }, []);
+
+  // navigation requested from outside a page (toast buttons, the nearby banner)
+  const navTo = useUI((s) => s.navTo);
+  useEffect(() => {
+    if (!navTo) return;
+    useUI.setState({ navTo: null });
+    if (location.pathname !== navTo) router.push(navTo);
+  }, [navTo, router]);
 
   // first visit (no account, didn't choose guest mode) → login screen
   useEffect(() => {
@@ -77,6 +86,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       <LogSheet />
       <WorkoutSheet />
       <QuickAddSheet />
+      <NearbyBanner />
       <Toaster />
     </>
   );

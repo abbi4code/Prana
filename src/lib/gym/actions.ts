@@ -1,13 +1,15 @@
 "use client";
 
 import { useAuth } from "../auth";
-import { useStore } from "../store";
+import { useStore, useUI } from "../store";
 import { syncNow } from "../sync/engine";
 import { gymApi } from "./api";
 import type { Reading } from "./location";
 import type { Verdict } from "./schema";
 import type { LocationStatus } from "./verify";
-import { activeVisit } from "./visits";
+import { AUTO_CLOSE_HOURS, FORGOTTEN_DEFAULT_MINUTES } from "./config";
+import { checkNearby } from "./nearby";
+import { activeVisit, duration } from "./visits";
 
 // Check-in / check-out (D30). Phase 2: an optional location reading, judged by the server.
 // Online by default: the server stamps the time and writes the visit. With no signal (or as a guest) the visit
@@ -86,14 +88,44 @@ export async function refreshActive() {
   }
 }
 
+/** Fix the guessed end of an auto-closed visit (server checks it's after the start, within 3 h, not in the future). */
+export async function fixEnd(visitId: string, endedAt: number): Promise<GymResult> {
+  const out = await gymApi({ path: "/api/gym/visit", method: "PATCH", body: { id: visitId, endedAt: new Date(endedAt).toISOString() } });
+  if (out.ok) return { ok: true, offline: false };
+  if (out.reason === "bad_time") return { ok: false, message: "That time doesn't fit: pick one after you arrived, within 3 hours." };
+  return { ok: false, message: out.reason === "offline" ? "You're offline. Try again when connected." : "Couldn't save that. Try again." };
+}
+
+/**
+ * Visits saved on the phone (offline / guest) follow the same forgotten-visit rule as the server:
+ * open longer than AUTO_CLOSE_HOURS → ends at the last exercise logged during it, else start + 1:30.
+ */
+export function closeStaleLocal() {
+  const s = useStore.getState();
+  const cut = AUTO_CLOSE_HOURS * 3600_000;
+  for (const v of s.localVisits) {
+    if (v.endedAt != null || Date.now() - v.startedAt < cut) continue;
+    const last = Math.max(0, ...s.workouts.filter((w) => w.visitId === v.id).map((w) => w.createdAt));
+    const end = last > v.startedAt ? Math.min(last, v.startedAt + cut) : v.startedAt + FORGOTTEN_DEFAULT_MINUTES * 60_000;
+    s.endLocalVisit(v.id, end);
+    const at = new Date(v.startedAt).toLocaleTimeString("en-IN", { hour: "numeric", minute: "2-digit" });
+    useUI.getState().showToast(`Your gym visit from ${at} was closed automatically (${duration(end - v.startedAt)})`);
+  }
+}
+
 let started = false;
 /** Once, after auth is initialised: refresh on sign-in and whenever the app comes back to the foreground. */
 export function initGym() {
   if (started || typeof window === "undefined") return;
   started = true;
+  const wake = async () => {
+    closeStaleLocal();
+    await refreshActive(); // also closes a forgotten server visit (lazy auto-close)
+    void checkNearby();
+  };
   useAuth.subscribe((a, prev) => {
     if (a.status === "signedIn" && prev.status !== "signedIn") void refreshActive();
   });
-  if (useAuth.getState().status === "signedIn") void refreshActive();
-  document.addEventListener("visibilitychange", () => document.visibilityState === "visible" && void refreshActive());
+  void wake();
+  document.addEventListener("visibilitychange", () => document.visibilityState === "visible" && void wake());
 }

@@ -1,6 +1,6 @@
 # Food Dataset
 
-Exercise and calorie-burn data (free-exercise-db, Compendium 2024, ACSM) is documented in [workouts.md](workouts.md), not here.
+Exercise and calorie-burn data (free-exercise-db, Compendium 2024, ACSM, lifting energy studies in `data/lift-energy.json` + `data/lift-energy-2.json`) is documented in [workouts.md](workouts.md), not here.
 
 ## Files
 

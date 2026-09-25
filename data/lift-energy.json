@@ -1,0 +1,3476 @@
+{
+  "meta": {
+    "version": "1.0",
+    "generated_on": "2026-09-25",
+    "notes": [
+      "Verbatim quotes omitted (quote: null) to avoid reproducing copyrighted text; every value has a locator.",
+      "READ FIRST: the Scott-lab 'J' work values appear to be kg x m, not true joules. See energy_per_work[0].work.units_note before using any slope."
+    ],
+    "sources": [
+      {
+        "id": "knausenberger2014",
+        "citation": "Scott CB, Luchini A, Knausenberger A, Steitz A. Total energy costs - aerobic and anaerobic, exercise and recovery - of five resistance exercises. Cent Eur J Sport Sci Med 2014;8(4):53-59 (CC BY-SA)",
+        "url": "https://wnus.usz.edu.pl/cejssm/file/article/download/175.pdf"
+      },
+      {
+        "id": "scott_reis2016",
+        "citation": "Scott CB, Reis VM. Modeling the total energy costs of resistance exercise: a work in progress. Cent Eur J Sport Sci Med 2016;14(2):5-12. doi:10.18276/cej.2016.2-01",
+        "url": "https://wnus.usz.edu.pl/cejssm/file/issue/download/124.pdf"
+      },
+      {
+        "id": "scott2011",
+        "citation": "Scott CB, Leighton BH, Ahearn KJ, McManus JJ. J Strength Cond Res 2011;25(4):903-908 (values via scott_reis2016 Table 1)",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/20703175/"
+      },
+      {
+        "id": "scott2009",
+        "citation": "Scott CB, Croteau A, Ravlo T. Energy expenditure before, during, and after the bench press. J Strength Cond Res 2009;23(2):611-618",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/19197214/"
+      },
+      {
+        "id": "scott2012b",
+        "citation": "Scott CB. The effect of time-under-tension and weight lifting cadence on aerobic, anaerobic, and recovery energy expenditures: 3 submaximal sets. Appl Physiol Nutr Metab 2012;37:252-256 (via scott_reis2016)",
+        "url": "https://cdnsciencepub.com/doi/10.1139/h11-158"
+      },
+      {
+        "id": "scott2020",
+        "citation": "Scott CB et al. Differences in oxygen uptake between equivalent resistance training protocols: sets vs. reps. Int J Phys Educ Fit Sports 2020;9(4):91-96",
+        "url": "https://ijpefs.org/index.php/ijpefs/article/view/328"
+      },
+      {
+        "id": "hornsby2018",
+        "citation": "Hornsby WG, Gentles JA, Comfort P, Suchomel TJ, Mizuguchi S, Stone MH. Resistance training volume load with and without exercise displacement. Sports 2018;6(4):137 (CC BY)",
+        "url": "https://www.mdpi.com/2075-4663/6/4/137"
+      },
+      {
+        "id": "mcbride2009",
+        "citation": "McBride JM et al. Comparison of methods to quantify volume during resistance exercise. J Strength Cond Res 2009;23(1):106-110",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/19130641/"
+      },
+      {
+        "id": "winter_ch4",
+        "citation": "Winter DA. Biomechanics and Motor Control of Human Movement, ch. 4 Anthropometry, Table 4.1 (course copy)",
+        "url": "https://courses.grainger.illinois.edu/me481/sp2021/Anthro-Winter.pdf"
+      },
+      {
+        "id": "healthcare2022",
+        "citation": "Healthcare 2022;10(10):2054, Table 4 'Body segment coefficients as calculated for Dempster model'",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9602786/table/healthcare-10-02054-t004"
+      },
+      {
+        "id": "ebben2011",
+        "citation": "Ebben WP et al. Kinetic analysis of several variations of push-ups. J Strength Cond Res 2011;25(10):2891-2894",
+        "url": "https://journals.lww.com/nsca-jscr/fulltext/2011/10000/kinetic_analysis_of_several_variations_of_push_ups.31.aspx"
+      },
+      {
+        "id": "contreras2012",
+        "citation": "Contreras B et al. The biomechanics of the push-up. Strength Cond J 2012",
+        "url": "https://www.ovid.com/jnls/nsca-scj/fulltext/10.1519/ssc.0b013e31826d877b~the-biomechanics-of-the-push-up-implications-for-resistance"
+      },
+      {
+        "id": "farinatti2011",
+        "citation": "Farinatti PTV, Castinheiras Neto AG. J Strength Cond Res 2011;25(11):3181-3190",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/21993043/"
+      },
+      {
+        "id": "ratamess2007",
+        "citation": "Ratamess NA et al. The effect of rest interval length on metabolic responses to the bench press exercise. Eur J Appl Physiol 2007",
+        "url": "https://link.springer.com/article/10.1007/s00421-007-0394-y"
+      },
+      {
+        "id": "farinatti2013_review",
+        "citation": "Farinatti P et al. Influence of resistance training variables on EPOC: a systematic review. ISRN 2013:825026",
+        "url": "https://onlinelibrary.wiley.com/doi/10.1155/2013/825026"
+      },
+      {
+        "id": "benito2016",
+        "citation": "Benito PJ et al. PLoS ONE 2016;11(11):e0164349 (lactate conversion description)",
+        "url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0164349"
+      },
+      {
+        "id": "phillips2003",
+        "citation": "Phillips WT, Ziuraitis JR. J Strength Cond Res 2003;17(2):350-355",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/12741877/"
+      }
+    ]
+  },
+  "energy_per_work": [
+    {
+      "study_id": "knausenberger2014",
+      "exercise": "deadlift (Smith machine)",
+      "subjects": [
+        {
+          "n": 22,
+          "sex": "male",
+          "age": 23.7,
+          "body_mass_kg": 83,
+          "height_cm": 180.5,
+          "training": ">=3 sessions/wk for >=3 months (ACSM maintenance phase)"
+        }
+      ],
+      "protocol": {
+        "load_kg": "see data_points",
+        "pct_1rm": null,
+        "load_selection": "self-selected, RPE 'somewhat hard', racked before failure",
+        "reps": "see data_points",
+        "sets": 1,
+        "rest_s": null,
+        "tempo_s": {
+          "concentric": 1.5,
+          "eccentric": 1.5
+        }
+      },
+      "work": {
+        "value": null,
+        "unit": "reported as J (see units_note)",
+        "method": "Vertical bar travel (cable-driven flywheel encoder on the Smith machine; CV 0.25%/rep) x weight lifted; inertia not measured; each data point = mean of 2 days",
+        "includes_body_segments": false,
+        "concentric_only": null,
+        "units_note": "UNIT CHECK (interpretation, not stated by authors): dividing reported 'work' by (load_kg x reps) gives plausible bar travel per rep (e.g. deadlift 302.3/(22.7x22) = 0.61 m; shrug 91.8/(72.5x11) = 0.12 m; calf raise 95.6/(81.6x10) = 0.12 m). If the values were true joules (load x 9.81 x distance) those distances would be ~10x too small (6 cm deadlift). So the reported 'J' behaves like kg x m (no g). To apply these slopes to work computed as kg x 9.81 x m x reps, divide that work by 9.81 first. Hornsby 2018 likewise reports load x displacement in kg-based units."
+      },
+      "energy": {
+        "total_kj": null,
+        "exercise_o2_kj": null,
+        "anaerobic_kj": null,
+        "epoc_kj": null,
+        "epoc_minutes": null,
+        "epoc_rule": "Recovery measured seated until 2 consecutive 15-s VO2 readings <= 5.0 mL/kg/min; resting VO2 subtracted",
+        "o2_to_energy": "Exercise O2: 1 L = 21.1 kJ (glucose). EPOC: 1 L = 19.6 kJ (fat/lactate)",
+        "lactate_conversion": "(peak recovery lactate - resting lactate) x [mL O2 per kg per mmol constant] x body mass x 21.1 kJ/L. The numeric constant is corrupted in the PDF text layer; Benito 2016 describes Scott's method (Scott 2006) as 3 mL O2/kg per mmol/L.",
+        "lactate_sampling": "Finger-prick, pre-lift and 2 min post-set (Lactate Pro)"
+      },
+      "component_percentages": {
+        "male": {
+          "pct_exercise_o2": 24.0,
+          "pct_anaerobic": 32.8,
+          "pct_epoc": 43.1
+        }
+      },
+      "regression": {
+        "slope": 0.102,
+        "intercept": 56.592,
+        "r": 0.997,
+        "x_unit": "work as reported ('J')",
+        "y_unit": "kJ (total: exercise O2 + anaerobic + EPOC)"
+      },
+      "data_points": [
+        {
+          "sex": "male",
+          "load_kg": 22.7,
+          "reps": 22,
+          "work_reported": 302.3,
+          "total_cost_kj": 84.0
+        },
+        {
+          "sex": "male",
+          "load_kg": 22.7,
+          "reps": 26,
+          "work_reported": 342.4,
+          "total_cost_kj": 95.2
+        },
+        {
+          "sex": "male",
+          "load_kg": 63.5,
+          "reps": 30,
+          "work_reported": 1138.6,
+          "total_cost_kj": 172.7
+        }
+      ],
+      "efficiency_pct": null,
+      "locator": "Scott, Luchini, Knausenberger, Steitz 2014: Tables 1-2 (raw), Table 3 (regression), Table 4 (components), Methods",
+      "quote": null,
+      "confidence": "high",
+      "notes": "Table 2 header labels female cost as '(J)' but magnitudes match kJ. Deadlift regression is from 3 points (men only). Paper author order in the PDF is Scott, Luchini, Knausenberger, Steitz."
+    },
+    {
+      "study_id": "knausenberger2014",
+      "exercise": "squat (Smith machine)",
+      "subjects": [
+        {
+          "n": 22,
+          "sex": "male",
+          "age": 23.7,
+          "body_mass_kg": 83,
+          "height_cm": 180.5,
+          "training": ">=3 sessions/wk for >=3 months (ACSM maintenance phase)"
+        },
+        {
+          "n": 16,
+          "sex": "female",
+          "age": 21.8,
+          "body_mass_kg": 61.1,
+          "height_cm": 165,
+          "training": ">=3 sessions/wk for >=3 months (ACSM maintenance phase)"
+        }
+      ],
+      "protocol": {
+        "load_kg": "see data_points",
+        "pct_1rm": null,
+        "load_selection": "self-selected, RPE 'somewhat hard', racked before failure",
+        "reps": "see data_points",
+        "sets": 1,
+        "rest_s": null,
+        "tempo_s": {
+          "concentric": 1.5,
+          "eccentric": 1.5
+        }
+      },
+      "work": {
+        "value": null,
+        "unit": "reported as J (see units_note)",
+        "method": "Vertical bar travel (cable-driven flywheel encoder on the Smith machine; CV 0.25%/rep) x weight lifted; inertia not measured; each data point = mean of 2 days",
+        "includes_body_segments": false,
+        "concentric_only": null,
+        "units_note": "UNIT CHECK (interpretation, not stated by authors): dividing reported 'work' by (load_kg x reps) gives plausible bar travel per rep (e.g. deadlift 302.3/(22.7x22) = 0.61 m; shrug 91.8/(72.5x11) = 0.12 m; calf raise 95.6/(81.6x10) = 0.12 m). If the values were true joules (load x 9.81 x distance) those distances would be ~10x too small (6 cm deadlift). So the reported 'J' behaves like kg x m (no g). To apply these slopes to work computed as kg x 9.81 x m x reps, divide that work by 9.81 first. Hornsby 2018 likewise reports load x displacement in kg-based units."
+      },
+      "energy": {
+        "total_kj": null,
+        "exercise_o2_kj": null,
+        "anaerobic_kj": null,
+        "epoc_kj": null,
+        "epoc_minutes": null,
+        "epoc_rule": "Recovery measured seated until 2 consecutive 15-s VO2 readings <= 5.0 mL/kg/min; resting VO2 subtracted",
+        "o2_to_energy": "Exercise O2: 1 L = 21.1 kJ (glucose). EPOC: 1 L = 19.6 kJ (fat/lactate)",
+        "lactate_conversion": "(peak recovery lactate - resting lactate) x [mL O2 per kg per mmol constant] x body mass x 21.1 kJ/L. The numeric constant is corrupted in the PDF text layer; Benito 2016 describes Scott's method (Scott 2006) as 3 mL O2/kg per mmol/L.",
+        "lactate_sampling": "Finger-prick, pre-lift and 2 min post-set (Lactate Pro)"
+      },
+      "component_percentages": {
+        "male": {
+          "pct_exercise_o2": 13.1,
+          "pct_anaerobic": 22.0,
+          "pct_epoc": 65.0
+        },
+        "female": {
+          "pct_exercise_o2": 16.8,
+          "pct_anaerobic": 21.1,
+          "pct_epoc": 62.1
+        }
+      },
+      "regression": {
+        "slope": 0.0942,
+        "intercept": 14.931,
+        "r": 0.977,
+        "x_unit": "work as reported ('J')",
+        "y_unit": "kJ (total: exercise O2 + anaerobic + EPOC)"
+      },
+      "data_points": [
+        {
+          "sex": "male",
+          "load_kg": 81.6,
+          "reps": 10,
+          "work_reported": 365.8,
+          "total_cost_kj": 41.8
+        },
+        {
+          "sex": "male",
+          "load_kg": 104.3,
+          "reps": 15,
+          "work_reported": 826.2,
+          "total_cost_kj": 95.1
+        },
+        {
+          "sex": "female",
+          "load_kg": 31.7,
+          "reps": 14,
+          "work_reported": 152.2,
+          "total_cost_kj": 31.3
+        },
+        {
+          "sex": "female",
+          "load_kg": 31.7,
+          "reps": 17,
+          "work_reported": 191.0,
+          "total_cost_kj": 39.6
+        },
+        {
+          "sex": "female",
+          "load_kg": 59.1,
+          "reps": 10,
+          "work_reported": 236.5,
+          "total_cost_kj": 31.6
+        },
+        {
+          "sex": "female",
+          "load_kg": 22.7,
+          "reps": 10,
+          "work_reported": 82.4,
+          "total_cost_kj": 28.4
+        },
+        {
+          "sex": "female",
+          "load_kg": 22.7,
+          "reps": 10,
+          "work_reported": 67.5,
+          "total_cost_kj": 16.2
+        }
+      ],
+      "efficiency_pct": null,
+      "locator": "Scott, Luchini, Knausenberger, Steitz 2014: Tables 1-2 (raw), Table 3 (regression), Table 4 (components), Methods",
+      "quote": null,
+      "confidence": "high",
+      "notes": "Table 2 header labels female cost as '(J)' but magnitudes match kJ. Deadlift regression is from 3 points (men only). Paper author order in the PDF is Scott, Luchini, Knausenberger, Steitz."
+    },
+    {
+      "study_id": "knausenberger2014",
+      "exercise": "incline_press (Smith machine)",
+      "subjects": [
+        {
+          "n": 22,
+          "sex": "male",
+          "age": 23.7,
+          "body_mass_kg": 83,
+          "height_cm": 180.5,
+          "training": ">=3 sessions/wk for >=3 months (ACSM maintenance phase)"
+        },
+        {
+          "n": 16,
+          "sex": "female",
+          "age": 21.8,
+          "body_mass_kg": 61.1,
+          "height_cm": 165,
+          "training": ">=3 sessions/wk for >=3 months (ACSM maintenance phase)"
+        }
+      ],
+      "protocol": {
+        "load_kg": "see data_points",
+        "pct_1rm": null,
+        "load_selection": "self-selected, RPE 'somewhat hard', racked before failure",
+        "reps": "see data_points",
+        "sets": 1,
+        "rest_s": null,
+        "tempo_s": {
+          "concentric": 1.5,
+          "eccentric": 1.5
+        }
+      },
+      "work": {
+        "value": null,
+        "unit": "reported as J (see units_note)",
+        "method": "Vertical bar travel (cable-driven flywheel encoder on the Smith machine; CV 0.25%/rep) x weight lifted; inertia not measured; each data point = mean of 2 days",
+        "includes_body_segments": false,
+        "concentric_only": null,
+        "units_note": "UNIT CHECK (interpretation, not stated by authors): dividing reported 'work' by (load_kg x reps) gives plausible bar travel per rep (e.g. deadlift 302.3/(22.7x22) = 0.61 m; shrug 91.8/(72.5x11) = 0.12 m; calf raise 95.6/(81.6x10) = 0.12 m). If the values were true joules (load x 9.81 x distance) those distances would be ~10x too small (6 cm deadlift). So the reported 'J' behaves like kg x m (no g). To apply these slopes to work computed as kg x 9.81 x m x reps, divide that work by 9.81 first. Hornsby 2018 likewise reports load x displacement in kg-based units."
+      },
+      "energy": {
+        "total_kj": null,
+        "exercise_o2_kj": null,
+        "anaerobic_kj": null,
+        "epoc_kj": null,
+        "epoc_minutes": null,
+        "epoc_rule": "Recovery measured seated until 2 consecutive 15-s VO2 readings <= 5.0 mL/kg/min; resting VO2 subtracted",
+        "o2_to_energy": "Exercise O2: 1 L = 21.1 kJ (glucose). EPOC: 1 L = 19.6 kJ (fat/lactate)",
+        "lactate_conversion": "(peak recovery lactate - resting lactate) x [mL O2 per kg per mmol constant] x body mass x 21.1 kJ/L. The numeric constant is corrupted in the PDF text layer; Benito 2016 describes Scott's method (Scott 2006) as 3 mL O2/kg per mmol/L.",
+        "lactate_sampling": "Finger-prick, pre-lift and 2 min post-set (Lactate Pro)"
+      },
+      "component_percentages": {
+        "male": {
+          "pct_exercise_o2": 14.8,
+          "pct_anaerobic": 43.6,
+          "pct_epoc": 41.4
+        },
+        "female": {
+          "pct_exercise_o2": 11.5,
+          "pct_anaerobic": 43.5,
+          "pct_epoc": 45.0
+        }
+      },
+      "regression": {
+        "slope": 0.0911,
+        "intercept": 3.21,
+        "r": 0.947,
+        "x_unit": "work as reported ('J')",
+        "y_unit": "kJ (total: exercise O2 + anaerobic + EPOC)"
+      },
+      "data_points": [
+        {
+          "sex": "male",
+          "load_kg": 40.8,
+          "reps": 10,
+          "work_reported": 208.6,
+          "total_cost_kj": 18.8
+        },
+        {
+          "sex": "male",
+          "load_kg": 54.5,
+          "reps": 10,
+          "work_reported": 209.7,
+          "total_cost_kj": 22.5
+        },
+        {
+          "sex": "male",
+          "load_kg": 31.8,
+          "reps": 14,
+          "work_reported": 206.0,
+          "total_cost_kj": 28.2
+        },
+        {
+          "sex": "male",
+          "load_kg": 49.9,
+          "reps": 7,
+          "work_reported": 208.6,
+          "total_cost_kj": 17.3
+        },
+        {
+          "sex": "male",
+          "load_kg": 63.5,
+          "reps": 10,
+          "work_reported": 342.1,
+          "total_cost_kj": 35.7
+        },
+        {
+          "sex": "male",
+          "load_kg": 27.3,
+          "reps": 10,
+          "work_reported": 109.8,
+          "total_cost_kj": 12.8
+        },
+        {
+          "sex": "female",
+          "load_kg": 11.4,
+          "reps": 10,
+          "work_reported": 41.6,
+          "total_cost_kj": 6.8
+        },
+        {
+          "sex": "female",
+          "load_kg": 27.3,
+          "reps": 10,
+          "work_reported": 109.7,
+          "total_cost_kj": 12.8
+        },
+        {
+          "sex": "female",
+          "load_kg": 18.2,
+          "reps": 7,
+          "work_reported": 57.4,
+          "total_cost_kj": 6.9
+        },
+        {
+          "sex": "female",
+          "load_kg": 18.2,
+          "reps": 10,
+          "work_reported": 71.7,
+          "total_cost_kj": 9.4
+        },
+        {
+          "sex": "female",
+          "load_kg": 13.6,
+          "reps": 10,
+          "work_reported": 47.6,
+          "total_cost_kj": 10.9
+        },
+        {
+          "sex": "female",
+          "load_kg": 18.2,
+          "reps": 10,
+          "work_reported": 88.5,
+          "total_cost_kj": 11.2
+        }
+      ],
+      "efficiency_pct": null,
+      "locator": "Scott, Luchini, Knausenberger, Steitz 2014: Tables 1-2 (raw), Table 3 (regression), Table 4 (components), Methods",
+      "quote": null,
+      "confidence": "high",
+      "notes": "Table 2 header labels female cost as '(J)' but magnitudes match kJ. Deadlift regression is from 3 points (men only). Paper author order in the PDF is Scott, Luchini, Knausenberger, Steitz."
+    },
+    {
+      "study_id": "knausenberger2014",
+      "exercise": "shrug (Smith machine)",
+      "subjects": [
+        {
+          "n": 22,
+          "sex": "male",
+          "age": 23.7,
+          "body_mass_kg": 83,
+          "height_cm": 180.5,
+          "training": ">=3 sessions/wk for >=3 months (ACSM maintenance phase)"
+        },
+        {
+          "n": 16,
+          "sex": "female",
+          "age": 21.8,
+          "body_mass_kg": 61.1,
+          "height_cm": 165,
+          "training": ">=3 sessions/wk for >=3 months (ACSM maintenance phase)"
+        }
+      ],
+      "protocol": {
+        "load_kg": "see data_points",
+        "pct_1rm": null,
+        "load_selection": "self-selected, RPE 'somewhat hard', racked before failure",
+        "reps": "see data_points",
+        "sets": 1,
+        "rest_s": null,
+        "tempo_s": {
+          "concentric": 1.5,
+          "eccentric": 1.5
+        }
+      },
+      "work": {
+        "value": null,
+        "unit": "reported as J (see units_note)",
+        "method": "Vertical bar travel (cable-driven flywheel encoder on the Smith machine; CV 0.25%/rep) x weight lifted; inertia not measured; each data point = mean of 2 days",
+        "includes_body_segments": false,
+        "concentric_only": null,
+        "units_note": "UNIT CHECK (interpretation, not stated by authors): dividing reported 'work' by (load_kg x reps) gives plausible bar travel per rep (e.g. deadlift 302.3/(22.7x22) = 0.61 m; shrug 91.8/(72.5x11) = 0.12 m; calf raise 95.6/(81.6x10) = 0.12 m). If the values were true joules (load x 9.81 x distance) those distances would be ~10x too small (6 cm deadlift). So the reported 'J' behaves like kg x m (no g). To apply these slopes to work computed as kg x 9.81 x m x reps, divide that work by 9.81 first. Hornsby 2018 likewise reports load x displacement in kg-based units."
+      },
+      "energy": {
+        "total_kj": null,
+        "exercise_o2_kj": null,
+        "anaerobic_kj": null,
+        "epoc_kj": null,
+        "epoc_minutes": null,
+        "epoc_rule": "Recovery measured seated until 2 consecutive 15-s VO2 readings <= 5.0 mL/kg/min; resting VO2 subtracted",
+        "o2_to_energy": "Exercise O2: 1 L = 21.1 kJ (glucose). EPOC: 1 L = 19.6 kJ (fat/lactate)",
+        "lactate_conversion": "(peak recovery lactate - resting lactate) x [mL O2 per kg per mmol constant] x body mass x 21.1 kJ/L. The numeric constant is corrupted in the PDF text layer; Benito 2016 describes Scott's method (Scott 2006) as 3 mL O2/kg per mmol/L.",
+        "lactate_sampling": "Finger-prick, pre-lift and 2 min post-set (Lactate Pro)"
+      },
+      "component_percentages": {
+        "male": {
+          "pct_exercise_o2": 26.3,
+          "pct_anaerobic": 29.3,
+          "pct_epoc": 44.8
+        },
+        "female": {
+          "pct_exercise_o2": 14.0,
+          "pct_anaerobic": 32.3,
+          "pct_epoc": 54.4
+        }
+      },
+      "regression": {
+        "slope": 0.246,
+        "intercept": 0.0455,
+        "r": 0.921,
+        "x_unit": "work as reported ('J')",
+        "y_unit": "kJ (total: exercise O2 + anaerobic + EPOC)"
+      },
+      "data_points": [
+        {
+          "sex": "male",
+          "load_kg": 72.5,
+          "reps": 11,
+          "work_reported": 91.8,
+          "total_cost_kj": 19.5
+        },
+        {
+          "sex": "male",
+          "load_kg": 90.6,
+          "reps": 11,
+          "work_reported": 143.3,
+          "total_cost_kj": 44.8
+        },
+        {
+          "sex": "male",
+          "load_kg": 63.4,
+          "reps": 12,
+          "work_reported": 110.5,
+          "total_cost_kj": 23.0
+        },
+        {
+          "sex": "male",
+          "load_kg": 40.8,
+          "reps": 34,
+          "work_reported": 120.8,
+          "total_cost_kj": 25.3
+        },
+        {
+          "sex": "male",
+          "load_kg": 22.7,
+          "reps": 22,
+          "work_reported": 61.6,
+          "total_cost_kj": 12.6
+        },
+        {
+          "sex": "male",
+          "load_kg": 40.8,
+          "reps": 10,
+          "work_reported": 49.9,
+          "total_cost_kj": 13.7
+        },
+        {
+          "sex": "female",
+          "load_kg": 18.2,
+          "reps": 10,
+          "work_reported": 13.4,
+          "total_cost_kj": 7.8
+        },
+        {
+          "sex": "female",
+          "load_kg": 31.7,
+          "reps": 10,
+          "work_reported": 27.6,
+          "total_cost_kj": 5.9
+        }
+      ],
+      "efficiency_pct": null,
+      "locator": "Scott, Luchini, Knausenberger, Steitz 2014: Tables 1-2 (raw), Table 3 (regression), Table 4 (components), Methods",
+      "quote": null,
+      "confidence": "high",
+      "notes": "Table 2 header labels female cost as '(J)' but magnitudes match kJ. Deadlift regression is from 3 points (men only). Paper author order in the PDF is Scott, Luchini, Knausenberger, Steitz."
+    },
+    {
+      "study_id": "knausenberger2014",
+      "exercise": "calf_raise (Smith machine)",
+      "subjects": [
+        {
+          "n": 22,
+          "sex": "male",
+          "age": 23.7,
+          "body_mass_kg": 83,
+          "height_cm": 180.5,
+          "training": ">=3 sessions/wk for >=3 months (ACSM maintenance phase)"
+        },
+        {
+          "n": 16,
+          "sex": "female",
+          "age": 21.8,
+          "body_mass_kg": 61.1,
+          "height_cm": 165,
+          "training": ">=3 sessions/wk for >=3 months (ACSM maintenance phase)"
+        }
+      ],
+      "protocol": {
+        "load_kg": "see data_points",
+        "pct_1rm": null,
+        "load_selection": "self-selected, RPE 'somewhat hard', racked before failure",
+        "reps": "see data_points",
+        "sets": 1,
+        "rest_s": null,
+        "tempo_s": {
+          "concentric": 1.5,
+          "eccentric": 1.5
+        }
+      },
+      "work": {
+        "value": null,
+        "unit": "reported as J (see units_note)",
+        "method": "Vertical bar travel (cable-driven flywheel encoder on the Smith machine; CV 0.25%/rep) x weight lifted; inertia not measured; each data point = mean of 2 days",
+        "includes_body_segments": false,
+        "concentric_only": null,
+        "units_note": "UNIT CHECK (interpretation, not stated by authors): dividing reported 'work' by (load_kg x reps) gives plausible bar travel per rep (e.g. deadlift 302.3/(22.7x22) = 0.61 m; shrug 91.8/(72.5x11) = 0.12 m; calf raise 95.6/(81.6x10) = 0.12 m). If the values were true joules (load x 9.81 x distance) those distances would be ~10x too small (6 cm deadlift). So the reported 'J' behaves like kg x m (no g). To apply these slopes to work computed as kg x 9.81 x m x reps, divide that work by 9.81 first. Hornsby 2018 likewise reports load x displacement in kg-based units."
+      },
+      "energy": {
+        "total_kj": null,
+        "exercise_o2_kj": null,
+        "anaerobic_kj": null,
+        "epoc_kj": null,
+        "epoc_minutes": null,
+        "epoc_rule": "Recovery measured seated until 2 consecutive 15-s VO2 readings <= 5.0 mL/kg/min; resting VO2 subtracted",
+        "o2_to_energy": "Exercise O2: 1 L = 21.1 kJ (glucose). EPOC: 1 L = 19.6 kJ (fat/lactate)",
+        "lactate_conversion": "(peak recovery lactate - resting lactate) x [mL O2 per kg per mmol constant] x body mass x 21.1 kJ/L. The numeric constant is corrupted in the PDF text layer; Benito 2016 describes Scott's method (Scott 2006) as 3 mL O2/kg per mmol/L.",
+        "lactate_sampling": "Finger-prick, pre-lift and 2 min post-set (Lactate Pro)"
+      },
+      "component_percentages": {
+        "male": {
+          "pct_exercise_o2": 20.4,
+          "pct_anaerobic": 28.6,
+          "pct_epoc": 51.0
+        },
+        "female": {
+          "pct_exercise_o2": 21.5,
+          "pct_anaerobic": 24.8,
+          "pct_epoc": 53.5
+        }
+      },
+      "regression": {
+        "slope": 0.296,
+        "intercept": 1.945,
+        "r": 0.941,
+        "x_unit": "work as reported ('J')",
+        "y_unit": "kJ (total: exercise O2 + anaerobic + EPOC)"
+      },
+      "data_points": [
+        {
+          "sex": "male",
+          "load_kg": 81.6,
+          "reps": 10,
+          "work_reported": 95.6,
+          "total_cost_kj": 26.2
+        },
+        {
+          "sex": "male",
+          "load_kg": 54.4,
+          "reps": 20,
+          "work_reported": 107.9,
+          "total_cost_kj": 40.3
+        },
+        {
+          "sex": "male",
+          "load_kg": 63.6,
+          "reps": 10,
+          "work_reported": 67.5,
+          "total_cost_kj": 21.1
+        },
+        {
+          "sex": "male",
+          "load_kg": 63.6,
+          "reps": 13,
+          "work_reported": 96.3,
+          "total_cost_kj": 33.6
+        },
+        {
+          "sex": "male",
+          "load_kg": 59.0,
+          "reps": 10,
+          "work_reported": 68.9,
+          "total_cost_kj": 20.3
+        },
+        {
+          "sex": "male",
+          "load_kg": 49.9,
+          "reps": 20,
+          "work_reported": 106.9,
+          "total_cost_kj": 34.7
+        },
+        {
+          "sex": "male",
+          "load_kg": 49.9,
+          "reps": 20,
+          "work_reported": 144.4,
+          "total_cost_kj": 40.7
+        },
+        {
+          "sex": "female",
+          "load_kg": 31.7,
+          "reps": 18,
+          "work_reported": 57.0,
+          "total_cost_kj": 22.3
+        },
+        {
+          "sex": "female",
+          "load_kg": 31.7,
+          "reps": 15,
+          "work_reported": 50.4,
+          "total_cost_kj": 15.9
+        },
+        {
+          "sex": "female",
+          "load_kg": 31.7,
+          "reps": 10,
+          "work_reported": 38.7,
+          "total_cost_kj": 11.4
+        }
+      ],
+      "efficiency_pct": null,
+      "locator": "Scott, Luchini, Knausenberger, Steitz 2014: Tables 1-2 (raw), Table 3 (regression), Table 4 (components), Methods",
+      "quote": null,
+      "confidence": "high",
+      "notes": "Table 2 header labels female cost as '(J)' but magnitudes match kJ. Deadlift regression is from 3 points (men only). Paper author order in the PDF is Scott, Luchini, Knausenberger, Steitz."
+    },
+    {
+      "study_id": "scott2011",
+      "exercise": "bench press (Smith machine), 1 set to failure",
+      "subjects": {
+        "n": null,
+        "sex": null,
+        "age": null,
+        "body_mass_kg": null,
+        "height_cm": null,
+        "training": null
+      },
+      "protocol": {
+        "load_kg": null,
+        "pct_1rm": 37,
+        "reps": 36,
+        "sets": 1,
+        "rest_s": null,
+        "tempo_s": null
+      },
+      "work": {
+        "value": 514,
+        "unit": "reported as J (see scott_reis2016 units note in knausenberger entries)",
+        "method": "Bar vertical displacement x weight (Scott lab Smith-machine method)",
+        "includes_body_segments": false,
+        "concentric_only": null
+      },
+      "energy": {
+        "total_kcal": 15,
+        "total_kj": null,
+        "exercise_o2_kj": null,
+        "anaerobic_kj": null,
+        "epoc_kj": null,
+        "epoc_minutes": null,
+        "lactate_conversion": "blood lactate method (Scott lab)"
+      },
+      "reported_ratio": {
+        "work_per_kcal": 34,
+        "unit": "'J' per kcal"
+      },
+      "regression": {
+        "slope": null,
+        "intercept": null,
+        "r": 0.87,
+        "r_note": "r between overall work and energy for all lifts (PubMed abstract), not a fitted line with published coefficients",
+        "x_unit": null,
+        "y_unit": null
+      },
+      "efficiency_pct": null,
+      "locator": "Scott & Reis 2016 CEJSSM, Table 1 (source: Scott et al. 2011)",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "study_id": "scott2011",
+      "exercise": "bench press (Smith machine), 1 set to failure",
+      "subjects": {
+        "n": null,
+        "sex": null,
+        "age": null,
+        "body_mass_kg": null,
+        "height_cm": null,
+        "training": null
+      },
+      "protocol": {
+        "load_kg": null,
+        "pct_1rm": 46,
+        "reps": 25,
+        "sets": 1,
+        "rest_s": null,
+        "tempo_s": null
+      },
+      "work": {
+        "value": 439,
+        "unit": "reported as J (see scott_reis2016 units note in knausenberger entries)",
+        "method": "Bar vertical displacement x weight (Scott lab Smith-machine method)",
+        "includes_body_segments": false,
+        "concentric_only": null
+      },
+      "energy": {
+        "total_kcal": 14,
+        "total_kj": null,
+        "exercise_o2_kj": null,
+        "anaerobic_kj": null,
+        "epoc_kj": null,
+        "epoc_minutes": null,
+        "lactate_conversion": "blood lactate method (Scott lab)"
+      },
+      "reported_ratio": {
+        "work_per_kcal": 31,
+        "unit": "'J' per kcal"
+      },
+      "regression": {
+        "slope": null,
+        "intercept": null,
+        "r": 0.87,
+        "r_note": "r between overall work and energy for all lifts (PubMed abstract), not a fitted line with published coefficients",
+        "x_unit": null,
+        "y_unit": null
+      },
+      "efficiency_pct": null,
+      "locator": "Scott & Reis 2016 CEJSSM, Table 1 (source: Scott et al. 2011)",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "study_id": "scott2011",
+      "exercise": "bench press (Smith machine), 1 set to failure",
+      "subjects": {
+        "n": null,
+        "sex": null,
+        "age": null,
+        "body_mass_kg": null,
+        "height_cm": null,
+        "training": null
+      },
+      "protocol": {
+        "load_kg": null,
+        "pct_1rm": 56,
+        "reps": 20,
+        "sets": 1,
+        "rest_s": null,
+        "tempo_s": null
+      },
+      "work": {
+        "value": 426,
+        "unit": "reported as J (see scott_reis2016 units note in knausenberger entries)",
+        "method": "Bar vertical displacement x weight (Scott lab Smith-machine method)",
+        "includes_body_segments": false,
+        "concentric_only": null
+      },
+      "energy": {
+        "total_kcal": 14,
+        "total_kj": null,
+        "exercise_o2_kj": null,
+        "anaerobic_kj": null,
+        "epoc_kj": null,
+        "epoc_minutes": null,
+        "lactate_conversion": "blood lactate method (Scott lab)"
+      },
+      "reported_ratio": {
+        "work_per_kcal": 30,
+        "unit": "'J' per kcal"
+      },
+      "regression": {
+        "slope": null,
+        "intercept": null,
+        "r": 0.87,
+        "r_note": "r between overall work and energy for all lifts (PubMed abstract), not a fitted line with published coefficients",
+        "x_unit": null,
+        "y_unit": null
+      },
+      "efficiency_pct": null,
+      "locator": "Scott & Reis 2016 CEJSSM, Table 1 (source: Scott et al. 2011)",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "study_id": "scott2011",
+      "exercise": "bench press (Smith machine), 1 set to failure",
+      "subjects": {
+        "n": null,
+        "sex": null,
+        "age": null,
+        "body_mass_kg": null,
+        "height_cm": null,
+        "training": null
+      },
+      "protocol": {
+        "load_kg": null,
+        "pct_1rm": 70,
+        "reps": 12,
+        "sets": 1,
+        "rest_s": null,
+        "tempo_s": null
+      },
+      "work": {
+        "value": 342,
+        "unit": "reported as J (see scott_reis2016 units note in knausenberger entries)",
+        "method": "Bar vertical displacement x weight (Scott lab Smith-machine method)",
+        "includes_body_segments": false,
+        "concentric_only": null
+      },
+      "energy": {
+        "total_kcal": 12,
+        "total_kj": null,
+        "exercise_o2_kj": null,
+        "anaerobic_kj": null,
+        "epoc_kj": null,
+        "epoc_minutes": null,
+        "lactate_conversion": "blood lactate method (Scott lab)"
+      },
+      "reported_ratio": {
+        "work_per_kcal": 28,
+        "unit": "'J' per kcal"
+      },
+      "regression": {
+        "slope": null,
+        "intercept": null,
+        "r": 0.87,
+        "r_note": "r between overall work and energy for all lifts (PubMed abstract), not a fitted line with published coefficients",
+        "x_unit": null,
+        "y_unit": null
+      },
+      "efficiency_pct": null,
+      "locator": "Scott & Reis 2016 CEJSSM, Table 1 (source: Scott et al. 2011)",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "study_id": "scott2011",
+      "exercise": "bench press (Smith machine), 1 set to failure",
+      "subjects": {
+        "n": null,
+        "sex": null,
+        "age": null,
+        "body_mass_kg": null,
+        "height_cm": null,
+        "training": null
+      },
+      "protocol": {
+        "load_kg": null,
+        "pct_1rm": 80,
+        "reps": 8,
+        "sets": 1,
+        "rest_s": null,
+        "tempo_s": null
+      },
+      "work": {
+        "value": 274,
+        "unit": "reported as J (see scott_reis2016 units note in knausenberger entries)",
+        "method": "Bar vertical displacement x weight (Scott lab Smith-machine method)",
+        "includes_body_segments": false,
+        "concentric_only": null
+      },
+      "energy": {
+        "total_kcal": 11,
+        "total_kj": null,
+        "exercise_o2_kj": null,
+        "anaerobic_kj": null,
+        "epoc_kj": null,
+        "epoc_minutes": null,
+        "lactate_conversion": "blood lactate method (Scott lab)"
+      },
+      "reported_ratio": {
+        "work_per_kcal": 25,
+        "unit": "'J' per kcal"
+      },
+      "regression": {
+        "slope": null,
+        "intercept": null,
+        "r": 0.87,
+        "r_note": "r between overall work and energy for all lifts (PubMed abstract), not a fitted line with published coefficients",
+        "x_unit": null,
+        "y_unit": null
+      },
+      "efficiency_pct": null,
+      "locator": "Scott & Reis 2016 CEJSSM, Table 1 (source: Scott et al. 2011)",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "study_id": "scott2011",
+      "exercise": "bench press (Smith machine), 1 set to failure",
+      "subjects": {
+        "n": null,
+        "sex": null,
+        "age": null,
+        "body_mass_kg": null,
+        "height_cm": null,
+        "training": null
+      },
+      "protocol": {
+        "load_kg": null,
+        "pct_1rm": 90,
+        "reps": 4,
+        "sets": 1,
+        "rest_s": null,
+        "tempo_s": null
+      },
+      "work": {
+        "value": 167,
+        "unit": "reported as J (see scott_reis2016 units note in knausenberger entries)",
+        "method": "Bar vertical displacement x weight (Scott lab Smith-machine method)",
+        "includes_body_segments": false,
+        "concentric_only": null
+      },
+      "energy": {
+        "total_kcal": 8,
+        "total_kj": null,
+        "exercise_o2_kj": null,
+        "anaerobic_kj": null,
+        "epoc_kj": null,
+        "epoc_minutes": null,
+        "lactate_conversion": "blood lactate method (Scott lab)"
+      },
+      "reported_ratio": {
+        "work_per_kcal": 21,
+        "unit": "'J' per kcal"
+      },
+      "regression": {
+        "slope": null,
+        "intercept": null,
+        "r": 0.87,
+        "r_note": "r between overall work and energy for all lifts (PubMed abstract), not a fitted line with published coefficients",
+        "x_unit": null,
+        "y_unit": null
+      },
+      "efficiency_pct": null,
+      "locator": "Scott & Reis 2016 CEJSSM, Table 1 (source: Scott et al. 2011)",
+      "quote": null,
+      "confidence": "high"
+    },
+    {
+      "study_id": "scott2009",
+      "exercise": "bench press (Smith machine), 50% 1RM",
+      "subjects": {
+        "n": 8,
+        "sex": null,
+        "age": 28.4,
+        "body_mass_kg": 68.4,
+        "height_cm": 170.4,
+        "training": null
+      },
+      "protocol": {
+        "load_kg": null,
+        "pct_1rm": 50,
+        "reps": [
+          7,
+          14,
+          21
+        ],
+        "sets": 1,
+        "rest_s": null,
+        "tempo_s": null,
+        "repeats": "each condition performed 3 times (9 sessions)"
+      },
+      "work": {
+        "value": null,
+        "unit": "reported as J",
+        "method": "Electronically recorded bar travel x weight on Smith machine; inertia not accounted for",
+        "includes_body_segments": false,
+        "concentric_only": null
+      },
+      "energy": {
+        "total_kj": null,
+        "exercise_o2_kj": null,
+        "anaerobic_kj": null,
+        "epoc_kj": null,
+        "epoc_minutes": null,
+        "lactate_conversion": "blood lactate method (Scott lab)",
+        "total_definition": "anaerobic exercise EE + aerobic exercise EE + EPOC"
+      },
+      "regression": {
+        "slope": 0.0937,
+        "intercept": 3.168,
+        "r": 0.97,
+        "x_unit": "work as reported ('J')",
+        "y_unit": "kJ total"
+      },
+      "reliability": "Total-EE coefficient of variation across triplicates reported (21.0% at 7 reps; other values truncated in abstract)",
+      "efficiency_pct": null,
+      "locator": "PubMed 19197214 abstract; regression line from the paper's figure caption as indexed",
+      "quote": null,
+      "confidence": "high",
+      "notes": "Scott et al. 2014 state this flat-bench line is virtually identical to their incline press line (slope 0.0911)."
+    },
+    {
+      "study_id": "scott2012b",
+      "exercise": "bench press, 70% 1RM, 3 x 5",
+      "subjects": {
+        "n": null,
+        "sex": null,
+        "age": null,
+        "body_mass_kg": null,
+        "height_cm": null,
+        "training": null
+      },
+      "protocol": {
+        "load_kg": null,
+        "pct_1rm": 70,
+        "reps": 5,
+        "sets": 3,
+        "rest_s": null,
+        "tempo_s": "3 s/rep (moderate) vs 5 s/rep (slow)"
+      },
+      "work": {
+        "value": null,
+        "unit": "reported as J",
+        "method": "Scott lab method",
+        "includes_body_segments": false,
+        "concentric_only": null
+      },
+      "energy": {
+        "total_kj": null,
+        "difference": "slow condition cost ~6 kcal more for similar work"
+      },
+      "reported_ratio": {
+        "work_per_kcal": {
+          "moderate_3s": 33,
+          "slow_5s": 23
+        },
+        "unit": "'J' per kcal"
+      },
+      "regression": {
+        "slope": null,
+        "intercept": null,
+        "r": null,
+        "x_unit": null,
+        "y_unit": null
+      },
+      "efficiency_pct": null,
+      "locator": "Scott & Reis 2016 CEJSSM, 'Lifting speed' section (secondary report of Scott 2012, APNM 37:252-256)",
+      "quote": null,
+      "confidence": "medium"
+    }
+  ],
+  "displacement": [
+    {
+      "pattern": "squat_back",
+      "what_moves": "barbell",
+      "vertical_m": 0.71,
+      "fraction_of_height": null,
+      "subjects": "8 trained weightlifters (5 M: 178 cm, 103.1 kg; 3 F: 166.2 cm, 64.8 kg; pooled 174 cm, 88.4 kg)",
+      "method": "V-scope ultrasound barbell tracking, concentric displacement, mean of 3 trials per lifter",
+      "source": "hornsby2018",
+      "locator": "Table 4 row 'Back squat'",
+      "confidence": "high",
+      "notes": "Weightlifters; ranges may differ from gym-goers. Pull-from-floor is a weightlifting pull, not a deadlift."
+    },
+    {
+      "pattern": "squat_front",
+      "what_moves": "barbell",
+      "vertical_m": 0.68,
+      "fraction_of_height": null,
+      "subjects": "8 trained weightlifters (5 M: 178 cm, 103.1 kg; 3 F: 166.2 cm, 64.8 kg; pooled 174 cm, 88.4 kg)",
+      "method": "V-scope ultrasound barbell tracking, concentric displacement, mean of 3 trials per lifter",
+      "source": "hornsby2018",
+      "locator": "Table 4 row 'Front squat'",
+      "confidence": "high",
+      "notes": "Weightlifters; ranges may differ from gym-goers. Pull-from-floor is a weightlifting pull, not a deadlift."
+    },
+    {
+      "pattern": "overhead_press",
+      "what_moves": "barbell",
+      "vertical_m": 0.56,
+      "fraction_of_height": null,
+      "subjects": "8 trained weightlifters (5 M: 178 cm, 103.1 kg; 3 F: 166.2 cm, 64.8 kg; pooled 174 cm, 88.4 kg)",
+      "method": "V-scope ultrasound barbell tracking, concentric displacement, mean of 3 trials per lifter",
+      "source": "hornsby2018",
+      "locator": "Table 4 row 'Press'",
+      "confidence": "high",
+      "notes": "Weightlifters; ranges may differ from gym-goers. Pull-from-floor is a weightlifting pull, not a deadlift."
+    },
+    {
+      "pattern": "overhead_press_behind_neck",
+      "what_moves": "barbell",
+      "vertical_m": 0.53,
+      "fraction_of_height": null,
+      "subjects": "8 trained weightlifters (5 M: 178 cm, 103.1 kg; 3 F: 166.2 cm, 64.8 kg; pooled 174 cm, 88.4 kg)",
+      "method": "V-scope ultrasound barbell tracking, concentric displacement, mean of 3 trials per lifter",
+      "source": "hornsby2018",
+      "locator": "Table 4 row 'Behind Neck Press'",
+      "confidence": "high",
+      "notes": "Weightlifters; ranges may differ from gym-goers. Pull-from-floor is a weightlifting pull, not a deadlift."
+    },
+    {
+      "pattern": "stiff_leg_deadlift_clean_grip",
+      "what_moves": "barbell",
+      "vertical_m": 0.55,
+      "fraction_of_height": null,
+      "subjects": "8 trained weightlifters (5 M: 178 cm, 103.1 kg; 3 F: 166.2 cm, 64.8 kg; pooled 174 cm, 88.4 kg)",
+      "method": "V-scope ultrasound barbell tracking, concentric displacement, mean of 3 trials per lifter",
+      "source": "hornsby2018",
+      "locator": "Table 4 row 'Clean grip SLDL'",
+      "confidence": "high",
+      "notes": "Weightlifters; ranges may differ from gym-goers. Pull-from-floor is a weightlifting pull, not a deadlift."
+    },
+    {
+      "pattern": "stiff_leg_deadlift_snatch_grip",
+      "what_moves": "barbell",
+      "vertical_m": 0.58,
+      "fraction_of_height": null,
+      "subjects": "8 trained weightlifters (5 M: 178 cm, 103.1 kg; 3 F: 166.2 cm, 64.8 kg; pooled 174 cm, 88.4 kg)",
+      "method": "V-scope ultrasound barbell tracking, concentric displacement, mean of 3 trials per lifter",
+      "source": "hornsby2018",
+      "locator": "Table 4 row 'Snatch grip SLDL'",
+      "confidence": "high",
+      "notes": "Weightlifters; ranges may differ from gym-goers. Pull-from-floor is a weightlifting pull, not a deadlift."
+    },
+    {
+      "pattern": "push_press",
+      "what_moves": "barbell",
+      "vertical_m": 0.76,
+      "fraction_of_height": null,
+      "subjects": "8 trained weightlifters (5 M: 178 cm, 103.1 kg; 3 F: 166.2 cm, 64.8 kg; pooled 174 cm, 88.4 kg)",
+      "method": "V-scope ultrasound barbell tracking, concentric displacement, mean of 3 trials per lifter",
+      "source": "hornsby2018",
+      "locator": "Table 4 row 'Push press'",
+      "confidence": "high",
+      "notes": "Weightlifters; ranges may differ from gym-goers. Pull-from-floor is a weightlifting pull, not a deadlift."
+    },
+    {
+      "pattern": "clean_grip_pull_from_floor",
+      "what_moves": "barbell",
+      "vertical_m": 1.01,
+      "fraction_of_height": null,
+      "subjects": "8 trained weightlifters (5 M: 178 cm, 103.1 kg; 3 F: 166.2 cm, 64.8 kg; pooled 174 cm, 88.4 kg)",
+      "method": "V-scope ultrasound barbell tracking, concentric displacement, mean of 3 trials per lifter",
+      "source": "hornsby2018",
+      "locator": "Table 4 row 'Clean grip pull from floor'",
+      "confidence": "high",
+      "notes": "Weightlifters; ranges may differ from gym-goers. Pull-from-floor is a weightlifting pull, not a deadlift."
+    },
+    {
+      "pattern": "mid_thigh_pull_clean_grip",
+      "what_moves": "barbell",
+      "vertical_m": 0.39,
+      "fraction_of_height": null,
+      "subjects": "8 trained weightlifters (5 M: 178 cm, 103.1 kg; 3 F: 166.2 cm, 64.8 kg; pooled 174 cm, 88.4 kg)",
+      "method": "V-scope ultrasound barbell tracking, concentric displacement, mean of 3 trials per lifter",
+      "source": "hornsby2018",
+      "locator": "Table 4 row 'Mid-thigh pull - Clean grip'",
+      "confidence": "high",
+      "notes": "Weightlifters; ranges may differ from gym-goers. Pull-from-floor is a weightlifting pull, not a deadlift."
+    },
+    {
+      "pattern": "squat_full_vs_quarter_example",
+      "what_moves": "barbell",
+      "vertical_m": {
+        "full": 0.55,
+        "quarter": 0.28
+      },
+      "fraction_of_height": null,
+      "subjects": null,
+      "method": "Illustrative worked example in paper",
+      "source": "hornsby2018",
+      "locator": "Table 7",
+      "confidence": "low",
+      "notes": "Illustration values, not measurements."
+    },
+    {
+      "pattern": "deadlift",
+      "what_moves": "Smith machine bar",
+      "vertical_m": null,
+      "fraction_of_height": null,
+      "subjects": "see knausenberger2014",
+      "method": "Derivable: per-rep travel = work_reported / (load_kg x reps), given the unit interpretation in energy_per_work",
+      "source": "knausenberger2014",
+      "locator": "Tables 1-2 raw data",
+      "confidence": "medium",
+      "notes": "Not computed here; raw points are in energy_per_work.data_points."
+    },
+    {
+      "pattern": "squat_smith",
+      "what_moves": "Smith machine bar",
+      "vertical_m": null,
+      "fraction_of_height": null,
+      "subjects": "see knausenberger2014",
+      "method": "Derivable: per-rep travel = work_reported / (load_kg x reps), given the unit interpretation in energy_per_work",
+      "source": "knausenberger2014",
+      "locator": "Tables 1-2 raw data",
+      "confidence": "medium",
+      "notes": "Not computed here; raw points are in energy_per_work.data_points."
+    },
+    {
+      "pattern": "incline_press_smith",
+      "what_moves": "Smith machine bar",
+      "vertical_m": null,
+      "fraction_of_height": null,
+      "subjects": "see knausenberger2014",
+      "method": "Derivable: per-rep travel = work_reported / (load_kg x reps), given the unit interpretation in energy_per_work",
+      "source": "knausenberger2014",
+      "locator": "Tables 1-2 raw data",
+      "confidence": "medium",
+      "notes": "Not computed here; raw points are in energy_per_work.data_points."
+    },
+    {
+      "pattern": "shrug",
+      "what_moves": "Smith machine bar",
+      "vertical_m": null,
+      "fraction_of_height": null,
+      "subjects": "see knausenberger2014",
+      "method": "Derivable: per-rep travel = work_reported / (load_kg x reps), given the unit interpretation in energy_per_work",
+      "source": "knausenberger2014",
+      "locator": "Tables 1-2 raw data",
+      "confidence": "medium",
+      "notes": "Not computed here; raw points are in energy_per_work.data_points."
+    },
+    {
+      "pattern": "calf_raise",
+      "what_moves": "Smith machine bar",
+      "vertical_m": null,
+      "fraction_of_height": null,
+      "subjects": "see knausenberger2014",
+      "method": "Derivable: per-rep travel = work_reported / (load_kg x reps), given the unit interpretation in energy_per_work",
+      "source": "knausenberger2014",
+      "locator": "Tables 1-2 raw data",
+      "confidence": "medium",
+      "notes": "Not computed here; raw points are in energy_per_work.data_points."
+    },
+    {
+      "pattern": "bench_press",
+      "what_moves": null,
+      "vertical_m": null,
+      "fraction_of_height": null,
+      "subjects": null,
+      "method": null,
+      "source": null,
+      "locator": null,
+      "confidence": null,
+      "notes": "No measured displacement found in an allowed source during this pass."
+    },
+    {
+      "pattern": "romanian_deadlift",
+      "what_moves": null,
+      "vertical_m": null,
+      "fraction_of_height": null,
+      "subjects": null,
+      "method": null,
+      "source": null,
+      "locator": null,
+      "confidence": null,
+      "notes": "No measured displacement found in an allowed source during this pass."
+    },
+    {
+      "pattern": "barbell_row",
+      "what_moves": null,
+      "vertical_m": null,
+      "fraction_of_height": null,
+      "subjects": null,
+      "method": null,
+      "source": null,
+      "locator": null,
+      "confidence": null,
+      "notes": "No measured displacement found in an allowed source during this pass."
+    },
+    {
+      "pattern": "lat_pulldown",
+      "what_moves": null,
+      "vertical_m": null,
+      "fraction_of_height": null,
+      "subjects": null,
+      "method": null,
+      "source": null,
+      "locator": null,
+      "confidence": null,
+      "notes": "No measured displacement found in an allowed source during this pass."
+    },
+    {
+      "pattern": "pull_up",
+      "what_moves": null,
+      "vertical_m": null,
+      "fraction_of_height": null,
+      "subjects": null,
+      "method": null,
+      "source": null,
+      "locator": null,
+      "confidence": null,
+      "notes": "No measured displacement found in an allowed source during this pass."
+    },
+    {
+      "pattern": "biceps_curl",
+      "what_moves": null,
+      "vertical_m": null,
+      "fraction_of_height": null,
+      "subjects": null,
+      "method": null,
+      "source": null,
+      "locator": null,
+      "confidence": null,
+      "notes": "No measured displacement found in an allowed source during this pass."
+    },
+    {
+      "pattern": "triceps_extension",
+      "what_moves": null,
+      "vertical_m": null,
+      "fraction_of_height": null,
+      "subjects": null,
+      "method": null,
+      "source": null,
+      "locator": null,
+      "confidence": null,
+      "notes": "No measured displacement found in an allowed source during this pass."
+    },
+    {
+      "pattern": "lateral_raise",
+      "what_moves": null,
+      "vertical_m": null,
+      "fraction_of_height": null,
+      "subjects": null,
+      "method": null,
+      "source": null,
+      "locator": null,
+      "confidence": null,
+      "notes": "No measured displacement found in an allowed source during this pass."
+    },
+    {
+      "pattern": "hip_thrust",
+      "what_moves": null,
+      "vertical_m": null,
+      "fraction_of_height": null,
+      "subjects": null,
+      "method": null,
+      "source": null,
+      "locator": null,
+      "confidence": null,
+      "notes": "No measured displacement found in an allowed source during this pass."
+    },
+    {
+      "pattern": "lunge",
+      "what_moves": null,
+      "vertical_m": null,
+      "fraction_of_height": null,
+      "subjects": null,
+      "method": null,
+      "source": null,
+      "locator": null,
+      "confidence": null,
+      "notes": "No measured displacement found in an allowed source during this pass."
+    },
+    {
+      "pattern": "push_up",
+      "what_moves": null,
+      "vertical_m": null,
+      "fraction_of_height": null,
+      "subjects": null,
+      "method": null,
+      "source": null,
+      "locator": null,
+      "confidence": null,
+      "notes": "No measured displacement found in an allowed source during this pass."
+    },
+    {
+      "pattern": "dip",
+      "what_moves": null,
+      "vertical_m": null,
+      "fraction_of_height": null,
+      "subjects": null,
+      "method": null,
+      "source": null,
+      "locator": null,
+      "confidence": null,
+      "notes": "No measured displacement found in an allowed source during this pass."
+    }
+  ],
+  "machines": [
+    {
+      "topic": "Smith machine work measurement",
+      "finding": "Scott lab attached one of the bar's cables to a small flywheel with an electronic processor; over 106.6 cm of bar travel the CV was 0.25% per rep and 0.75% between sets. Work = vertical bar travel x weight; inertia not measured.",
+      "values": {
+        "calibration_distance_cm": 106.6,
+        "cv_per_rep_pct": 0.25,
+        "cv_between_sets_pct": 0.75
+      },
+      "source": "knausenberger2014",
+      "confidence": "high"
+    },
+    {
+      "topic": "body mass in squat volume",
+      "finding": "McBride 2009 compared a volume method of repetitions x (body mass - shank mass + external load) against force-plate total work (force x displacement); total work was judged most valid.",
+      "values": {},
+      "source": "mcbride2009",
+      "confidence": "high"
+    },
+    {
+      "topic": "cable pulley ratio (stack travel vs handle travel)",
+      "finding": null,
+      "values": {},
+      "source": null,
+      "confidence": null,
+      "notes": "Not found."
+    },
+    {
+      "topic": "leg press sled angle",
+      "finding": null,
+      "values": {},
+      "source": null,
+      "confidence": null,
+      "notes": "Not found. Reis 2017 used a 45-degree leg press but did not report work."
+    }
+  ],
+  "segments": [
+    {
+      "segment": "hand",
+      "mass_fraction": 0.006,
+      "length_fraction_of_height": null,
+      "source": "winter_ch4",
+      "locator": "Table 4.1 'Segment Weight/Total Body Weight' (Dempster via Miller & Nelson / Plagenhoef)"
+    },
+    {
+      "segment": "forearm",
+      "mass_fraction": 0.016,
+      "length_fraction_of_height": null,
+      "source": "winter_ch4",
+      "locator": "Table 4.1 'Segment Weight/Total Body Weight' (Dempster via Miller & Nelson / Plagenhoef)"
+    },
+    {
+      "segment": "upper_arm",
+      "mass_fraction": 0.028,
+      "length_fraction_of_height": null,
+      "source": "winter_ch4",
+      "locator": "Table 4.1 'Segment Weight/Total Body Weight' (Dempster via Miller & Nelson / Plagenhoef)"
+    },
+    {
+      "segment": "forearm_and_hand",
+      "mass_fraction": 0.022,
+      "length_fraction_of_height": null,
+      "source": "winter_ch4",
+      "locator": "Table 4.1 'Segment Weight/Total Body Weight' (Dempster via Miller & Nelson / Plagenhoef)"
+    },
+    {
+      "segment": "total_arm",
+      "mass_fraction": 0.05,
+      "length_fraction_of_height": null,
+      "source": "winter_ch4",
+      "locator": "Table 4.1 'Segment Weight/Total Body Weight' (Dempster via Miller & Nelson / Plagenhoef)"
+    },
+    {
+      "segment": "foot",
+      "mass_fraction": 0.0145,
+      "length_fraction_of_height": {
+        "male": 0.152,
+        "female": 0.151,
+        "source": "healthcare2022",
+        "locator": "Table 4",
+        "confidence": "medium"
+      },
+      "source": "winter_ch4",
+      "locator": "Table 4.1 'Segment Weight/Total Body Weight' (Dempster via Miller & Nelson / Plagenhoef)"
+    },
+    {
+      "segment": "leg_shank",
+      "mass_fraction": 0.0465,
+      "length_fraction_of_height": null,
+      "source": "winter_ch4",
+      "locator": "Table 4.1 'Segment Weight/Total Body Weight' (Dempster via Miller & Nelson / Plagenhoef)"
+    },
+    {
+      "segment": "thigh",
+      "mass_fraction": 0.1,
+      "length_fraction_of_height": {
+        "male": 0.245,
+        "female": 0.242,
+        "source": "healthcare2022",
+        "locator": "Table 4 (based on Drillis & Contini via Plagenhoef)",
+        "confidence": "medium"
+      },
+      "source": "winter_ch4",
+      "locator": "Table 4.1 'Segment Weight/Total Body Weight' (Dempster via Miller & Nelson / Plagenhoef)"
+    },
+    {
+      "segment": "foot_and_leg",
+      "mass_fraction": 0.061,
+      "length_fraction_of_height": null,
+      "source": "winter_ch4",
+      "locator": "Table 4.1 'Segment Weight/Total Body Weight' (Dempster via Miller & Nelson / Plagenhoef)"
+    },
+    {
+      "segment": "total_leg",
+      "mass_fraction": 0.161,
+      "length_fraction_of_height": null,
+      "source": "winter_ch4",
+      "locator": "Table 4.1 'Segment Weight/Total Body Weight' (Dempster via Miller & Nelson / Plagenhoef)"
+    },
+    {
+      "segment": "head_and_neck",
+      "mass_fraction": 0.081,
+      "length_fraction_of_height": null,
+      "source": "winter_ch4",
+      "locator": "Table 4.1 'Segment Weight/Total Body Weight' (Dempster via Miller & Nelson / Plagenhoef)"
+    },
+    {
+      "segment": "thorax",
+      "mass_fraction": 0.216,
+      "length_fraction_of_height": null,
+      "source": "winter_ch4",
+      "locator": "Table 4.1 'Segment Weight/Total Body Weight' (Dempster via Miller & Nelson / Plagenhoef)"
+    },
+    {
+      "segment": "abdomen",
+      "mass_fraction": 0.139,
+      "length_fraction_of_height": null,
+      "source": "winter_ch4",
+      "locator": "Table 4.1 'Segment Weight/Total Body Weight' (Dempster via Miller & Nelson / Plagenhoef)"
+    },
+    {
+      "segment": "pelvis",
+      "mass_fraction": 0.142,
+      "length_fraction_of_height": null,
+      "source": "winter_ch4",
+      "locator": "Table 4.1 'Segment Weight/Total Body Weight' (Dempster via Miller & Nelson / Plagenhoef)"
+    },
+    {
+      "segment": "trunk",
+      "mass_fraction": 0.497,
+      "length_fraction_of_height": null,
+      "source": "winter_ch4",
+      "locator": "Table 4.1 'Segment Weight/Total Body Weight' (Dempster via Miller & Nelson / Plagenhoef)"
+    },
+    {
+      "segment": "head_arms_trunk_HAT",
+      "mass_fraction": 0.678,
+      "length_fraction_of_height": null,
+      "source": "winter_ch4",
+      "locator": "Table 4.1 'Segment Weight/Total Body Weight' (Dempster via Miller & Nelson / Plagenhoef)"
+    }
+  ],
+  "bodyweight_fractions": [
+    {
+      "exercise": "push_up_regular",
+      "fraction": 0.64,
+      "measure": "peak vertical GRF / body mass",
+      "source": "ebben2011 (values as tabulated by contreras2012)",
+      "locator": "Ebben 2011 J Strength Cond Res 25(10):2891-2894",
+      "confidence": "high"
+    },
+    {
+      "exercise": "push_up_knees",
+      "fraction": 0.49,
+      "measure": "peak vertical GRF / body mass",
+      "source": "ebben2011 (values as tabulated by contreras2012)",
+      "locator": "Ebben 2011 J Strength Cond Res 25(10):2891-2894",
+      "confidence": "high"
+    },
+    {
+      "exercise": "push_up_hands_on_30.5cm_box",
+      "fraction": 0.55,
+      "measure": "peak vertical GRF / body mass",
+      "source": "ebben2011 (values as tabulated by contreras2012)",
+      "locator": "Ebben 2011 J Strength Cond Res 25(10):2891-2894",
+      "confidence": "high"
+    },
+    {
+      "exercise": "push_up_hands_on_61cm_box",
+      "fraction": 0.41,
+      "measure": "peak vertical GRF / body mass",
+      "source": "ebben2011 (values as tabulated by contreras2012)",
+      "locator": "Ebben 2011 J Strength Cond Res 25(10):2891-2894",
+      "confidence": "high"
+    },
+    {
+      "exercise": "push_up_feet_on_30.5cm_box",
+      "fraction": 0.7,
+      "measure": "peak vertical GRF / body mass",
+      "source": "ebben2011 (values as tabulated by contreras2012)",
+      "locator": "Ebben 2011 J Strength Cond Res 25(10):2891-2894",
+      "confidence": "high"
+    },
+    {
+      "exercise": "push_up_feet_on_61cm_box",
+      "fraction": 0.74,
+      "measure": "peak vertical GRF / body mass",
+      "source": "ebben2011 (values as tabulated by contreras2012)",
+      "locator": "Ebben 2011 J Strength Cond Res 25(10):2891-2894",
+      "confidence": "high"
+    },
+    {
+      "exercise": "pull_up",
+      "fraction": null,
+      "measure": null,
+      "source": null,
+      "locator": null,
+      "confidence": null,
+      "notes": "No measured fraction found."
+    },
+    {
+      "exercise": "chin_up",
+      "fraction": null,
+      "measure": null,
+      "source": null,
+      "locator": null,
+      "confidence": null,
+      "notes": "No measured fraction found."
+    },
+    {
+      "exercise": "dip",
+      "fraction": null,
+      "measure": null,
+      "source": null,
+      "locator": null,
+      "confidence": null,
+      "notes": "No measured fraction found."
+    },
+    {
+      "exercise": "inverted_row",
+      "fraction": null,
+      "measure": null,
+      "source": null,
+      "locator": null,
+      "confidence": null,
+      "notes": "A TRX inverted-row study reports %BW by position (PMC10516423) but the values could not be read (access blocked)."
+    },
+    {
+      "exercise": "bodyweight_squat",
+      "fraction": null,
+      "measure": null,
+      "source": null,
+      "locator": null,
+      "confidence": null,
+      "notes": "No measured fraction found."
+    },
+    {
+      "exercise": "lunge",
+      "fraction": null,
+      "measure": null,
+      "source": null,
+      "locator": null,
+      "confidence": null,
+      "notes": "No measured fraction found."
+    },
+    {
+      "exercise": "step_up",
+      "fraction": null,
+      "measure": null,
+      "source": null,
+      "locator": null,
+      "confidence": null,
+      "notes": "No measured fraction found."
+    },
+    {
+      "exercise": "sit_up_crunch",
+      "fraction": null,
+      "measure": null,
+      "source": null,
+      "locator": null,
+      "confidence": null,
+      "notes": "No measured fraction found."
+    },
+    {
+      "exercise": "hanging_leg_raise",
+      "fraction": null,
+      "measure": null,
+      "source": null,
+      "locator": null,
+      "confidence": null,
+      "notes": "No measured fraction found."
+    },
+    {
+      "exercise": "plank",
+      "fraction": null,
+      "measure": null,
+      "source": null,
+      "locator": null,
+      "confidence": null,
+      "notes": "No measured fraction found."
+    }
+  ],
+  "rest_period_energy": [
+    {
+      "study_id": "farinatti2011",
+      "comparison": "1-min vs 3-min rest; 5 x 10 reps at 15RM load; horizontal leg press (LP) and chest fly (CF); 10 men; VO2 to 90 min post",
+      "finding": "Rest length did not change total VO2 or total energy for either exercise; 1-min rest raised VO2 only in the first minutes of recovery and increased fatigue across sets in LP. Muscle mass drove total cost.",
+      "values": {
+        "total_kcal": {
+          "LP_3min": 91.1,
+          "LP_1min": 88.7,
+          "CF_1min": 50.3,
+          "CF_3min": 54.1
+        },
+        "epoc_duration_min": {
+          "LP1": 40,
+          "LP3": 40,
+          "CF1": 40,
+          "CF3": 20
+        }
+      },
+      "source": "farinatti2011",
+      "confidence": "high"
+    },
+    {
+      "study_id": "scott2020",
+      "comparison": "8 sets x 2 reps (30 s rest) vs 2 sets x 8 reps (3.5 min rest), 65% 1RM, equal 48 s lifting and 210 s total rest; squat (7 M, 3 F) and bench (9 M)",
+      "finding": "More, shorter sets cost more: O2 during lifting + between-set periods higher for 8x2 (squat +41%, bench +27%) and EPOC higher (squat +27%, bench +29%).",
+      "values": {
+        "o2_lift_plus_rest_increase_pct": {
+          "squat": 41,
+          "bench": 27
+        },
+        "epoc_increase_pct": {
+          "squat": 27,
+          "bench": 29
+        }
+      },
+      "source": "scott2020",
+      "confidence": "high",
+      "notes": "Rest per interval and number of sets change together, so this isolates 'number of recovery periods' more than rest length."
+    },
+    {
+      "study_id": "ratamess2007",
+      "comparison": "Bench press 5 sets (75% 1RM x 10 or 85% x 5) with 30 s, 1, 2, 3 or 5 min rest; 8 trained men",
+      "finding": "With 30-s and 1-min rest, load and volume fell 15-55% across sets; with 2-min rest performance held for 2 sets, 3-min for ~3 sets. VO2 elevated through 30 min post. Energy by condition not read.",
+      "values": {
+        "volume_reduction_pct_short_rest": [
+          15,
+          55
+        ]
+      },
+      "source": "ratamess2007",
+      "confidence": "medium"
+    },
+    {
+      "study_id": "haltom1999_via_review",
+      "comparison": "Circuit weight training with 20 s vs 60 s rest",
+      "finding": "Total energy (exercise + recovery) was somewhat higher with 60 s rest (277.2 vs 242.2 kcal), while EPOC magnitude was higher with 20 s rest.",
+      "values": {
+        "total_kcal": {
+          "rest_20s": 242.2,
+          "rest_60s": 277.2
+        }
+      },
+      "source": "farinatti2013_review",
+      "confidence": "medium",
+      "notes": "Secondary report; the longer session includes more total time."
+    },
+    {
+      "study_id": "murphy1992_via_review",
+      "comparison": "Circuit at 50% 1RM with 30 s rest vs 3 successive sets at 80% 1RM with 2 min rest (6 exercises)",
+      "finding": "EPOC larger after the circuit (4.9 vs 2.7 L O2), similar duration (~20 min).",
+      "values": {
+        "epoc_L_O2": {
+          "circuit_30s": 4.9,
+          "sets_2min": 2.7
+        }
+      },
+      "source": "farinatti2013_review",
+      "confidence": "medium"
+    }
+  ],
+  "validation_sessions": [
+    {
+      "study_id": "knausenberger2014",
+      "subjects": {
+        "n": 1,
+        "sex": "male",
+        "body_mass_kg": null,
+        "group_mean_body_mass_kg": 83,
+        "height_cm": null,
+        "group_mean_height_cm": 180.5,
+        "age": null,
+        "group_mean_age": 23.7
+      },
+      "exercises": [
+        {
+          "name": "deadlift (Smith machine)",
+          "load_kg": 22.7,
+          "pct_1rm": null,
+          "one_rm_kg": null,
+          "sets": 1,
+          "reps": 22,
+          "rest_s": null,
+          "tempo_s": "1.5 up / 1.5 down",
+          "work_reported": 302.3
+        }
+      ],
+      "measured_kcal": null,
+      "measured_kj": 84.0,
+      "per": "set",
+      "includes_epoc": true,
+      "method": "Exercise O2 + lactate-based anaerobic + EPOC (see energy_per_work)",
+      "locator": "Table 1 (men) / Table 2 (women)",
+      "notes": "Individual body mass not published; only group means. Value is the mean of two days. 1 kcal = 4.184 kJ."
+    },
+    {
+      "study_id": "knausenberger2014",
+      "subjects": {
+        "n": 1,
+        "sex": "male",
+        "body_mass_kg": null,
+        "group_mean_body_mass_kg": 83,
+        "height_cm": null,
+        "group_mean_height_cm": 180.5,
+        "age": null,
+        "group_mean_age": 23.7
+      },
+      "exercises": [
+        {
+          "name": "deadlift (Smith machine)",
+          "load_kg": 22.7,
+          "pct_1rm": null,
+          "one_rm_kg": null,
+          "sets": 1,
+          "reps": 26,
+          "rest_s": null,
+          "tempo_s": "1.5 up / 1.5 down",
+          "work_reported": 342.4
+        }
+      ],
+      "measured_kcal": null,
+      "measured_kj": 95.2,
+      "per": "set",
+      "includes_epoc": true,
+      "method": "Exercise O2 + lactate-based anaerobic + EPOC (see energy_per_work)",
+      "locator": "Table 1 (men) / Table 2 (women)",
+      "notes": "Individual body mass not published; only group means. Value is the mean of two days. 1 kcal = 4.184 kJ."
+    },
+    {
+      "study_id": "knausenberger2014",
+      "subjects": {
+        "n": 1,
+        "sex": "male",
+        "body_mass_kg": null,
+        "group_mean_body_mass_kg": 83,
+        "height_cm": null,
+        "group_mean_height_cm": 180.5,
+        "age": null,
+        "group_mean_age": 23.7
+      },
+      "exercises": [
+        {
+          "name": "deadlift (Smith machine)",
+          "load_kg": 63.5,
+          "pct_1rm": null,
+          "one_rm_kg": null,
+          "sets": 1,
+          "reps": 30,
+          "rest_s": null,
+          "tempo_s": "1.5 up / 1.5 down",
+          "work_reported": 1138.6
+        }
+      ],
+      "measured_kcal": null,
+      "measured_kj": 172.7,
+      "per": "set",
+      "includes_epoc": true,
+      "method": "Exercise O2 + lactate-based anaerobic + EPOC (see energy_per_work)",
+      "locator": "Table 1 (men) / Table 2 (women)",
+      "notes": "Individual body mass not published; only group means. Value is the mean of two days. 1 kcal = 4.184 kJ."
+    },
+    {
+      "study_id": "knausenberger2014",
+      "subjects": {
+        "n": 1,
+        "sex": "male",
+        "body_mass_kg": null,
+        "group_mean_body_mass_kg": 83,
+        "height_cm": null,
+        "group_mean_height_cm": 180.5,
+        "age": null,
+        "group_mean_age": 23.7
+      },
+      "exercises": [
+        {
+          "name": "squat (Smith machine)",
+          "load_kg": 81.6,
+          "pct_1rm": null,
+          "one_rm_kg": null,
+          "sets": 1,
+          "reps": 10,
+          "rest_s": null,
+          "tempo_s": "1.5 up / 1.5 down",
+          "work_reported": 365.8
+        }
+      ],
+      "measured_kcal": null,
+      "measured_kj": 41.8,
+      "per": "set",
+      "includes_epoc": true,
+      "method": "Exercise O2 + lactate-based anaerobic + EPOC (see energy_per_work)",
+      "locator": "Table 1 (men) / Table 2 (women)",
+      "notes": "Individual body mass not published; only group means. Value is the mean of two days. 1 kcal = 4.184 kJ."
+    },
+    {
+      "study_id": "knausenberger2014",
+      "subjects": {
+        "n": 1,
+        "sex": "male",
+        "body_mass_kg": null,
+        "group_mean_body_mass_kg": 83,
+        "height_cm": null,
+        "group_mean_height_cm": 180.5,
+        "age": null,
+        "group_mean_age": 23.7
+      },
+      "exercises": [
+        {
+          "name": "squat (Smith machine)",
+          "load_kg": 104.3,
+          "pct_1rm": null,
+          "one_rm_kg": null,
+          "sets": 1,
+          "reps": 15,
+          "rest_s": null,
+          "tempo_s": "1.5 up / 1.5 down",
+          "work_reported": 826.2
+        }
+      ],
+      "measured_kcal": null,
+      "measured_kj": 95.1,
+      "per": "set",
+      "includes_epoc": true,
+      "method": "Exercise O2 + lactate-based anaerobic + EPOC (see energy_per_work)",
+      "locator": "Table 1 (men) / Table 2 (women)",
+      "notes": "Individual body mass not published; only group means. Value is the mean of two days. 1 kcal = 4.184 kJ."
+    },
+    {
+      "study_id": "knausenberger2014",
+      "subjects": {
+        "n": 1,
+        "sex": "male",
+        "body_mass_kg": null,
+        "group_mean_body_mass_kg": 83,
+        "height_cm": null,
+        "group_mean_height_cm": 180.5,
+        "age": null,
+        "group_mean_age": 23.7
+      },
+      "exercises": [
+        {
+          "name": "incline_press (Smith machine)",
+          "load_kg": 40.8,
+          "pct_1rm": null,
+          "one_rm_kg": null,
+          "sets": 1,
+          "reps": 10,
+          "rest_s": null,
+          "tempo_s": "1.5 up / 1.5 down",
+          "work_reported": 208.6
+        }
+      ],
+      "measured_kcal": null,
+      "measured_kj": 18.8,
+      "per": "set",
+      "includes_epoc": true,
+      "method": "Exercise O2 + lactate-based anaerobic + EPOC (see energy_per_work)",
+      "locator": "Table 1 (men) / Table 2 (women)",
+      "notes": "Individual body mass not published; only group means. Value is the mean of two days. 1 kcal = 4.184 kJ."
+    },
+    {
+      "study_id": "knausenberger2014",
+      "subjects": {
+        "n": 1,
+        "sex": "male",
+        "body_mass_kg": null,
+        "group_mean_body_mass_kg": 83,
+        "height_cm": null,
+        "group_mean_height_cm": 180.5,
+        "age": null,
+        "group_mean_age": 23.7
+      },
+      "exercises": [
+        {
+          "name": "incline_press (Smith machine)",
+          "load_kg": 54.5,
+          "pct_1rm": null,
+          "one_rm_kg": null,
+          "sets": 1,
+          "reps": 10,
+          "rest_s": null,
+          "tempo_s": "1.5 up / 1.5 down",
+          "work_reported": 209.7
+        }
+      ],
+      "measured_kcal": null,
+      "measured_kj": 22.5,
+      "per": "set",
+      "includes_epoc": true,
+      "method": "Exercise O2 + lactate-based anaerobic + EPOC (see energy_per_work)",
+      "locator": "Table 1 (men) / Table 2 (women)",
+      "notes": "Individual body mass not published; only group means. Value is the mean of two days. 1 kcal = 4.184 kJ."
+    },
+    {
+      "study_id": "knausenberger2014",
+      "subjects": {
+        "n": 1,
+        "sex": "male",
+        "body_mass_kg": null,
+        "group_mean_body_mass_kg": 83,
+        "height_cm": null,
+        "group_mean_height_cm": 180.5,
+        "age": null,
+        "group_mean_age": 23.7
+      },
+      "exercises": [
+        {
+          "name": "incline_press (Smith machine)",
+          "load_kg": 31.8,
+          "pct_1rm": null,
+          "one_rm_kg": null,
+          "sets": 1,
+          "reps": 14,
+          "rest_s": null,
+          "tempo_s": "1.5 up / 1.5 down",
+          "work_reported": 206.0
+        }
+      ],
+      "measured_kcal": null,
+      "measured_kj": 28.2,
+      "per": "set",
+      "includes_epoc": true,
+      "method": "Exercise O2 + lactate-based anaerobic + EPOC (see energy_per_work)",
+      "locator": "Table 1 (men) / Table 2 (women)",
+      "notes": "Individual body mass not published; only group means. Value is the mean of two days. 1 kcal = 4.184 kJ."
+    },
+    {
+      "study_id": "knausenberger2014",
+      "subjects": {
+        "n": 1,
+        "sex": "male",
+        "body_mass_kg": null,
+        "group_mean_body_mass_kg": 83,
+        "height_cm": null,
+        "group_mean_height_cm": 180.5,
+        "age": null,
+        "group_mean_age": 23.7
+      },
+      "exercises": [
+        {
+          "name": "incline_press (Smith machine)",
+          "load_kg": 49.9,
+          "pct_1rm": null,
+          "one_rm_kg": null,
+          "sets": 1,
+          "reps": 7,
+          "rest_s": null,
+          "tempo_s": "1.5 up / 1.5 down",
+          "work_reported": 208.6
+        }
+      ],
+      "measured_kcal": null,
+      "measured_kj": 17.3,
+      "per": "set",
+      "includes_epoc": true,
+      "method": "Exercise O2 + lactate-based anaerobic + EPOC (see energy_per_work)",
+      "locator": "Table 1 (men) / Table 2 (women)",
+      "notes": "Individual body mass not published; only group means. Value is the mean of two days. 1 kcal = 4.184 kJ."
+    },
+    {
+      "study_id": "knausenberger2014",
+      "subjects": {
+        "n": 1,
+        "sex": "male",
+        "body_mass_kg": null,
+        "group_mean_body_mass_kg": 83,
+        "height_cm": null,
+        "group_mean_height_cm": 180.5,
+        "age": null,
+        "group_mean_age": 23.7
+      },
+      "exercises": [
+        {
+          "name": "incline_press (Smith machine)",
+          "load_kg": 63.5,
+          "pct_1rm": null,
+          "one_rm_kg": null,
+          "sets": 1,
+          "reps": 10,
+          "rest_s": null,
+          "tempo_s": "1.5 up / 1.5 down",
+          "work_reported": 342.1
+        }
+      ],
+      "measured_kcal": null,
+      "measured_kj": 35.7,
+      "per": "set",
+      "includes_epoc": true,
+      "method": "Exercise O2 + lactate-based anaerobic + EPOC (see energy_per_work)",
+      "locator": "Table 1 (men) / Table 2 (women)",
+      "notes": "Individual body mass not published; only group means. Value is the mean of two days. 1 kcal = 4.184 kJ."
+    },
+    {
+      "study_id": "knausenberger2014",
+      "subjects": {
+        "n": 1,
+        "sex": "male",
+        "body_mass_kg": null,
+        "group_mean_body_mass_kg": 83,
+        "height_cm": null,
+        "group_mean_height_cm": 180.5,
+        "age": null,
+        "group_mean_age": 23.7
+      },
+      "exercises": [
+        {
+          "name": "incline_press (Smith machine)",
+          "load_kg": 27.3,
+          "pct_1rm": null,
+          "one_rm_kg": null,
+          "sets": 1,
+          "reps": 10,
+          "rest_s": null,
+          "tempo_s": "1.5 up / 1.5 down",
+          "work_reported": 109.8
+        }
+      ],
+      "measured_kcal": null,
+      "measured_kj": 12.8,
+      "per": "set",
+      "includes_epoc": true,
+      "method": "Exercise O2 + lactate-based anaerobic + EPOC (see energy_per_work)",
+      "locator": "Table 1 (men) / Table 2 (women)",
+      "notes": "Individual body mass not published; only group means. Value is the mean of two days. 1 kcal = 4.184 kJ."
+    },
+    {
+      "study_id": "knausenberger2014",
+      "subjects": {
+        "n": 1,
+        "sex": "male",
+        "body_mass_kg": null,
+        "group_mean_body_mass_kg": 83,
+        "height_cm": null,
+        "group_mean_height_cm": 180.5,
+        "age": null,
+        "group_mean_age": 23.7
+      },
+      "exercises": [
+        {
+          "name": "shrug (Smith machine)",
+          "load_kg": 72.5,
+          "pct_1rm": null,
+          "one_rm_kg": null,
+          "sets": 1,
+          "reps": 11,
+          "rest_s": null,
+          "tempo_s": "1.5 up / 1.5 down",
+          "work_reported": 91.8
+        }
+      ],
+      "measured_kcal": null,
+      "measured_kj": 19.5,
+      "per": "set",
+      "includes_epoc": true,
+      "method": "Exercise O2 + lactate-based anaerobic + EPOC (see energy_per_work)",
+      "locator": "Table 1 (men) / Table 2 (women)",
+      "notes": "Individual body mass not published; only group means. Value is the mean of two days. 1 kcal = 4.184 kJ."
+    },
+    {
+      "study_id": "knausenberger2014",
+      "subjects": {
+        "n": 1,
+        "sex": "male",
+        "body_mass_kg": null,
+        "group_mean_body_mass_kg": 83,
+        "height_cm": null,
+        "group_mean_height_cm": 180.5,
+        "age": null,
+        "group_mean_age": 23.7
+      },
+      "exercises": [
+        {
+          "name": "shrug (Smith machine)",
+          "load_kg": 90.6,
+          "pct_1rm": null,
+          "one_rm_kg": null,
+          "sets": 1,
+          "reps": 11,
+          "rest_s": null,
+          "tempo_s": "1.5 up / 1.5 down",
+          "work_reported": 143.3
+        }
+      ],
+      "measured_kcal": null,
+      "measured_kj": 44.8,
+      "per": "set",
+      "includes_epoc": true,
+      "method": "Exercise O2 + lactate-based anaerobic + EPOC (see energy_per_work)",
+      "locator": "Table 1 (men) / Table 2 (women)",
+      "notes": "Individual body mass not published; only group means. Value is the mean of two days. 1 kcal = 4.184 kJ."
+    },
+    {
+      "study_id": "knausenberger2014",
+      "subjects": {
+        "n": 1,
+        "sex": "male",
+        "body_mass_kg": null,
+        "group_mean_body_mass_kg": 83,
+        "height_cm": null,
+        "group_mean_height_cm": 180.5,
+        "age": null,
+        "group_mean_age": 23.7
+      },
+      "exercises": [
+        {
+          "name": "shrug (Smith machine)",
+          "load_kg": 63.4,
+          "pct_1rm": null,
+          "one_rm_kg": null,
+          "sets": 1,
+          "reps": 12,
+          "rest_s": null,
+          "tempo_s": "1.5 up / 1.5 down",
+          "work_reported": 110.5
+        }
+      ],
+      "measured_kcal": null,
+      "measured_kj": 23.0,
+      "per": "set",
+      "includes_epoc": true,
+      "method": "Exercise O2 + lactate-based anaerobic + EPOC (see energy_per_work)",
+      "locator": "Table 1 (men) / Table 2 (women)",
+      "notes": "Individual body mass not published; only group means. Value is the mean of two days. 1 kcal = 4.184 kJ."
+    },
+    {
+      "study_id": "knausenberger2014",
+      "subjects": {
+        "n": 1,
+        "sex": "male",
+        "body_mass_kg": null,
+        "group_mean_body_mass_kg": 83,
+        "height_cm": null,
+        "group_mean_height_cm": 180.5,
+        "age": null,
+        "group_mean_age": 23.7
+      },
+      "exercises": [
+        {
+          "name": "shrug (Smith machine)",
+          "load_kg": 40.8,
+          "pct_1rm": null,
+          "one_rm_kg": null,
+          "sets": 1,
+          "reps": 34,
+          "rest_s": null,
+          "tempo_s": "1.5 up / 1.5 down",
+          "work_reported": 120.8
+        }
+      ],
+      "measured_kcal": null,
+      "measured_kj": 25.3,
+      "per": "set",
+      "includes_epoc": true,
+      "method": "Exercise O2 + lactate-based anaerobic + EPOC (see energy_per_work)",
+      "locator": "Table 1 (men) / Table 2 (women)",
+      "notes": "Individual body mass not published; only group means. Value is the mean of two days. 1 kcal = 4.184 kJ."
+    },
+    {
+      "study_id": "knausenberger2014",
+      "subjects": {
+        "n": 1,
+        "sex": "male",
+        "body_mass_kg": null,
+        "group_mean_body_mass_kg": 83,
+        "height_cm": null,
+        "group_mean_height_cm": 180.5,
+        "age": null,
+        "group_mean_age": 23.7
+      },
+      "exercises": [
+        {
+          "name": "shrug (Smith machine)",
+          "load_kg": 22.7,
+          "pct_1rm": null,
+          "one_rm_kg": null,
+          "sets": 1,
+          "reps": 22,
+          "rest_s": null,
+          "tempo_s": "1.5 up / 1.5 down",
+          "work_reported": 61.6
+        }
+      ],
+      "measured_kcal": null,
+      "measured_kj": 12.6,
+      "per": "set",
+      "includes_epoc": true,
+      "method": "Exercise O2 + lactate-based anaerobic + EPOC (see energy_per_work)",
+      "locator": "Table 1 (men) / Table 2 (women)",
+      "notes": "Individual body mass not published; only group means. Value is the mean of two days. 1 kcal = 4.184 kJ."
+    },
+    {
+      "study_id": "knausenberger2014",
+      "subjects": {
+        "n": 1,
+        "sex": "male",
+        "body_mass_kg": null,
+        "group_mean_body_mass_kg": 83,
+        "height_cm": null,
+        "group_mean_height_cm": 180.5,
+        "age": null,
+        "group_mean_age": 23.7
+      },
+      "exercises": [
+        {
+          "name": "shrug (Smith machine)",
+          "load_kg": 40.8,
+          "pct_1rm": null,
+          "one_rm_kg": null,
+          "sets": 1,
+          "reps": 10,
+          "rest_s": null,
+          "tempo_s": "1.5 up / 1.5 down",
+          "work_reported": 49.9
+        }
+      ],
+      "measured_kcal": null,
+      "measured_kj": 13.7,
+      "per": "set",
+      "includes_epoc": true,
+      "method": "Exercise O2 + lactate-based anaerobic + EPOC (see energy_per_work)",
+      "locator": "Table 1 (men) / Table 2 (women)",
+      "notes": "Individual body mass not published; only group means. Value is the mean of two days. 1 kcal = 4.184 kJ."
+    },
+    {
+      "study_id": "knausenberger2014",
+      "subjects": {
+        "n": 1,
+        "sex": "male",
+        "body_mass_kg": null,
+        "group_mean_body_mass_kg": 83,
+        "height_cm": null,
+        "group_mean_height_cm": 180.5,
+        "age": null,
+        "group_mean_age": 23.7
+      },
+      "exercises": [
+        {
+          "name": "calf_raise (Smith machine)",
+          "load_kg": 81.6,
+          "pct_1rm": null,
+          "one_rm_kg": null,
+          "sets": 1,
+          "reps": 10,
+          "rest_s": null,
+          "tempo_s": "1.5 up / 1.5 down",
+          "work_reported": 95.6
+        }
+      ],
+      "measured_kcal": null,
+      "measured_kj": 26.2,
+      "per": "set",
+      "includes_epoc": true,
+      "method": "Exercise O2 + lactate-based anaerobic + EPOC (see energy_per_work)",
+      "locator": "Table 1 (men) / Table 2 (women)",
+      "notes": "Individual body mass not published; only group means. Value is the mean of two days. 1 kcal = 4.184 kJ."
+    },
+    {
+      "study_id": "knausenberger2014",
+      "subjects": {
+        "n": 1,
+        "sex": "male",
+        "body_mass_kg": null,
+        "group_mean_body_mass_kg": 83,
+        "height_cm": null,
+        "group_mean_height_cm": 180.5,
+        "age": null,
+        "group_mean_age": 23.7
+      },
+      "exercises": [
+        {
+          "name": "calf_raise (Smith machine)",
+          "load_kg": 54.4,
+          "pct_1rm": null,
+          "one_rm_kg": null,
+          "sets": 1,
+          "reps": 20,
+          "rest_s": null,
+          "tempo_s": "1.5 up / 1.5 down",
+          "work_reported": 107.9
+        }
+      ],
+      "measured_kcal": null,
+      "measured_kj": 40.3,
+      "per": "set",
+      "includes_epoc": true,
+      "method": "Exercise O2 + lactate-based anaerobic + EPOC (see energy_per_work)",
+      "locator": "Table 1 (men) / Table 2 (women)",
+      "notes": "Individual body mass not published; only group means. Value is the mean of two days. 1 kcal = 4.184 kJ."
+    },
+    {
+      "study_id": "knausenberger2014",
+      "subjects": {
+        "n": 1,
+        "sex": "male",
+        "body_mass_kg": null,
+        "group_mean_body_mass_kg": 83,
+        "height_cm": null,
+        "group_mean_height_cm": 180.5,
+        "age": null,
+        "group_mean_age": 23.7
+      },
+      "exercises": [
+        {
+          "name": "calf_raise (Smith machine)",
+          "load_kg": 63.6,
+          "pct_1rm": null,
+          "one_rm_kg": null,
+          "sets": 1,
+          "reps": 10,
+          "rest_s": null,
+          "tempo_s": "1.5 up / 1.5 down",
+          "work_reported": 67.5
+        }
+      ],
+      "measured_kcal": null,
+      "measured_kj": 21.1,
+      "per": "set",
+      "includes_epoc": true,
+      "method": "Exercise O2 + lactate-based anaerobic + EPOC (see energy_per_work)",
+      "locator": "Table 1 (men) / Table 2 (women)",
+      "notes": "Individual body mass not published; only group means. Value is the mean of two days. 1 kcal = 4.184 kJ."
+    },
+    {
+      "study_id": "knausenberger2014",
+      "subjects": {
+        "n": 1,
+        "sex": "male",
+        "body_mass_kg": null,
+        "group_mean_body_mass_kg": 83,
+        "height_cm": null,
+        "group_mean_height_cm": 180.5,
+        "age": null,
+        "group_mean_age": 23.7
+      },
+      "exercises": [
+        {
+          "name": "calf_raise (Smith machine)",
+          "load_kg": 63.6,
+          "pct_1rm": null,
+          "one_rm_kg": null,
+          "sets": 1,
+          "reps": 13,
+          "rest_s": null,
+          "tempo_s": "1.5 up / 1.5 down",
+          "work_reported": 96.3
+        }
+      ],
+      "measured_kcal": null,
+      "measured_kj": 33.6,
+      "per": "set",
+      "includes_epoc": true,
+      "method": "Exercise O2 + lactate-based anaerobic + EPOC (see energy_per_work)",
+      "locator": "Table 1 (men) / Table 2 (women)",
+      "notes": "Individual body mass not published; only group means. Value is the mean of two days. 1 kcal = 4.184 kJ."
+    },
+    {
+      "study_id": "knausenberger2014",
+      "subjects": {
+        "n": 1,
+        "sex": "male",
+        "body_mass_kg": null,
+        "group_mean_body_mass_kg": 83,
+        "height_cm": null,
+        "group_mean_height_cm": 180.5,
+        "age": null,
+        "group_mean_age": 23.7
+      },
+      "exercises": [
+        {
+          "name": "calf_raise (Smith machine)",
+          "load_kg": 59.0,
+          "pct_1rm": null,
+          "one_rm_kg": null,
+          "sets": 1,
+          "reps": 10,
+          "rest_s": null,
+          "tempo_s": "1.5 up / 1.5 down",
+          "work_reported": 68.9
+        }
+      ],
+      "measured_kcal": null,
+      "measured_kj": 20.3,
+      "per": "set",
+      "includes_epoc": true,
+      "method": "Exercise O2 + lactate-based anaerobic + EPOC (see energy_per_work)",
+      "locator": "Table 1 (men) / Table 2 (women)",
+      "notes": "Individual body mass not published; only group means. Value is the mean of two days. 1 kcal = 4.184 kJ."
+    },
+    {
+      "study_id": "knausenberger2014",
+      "subjects": {
+        "n": 1,
+        "sex": "male",
+        "body_mass_kg": null,
+        "group_mean_body_mass_kg": 83,
+        "height_cm": null,
+        "group_mean_height_cm": 180.5,
+        "age": null,
+        "group_mean_age": 23.7
+      },
+      "exercises": [
+        {
+          "name": "calf_raise (Smith machine)",
+          "load_kg": 49.9,
+          "pct_1rm": null,
+          "one_rm_kg": null,
+          "sets": 1,
+          "reps": 20,
+          "rest_s": null,
+          "tempo_s": "1.5 up / 1.5 down",
+          "work_reported": 106.9
+        }
+      ],
+      "measured_kcal": null,
+      "measured_kj": 34.7,
+      "per": "set",
+      "includes_epoc": true,
+      "method": "Exercise O2 + lactate-based anaerobic + EPOC (see energy_per_work)",
+      "locator": "Table 1 (men) / Table 2 (women)",
+      "notes": "Individual body mass not published; only group means. Value is the mean of two days. 1 kcal = 4.184 kJ."
+    },
+    {
+      "study_id": "knausenberger2014",
+      "subjects": {
+        "n": 1,
+        "sex": "male",
+        "body_mass_kg": null,
+        "group_mean_body_mass_kg": 83,
+        "height_cm": null,
+        "group_mean_height_cm": 180.5,
+        "age": null,
+        "group_mean_age": 23.7
+      },
+      "exercises": [
+        {
+          "name": "calf_raise (Smith machine)",
+          "load_kg": 49.9,
+          "pct_1rm": null,
+          "one_rm_kg": null,
+          "sets": 1,
+          "reps": 20,
+          "rest_s": null,
+          "tempo_s": "1.5 up / 1.5 down",
+          "work_reported": 144.4
+        }
+      ],
+      "measured_kcal": null,
+      "measured_kj": 40.7,
+      "per": "set",
+      "includes_epoc": true,
+      "method": "Exercise O2 + lactate-based anaerobic + EPOC (see energy_per_work)",
+      "locator": "Table 1 (men) / Table 2 (women)",
+      "notes": "Individual body mass not published; only group means. Value is the mean of two days. 1 kcal = 4.184 kJ."
+    },
+    {
+      "study_id": "knausenberger2014",
+      "subjects": {
+        "n": 1,
+        "sex": "female",
+        "body_mass_kg": null,
+        "group_mean_body_mass_kg": 61.1,
+        "height_cm": null,
+        "group_mean_height_cm": 165,
+        "age": null,
+        "group_mean_age": 21.8
+      },
+      "exercises": [
+        {
+          "name": "squat (Smith machine)",
+          "load_kg": 31.7,
+          "pct_1rm": null,
+          "one_rm_kg": null,
+          "sets": 1,
+          "reps": 14,
+          "rest_s": null,
+          "tempo_s": "1.5 up / 1.5 down",
+          "work_reported": 152.2
+        }
+      ],
+      "measured_kcal": null,
+      "measured_kj": 31.3,
+      "per": "set",
+      "includes_epoc": true,
+      "method": "Exercise O2 + lactate-based anaerobic + EPOC (see energy_per_work)",
+      "locator": "Table 1 (men) / Table 2 (women)",
+      "notes": "Individual body mass not published; only group means. Value is the mean of two days. 1 kcal = 4.184 kJ."
+    },
+    {
+      "study_id": "knausenberger2014",
+      "subjects": {
+        "n": 1,
+        "sex": "female",
+        "body_mass_kg": null,
+        "group_mean_body_mass_kg": 61.1,
+        "height_cm": null,
+        "group_mean_height_cm": 165,
+        "age": null,
+        "group_mean_age": 21.8
+      },
+      "exercises": [
+        {
+          "name": "squat (Smith machine)",
+          "load_kg": 31.7,
+          "pct_1rm": null,
+          "one_rm_kg": null,
+          "sets": 1,
+          "reps": 17,
+          "rest_s": null,
+          "tempo_s": "1.5 up / 1.5 down",
+          "work_reported": 191.0
+        }
+      ],
+      "measured_kcal": null,
+      "measured_kj": 39.6,
+      "per": "set",
+      "includes_epoc": true,
+      "method": "Exercise O2 + lactate-based anaerobic + EPOC (see energy_per_work)",
+      "locator": "Table 1 (men) / Table 2 (women)",
+      "notes": "Individual body mass not published; only group means. Value is the mean of two days. 1 kcal = 4.184 kJ."
+    },
+    {
+      "study_id": "knausenberger2014",
+      "subjects": {
+        "n": 1,
+        "sex": "female",
+        "body_mass_kg": null,
+        "group_mean_body_mass_kg": 61.1,
+        "height_cm": null,
+        "group_mean_height_cm": 165,
+        "age": null,
+        "group_mean_age": 21.8
+      },
+      "exercises": [
+        {
+          "name": "squat (Smith machine)",
+          "load_kg": 59.1,
+          "pct_1rm": null,
+          "one_rm_kg": null,
+          "sets": 1,
+          "reps": 10,
+          "rest_s": null,
+          "tempo_s": "1.5 up / 1.5 down",
+          "work_reported": 236.5
+        }
+      ],
+      "measured_kcal": null,
+      "measured_kj": 31.6,
+      "per": "set",
+      "includes_epoc": true,
+      "method": "Exercise O2 + lactate-based anaerobic + EPOC (see energy_per_work)",
+      "locator": "Table 1 (men) / Table 2 (women)",
+      "notes": "Individual body mass not published; only group means. Value is the mean of two days. 1 kcal = 4.184 kJ."
+    },
+    {
+      "study_id": "knausenberger2014",
+      "subjects": {
+        "n": 1,
+        "sex": "female",
+        "body_mass_kg": null,
+        "group_mean_body_mass_kg": 61.1,
+        "height_cm": null,
+        "group_mean_height_cm": 165,
+        "age": null,
+        "group_mean_age": 21.8
+      },
+      "exercises": [
+        {
+          "name": "squat (Smith machine)",
+          "load_kg": 22.7,
+          "pct_1rm": null,
+          "one_rm_kg": null,
+          "sets": 1,
+          "reps": 10,
+          "rest_s": null,
+          "tempo_s": "1.5 up / 1.5 down",
+          "work_reported": 82.4
+        }
+      ],
+      "measured_kcal": null,
+      "measured_kj": 28.4,
+      "per": "set",
+      "includes_epoc": true,
+      "method": "Exercise O2 + lactate-based anaerobic + EPOC (see energy_per_work)",
+      "locator": "Table 1 (men) / Table 2 (women)",
+      "notes": "Individual body mass not published; only group means. Value is the mean of two days. 1 kcal = 4.184 kJ."
+    },
+    {
+      "study_id": "knausenberger2014",
+      "subjects": {
+        "n": 1,
+        "sex": "female",
+        "body_mass_kg": null,
+        "group_mean_body_mass_kg": 61.1,
+        "height_cm": null,
+        "group_mean_height_cm": 165,
+        "age": null,
+        "group_mean_age": 21.8
+      },
+      "exercises": [
+        {
+          "name": "squat (Smith machine)",
+          "load_kg": 22.7,
+          "pct_1rm": null,
+          "one_rm_kg": null,
+          "sets": 1,
+          "reps": 10,
+          "rest_s": null,
+          "tempo_s": "1.5 up / 1.5 down",
+          "work_reported": 67.5
+        }
+      ],
+      "measured_kcal": null,
+      "measured_kj": 16.2,
+      "per": "set",
+      "includes_epoc": true,
+      "method": "Exercise O2 + lactate-based anaerobic + EPOC (see energy_per_work)",
+      "locator": "Table 1 (men) / Table 2 (women)",
+      "notes": "Individual body mass not published; only group means. Value is the mean of two days. 1 kcal = 4.184 kJ."
+    },
+    {
+      "study_id": "knausenberger2014",
+      "subjects": {
+        "n": 1,
+        "sex": "female",
+        "body_mass_kg": null,
+        "group_mean_body_mass_kg": 61.1,
+        "height_cm": null,
+        "group_mean_height_cm": 165,
+        "age": null,
+        "group_mean_age": 21.8
+      },
+      "exercises": [
+        {
+          "name": "incline_press (Smith machine)",
+          "load_kg": 11.4,
+          "pct_1rm": null,
+          "one_rm_kg": null,
+          "sets": 1,
+          "reps": 10,
+          "rest_s": null,
+          "tempo_s": "1.5 up / 1.5 down",
+          "work_reported": 41.6
+        }
+      ],
+      "measured_kcal": null,
+      "measured_kj": 6.8,
+      "per": "set",
+      "includes_epoc": true,
+      "method": "Exercise O2 + lactate-based anaerobic + EPOC (see energy_per_work)",
+      "locator": "Table 1 (men) / Table 2 (women)",
+      "notes": "Individual body mass not published; only group means. Value is the mean of two days. 1 kcal = 4.184 kJ."
+    },
+    {
+      "study_id": "knausenberger2014",
+      "subjects": {
+        "n": 1,
+        "sex": "female",
+        "body_mass_kg": null,
+        "group_mean_body_mass_kg": 61.1,
+        "height_cm": null,
+        "group_mean_height_cm": 165,
+        "age": null,
+        "group_mean_age": 21.8
+      },
+      "exercises": [
+        {
+          "name": "incline_press (Smith machine)",
+          "load_kg": 27.3,
+          "pct_1rm": null,
+          "one_rm_kg": null,
+          "sets": 1,
+          "reps": 10,
+          "rest_s": null,
+          "tempo_s": "1.5 up / 1.5 down",
+          "work_reported": 109.7
+        }
+      ],
+      "measured_kcal": null,
+      "measured_kj": 12.8,
+      "per": "set",
+      "includes_epoc": true,
+      "method": "Exercise O2 + lactate-based anaerobic + EPOC (see energy_per_work)",
+      "locator": "Table 1 (men) / Table 2 (women)",
+      "notes": "Individual body mass not published; only group means. Value is the mean of two days. 1 kcal = 4.184 kJ."
+    },
+    {
+      "study_id": "knausenberger2014",
+      "subjects": {
+        "n": 1,
+        "sex": "female",
+        "body_mass_kg": null,
+        "group_mean_body_mass_kg": 61.1,
+        "height_cm": null,
+        "group_mean_height_cm": 165,
+        "age": null,
+        "group_mean_age": 21.8
+      },
+      "exercises": [
+        {
+          "name": "incline_press (Smith machine)",
+          "load_kg": 18.2,
+          "pct_1rm": null,
+          "one_rm_kg": null,
+          "sets": 1,
+          "reps": 7,
+          "rest_s": null,
+          "tempo_s": "1.5 up / 1.5 down",
+          "work_reported": 57.4
+        }
+      ],
+      "measured_kcal": null,
+      "measured_kj": 6.9,
+      "per": "set",
+      "includes_epoc": true,
+      "method": "Exercise O2 + lactate-based anaerobic + EPOC (see energy_per_work)",
+      "locator": "Table 1 (men) / Table 2 (women)",
+      "notes": "Individual body mass not published; only group means. Value is the mean of two days. 1 kcal = 4.184 kJ."
+    },
+    {
+      "study_id": "knausenberger2014",
+      "subjects": {
+        "n": 1,
+        "sex": "female",
+        "body_mass_kg": null,
+        "group_mean_body_mass_kg": 61.1,
+        "height_cm": null,
+        "group_mean_height_cm": 165,
+        "age": null,
+        "group_mean_age": 21.8
+      },
+      "exercises": [
+        {
+          "name": "incline_press (Smith machine)",
+          "load_kg": 18.2,
+          "pct_1rm": null,
+          "one_rm_kg": null,
+          "sets": 1,
+          "reps": 10,
+          "rest_s": null,
+          "tempo_s": "1.5 up / 1.5 down",
+          "work_reported": 71.7
+        }
+      ],
+      "measured_kcal": null,
+      "measured_kj": 9.4,
+      "per": "set",
+      "includes_epoc": true,
+      "method": "Exercise O2 + lactate-based anaerobic + EPOC (see energy_per_work)",
+      "locator": "Table 1 (men) / Table 2 (women)",
+      "notes": "Individual body mass not published; only group means. Value is the mean of two days. 1 kcal = 4.184 kJ."
+    },
+    {
+      "study_id": "knausenberger2014",
+      "subjects": {
+        "n": 1,
+        "sex": "female",
+        "body_mass_kg": null,
+        "group_mean_body_mass_kg": 61.1,
+        "height_cm": null,
+        "group_mean_height_cm": 165,
+        "age": null,
+        "group_mean_age": 21.8
+      },
+      "exercises": [
+        {
+          "name": "incline_press (Smith machine)",
+          "load_kg": 13.6,
+          "pct_1rm": null,
+          "one_rm_kg": null,
+          "sets": 1,
+          "reps": 10,
+          "rest_s": null,
+          "tempo_s": "1.5 up / 1.5 down",
+          "work_reported": 47.6
+        }
+      ],
+      "measured_kcal": null,
+      "measured_kj": 10.9,
+      "per": "set",
+      "includes_epoc": true,
+      "method": "Exercise O2 + lactate-based anaerobic + EPOC (see energy_per_work)",
+      "locator": "Table 1 (men) / Table 2 (women)",
+      "notes": "Individual body mass not published; only group means. Value is the mean of two days. 1 kcal = 4.184 kJ."
+    },
+    {
+      "study_id": "knausenberger2014",
+      "subjects": {
+        "n": 1,
+        "sex": "female",
+        "body_mass_kg": null,
+        "group_mean_body_mass_kg": 61.1,
+        "height_cm": null,
+        "group_mean_height_cm": 165,
+        "age": null,
+        "group_mean_age": 21.8
+      },
+      "exercises": [
+        {
+          "name": "incline_press (Smith machine)",
+          "load_kg": 18.2,
+          "pct_1rm": null,
+          "one_rm_kg": null,
+          "sets": 1,
+          "reps": 10,
+          "rest_s": null,
+          "tempo_s": "1.5 up / 1.5 down",
+          "work_reported": 88.5
+        }
+      ],
+      "measured_kcal": null,
+      "measured_kj": 11.2,
+      "per": "set",
+      "includes_epoc": true,
+      "method": "Exercise O2 + lactate-based anaerobic + EPOC (see energy_per_work)",
+      "locator": "Table 1 (men) / Table 2 (women)",
+      "notes": "Individual body mass not published; only group means. Value is the mean of two days. 1 kcal = 4.184 kJ."
+    },
+    {
+      "study_id": "knausenberger2014",
+      "subjects": {
+        "n": 1,
+        "sex": "female",
+        "body_mass_kg": null,
+        "group_mean_body_mass_kg": 61.1,
+        "height_cm": null,
+        "group_mean_height_cm": 165,
+        "age": null,
+        "group_mean_age": 21.8
+      },
+      "exercises": [
+        {
+          "name": "shrug (Smith machine)",
+          "load_kg": 18.2,
+          "pct_1rm": null,
+          "one_rm_kg": null,
+          "sets": 1,
+          "reps": 10,
+          "rest_s": null,
+          "tempo_s": "1.5 up / 1.5 down",
+          "work_reported": 13.4
+        }
+      ],
+      "measured_kcal": null,
+      "measured_kj": 7.8,
+      "per": "set",
+      "includes_epoc": true,
+      "method": "Exercise O2 + lactate-based anaerobic + EPOC (see energy_per_work)",
+      "locator": "Table 1 (men) / Table 2 (women)",
+      "notes": "Individual body mass not published; only group means. Value is the mean of two days. 1 kcal = 4.184 kJ."
+    },
+    {
+      "study_id": "knausenberger2014",
+      "subjects": {
+        "n": 1,
+        "sex": "female",
+        "body_mass_kg": null,
+        "group_mean_body_mass_kg": 61.1,
+        "height_cm": null,
+        "group_mean_height_cm": 165,
+        "age": null,
+        "group_mean_age": 21.8
+      },
+      "exercises": [
+        {
+          "name": "shrug (Smith machine)",
+          "load_kg": 31.7,
+          "pct_1rm": null,
+          "one_rm_kg": null,
+          "sets": 1,
+          "reps": 10,
+          "rest_s": null,
+          "tempo_s": "1.5 up / 1.5 down",
+          "work_reported": 27.6
+        }
+      ],
+      "measured_kcal": null,
+      "measured_kj": 5.9,
+      "per": "set",
+      "includes_epoc": true,
+      "method": "Exercise O2 + lactate-based anaerobic + EPOC (see energy_per_work)",
+      "locator": "Table 1 (men) / Table 2 (women)",
+      "notes": "Individual body mass not published; only group means. Value is the mean of two days. 1 kcal = 4.184 kJ."
+    },
+    {
+      "study_id": "knausenberger2014",
+      "subjects": {
+        "n": 1,
+        "sex": "female",
+        "body_mass_kg": null,
+        "group_mean_body_mass_kg": 61.1,
+        "height_cm": null,
+        "group_mean_height_cm": 165,
+        "age": null,
+        "group_mean_age": 21.8
+      },
+      "exercises": [
+        {
+          "name": "calf_raise (Smith machine)",
+          "load_kg": 31.7,
+          "pct_1rm": null,
+          "one_rm_kg": null,
+          "sets": 1,
+          "reps": 18,
+          "rest_s": null,
+          "tempo_s": "1.5 up / 1.5 down",
+          "work_reported": 57.0
+        }
+      ],
+      "measured_kcal": null,
+      "measured_kj": 22.3,
+      "per": "set",
+      "includes_epoc": true,
+      "method": "Exercise O2 + lactate-based anaerobic + EPOC (see energy_per_work)",
+      "locator": "Table 1 (men) / Table 2 (women)",
+      "notes": "Individual body mass not published; only group means. Value is the mean of two days. 1 kcal = 4.184 kJ."
+    },
+    {
+      "study_id": "knausenberger2014",
+      "subjects": {
+        "n": 1,
+        "sex": "female",
+        "body_mass_kg": null,
+        "group_mean_body_mass_kg": 61.1,
+        "height_cm": null,
+        "group_mean_height_cm": 165,
+        "age": null,
+        "group_mean_age": 21.8
+      },
+      "exercises": [
+        {
+          "name": "calf_raise (Smith machine)",
+          "load_kg": 31.7,
+          "pct_1rm": null,
+          "one_rm_kg": null,
+          "sets": 1,
+          "reps": 15,
+          "rest_s": null,
+          "tempo_s": "1.5 up / 1.5 down",
+          "work_reported": 50.4
+        }
+      ],
+      "measured_kcal": null,
+      "measured_kj": 15.9,
+      "per": "set",
+      "includes_epoc": true,
+      "method": "Exercise O2 + lactate-based anaerobic + EPOC (see energy_per_work)",
+      "locator": "Table 1 (men) / Table 2 (women)",
+      "notes": "Individual body mass not published; only group means. Value is the mean of two days. 1 kcal = 4.184 kJ."
+    },
+    {
+      "study_id": "knausenberger2014",
+      "subjects": {
+        "n": 1,
+        "sex": "female",
+        "body_mass_kg": null,
+        "group_mean_body_mass_kg": 61.1,
+        "height_cm": null,
+        "group_mean_height_cm": 165,
+        "age": null,
+        "group_mean_age": 21.8
+      },
+      "exercises": [
+        {
+          "name": "calf_raise (Smith machine)",
+          "load_kg": 31.7,
+          "pct_1rm": null,
+          "one_rm_kg": null,
+          "sets": 1,
+          "reps": 10,
+          "rest_s": null,
+          "tempo_s": "1.5 up / 1.5 down",
+          "work_reported": 38.7
+        }
+      ],
+      "measured_kcal": null,
+      "measured_kj": 11.4,
+      "per": "set",
+      "includes_epoc": true,
+      "method": "Exercise O2 + lactate-based anaerobic + EPOC (see energy_per_work)",
+      "locator": "Table 1 (men) / Table 2 (women)",
+      "notes": "Individual body mass not published; only group means. Value is the mean of two days. 1 kcal = 4.184 kJ."
+    },
+    {
+      "study_id": "scott2011",
+      "subjects": {
+        "n": null,
+        "sex": null,
+        "body_mass_kg": null,
+        "height_cm": null,
+        "age": null
+      },
+      "exercises": [
+        {
+          "name": "bench press (Smith), to failure",
+          "load_kg": null,
+          "pct_1rm": 37,
+          "one_rm_kg": null,
+          "sets": 1,
+          "reps": 36,
+          "rest_s": null
+        }
+      ],
+      "measured_kcal": 15,
+      "per": "set",
+      "includes_epoc": true,
+      "method": "Exercise O2 + lactate + recovery O2",
+      "locator": "Scott & Reis 2016, Table 1"
+    },
+    {
+      "study_id": "scott2011",
+      "subjects": {
+        "n": null,
+        "sex": null,
+        "body_mass_kg": null,
+        "height_cm": null,
+        "age": null
+      },
+      "exercises": [
+        {
+          "name": "bench press (Smith), to failure",
+          "load_kg": null,
+          "pct_1rm": 46,
+          "one_rm_kg": null,
+          "sets": 1,
+          "reps": 25,
+          "rest_s": null
+        }
+      ],
+      "measured_kcal": 14,
+      "per": "set",
+      "includes_epoc": true,
+      "method": "Exercise O2 + lactate + recovery O2",
+      "locator": "Scott & Reis 2016, Table 1"
+    },
+    {
+      "study_id": "scott2011",
+      "subjects": {
+        "n": null,
+        "sex": null,
+        "body_mass_kg": null,
+        "height_cm": null,
+        "age": null
+      },
+      "exercises": [
+        {
+          "name": "bench press (Smith), to failure",
+          "load_kg": null,
+          "pct_1rm": 56,
+          "one_rm_kg": null,
+          "sets": 1,
+          "reps": 20,
+          "rest_s": null
+        }
+      ],
+      "measured_kcal": 14,
+      "per": "set",
+      "includes_epoc": true,
+      "method": "Exercise O2 + lactate + recovery O2",
+      "locator": "Scott & Reis 2016, Table 1"
+    },
+    {
+      "study_id": "scott2011",
+      "subjects": {
+        "n": null,
+        "sex": null,
+        "body_mass_kg": null,
+        "height_cm": null,
+        "age": null
+      },
+      "exercises": [
+        {
+          "name": "bench press (Smith), to failure",
+          "load_kg": null,
+          "pct_1rm": 70,
+          "one_rm_kg": null,
+          "sets": 1,
+          "reps": 12,
+          "rest_s": null
+        }
+      ],
+      "measured_kcal": 12,
+      "per": "set",
+      "includes_epoc": true,
+      "method": "Exercise O2 + lactate + recovery O2",
+      "locator": "Scott & Reis 2016, Table 1"
+    },
+    {
+      "study_id": "scott2011",
+      "subjects": {
+        "n": null,
+        "sex": null,
+        "body_mass_kg": null,
+        "height_cm": null,
+        "age": null
+      },
+      "exercises": [
+        {
+          "name": "bench press (Smith), to failure",
+          "load_kg": null,
+          "pct_1rm": 80,
+          "one_rm_kg": null,
+          "sets": 1,
+          "reps": 8,
+          "rest_s": null
+        }
+      ],
+      "measured_kcal": 11,
+      "per": "set",
+      "includes_epoc": true,
+      "method": "Exercise O2 + lactate + recovery O2",
+      "locator": "Scott & Reis 2016, Table 1"
+    },
+    {
+      "study_id": "scott2011",
+      "subjects": {
+        "n": null,
+        "sex": null,
+        "body_mass_kg": null,
+        "height_cm": null,
+        "age": null
+      },
+      "exercises": [
+        {
+          "name": "bench press (Smith), to failure",
+          "load_kg": null,
+          "pct_1rm": 90,
+          "one_rm_kg": null,
+          "sets": 1,
+          "reps": 4,
+          "rest_s": null
+        }
+      ],
+      "measured_kcal": 8,
+      "per": "set",
+      "includes_epoc": true,
+      "method": "Exercise O2 + lactate + recovery O2",
+      "locator": "Scott & Reis 2016, Table 1"
+    },
+    {
+      "study_id": "farinatti2011",
+      "subjects": {
+        "n": 10,
+        "sex": "male",
+        "body_mass_kg": null,
+        "height_cm": null,
+        "age": null
+      },
+      "exercises": [
+        {
+          "name": "horizontal leg press",
+          "load_kg": null,
+          "pct_1rm": null,
+          "load_note": "15RM load",
+          "one_rm_kg": null,
+          "sets": 5,
+          "reps": 10,
+          "rest_s": 60
+        },
+        {
+          "name": "horizontal leg press",
+          "load_kg": null,
+          "pct_1rm": null,
+          "load_note": "15RM load",
+          "one_rm_kg": null,
+          "sets": 5,
+          "reps": 10,
+          "rest_s": 180
+        }
+      ],
+      "measured_kcal": {
+        "rest_60s": 88.7,
+        "rest_180s": 91.1
+      },
+      "per": "session",
+      "includes_epoc": true,
+      "method": "VO2 during and 90 min after",
+      "locator": "PubMed 21993043 abstract"
+    },
+    {
+      "study_id": "farinatti2011",
+      "subjects": {
+        "n": 10,
+        "sex": "male",
+        "body_mass_kg": null,
+        "height_cm": null,
+        "age": null
+      },
+      "exercises": [
+        {
+          "name": "chest fly",
+          "load_kg": null,
+          "pct_1rm": null,
+          "load_note": "15RM load",
+          "one_rm_kg": null,
+          "sets": 5,
+          "reps": 10,
+          "rest_s": 60
+        },
+        {
+          "name": "chest fly",
+          "load_kg": null,
+          "pct_1rm": null,
+          "load_note": "15RM load",
+          "one_rm_kg": null,
+          "sets": 5,
+          "reps": 10,
+          "rest_s": 180
+        }
+      ],
+      "measured_kcal": {
+        "rest_60s": 50.3,
+        "rest_180s": 54.1
+      },
+      "per": "session",
+      "includes_epoc": true,
+      "method": "VO2 during and 90 min after",
+      "locator": "PubMed 21993043 abstract"
+    },
+    {
+      "study_id": "phillips2003",
+      "subjects": {
+        "n": 12,
+        "sex": "mixed",
+        "body_mass_kg": null,
+        "height_cm": null,
+        "age": 26.7
+      },
+      "exercises": [
+        {
+          "name": "8-exercise ACSM circuit",
+          "load_kg": null,
+          "pct_1rm": null,
+          "load_note": "15RM",
+          "one_rm_kg": null,
+          "sets": 1,
+          "reps": 15,
+          "rest_s": null
+        }
+      ],
+      "measured_kcal": {
+        "men": 135.2,
+        "women": 81.7
+      },
+      "per": "session",
+      "includes_epoc": null,
+      "method": "Portable calorimetry",
+      "locator": "PubMed 12741877 abstract"
+    }
+  ]
+}

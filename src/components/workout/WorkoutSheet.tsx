@@ -5,10 +5,10 @@ import { Drawer } from "vaul";
 import { AnimatePresence, motion } from "motion/react";
 import { Check, ChevronDown, ChevronLeft, Dumbbell, History, Minus, Plus, Scale, Search, Trash, X } from "lucide-react";
 import { RollingNumber } from "@/components/RollingNumber";
-import { DEFAULT_REST, REST_CHOICES, cardioBurn, liftBurn, type Person } from "@/lib/burn";
+import { DEFAULT_REST, REST_CHOICES, cardioBurn, type Person } from "@/lib/burn";
 import { dayKey, dayLabel, parseDay } from "@/lib/dates";
 import {
-  EQUIPMENT, GROUPS, GROUP_LABEL, defaultKg, equipLabel, findActivities, findExercises, getActivity, getExercise, kgStep, loadSteps, muscleLabel, setsSummary,
+  EQUIPMENT, GROUPS, exerciseBurn, GROUP_LABEL, defaultKg, equipLabel, findActivities, findExercises, getActivity, getExercise, kgStep, loadSteps, muscleLabel, setsSummary,
 } from "@/lib/exercises";
 import { MicButton, NlConfirm, SignInHint, UnderstandRow, isSentence, useNlLog } from "@/components/log/NlLog";
 import { mealForNow } from "@/lib/nutrition";
@@ -345,16 +345,16 @@ export function LiftDetail({ ex, date, initial, embedded, onBack, onDone }: { ex
   const [steps, setSteps] = useState<string[] | null>(null);
   const [showSteps, setShowSteps] = useState(false);
 
-  const est = p ? liftBurn(ex, sets, rest, intense, p) : null;
+  const est = p ? exerciseBurn(ex, sets, rest, intense, p) : null;
   const timed = ex.load === "timed";
-  const kgLabel = ex.load === "assisted" ? "assist kg" : ex.load === "bodyweight" ? "+ kg" : "kg";
+  const kgLabel = ex.load === "assisted" ? "assist kg" : ex.load === "bodyweight" ? "+ kg" : ex.rep?.perSide ? "kg each" : "kg";
   const step = kgStep(ex.equip);
 
   const patch = (i: number, v: Partial<WorkSet>) => setSets((list) => list.map((s, j) => (j === i ? { ...s, ...v } : s)));
 
   const save = () => {
     if (!est || !sets.length) return;
-    const data = { kind: "lift" as const, refId: ex.id, name: ex.name, sets, restSec: rest, intense, minutes: est.minutes, met: est.met, kcal: est.kcal };
+    const data = { kind: "lift" as const, refId: ex.id, name: ex.name, sets, restSec: rest, intense, minutes: est.minutes, met: est.met, kcal: est.kcal, ...(est.burn ? { burn: est.burn } : {}) };
     if (initial) {
       updateWorkout(initial.id, data);
       showToast(`Updated ${ex.name}`);
@@ -454,12 +454,18 @@ export function LiftDetail({ ex, date, initial, embedded, onBack, onDone }: { ex
             <Chip key={r} small active={rest === r} onClick={() => setRest(r)}>{r < 120 ? `${r} s` : `${r / 60} min`}</Chip>
           ))}
         </div>
+        <p className="mt-2 text-xs text-muted">Changes the time, not the calories: studies find the same total burn with short or long rests.</p>
 
+        {/* pace only matters for exercises still on the time model; measured per-rep costs don't depend on it */}
+        {!ex.rep && (
+          <>
         <Label>Pace</Label>
         <div className="flex gap-2">
           <Chip small active={!intense} onClick={() => setIntense(false)}>Normal</Chip>
           <Chip small active={intense} onClick={() => setIntense(true)}>Intense · supersets, short rest</Chip>
         </div>
+          </>
+        )}
 
         {ex.photo && (
           <button onClick={toggleSteps} className="mt-6 flex w-full items-center justify-between rounded-2xl bg-surface-2 px-4 py-3 text-sm font-semibold">
@@ -481,7 +487,14 @@ export function LiftDetail({ ex, date, initial, embedded, onBack, onDone }: { ex
         </AnimatePresence>
       </div>
 
-      <Footer p={p} est={est} label={initial ? "Save changes" : "Log exercise"} onSave={save} disabled={!sets.length} />
+      <Footer
+        p={p}
+        est={est}
+        label={initial ? "Save changes" : "Log exercise"}
+        onSave={save}
+        disabled={!sets.length}
+        basis={ex.rep ? (ex.rep.bw != null ? `from reps × ${p ? Math.round(ex.rep.bw * 100) : ""}% of your weight` : "from weight × reps") : undefined}
+      />
     </div>
   );
 }
@@ -582,7 +595,7 @@ export function CardioDetail({ a, date, initial, embedded, onBack, onDone }: { a
 
 // ── Shared bits ──
 
-function Footer({ p, est, label, onSave, disabled }: { p: Person | null; est: { kcal: number; minutes: number } | null; label: string; onSave: () => void; disabled?: boolean }) {
+function Footer({ p, est, label, onSave, disabled, basis }: { p: Person | null; est: { kcal: number; minutes: number } | null; label: string; onSave: () => void; disabled?: boolean; basis?: string }) {
   return (
     <div className="shrink-0 border-t border-line bg-surface px-5 pb-[calc(1rem+var(--safe-bottom))] pt-3">
       {!p ? (
@@ -601,7 +614,7 @@ function Footer({ p, est, label, onSave, disabled }: { p: Person | null; est: { 
             <p className="pb-1 text-right text-xs text-muted tabular">
               {Math.round(est?.minutes ?? 0)} min
               <br />
-              {p.personal ? `for ${p.kg} kg` : <span className="text-faint">add age + height in Me for a personal estimate</span>}
+              {basis ?? (p.personal ? `for ${p.kg} kg` : <span className="text-faint">add age + height in Me for a personal estimate</span>)}
             </p>
           </div>
           <motion.button

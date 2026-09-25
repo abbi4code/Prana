@@ -14,9 +14,9 @@ import { FoodIcon } from "@/components/FoodIcon";
 import { Sheet } from "@/components/Sheet";
 import { ActivityIcon, ExercisePhoto } from "@/components/workout/ExercisePhoto";
 import { CardioDetail, LiftDetail } from "@/components/workout/WorkoutSheet";
-import { DEFAULT_REST, cardioBurn, liftBurn, type Person } from "@/lib/burn";
+import { DEFAULT_REST, cardioBurn, type Person } from "@/lib/burn";
 import { dayKey, dayLabel } from "@/lib/dates";
-import { getActivity, getExercise, matchWorkout, searchWorkouts, setsSummary, type WorkoutHit } from "@/lib/exercises";
+import { exerciseBurn, getActivity, getExercise, matchWorkout, searchWorkouts, setsSummary, type WorkoutHit } from "@/lib/exercises";
 import { STARTER_IDS, getFood, getUnit, matchFood, searchFoods } from "@/lib/foods";
 import { MEALS, fmtQty, mealForNow, portion } from "@/lib/nutrition";
 import { mealKcal } from "@/lib/thali";
@@ -424,8 +424,8 @@ function repeatData(hit: WorkoutHit, last: Workout, p: Person) {
     if (!last.sets?.length) return null;
     const rest = last.restSec ?? DEFAULT_REST;
     const intense = last.intense ?? false;
-    const est = liftBurn(hit.item, last.sets, rest, intense, p);
-    return { kind: "lift" as const, refId: hit.item.id, name: hit.item.name, sets: last.sets.map((s) => ({ ...s })), restSec: rest, intense, minutes: est.minutes, met: est.met, kcal: est.kcal };
+    const est = exerciseBurn(hit.item, last.sets, rest, intense, p);
+    return { kind: "lift" as const, refId: hit.item.id, name: hit.item.name, sets: last.sets.map((s) => ({ ...s })), restSec: rest, intense, minutes: est.minutes, met: est.met, kcal: est.kcal, ...(est.burn ? { burn: est.burn } : {}) };
   }
   const v = { minutes: last.minutes, speedKmh: last.speedKmh, inclinePct: last.inclinePct, optionCode: last.optionCode };
   const est = cardioBurn(hit.item, v, p);

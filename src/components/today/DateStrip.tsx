@@ -80,7 +80,7 @@ export function DateStrip({ date, onChange, logged, streak, streakLive }: {
   );
 }
 
-function NavBtn({ children, onClick, label, disabled }: { children: React.ReactNode; onClick: () => void; label: string; disabled?: boolean }) {
+export function NavBtn({ children, onClick, label, disabled }: { children: React.ReactNode; onClick: () => void; label: string; disabled?: boolean }) {
   return (
     <button onClick={onClick} aria-label={label} disabled={disabled} className="grid size-10 place-items-center rounded-full border border-line text-muted disabled:opacity-30 active:bg-surface-2">
       {children}

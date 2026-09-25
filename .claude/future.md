@@ -20,6 +20,7 @@
 | **Hidden-calorie chips** | "+ ghee on roti", "+ tadka", "+ sugar in chai" on the food detail |
 | **Fried-food fix** (Q4) | Replace "~ high estimate" with a sourced absorbed-oil adjustment |
 | NL logging follow-ups | Real-phone voice test (Android + iPhone); prune `parse_cache` / `parse_usage` (pg_cron); grow `evals/nl-parse.jsonl` from real corrections; maybe server STT later (nl-logging.md) |
+| Greeting batches 5–7 | Moment lines (streak, back after a break, first day, at gym, workout done, rest day, nothing logged, on track, Monday, weekend); prompt in greetings.md |
 | Thali photo logging | Photo → items + katori counts (Claude vision) |
 | Weekly Wrapped, calorie bank, festival/shaadi mode, fasting mode | Engagement features from the roadmap (features.md v2) |
 | Barcode scan | Packaged foods |
@@ -59,3 +60,10 @@
 | 2026-09-25 | "Add anything" (D29): Today bar + sidebar field + / ⌘K open one sheet searching food and workouts; one-tap + (last portion / last session, Undo), mixed recents, thalis, sentence + voice (mic starts from the bar). `searchWorkouts()` in `lib/exercises.ts`; `useSpeech` gained a silent `abort()`. No migration |
 | 2026-09-25 | Gym check-in phase 1 (D30): `user_gyms`, `gym_visits` (server-written), `gym_events` (append-only), check-in/out API, timer, offline/guest fallback. Migration `…130000_gym_checkin` pushed; SQL tests in a rolled-back transaction |
 | 2026-09-25 | Gym check-in phases 2–3 (D30): location consent (`…140000_location_consent` pushed), explainer + permission states, server Haversine verification with confirm step, gym sheet with current location + Leaflet/OSM map + radius. Dependency: `leaflet` |
+| 2026-09-25 | Gym check-in phase 4 (D30): lazy auto-close (last exercise or +1:30, fix end), 20-min minimum, visits count as workout days, nearby banner (on the phone), recent visits. Migration `…150000_gym_autoclose` pushed |
+| 2026-09-25 | Today greeting (D31): `data/greetings/batch-1.json` (537 lines, reviewed from 541), `npm run greetings`, `lib/greet.ts` picker, `Greeting` on Today. No migration |
+| 2026-09-25 | Greeting batch 4 reviewed (night/late 195; 1,125 total). `on_track` after 8 pm = the real 80–105 % |
+| 2026-09-25 | Greeting batches 2–3 reviewed (early/morning 197, afternoon/evening 196; 930 total). Picker: morning until 12, `work` lines weekday-only, breakfast nudges from 8 am, `on_track` = logged and not over, no gym nudges after a workout |
+| 2026-09-25 | Lifting kcal: rest length no longer changes calories (Farinatti 2011), only the time shown. Research `data/lift-energy.json` reviewed; per-set work model (v2) waits for a second research pass. Workout goals Save button overflow fixed |
+| 2026-09-25 | Lifting burn v2: per-rep costs by movement from research rounds 2–3 (`data/lift-energy*.json`), 157 lifts on the new model, 54 core/conditioning moves on time × MET; dumbbell kg = per dumbbell ("kg each"); Adeel 2021 excluded as implausible |
+| 2026-09-25 | Workout week strip with streak emojis (🔥 🌙 ❄️ 🥲), streak band and an "Exercises" view per day (phone list, desktop calendar). Progress re-laid out as an aligned grid: one `StreakShell` for all three streak cards, full-width fluid heatmap, weight + calories equal heights, calorie chart always shows the goal line. No migration |

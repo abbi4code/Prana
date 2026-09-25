@@ -52,8 +52,9 @@ Guiding rule: **logging fast beats everything.** People quit trackers because lo
 | Exercise library | 211 exercises (200 with start/end photos from free-exercise-db), muscle + sub-muscle + equipment filters, alias search, recents | done |
 | Workout log | Sets × reps × kg (seconds for holds), "last time" pre-fill, rest + pace, edit / swipe-delete + undo | done |
 | Cardio & sports | 20 activities: walk/run by speed + incline (ACSM), bike/rower/elliptical/skipping/swim/cricket/badminton/football/yoga/surya namaskar/HIIT/zumba by effort | done |
-| Calorie burn | Compendium MET × weight × time minus resting burn; Burned card + optional daily burn goal; separate from food | done |
+| Calorie burn | Lifts: measured per-rep costs (weight × reps, v2); cardio + core: Compendium MET × time; minus resting burn; Burned card + optional daily burn goal; separate from food | done |
 | Today: Eaten · Burned · Net · Goal | Goal kcal editable inline (default stays the goal calculator) | done |
+| Workout week strip | 🔥 / 🌙 / ❄️ / 🥲 per day, streak band, weekly count; "Exercises" shows each day's exercises (list on phone, calendar on desktop) | done |
 | Workout + global streaks | Rest days picked by the user; global "Prana streak" = food on target + workout done; heatmap Food/Workout/Both | done |
 | Routines, rest timer, PRs, last-session beside each set | Phase 2 | planned |
 | Weekly volume + body heatmap, measurements, progress photos | Phase 3 | planned |
@@ -65,11 +66,12 @@ Guiding rule: **logging fast beats everything.** People quit trackers because lo
 | Save your gym + "I'm at the gym" / Done with live timer | Server visits, one active per user, offline + guest fallback, live pill on Today | done (phase 1) |
 | Location verification | Consent + explainer, permission states, server distance check, iOS notes, verified / not verified tags | done (phase 2) |
 | Gym location | Current location + map picker (Leaflet/OSM, dark tiles), radius 100–300 m, gym settings sheet | done (phase 3) |
-| Nearby banner, auto-close, visit counts as workout day | Nearby check on the phone | planned (phase 4) |
+| Nearby banner, auto-close (+ fix end), 20-min minimum, visit counts as workout day, recent visits | Nearby check on the phone; lazy auto-close on the server | done (phase 4) |
 
 ## Also built
 | Feature | Status |
 |---|---|
+| Today greeting (D31): desi hype/funny line picked for the moment, tap for another | done (batches 1–4, 1,125 lines; moment batches 5–7 to generate) |
 | Multi-add: log several foods in one go, "Done · 3" | done |
 | Edit / delete a logged item (tap it) | done |
 | Calorie history chart (14 days) + days on target | done |
@@ -93,7 +95,7 @@ Guiding rule: **logging fast beats everything.** People quit trackers because lo
 - **Today** `/`: week strip + streak flame, calorie ring (rolling digits), macro bars, chai + water cards, 4 meal cards (swipe rows, save-as-thali, ⚡ thali chips, "same as yesterday").
 - **Log sheet** (+ button, or N / on desktop): meal chips, search, My thalis, recent/frequent/popular, create food → food detail (drag katori, units, meal) · thali builder · create food.
 - **Workout** `/workout`: week strip + workout flame, Burned card, Exercise/Cardio buttons, session list, workout streak, workout goals (burn goal, rest days). Sheet: library → lift / cardio detail.
-- **Progress** `/progress`: Prana (global) streak, food streak, year heatmap (Food/Workout/Both), weight (7-day avg), calories last 14 days.
+- **Progress** `/progress`: bento grid: Prana, food and workout streak cards in one row (equal heights), full-width year heatmap (Food/Workout/Both; tapping a day lists its workouts), weight (7-day avg) | calories last 14 days (equal heights, goal line always visible).
 - **Me** `/me`: goal calculator, daily goals, appearance, my foods, account/sync, backup.
 - **Login** `/login`, **OAuth return** `/auth/callback`.
 - Planned: Weekly Wrapped (Progress), voice logging (log sheet).

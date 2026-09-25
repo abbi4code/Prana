@@ -7,6 +7,7 @@ import { AddBar } from "@/components/today/AddBar";
 import { BurnCard } from "@/components/today/BurnCard";
 import { CalorieRing } from "@/components/today/CalorieRing";
 import { DateStrip } from "@/components/today/DateStrip";
+import { Greeting } from "@/components/today/Greeting";
 import { MacroBars } from "@/components/today/MacroBars";
 import { MealCard } from "@/components/today/MealCard";
 import { CHAI_ID, QuickRow } from "@/components/today/QuickRow";
@@ -44,54 +45,59 @@ export default function TodayPage() {
 
   if (!hydrated) return <TodaySkeleton />;
 
-  // phone: one column. desktop: summary column (sticky) + meals grid
+  // greeting on top (full width), then phone: one column. desktop: summary column (sticky) + meals grid
   return (
-    <div className="space-y-4 lg:grid lg:grid-cols-[400px_minmax(0,1fr)] lg:items-start lg:gap-8 lg:space-y-0">
-      <div className="space-y-4 lg:sticky lg:top-10">
-        <DateStrip date={date} onChange={setDate} logged={logged} streak={flame.n} streakLive={flame.live} />
-        <AddBar />
-
-        <section className="card px-5 pb-5 pt-6">
-          <CalorieRing eaten={t.kcal} goal={goals.kcal} />
-          <div className="mt-4 grid grid-cols-4 divide-x divide-line-strong text-sm">
-            <Stat label="Eaten" value={t.kcal} />
-            <Stat label="Burned" value={burned} tone="text-jamun" />
-            <Stat label="Net" value={t.kcal - burned} />
-            <GoalStat goal={goals.kcal} onSave={(kcal) => setGoals({ ...goals, kcal })} />
-          </div>
-          <div className="mt-5 border-t border-line pt-5">
-            <MacroBars totals={t} goals={goals} date={date} />
-          </div>
-        </section>
-
-        <QuickRow date={date} />
-        <BurnCard date={date} />
+    <>
+      <div className="mb-4 lg:mb-7">
+        <Greeting streak={flame.n} />
       </div>
+      <div className="space-y-4 lg:grid lg:grid-cols-[400px_minmax(0,1fr)] lg:items-start lg:gap-8 lg:space-y-0">
+        <div className="space-y-4 lg:sticky lg:top-10">
+          <DateStrip date={date} onChange={setDate} logged={logged} streak={flame.n} streakLive={flame.live} />
+          <AddBar />
 
-      <div className="space-y-4">
-        <div className="hidden pt-9 lg:block">
-          <h2 className="font-display text-2xl font-semibold">Meals</h2>
-          <p className="text-sm text-muted">
-            {day.length
-              ? `${day.length} item${day.length === 1 ? "" : "s"} · ${t.kcal.toLocaleString("en-IN")} kcal`
-              : "Nothing logged yet. Press / to add food or a workout."}
-          </p>
+          <section className="card px-5 pb-5 pt-6">
+            <CalorieRing eaten={t.kcal} goal={goals.kcal} />
+            <div className="mt-4 grid grid-cols-4 divide-x divide-line-strong text-sm">
+              <Stat label="Eaten" value={t.kcal} />
+              <Stat label="Burned" value={burned} tone="text-jamun" />
+              <Stat label="Net" value={t.kcal - burned} />
+              <GoalStat goal={goals.kcal} onSave={(kcal) => setGoals({ ...goals, kcal })} />
+            </div>
+            <div className="mt-5 border-t border-line pt-5">
+              <MacroBars totals={t} goals={goals} date={date} />
+            </div>
+          </section>
+
+          <QuickRow date={date} />
+          <BurnCard date={date} />
         </div>
-        <div className="space-y-4 md:grid md:grid-cols-2 md:gap-4 md:space-y-0 lg:block lg:space-y-4 xl:grid xl:space-y-0">
-          {MEALS.map((m) => (
-            <MealCard
-              key={m.id}
-              meal={m.id}
-              label={m.label}
-              date={date}
-              prevDate={prev}
-              entries={day.filter((e) => e.meal === m.id && e.foodId !== CHAI_ID)}
-              yesterday={yesterday.filter((e) => e.meal === m.id && e.foodId !== CHAI_ID)}
-            />
-          ))}
+
+        <div className="space-y-4">
+          <div className="hidden pt-9 lg:block">
+            <h2 className="font-display text-2xl font-semibold">Meals</h2>
+            <p className="text-sm text-muted">
+              {day.length
+                ? `${day.length} item${day.length === 1 ? "" : "s"} · ${t.kcal.toLocaleString("en-IN")} kcal`
+                : "Nothing logged yet. Press / to add food or a workout."}
+            </p>
+          </div>
+          <div className="space-y-4 md:grid md:grid-cols-2 md:gap-4 md:space-y-0 lg:block lg:space-y-4 xl:grid xl:space-y-0">
+            {MEALS.map((m) => (
+              <MealCard
+                key={m.id}
+                meal={m.id}
+                label={m.label}
+                date={date}
+                prevDate={prev}
+                entries={day.filter((e) => e.meal === m.id && e.foodId !== CHAI_ID)}
+                yesterday={yesterday.filter((e) => e.meal === m.id && e.foodId !== CHAI_ID)}
+              />
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
@@ -162,20 +168,25 @@ function GoalStat({ goal, onSave }: { goal: number; onSave: (kcal: number) => vo
 
 function TodaySkeleton() {
   return (
-    <div className="space-y-4 lg:grid lg:grid-cols-[400px_minmax(0,1fr)] lg:gap-8 lg:space-y-0">
-      <div className="space-y-4">
-        <div className="skeleton h-28" />
-        <div className="skeleton h-16" />
-        <div className="skeleton h-[26rem]" />
-        <div className="grid grid-cols-2 gap-3">
+    <>
+      <div className="mb-4 min-h-[3.6rem] lg:mb-7 lg:min-h-[2.6rem]">
+        <div className="skeleton h-7 w-2/3 lg:h-9 lg:w-1/2" />
+      </div>
+      <div className="space-y-4 lg:grid lg:grid-cols-[400px_minmax(0,1fr)] lg:gap-8 lg:space-y-0">
+        <div className="space-y-4">
           <div className="skeleton h-28" />
-          <div className="skeleton h-28" />
+          <div className="skeleton h-16" />
+          <div className="skeleton h-[26rem]" />
+          <div className="grid grid-cols-2 gap-3">
+            <div className="skeleton h-28" />
+            <div className="skeleton h-28" />
+          </div>
+          <div className="skeleton h-20" />
         </div>
-        <div className="skeleton h-20" />
+        <div className="space-y-4 md:grid md:grid-cols-2 md:gap-4 md:space-y-0 lg:block lg:space-y-4 lg:pt-24 xl:grid xl:space-y-0">
+          {[0, 1, 2, 3].map((i) => <div key={i} className="skeleton h-24" />)}
+        </div>
       </div>
-      <div className="space-y-4 md:grid md:grid-cols-2 md:gap-4 md:space-y-0 lg:block lg:space-y-4 lg:pt-24 xl:grid xl:space-y-0">
-        {[0, 1, 2, 3].map((i) => <div key={i} className="skeleton h-24" />)}
-      </div>
-    </div>
+    </>
   );
 }

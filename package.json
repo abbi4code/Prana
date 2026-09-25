@@ -12,7 +12,8 @@
     "db:push": "sh scripts/supabase.sh db",
     "auth:push": "sh scripts/supabase.sh auth",
     "env:keys": "sh scripts/supabase.sh keys",
-    "eval:parse": "node --no-warnings scripts/eval-parse.mts"
+    "eval:parse": "node --no-warnings scripts/eval-parse.mts",
+    "greetings": "node scripts/build-greetings.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.117.1",

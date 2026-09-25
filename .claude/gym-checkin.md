@@ -1,6 +1,6 @@
 # Gym check-in with location verification
 
-Status: **Phases 1–3 built 2026-09-25** (check-in/out + timer + offline/guest fallback; location consent, permission flow, server verification; gym location via current location + Leaflet/OSM map, radius). Migrations `…130000_gym_checkin`, `…140000_location_consent` pushed. Phase 4 next. Decision: **D30** in [decisions.md](decisions.md).
+Status: **All four phases built 2026-09-25** (check-in/out + timer + offline/guest fallback; location consent, permission flow, server verification; gym location via current location + Leaflet/OSM map, radius); nearby banner, lazy auto-close, 20-min minimum, visits count as workout days). Migrations `…130000_gym_checkin`, `…140000_location_consent`, `…150000_gym_autoclose` pushed. Remaining: owner's real-device tests; native geofencing later. Decision: **D30** in [decisions.md](decisions.md).
 Part 1 is the owner's spec (kept as given). Part 2 maps it onto Prana and lists the conflicts. Part 3 lists the open questions.
 
 ---
@@ -141,6 +141,17 @@ Nothing location-related exists yet (no geolocation, permissions or maps code).
 - **Gym sheet** (`GymSheet.tsx`, lazy-loaded): name, **"I'm at my gym right now"** (one high-accuracy reading; turns the setting on), **Leaflet + OpenStreetMap map** (`GymMap.tsx`: tap or drag the jamun pin, radius circle, dashed accuracy circle, tiles inverted in dark mode, attribution kept, `data-vaul-no-drag`), radius slider 100–300 m, consent toggle. Leaflet (~42 KB gzip) loads only when the sheet opens.
 - **Tests**: Node (verify/judge); Chrome with simulated GPS (setup via current location, radius, blocked permission → map fallback, both themes, phone + desktop); signed-in screens with a fake local session + mocked API (explainer → too far → check in anyway → not verified; verified; blocked; fuzzy). Real-device tests (Android + iPhone) still to do by the owner.
 
-### Next
-- Phase 4: nearby banner (on the phone, only when consent is on and permission already granted), auto-close (3 h → last activity or start + 1:30), min 20 min, a counted visit makes the day a workout day (Q7), unverified tag in lists.
+### Phase 4 (2026-09-25)
+- **Lazy auto-close** (no cron): `gym_auto_close(user, 180, 90)` runs at the start of every gym API call (`/active` on every app open, check-in, check-out). A visit open > 3 h ends at the **last exercise logged during it** (`workouts.data.visitId`, synced), else **start + 1:30**, never past 3 h; status `auto_closed`, `auto_close` event. "Done" tapped after 3 h uses this rule instead of the late tap. Replies carry `autoClosed` → toast "Your gym visit from 7:04 pm was closed automatically (1 h 30 min)" with **Fix end**.
+- **Fix end**: `PATCH /api/gym/visit` → `gym_set_end` (auto-closed visits only; after the start, within 3 h, not in the future; `end_corrected` event, new type in migration `…150000_gym_autoclose`). UI: pencil on the visit row → "Left at [time]" → Save.
+- **Phone-only visits** (offline/guest) follow the same rule locally (`closeStaleLocal`, on app open/foreground).
+- **Minimum 20 min** (`MIN_VISIT_MINUTES`): shorter visits don't count (struck through, "under 20 min, doesn't count").
+- **Counted visit = workout day** (Q7): `workoutDay(..., visited)`; visit days also start the workout/global streaks and get dots on the Workout week strip. No separate visit streak.
+- **Nearby banner** (`lib/gym/nearby.ts`, `NearbyBanner.tsx`): on app open / foreground, only if consent is on, a gym location exists, no active visit, not snoozed (4 h per gym), not within 60 min of a finished visit, and the permission is already **granted** (never on "prompt"/"unknown"). One cheap reading (no high accuracy, ≤ 5 min old), distance worked out **on the phone**; nothing is sent. "Check in" snoozes, opens the Workout tab and runs the normal server-verified check-in.
+- **Recent visits** on the Gym card: last 3 with day, duration, times, verified / not verified / auto-closed / on this phone tags; "N visits this month" counts only 20+ min visits.
+- **Tests**: SQL (11 checks, rolled back: 1 h left open, no exercise → +1:30, last exercise at 55 min → 55, cap at 3 h, idempotent, events, fix end valid/future/before start/real check-out refused); Node (visited workout day, 20-min rule, visit tags, streak from visits alone); Chrome (banner → check in → timer; zero geolocation calls on "prompt" or consent off; stale phone visit closed at 50 min; auto-close toast → Fix end → PATCH; 3-day workout streak from visits alone).
+
+### Still to do
+- Owner: real Android + iPhone tests (first permission, denied, indoor reading, close mid-visit and reopen, double tap, nearby banner after granting).
+- Future (not now): native app geofencing into `gym_events` (`native_geofence`) + a session builder.
 - Owner: test on one Android phone and one iPhone (first-time permission, denied, indoor reading, close mid-session and reopen, double tap).

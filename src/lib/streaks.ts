@@ -79,9 +79,11 @@ export function computeStreaks(kcalByDay: Map<string, number>, goal: number, tod
 
 /**
  * Workout day (D27): with a daily burn goal, hit = burned at least the goal; without one, hit = any workout logged.
+ * A counted gym visit (≥ MIN_VISIT_MINUTES, D30) is always a hit.
  * A missed planned rest day is "rest", so it never breaks the streak.
  */
-export function workoutDay(logged: boolean, burned: number, burnGoal: number | null, restDay: boolean): Judged {
+export function workoutDay(logged: boolean, burned: number, burnGoal: number | null, restDay: boolean, visited = false): Judged {
+  if (visited) return "hit"; // a counted gym visit (D30) makes it a workout day, whatever the burn
   if (logged && (burnGoal == null || burned >= burnGoal)) return "hit";
   return restDay ? "rest" : "miss";
 }

@@ -14,3 +14,11 @@ export const MIN_VISIT_MINUTES = 20;
 /** Per-user limits on check-in / check-out calls. */
 export const RATE_PER_MINUTE = 12;
 export const RATE_PER_DAY = 120;
+/** A forgotten visit with no logged exercise ends this long after it started (owner's default). */
+export const FORGOTTEN_DEFAULT_MINUTES = 90;
+/** Nearby banner: don't show again for the same gym for this long after it's dismissed or used. */
+export const NEARBY_SNOOZE_HOURS = 4;
+/** Nearby banner: a location this recent is good enough (cheap reading, spares battery). */
+export const NEARBY_MAX_AGE_MS = 5 * 60_000;
+/** Nearby banner: not right after a visit ended (you're probably walking out). */
+export const NEARBY_AFTER_VISIT_MINUTES = 60;

@@ -2,13 +2,11 @@
 
 import { useState } from "react";
 import { motion } from "motion/react";
-import { Dumbbell, Flame, Moon, Snowflake, Target, Trophy } from "lucide-react";
+import { Moon, Target } from "lucide-react";
 import { Burst, useGoalHits } from "@/components/Burst";
 import { RollingNumber } from "@/components/RollingNumber";
-import { MAX_FREEZES, FREEZE_EVERY } from "@/lib/streaks";
 import { useStore, useUI } from "@/lib/store";
 import type { Fitness } from "@/lib/types";
-import { useFitnessStreaks } from "@/lib/useWorkouts";
 
 /** Big "burned" number, bar toward the optional daily burn goal, time and sets. */
 export function BurnSummary({ date, kcal, minutes, sets, rest }: { date: string; kcal: number; minutes: number; sets: number; rest: boolean }) {
@@ -48,7 +46,7 @@ export function BurnSummary({ date, kcal, minutes, sets, rest }: { date: string;
         ) : null}
       </div>
       <p className="mt-3 text-[11px] leading-relaxed text-faint">
-        Estimates (about ±25%): calories above resting only, from the Compendium of Physical Activities 2024. Kept separate from your food goal.
+        Estimates (roughly ±30%), calories above resting only. Lifts: measured energy per rep, so weight and reps count and rest doesn&apos;t. Cardio: Compendium of Physical Activities 2024. Kept separate from your food goal.
       </p>
     </section>
   );
@@ -59,58 +57,6 @@ function Stat({ value, label }: { value: number; label: string }) {
     <div>
       <p className="font-display text-xl font-semibold tabular">{value}</p>
       <p className="text-[11px] font-bold uppercase tracking-wider text-faint">{label}</p>
-    </div>
-  );
-}
-
-export function WorkoutStreakCard() {
-  const { workout, today, started } = useFitnessStreaks();
-  const todayOn = workout.status.get(today) === "hit";
-  const { current, best, freezes, hits } = workout;
-  return (
-    <section className="card relative overflow-hidden p-5">
-      <p className="text-xs font-bold uppercase tracking-wider text-muted">Workout streak</p>
-      <div className="mt-2 flex items-end gap-3">
-        <motion.span
-          animate={current ? { scale: [1, 1.12, 1], rotate: [0, -6, 0] } : {}}
-          transition={{ duration: 1.6, repeat: Infinity, repeatDelay: 2.4 }}
-          className={`grid size-14 place-items-center rounded-2xl ${current ? "bg-jamun/15 text-jamun" : "bg-surface-2 text-faint"}`}
-        >
-          <Dumbbell size={28} strokeWidth={2.2} />
-        </motion.span>
-        <div>
-          <p className="font-display text-5xl font-semibold leading-none">
-            <RollingNumber value={current} />
-          </p>
-          <p className="mt-1 text-sm text-muted">
-            {!started ? "Log a workout to start" : `workout ${current === 1 ? "day" : "days"}${todayOn ? ", today included" : ""}`}
-          </p>
-        </div>
-      </div>
-      <div className="mt-5 grid grid-cols-3 gap-2 text-center">
-        <Mini icon={<Trophy size={15} className="text-turmeric" />} value={best} label="best" />
-        <Mini icon={<Flame size={15} className="text-jamun" />} value={hits} label="workout days" />
-        <div className="rounded-2xl bg-surface-2 px-2 py-2.5">
-          <div className="flex justify-center gap-1">
-            {Array.from({ length: MAX_FREEZES }, (_, i) => (
-              <Snowflake key={i} size={17} className={i < freezes ? "text-sky" : "text-faint/50"} />
-            ))}
-          </div>
-          <p className="mt-1 text-[11px] text-muted">freezes</p>
-        </div>
-      </div>
-      <p className="mt-3 text-xs leading-relaxed text-faint">
-        A workout day = your burn goal reached (or any workout, if you haven&apos;t set one). Rest days you picked never break it. Every {FREEZE_EVERY} days earns a freeze.
-      </p>
-    </section>
-  );
-}
-
-function Mini({ icon, value, label }: { icon: React.ReactNode; value: number; label: string }) {
-  return (
-    <div className="rounded-2xl bg-surface-2 px-2 py-2.5">
-      <p className="flex items-center justify-center gap-1 font-display text-xl font-semibold tabular">{icon}{value}</p>
-      <p className="text-[11px] text-muted">{label}</p>
     </div>
   );
 }
@@ -143,7 +89,7 @@ export function WorkoutGoalsCard({ fitness }: { fitness: Fitness }) {
 
       <p className="mt-4 text-[11px] font-bold uppercase tracking-[0.14em] text-faint">Daily burn goal (optional)</p>
       <div className="mt-2 flex gap-2">
-        <label className="flex h-12 flex-1 items-center rounded-2xl border border-line-strong bg-surface-2 px-4 focus-within:border-jamun/60">
+        <label className="flex h-12 min-w-0 flex-1 items-center rounded-2xl border border-line-strong bg-surface-2 px-4 focus-within:border-jamun/60">
           <input
             value={goal}
             onChange={(e) => setGoal(e.target.value.replace(/[^\d]/g, ""))}
@@ -159,7 +105,7 @@ export function WorkoutGoalsCard({ fitness }: { fitness: Fitness }) {
             animate={{ opacity: 1, scale: 1 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => setFitness({ ...fitness, burnGoal: parsed })}
-            className="h-12 rounded-2xl bg-cream px-5 font-bold text-bg"
+            className="h-12 shrink-0 rounded-2xl bg-cream px-5 font-bold text-bg"
           >
             Save
           </motion.button>

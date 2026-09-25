@@ -1,11 +1,14 @@
 import data from "@/data/exercises.generated.json";
+import { liftBurn, repBurn, type Person } from "./burn";
 import { buildWorkoutMatcher, type WorkoutCandidate } from "./nl/workoutMatch";
-import type { Activity, Exercise, MuscleGroup, Workout } from "./types";
+import type { Activity, Exercise, MuscleGroup, RepGroup, Workout } from "./types";
 
 export { defaultKg } from "./nl/workoutDraft";
 
 export const EXERCISES = data.exercises as Exercise[];
 export const ACTIVITIES = data.activities as Activity[];
+/** Measured per-rep costs by movement (lifting burn v2), keyed by Exercise.rep.g */
+export const REP_GROUPS = data.repGroups as Record<string, RepGroup>;
 const EX_BY_ID = new Map(EXERCISES.map((e) => [e.id, e]));
 const ACT_BY_ID = new Map(ACTIVITIES.map((a) => [a.id, a]));
 
@@ -155,3 +158,12 @@ export function setsSummary(w: Pick<Workout, "sets">, ex?: Pick<Exercise, "load"
   return sets.map((s) => `${fmtKg(s.kg)}×${s.reps}`).join(" · ");
 }
 const fmtKg = (kg: number) => (Number.isInteger(kg) ? String(kg) : kg.toFixed(1));
+
+/**
+ * Calories for logged sets: the measured per-rep model (v2) when the exercise maps to a measured movement,
+ * otherwise time × MET. `burn` is stored on the workout so it's clear which model a log used.
+ */
+export function exerciseBurn(ex: Exercise, sets: Workout["sets"] & object, restSec: number, intense: boolean, p: Person) {
+  if (ex.rep) return { ...repBurn(ex, REP_GROUPS[ex.rep.g], sets, restSec, p), burn: "rep" as const };
+  return { ...liftBurn(ex, sets, restSec, intense, p), burn: undefined };
+}

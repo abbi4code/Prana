@@ -32,8 +32,9 @@ Working MVP+ on GitHub (`abbi4code/Prana`, public). Built:
 - **Natural-language + voice logging** for food **and workouts** ("2 roti aur dal for dinner", "bench 3x10 60kg aur 20 min walk", "kal raat…" → one confirm card → log), signed-in users, via `/api/food/parse` + OpenAI `gpt-6-luna`. See [nl-logging.md](nl-logging.md). Eval 84/84.
 - **"Add anything"** (D29): one search bar on Today (+ sidebar, / or ⌘K) for food and workouts; + adds exactly what the row shows (last portion / last session) with Undo; sentences + voice in the same box.
 - **Workouts** (D27, [workouts.md](workouts.md)): Workout tab, 211 exercises with photos (free-exercise-db), sets × reps × kg, 20 cardio/sport activities, calorie-burn estimate (Compendium + ACSM, minus resting), Today Eaten · Burned · Net · Goal (goal editable inline), workout + global "Prana" streaks with user-picked rest days.
-- **Gym check-in** phases 1–3 (D30, [gym-checkin.md](gym-checkin.md)): gym sheet with current location + Leaflet/OSM map + radius; "I'm at the gym" / Done with a live timer; location consent + explainer, server-side distance verification (verified / not verified); offline + guest fallback. Phase 4 (nearby banner, auto-close) next.
-- Supabase: 8 migrations pushed (latest `20260925140000_location_consent`).
+- **Gym check-in** phases 1–3 (D30, [gym-checkin.md](gym-checkin.md)): gym sheet with current location + Leaflet/OSM map + radius; "I'm at the gym" / Done with a live timer; location consent + explainer, server-side distance verification (verified / not verified); offline + guest fallback; nearby banner, lazy auto-close (fix end), visits count as workout days.
+- **Greetings** (D31, [greetings.md](greetings.md)): a desi hype/funny line on top of Today, picked for the moment (streak, back after a break, at the gym, rest day…), no repeats for 80 picks, tap for another. Batches 1–4 in (1,125 lines, every time of day); batches 5–7 (moments: streak, welcome back, at gym, rest day…) to generate.
+- Supabase: 9 migrations pushed (latest `20260925150000_gym_autoclose`).
 
 **Next up**: workouts phase 2 (routines, rest timer, PRs), then the roadmap ([features.md](features.md) / [future.md](future.md)): home vs restaurant oil toggle, hidden-calorie chips (+ghee, +sugar), fried-food fix (Q4), weekly Wrapped, calorie bank, festival/fasting modes, barcode scan.
 
@@ -42,13 +43,14 @@ Working MVP+ on GitHub (`abbi4code/Prana`, public). Built:
 | File | What's in it |
 |---|---|
 | [architecture.md](architecture.md) | **How the code works**: data flow, store, sync, theming, food pipeline, checklists for common changes, gotchas, how to verify |
-| [decisions.md](decisions.md) | All decisions D01–D28 with reasons (stack, data model, units, design, UX, streak rules, thalis…) |
+| [decisions.md](decisions.md) | All decisions D01–D31 with reasons (stack, data model, units, design, UX, streak rules, thalis…) |
 | [features.md](features.md) | Feature list by phase with status |
 | [future.md](future.md) | Open questions, backlog, parked ideas, change log |
 | [data.md](data.md) | Food data: files, sources actually used, rules, review results, known gaps |
 | [setup-auth.md](setup-auth.md) | Supabase + Google sign-in setup (done; keep for reference and redeploys) |
 | [nl-logging.md](nl-logging.md) | Natural-language + voice logging (food + workouts): owner's spec, architecture, as-built files, eval, odd-input behaviour |
-| [gym-checkin.md](gym-checkin.md) | Gym check-in (D30): owner's spec, mapping onto Prana, answers, as-built phases 1–3, phase 4 next |
+| [gym-checkin.md](gym-checkin.md) | Gym check-in (D30): owner's spec, mapping onto Prana, answers, as-built phases 1–4 |
+| [greetings.md](greetings.md) | Today greeting (D31): why hardcoded + context-picked, picking rules, data pipeline, **the browser-Claude prompt** for new batches |
 | [workouts.md](workouts.md) | Workouts (built, phase 1): exercise library + photos, burn model and its sources, streak rules, data pipeline, phases 2–3 |
 
 ## Commands
@@ -59,6 +61,7 @@ npm run build        # production build (also type-checks)
 npm run lint
 npm run foods        # rebuild src/data/foods.generated.json after editing data/*.json
 npm run exercises    # rebuild src/data/exercises*.generated.json after editing data/exercises*.json / burn-model.json
+npm run greetings    # validate data/greetings/*.json + rebuild src/data/greetings.generated.json
 node scripts/import-exercise-db.mjs   # fetch free-exercise-db muscles + photos (WebP via cwebp) for new exercises
 node scripts/import-extra.mjs /path/to/INDB.xlsx   # regenerate data/foods-extra.json (see data.md)
 npm run db:push      # push supabase/migrations to the hosted project (reads .env)

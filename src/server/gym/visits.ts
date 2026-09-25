@@ -1,5 +1,5 @@
 import "server-only";
-import { RATE_PER_DAY, RATE_PER_MINUTE } from "@/lib/gym/config";
+import { AUTO_CLOSE_HOURS, FORGOTTEN_DEFAULT_MINUTES, RATE_PER_DAY, RATE_PER_MINUTE } from "@/lib/gym/config";
 import type { GymResponse } from "@/lib/gym/schema";
 import { judge, type Judgement, type LocationStatus } from "@/lib/gym/verify";
 import { rowToVisit, type VisitRow } from "@/lib/sync/rows";
@@ -13,6 +13,19 @@ export const json = (body: unknown, status = 200, headers: Record<string, string
 
 export const reply = (visit: VisitRow | null, extra: Partial<GymResponse> = {}) =>
   json({ visit: visit ? rowToVisit(visit) : null, serverNow: Date.now(), ...extra } satisfies GymResponse);
+
+/**
+ * Lazy auto-close (phase 4, no cron): every gym call first closes a visit left open longer than
+ * AUTO_CLOSE_HOURS. Ends at the last exercise logged during it, else start + FORGOTTEN_DEFAULT_MINUTES.
+ */
+export async function autoClose(userId: string) {
+  const { data, error } = await supabaseAdmin().rpc("gym_auto_close", {
+    p_user: userId, p_after_minutes: AUTO_CLOSE_HOURS * 60, p_default_minutes: FORGOTTEN_DEFAULT_MINUTES,
+  });
+  if (error) throw new Error(`auto-close: ${error.message}`);
+  const v = (data as { visit: VisitRow | null }).visit;
+  return v ? rowToVisit(v) : undefined;
+}
 
 /** Per-user limit on check-in/out calls. Returns a 429 response when over, else null. */
 export async function rateLimited(userId: string): Promise<Response | null> {
@@ -28,6 +41,8 @@ export async function callGym<T>(fn: string, args: Record<string, unknown>): Pro
   if (!error) return { data: data as T };
   if (error.message.includes("gym_not_found")) return { res: json({ error: "gym_not_found" }, 404) };
   if (error.message.includes("bad_time")) return { res: json({ error: "bad_time" }, 400) };
+  if (error.message.includes("visit_not_found")) return { res: json({ error: "visit_not_found" }, 404) };
+  if (error.message.includes("not_editable")) return { res: json({ error: "not_editable" }, 409) };
   throw new Error(`${fn}: ${error.message}`);
 }
 

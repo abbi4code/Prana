@@ -3,7 +3,7 @@
 import { CheckOutBody } from "@/lib/gym/schema";
 import type { VisitRow } from "@/lib/sync/rows";
 import { requestUser } from "@/server/auth";
-import { activeVisitRow, callGym, json, rateLimited, reply, serverError, serverJudge } from "@/server/gym/visits";
+import { activeVisitRow, autoClose, callGym, json, rateLimited, reply, serverError, serverJudge } from "@/server/gym/visits";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -18,6 +18,9 @@ export async function POST(req: Request) {
     if (limited) return limited;
 
     const { offline, location, locationStatus } = body.data;
+    // "Done" tapped hours later: the forgotten-visit rule decides the end, not the late tap
+    const autoClosed = await autoClose(user.id);
+    if (autoClosed) return reply(null, { autoClosed });
     const active = offline ? null : await activeVisitRow(user.id);
     if (!offline && !active) return reply(null);
     const j = offline ? { verification: "not_checked" as const, distanceM: null, accuracyM: null } : await serverJudge(user.id, active!.gym_id, locationStatus, location);

@@ -3,6 +3,8 @@
 import { useMemo } from "react";
 import { person, type Person } from "./burn";
 import { dayKey, parseDay } from "./dates";
+import { MIN_VISIT_MINUTES } from "./gym/config";
+import { counted, finishedVisits } from "./gym/visits";
 import { useStore } from "./store";
 import { dayStatus, globalDay, runStreak, workoutDay, type Judged, type RunResult } from "./streaks";
 import type { Profile, WeightLog, Workout } from "./types";
@@ -59,15 +61,22 @@ export function useFitnessStreaks() {
   const workouts = useStore((s) => s.workouts);
   const goal = useStore((s) => s.goals.kcal);
   const fitness = useStore((s) => s.fitness);
+  const visits = useStore((s) => s.visits);
+  const localVisits = useStore((s) => s.localVisits);
+  const pendingCheckout = useStore((s) => s.pendingCheckout);
   const today = dayKey();
   return useMemo(() => {
     const kcalByDay = new Map<string, number>();
     for (const e of entries) kcalByDay.set(e.date, (kcalByDay.get(e.date) ?? 0) + e.kcal);
     const burnByDay = new Map<string, number>();
     for (const w of workouts) burnByDay.set(w.date, (burnByDay.get(w.date) ?? 0) + w.kcal);
-    const first = [...burnByDay.keys()].filter((d) => d <= today).sort()[0] ?? null;
+    // gym visits of 20+ min (D30), on the local day they started
+    const visitDays = new Set<string>();
+    for (const v of finishedVisits(visits, localVisits, pendingCheckout)) if (counted(v, MIN_VISIT_MINUTES)) visitDays.add(dayKey(new Date(v.start)));
+    const first = [...burnByDay.keys(), ...visitDays].filter((d) => d <= today).sort()[0] ?? null;
 
-    const judgeWorkout = (d: string) => workoutDay(burnByDay.has(d), burnByDay.get(d) ?? 0, fitness.burnGoal, isRestDay(fitness.restDays, d));
+    const judgeWorkout = (d: string) =>
+      workoutDay(burnByDay.has(d), burnByDay.get(d) ?? 0, fitness.burnGoal, isRestDay(fitness.restDays, d), visitDays.has(d));
     const tracked = (judge: (d: string) => Judged): Run => {
       const status = new Map<string, Judged>();
       const r = runStreak(first, today, (d) => {
@@ -79,6 +88,6 @@ export function useFitnessStreaks() {
     };
     const workout = tracked(judgeWorkout);
     const global = tracked((d) => globalDay(dayStatus(kcalByDay.get(d) ?? 0, goal), judgeWorkout(d)));
-    return { today, started: !!first, burnByDay, kcalByDay, workout, global };
-  }, [entries, workouts, goal, fitness, today]);
+    return { today, started: !!first, burnByDay, kcalByDay, visitDays, workout, global };
+  }, [entries, workouts, goal, fitness, visits, localVisits, pendingCheckout, today]);
 }

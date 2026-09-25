@@ -5,9 +5,9 @@ import { AnimatePresence, motion } from "motion/react";
 import { ChevronLeft, Dumbbell, Mic, Minus, Plus, Scale, Search, Sparkles, TriangleAlert, UtensilsCrossed, X } from "lucide-react";
 import { FoodIcon } from "@/components/FoodIcon";
 import { RollingNumber } from "@/components/RollingNumber";
-import { DEFAULT_REST, cardioBurn, liftBurn } from "@/lib/burn";
+import { DEFAULT_REST, cardioBurn } from "@/lib/burn";
 import { addDays, dayKey, dayLabel } from "@/lib/dates";
-import { getActivity, getExercise, matchWorkout } from "@/lib/exercises";
+import { exerciseBurn, getActivity, getExercise, matchWorkout } from "@/lib/exercises";
 import { getFood, getUnit, matchFood, searchFoods } from "@/lib/foods";
 import { logCorrection } from "@/lib/nl/corrections";
 import { LOW_CONFIDENCE, confidenceOf, type Candidate } from "@/lib/nl/match";
@@ -125,7 +125,7 @@ export function ConfirmParse({ text, source, parsed, initialMeal, date, onBack, 
   const p = usePerson(logDate);
   const wlines = wrows.map((r) => {
     if (!r.pick || !p) return { r, est: null };
-    if (r.pick.kind === "lift" && r.lift) return { r, est: liftBurn(getExercise(r.pick.id)!, r.lift.sets, DEFAULT_REST, false, p) };
+    if (r.pick.kind === "lift" && r.lift) return { r, est: exerciseBurn(getExercise(r.pick.id)!, r.lift.sets, DEFAULT_REST, false, p) };
     if (r.pick.kind === "cardio" && r.cardio) return { r, est: cardioBurn(getActivity(r.pick.id)!, r.cardio, p) };
     return { r, est: null };
   });
@@ -145,7 +145,7 @@ export function ConfirmParse({ text, source, parsed, initialMeal, date, onBack, 
       if (!r.pick || !est) continue;
       if (r.pick.kind === "lift" && r.lift) {
         const ex = getExercise(r.pick.id)!;
-        workoutIds.push(addWorkout({ date: logDate, kind: "lift", refId: ex.id, name: ex.name, sets: r.lift.sets, restSec: DEFAULT_REST, intense: false, minutes: est.minutes, met: est.met, kcal: est.kcal }));
+        workoutIds.push(addWorkout({ date: logDate, kind: "lift", refId: ex.id, name: ex.name, sets: r.lift.sets, restSec: DEFAULT_REST, intense: false, minutes: est.minutes, met: est.met, kcal: est.kcal, ...("burn" in est && est.burn === "rep" ? { burn: "rep" as const } : {}) }));
       } else if (r.cardio) {
         const a = getActivity(r.pick.id)!;
         const { minutes, speedKmh, inclinePct, optionCode } = r.cardio;

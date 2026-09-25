@@ -27,7 +27,7 @@ src/app/
   template.tsx          page rise-and-fade on navigation
   page.tsx              Today
   workout/page.tsx      Workout tab: gym check-in card (D30), burn card, session list, workout streak, workout goals (D27)
-  api/gym/              check-in, check-out, active (D30): sign-in required, server-written visits
+  api/gym/              check-in, check-out, active, visit (fix end) (D30): sign-in required, server-written visits, lazy auto-close on every call
   progress/page.tsx     Prana (global) + food streak cards, year heatmap (food/workout/both), weight, 14-day calories
   me/page.tsx           goal calculator, goals, appearance, my foods, account + backup
   login/, auth/callback/  login screen (full-screen, no nav), OAuth return page
@@ -41,9 +41,9 @@ src/components/
   RollingNumber.tsx     odometer digits  ·  Burst.tsx particles + useGoalHits  ·  Toaster.tsx undo toasts
   log/                  LogSheet (add/edit/thali flows), FoodDetail, PortionVisual (katori/glass/pieces), CreateFood, NlLog + ConfirmParse + ConfirmWorkoutRow (NL confirm card, used by all three sheets), QuickAdd ("Add anything" sheet, D29)
   thali/                ThaliPlate (steel thali art), ThaliBuilder
-  today/                AddBar ("Add anything" + mic, D29), CalorieRing, MacroBars, DateStrip (+streak flame), QuickRow (chai/water), MealCard (swipe rows), BurnCard
-  workout/              WorkoutSheet (library, LiftDetail, CardioDetail), WorkoutList (swipe rows), WorkoutCards (burn, streak, goals), ExercisePhoto
-  progress/             StreakCard + PranaStreakCard, YearHeatmap
+  today/                AddBar ("Add anything" + mic, D29), CalorieRing, MacroBars, DateStrip (+streak flame), Greeting (D31), QuickRow (chai/water), MealCard (swipe rows), BurnCard
+  workout/              WorkoutWeek (week strip with streak marks + "Exercises" per day), WorkoutSheet (library, LiftDetail, CardioDetail), WorkoutList (swipe rows), WorkoutCards (burn, goals), ExercisePhoto
+  progress/             StreakShell (one layout for every streak card) + StreakCard / PranaStreakCard / WorkoutStreakCard, YearHeatmap (fluid squares)
   account/              GoogleButton, AccountCard (+ SyncStatus, Avatar)
 src/lib/
   types.ts              Food, FoodUnit, Entry, Goals, Profile, SavedMeal, ThaliItem, Category, UnitKind
@@ -55,6 +55,7 @@ src/lib/
   burn.ts               PURE burn maths (Compendium MET, ACSM walk/run, minus Mifflin resting burn)
   exercises.ts          exercise/activity catalog, filters, search, setsSummary, lazy how-to steps
   gym/                  D30 check-in: config (thresholds), visits + verify (pure: Haversine, judge), location (browser permission/reading), schema (Zod, both sides), api (fetch + skew + offline flush), actions
+  greet.ts              PURE greeting picker (D31): moments, fits, pickGreeting, greetParts
   useWorkouts.ts        usePerson (body weight for a day), useDayWorkouts, lastTime, useFitnessStreaks (workout + global)
   auth.ts               useAuth, initAuth, signInWithGoogle, signOut, adoptLocalData
   sync/engine.ts        push → pull loop; sync/rows.ts PURE row mapping + merge rules
@@ -67,6 +68,7 @@ src/server/             server-only: env (Zod), supabase-admin (service role), a
 src/app/api/food/parse/ the parse route
 src/data/foods.generated.json   BUILT catalog; never edit by hand (+ food-prefer.generated.json)
 src/data/exercises.generated.json, exercise-steps.generated.json   BUILT by `npm run exercises`; never edit by hand
+src/data/greetings.generated.json   BUILT by `npm run greetings` from data/greetings/*.json (greetings.md)
 data/aliases.json       reviewed search names (add / remove / prefer) merged into the catalog
 evals/nl-parse.jsonl    60 parsing cases for `npm run eval:parse`
 data/foods.json, data/foods-extra.json   food sources (see data.md)
@@ -132,6 +134,8 @@ Phone < 768: bottom pill nav + round +, bottom sheet. `md`: wider single column,
 
 **Add exercises:** add to `data/exercises.json` (free-exercise-db id, aliases, group) or `data/exercises-extra.json` (no photo), run `node scripts/import-exercise-db.mjs` for new photos (needs `cwebp`), then `npm run exercises`. Burn class = `metFor` in `scripts/build-exercises.mjs`; METs are looked up by Compendium code in `data/burn-model.json` (never typed in). New cardio option → `OPTIONS` there.
 
+**Add greetings:** save the browser-Claude batch as `data/greetings/batch-N.json` (prompt in greetings.md) → `npm run greetings` → read the lines once for tone.
+
 **Add a screen/feature:** phone and desktop layouts, dark and light theme, skeleton while `!hydrated`, the store as the only data path, docs updated.
 
 ## Gotchas (all hit once already)
@@ -143,6 +147,8 @@ Phone < 768: bottom pill nav + round +, bottom sheet. `md`: wider single column,
 - **vaul:** give every sheet exactly one `Drawer.Title` (embedded panes skip theirs); add `data-vaul-no-drag` to anything draggable inside a sheet; keep `after:hidden`. The desktop modal animation overrides vaul's keyframes with `!important` (`.modal-pop` in globals.css) because vaul injects its CSS at runtime, after ours.
 - **Leaflet**: its CSS loads after ours, so override with doubled classes (`.leaflet-marker-icon.gym-pin`); SVG paths are styled by `className` (vars can't go in attributes); call `invalidateSize()` after a sheet animates in; mark the map `data-vaul-no-drag`.
 - **Location**: never call `getCurrentPosition` on load or when the app setting is off; `navigator.permissions` can throw (wrap it); test with puppeteer `overridePermissions` + `setGeolocation`.
+- **CSS grid tracks size to their content by default:** a sideways-scrolling row inside a `grid` item stretches the page. Use `grid-cols-1` (= `minmax(0,1fr)`) on single-column grids.
+- **Full-page puppeteer screenshots can catch Recharts mid-animation** (the capture resizes the viewport). Check charts with a normal viewport screenshot.
 - **Horizontal chip rows** scroll on phones but must wrap on desktop (`lg:flex-wrap`): sideways scrolling is awkward with a mouse.
 - **Next 16:** `LayoutProps`/`RouteContext` types come from `npx next typegen`; deleting a route leaves stale `.next/types` until typegen/build runs. Middleware is now `proxy.ts` (unused here).
 - **`supabase/config.toml` is deliberately minimal.** The CLI template would overwrite unrelated dashboard settings (email confirmations, MFA…). Never `supabase init --force`; preview with `config diff`.
