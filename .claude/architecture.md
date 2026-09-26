@@ -45,6 +45,7 @@ src/components/
   thali/                ThaliPlate (steel thali art), ThaliBuilder
   today/                AddBar ("Add anything" + mic, D29), CalorieRing, MacroBars, DateStrip (+streak flame), Greeting (D31), QuickRow (chai/water), MealCard (swipe rows), BurnCard
   workout/              Routines + RoutineSheet (D34: cards, checklist, builder, picker), WorkoutWeek (week strip with streak marks + "Exercises" per day), WorkoutSheet (library, LiftDetail, CardioDetail), WorkoutList (swipe rows), ActivityRings (burn / Move / Strength dial, D33), MuscleMap (D41), RestTimer (D40), WorkoutCards (goals), ExercisePhoto
+  akhada/               Akhada (D46–D49): Profile (gate, consent/edit, avatar), Leaderboard (+ Trained today), People (person / friends / inbox sheets, CheerButton), Challenges (tab, create, detail, Results), Duels (block, picker, DuelView), AkhadaCard (Me)
   wrapped/              Weekly Wrapped (D42): WrappedViewer (stories), WrappedCards, WrappedEntry (Today banner, Progress card)
   progress/             StreakShell (one layout for every streak card) + StreakCard / PranaStreakCard / WorkoutStreakCard, YearHeatmap (fluid squares)
   account/              GoogleButton, AccountCard (+ SyncStatus, Avatar)
@@ -65,6 +66,8 @@ src/lib/
   burn.ts               PURE burn maths (Compendium MET, ACSM walk/run, minus Mifflin resting burn)
   exercises.ts          exercise/activity catalog, filters, search, setsSummary, lazy how-to steps
   gym/                  D30 check-in: config (thresholds), visits + verify (pure: Haversine, judge), location (browser permission/reading), schema (Zod, both sides), api (fetch + skew + offline flush), actions, gyms (currentGym: newest, never gyms[0]), places (search contract, Zod) + placesApi
+  social/               Akhada client: api.ts (typed RPCs + failText), state.ts (profile store + social_sync on open, useRemote cache, avatars, resume after sign-in, trophy cache for badges)
+  akhadaShare.ts        result / duel share cards (canvas, reuses wrappedShare helpers)
   wrapped.ts            PURE Weekly Wrapped (D42): week maths, stats, persona; useWrapped.ts feeds it; wrappedShare.ts draws the share image
   greet.ts              PURE greeting picker (D31): moments, fits, pickGreeting, greetParts
   useWorkouts.ts        usePerson (body weight for a day), useDayWorkouts, lastTime, useFitnessStreaks (workout + global)
@@ -173,6 +176,11 @@ Phone < 768: bottom pill nav + round +, bottom sheet. `md`: wider single column,
 - **Toasts sit above sheets**, and a tap outside a sheet closes it: a toast over a sheet's lower part eats taps (and closes the sheet) for its 4.5 s. Browser tests wait for it to clear.
 - **Esc closes a vaul sheet from a capture listener** (Radix), so an input's `stopPropagation` is too late. A field that clears itself on Esc sets `data-escape-clears` (only while it has something to clear); `Sheet.tsx` then keeps the sheet open.
 - **Headless Chrome paints sheets late:** a screenshot within ~2 s of opening one can show only the Leaflet map on black. Wait ~2.5 s before screenshots (the DOM is already there for assertions).
+- **RLS without an update policy doesn't error:** a user's UPDATE just matches 0 rows. Test that nothing changed, not that it failed.
+- **NULL in PL/pgSQL IF checks:** `if not (a or p_code = c.join_code)` is NULL (so skipped) when `p_code` is null. Wrap access checks in `coalesce(…, false)`; this once let anyone join invite-only challenges (caught by the SQL tests).
+- **`full` is a reserved word** in Postgres: not usable as a parameter name.
+- **Name filters vs Indian names:** plain substring bans hit Shital, Nazia, Gandhi, Chodankar; keep the banned list in `social_banned_terms` free of such collisions and test real names.
+- **Devanagari + letter-spacing:** tracking splits conjuncts (अखाड़ा → अ खा ड़ा). Hindi text never gets `tracking-*` or `uppercase`.
 - **Stale local servers:** a previous `next start` on the same port serves old chunk hashes (500s). Kill the port before restarting.
 
 ## Verifying changes
@@ -183,3 +191,4 @@ Phone < 768: bottom pill nav + round +, bottom sheet. `md`: wider single column,
    - Seed data before load: `localStorage.setItem("ct-v1", JSON.stringify({ state: { guest: true, entries: [...] }, version: 1 }))` (`guest: true` skips the login gate).
    - Theme: `localStorage["prana-theme"] = "light"`.
    - Watch `pageerror`/console errors.
+4. SQL (migrations, security-definer functions): replay every migration on **PGlite** in the scratchpad (`npm i @electric-sql/pglite` there, not in the project) with a stub `auth` schema (`auth.users`, `auth.uid()` from `request.jwt.claim.sub`) and the roles `anon` / `authenticated` / `service_role`; run calls with `set role authenticated` + the claim so RLS applies. For UI tests, answer the app's Supabase RPC requests from PGlite in puppeteer's request interception (with CORS headers + OPTIONS). See social.md "Tests".

@@ -39,7 +39,8 @@ Working MVP+ on GitHub (`abbi4code/Prana`, public). Built:
 - **Achievements** (D38): own menu ("Awards" tab): 57 habit badges (bronze → diamond, derived from history) + the PR list; unlock banners.
 - **Weekly Wrapped** (D42, [engagement.md](engagement.md)): Monday–Sunday stories from Sunday 6 pm, share image drawn on the device. Festival days (D43) + plan-ahead calorie bank (D44) decided, not built.
 - **BMR** (D45): "Your energy" in Me (live resting burn + how the goal is built), goal refresh nudge when weight moves it, resting burn on Progress.
-- Supabase: 10 migrations pushed (latest `20260925160000_routines`). **Not pushed yet:** `20260925170000_gym_switch`, `20260925171000_place_search` (push before running the new client against the hosted DB: sync sends `user_gyms.place`).
+- **Akhada** (D46, D47, [social.md](social.md)): opt-in profiles, friends + invite links, block/report, inbox, leaderboard (active days → effort → verified, server-computed), challenges (lift / days / minutes / team; ✓ verified, big-jump flag, disputes). Replaced the Awards tab (Leaderboard · Challenges · Awards). Part 2 (D48, D49): weekly duels, frozen results + notifications, Akhada badges, share cards, Shabaash kudos + nudges.
+- Supabase: 10 migrations pushed (latest `20260925160000_routines`). **Not pushed yet:** `20260925170000_gym_switch`, `20260925171000_place_search`, `20260927100000_social`, `20260927101000_challenges`, `20260927120000_duels_results_kudos` (push before running the new client against the hosted DB: sync sends `user_gyms.place`).
 
 **Next up**: rest timer, then the roadmap ([features.md](features.md) / [future.md](future.md)): home vs restaurant oil toggle, hidden-calorie chips (+ghee, +sugar), fried-food fix (Q4), festival days (D43) → calorie bank (D44) → fasting, then barcode scan + thali photo (decisions pending, [smart-logging.md](smart-logging.md)).
 
@@ -59,6 +60,7 @@ Working MVP+ on GitHub (`abbi4code/Prana`, public). Built:
 | [workouts.md](workouts.md) | Workouts (built, phase 1): exercise library + photos, burn model and its sources, streak rules, data pipeline, phases 2–3 |
 | [engagement.md](engagement.md) | Weekly Wrapped, festival days, calorie bank, fasting: owner decisions, research (vrat foods with INDB/IFCT codes, calendars, IF safety copy), as-built |
 | [smart-logging.md](smart-logging.md) | Barcode scan + thali photo: research (scanner libs, Open Food Facts, FSSAI labels, vision accuracy + cost) and the decisions still needed |
+| [social.md](social.md) | Leaderboard + challenges: owner's ask, research (Apple/Strava/Duolingo, motivation, anti-cheat, DPDP), proposed design, decisions |
 
 ## Commands
 

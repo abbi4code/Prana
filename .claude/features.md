@@ -109,6 +109,19 @@ Guiding rule: **logging fast beats everything.** People quit trackers because lo
 - **Login** `/login`, **OAuth return** `/auth/callback`.
 - **Weekly Wrapped** (D42): banner on Today (Sunday evening → Tuesday), card on Progress, full-screen stories.
 
+## v3: Akhada (D46, D47, see social.md)
+
+| Feature | Notes | Status |
+|---|---|---|
+| Opt-in profile | Consent card (what's shared / never shared), display name + @handle (live check, abuse filter), avatar presets, listed or friends-only, 18+ | built |
+| Friends | @handle requests, invite links (friends at once), search, block, report, inbox | built |
+| Leaderboard | Friends / Everyone × this/last week, this/last month; active days → effort → verified days; streak shown; trust gate; server-computed | built |
+| Challenges | Lift target, gym days, active minutes, team goal; invite / link / open; ✓ verified, big-jump flag, disputes | built |
+| Weekly duels (D48) | 1v1, 7 days, best 6 days of effort, day-by-day face-off, rematch | built |
+| Results + badges (D49) | Settle 3 days after the end, podium + your place, notifications, Finisher / Champion / Duel master / Shabaash badges, share cards | built |
+| Kudos + nudges (D49) | 🔥 Shabaash on a friend's active day, 👋 nudge after 3 quiet days (opt-out) | built |
+| Leagues, squads, gym boards, video proof, push notifications, moderation screen | Next phases | planned |
+
 ## Explicitly not building (for now)
 
-Social feed · recipe pages. See [future.md](future.md).
+Social feed (Akhada has boards + challenges, no feed) · recipe pages. See [future.md](future.md).

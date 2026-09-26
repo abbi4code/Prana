@@ -52,6 +52,10 @@ When something changes, mark the old entry **Superseded by Dxx** instead of dele
 | D43 | Festival / shaadi days: a marked day is skipped by the food streak (neither adds nor breaks), max 4 a month, mark on the day or up to 2 days after | Decided (not built) | 2026-09-25 |
 | D44 | Calorie bank = plan ahead: pick a splurge day, the extra comes evenly off the other days of that week (never below a safe floor); streaks judge each day against its adjusted goal | Decided (not built) | 2026-09-25 |
 | D45 | Resting burn (BMR) shown: "Your energy" card in Me (live count + how the goal is built), goal refresh nudge when weight moves it ≥ 50 kcal, BMR on the Progress weight card, resting context in the workout logger | Decided (built) | 2026-09-27 |
+| D46 | Social leaderboard: opt-in (consent, chosen name + @handle, 18+), ranked by active days (cap 6/week, 26/month) → effort (% of a standard day, capped) → verified gym days; calories never ranked; computed only on the server; lives in a new **Akhada** tab (Leaderboard · Challenges · Awards) | Decided (built; migrations not pushed) | 2026-09-27 |
+| D47 | Challenges: 1:1 / group / open to everyone; lift targets need a real logged set of 1–5 reps (✓ when logged during a verified gym visit, else "self-reported"), impossible lifts blocked, big jumps flagged, members can dispute; video proof later | Decided (built; migrations not pushed) | 2026-09-27 |
+| D48 | Weekly duels: 1v1 with a friend, 7 days from the day after accepting; score = effort on your best 6 days (max 600); tie → verified gym days → draw; invites expire in 48 h; max 5 open | Decided (built; migration not pushed) | 2026-09-27 |
+| D49 | Results settle (frozen) 3 days after the last day, lazily on app open: notifications + Akhada badges (Finisher, Champion, Duel master, Shabaash); kudos once per friend per active day; nudges after 3 quiet days, once per 3 days, opt-out | Decided (built; migration not pushed) | 2026-09-27 |
 
 ---
 
@@ -355,6 +359,25 @@ Owner, 2026-09-27: "integrate BMR … plan where we will show this data … take
 - **Progress weight card:** "Resting burn ~1,690 · −39 kcal/day since 18 Aug".
 - **Workout logger footer:** "That's extra, on top of ~7 kcal your body burns resting anyway", explaining why burn numbers are lower than other apps (resting isn't counted twice).
 - Today is unchanged (owner's choice). No migration.
+
+## D46 — Social leaderboard (Akhada)
+Owner, 2026-09-27: "leaderboard … week, month … first each day streak (of the gym), then exercise they did each day, and calories they burn each day … find the best way possible". Research + full design: [social.md](social.md). Owner picked the recommended option on all four questions:
+- **Ranking:** active days → effort → verified gym days (not the original streak → exercises → calories): calories scale with body weight (heavier people would always win) and ranking them carries eating-disorder risk; "exercises done" rewards splitting a session. Active days capped (6/week, 26/month) so rest is never punished; effort = % of a standard training day, capped at 100 % per day; ties share a rank. The 🔥 streak is shown, not ranked.
+- **Visibility:** opt-in with a separate consent screen, chosen display name + @handle (not the Google name), 18+ (DPDP: consent to show data; no tracking of children). Public = active days, effort, streak, verified share only.
+- **Trust:** scores come only from server-side aggregates of synced rows (users can't write scores); guests never rank; logs synced > 48 h after the day don't count; hard caps; GPS-verified gym days are shown with ✓.
+- **Where:** the Awards tab becomes **Akhada** (अखाड़ा) with Leaderboard · Challenges · Awards.
+
+## D47 — Challenges
+Owner, 2026-09-27: "one person can put challenge … 100 kg deadlift with someone, or everyone". Kinds: lift target, active days, active minutes, a shared group goal; audiences: people you invite (friends or link) or open to everyone. **Lift proof (owner's pick):** a real logged set of 1–5 reps at or above the target; ✓ verified when logged during a GPS-verified gym visit, else "self-reported"; lifts above world-record level rejected, jumps > 15 % over your recent best flagged; members can dispute. Video proof is a later phase.
+
+## D48 — Weekly duels
+Owner, 2026-09-27: "1v1 weekly duels (Apple Watch style): pick a friend, whoever scores more effort in 7 days wins". Like Apple's competitions, a duel starts the day after it's accepted (nobody gets a head start) and scores are capped per day; here each day is the same effort (0–100) as the leaderboard, and only the **best 6 of the 7 days** count (max 600), so one rest day never costs anything (D46). Tie → more GPS-verified gym days; still equal → draw. Friends only, one open duel per pair, at most 5 open, invites expire after 48 h. Rematch in one tap.
+
+## D49 — Results, badges, kudos and nudges
+- **Settling:** logs may arrive up to 48 h late (D46), so a challenge or duel ending on day E shows "provisional" and becomes **final on E + 3**. `social_sync()` (called when the app opens) settles it: every member's value, done and **shared place** are frozen, members are notified, and later edits can't change it. No cron.
+- **Badges** (Awards → Akhada, same tiers engine as D38): Finisher (challenges completed), Champion (1st place, 2+ people; ties share), Duel master (duels won), Shabaash (days a friend cheered you). Fed by `social_trophies()`, cached on the device so Awards works offline; the existing unlock banner celebrates them.
+- **Share cards:** the result or the duel score as a 1080 × 1920 image, drawn on the device (no calories, no body weight).
+- **Kudos:** one "🔥 Shabaash" per friend per active day (today or yesterday). **Nudges:** only when a friend has had no active day for 3 days, at most once every 3 days per friend, and anyone can turn them off (Me → Akhada profile). Positive by design: no "you're falling behind" messages.
 
 ## D12 — Project docs
 Decisions, features, future changes and data notes live as separate md files in `.claude/`, indexed in [CLAUDE.md](CLAUDE.md).

@@ -7,6 +7,7 @@ import { FoodIcon } from "@/components/FoodIcon";
 import { AccountCard } from "@/components/account/AccountCard";
 import { EnergyCard } from "@/components/me/EnergyCard";
 import { YourGymCard } from "@/components/workout/YourGymCard";
+import { AkhadaCard } from "@/components/akhada/AkhadaCard";
 import { APP_NAME } from "@/lib/app";
 import { suggestGoals } from "@/lib/nutrition";
 import { useStore } from "@/lib/store";
@@ -36,6 +37,7 @@ export default function MePage() {
         <div className="space-y-4 lg:space-y-6">
           <GoalsCard key={JSON.stringify(goals)} goals={goals} />
           <YourGymCard />
+          <AkhadaCard />
           <AppearanceCard />
           <MyFoodsCard />
           <DataCard />

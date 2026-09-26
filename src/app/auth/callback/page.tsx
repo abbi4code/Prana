@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { LoaderCircle } from "lucide-react";
 import { useAuth } from "@/lib/auth";
+import { takeAfterLogin } from "@/lib/social/state";
 
 /** Google → Supabase → here with ?code=. The Supabase client exchanges it on load (PKCE). */
 export default function AuthCallbackPage() {
@@ -22,7 +23,8 @@ function Callback() {
   const error = params.get("error_description") ?? params.get("error");
 
   useEffect(() => {
-    if (status === "signedIn") router.replace("/");
+    // a join link opened before signing in continues where it was (Akhada paths only)
+    if (status === "signedIn") router.replace(takeAfterLogin() ?? "/");
   }, [status, router]);
 
   if (error || status === "signedOut" || status === "disabled")

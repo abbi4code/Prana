@@ -55,7 +55,7 @@ export function PrCelebration() {
   const open = () => {
     const tab = head?.kind === "pr" ? "#records" : "";
     next();
-    useUI.setState({ navTo: `/achievements${tab}` });
+    useUI.setState({ navTo: `/akhada?tab=awards${tab}` });
   };
 
   return (

@@ -9,6 +9,7 @@ import { brzycki, E1RM_MAX_REPS } from "./records";
 import { useStore } from "./store";
 import { useRecords } from "./useRecords";
 import { useStreaks } from "./useStreaks";
+import { useTrophies } from "./social/state";
 import { useFitnessStreaks, weightOn } from "./useWorkouts";
 
 const sorted = (list: Iterable<string>) => [...list].sort();
@@ -29,6 +30,7 @@ export function useBadges() {
   const food = useStreaks();
   const fit = useFitnessStreaks();
   const records = useRecords();
+  const trophies = useTrophies(useStore((s) => s.sync.userId));
 
   return useMemo(() => {
     const today = dayKey();
@@ -80,8 +82,9 @@ export function useBadges() {
     const facts: Facts = {
       foodBest: food.bestDates, workoutBest: fit.workout.bestDates, pranaBest: fit.started ? fit.global.bestDates : [],
       foodDays, onTargetDays, proteinDays, waterDays, weighDays, workoutDays, prSessions, routineSessions, visits: visitDays,
+      challengeWins: trophies.wins, challengeFinishes: trophies.finishes, duelWins: trophies.duels, kudosDays: trophies.kudos,
       specials: sp,
     };
     return evaluate(facts);
-  }, [entries, goals.p, water, weights, profile, workouts, savedMeals, routines, visits, localVisits, pendingCheckout, food, fit, records]);
+  }, [entries, goals.p, water, weights, profile, workouts, savedMeals, routines, visits, localVisits, pendingCheckout, food, fit, records, trophies]);
 }

@@ -17,10 +17,15 @@ export type Facts = {
   prSessions: string[];
   routineSessions: string[];
   visits: string[];
+  /** Akhada (D49): dates of challenges won / finished, duels won, days a friend said Shabaash (server results) */
+  challengeWins: string[];
+  challengeFinishes: string[];
+  duelWins: string[];
+  kudosDays: string[];
   specials: Partial<Record<SpecialId, string>>;
 };
 
-export type Group = "streaks" | "training" | "habits";
+export type Group = "streaks" | "training" | "habits" | "akhada";
 export type Family = { id: string; name: string; emoji: string; group: Group; blurb: string; unit: [string, string]; tiers: [number, number, number, number]; from: Exclude<keyof Facts, "specials"> };
 
 export const TIER_NAME = ["Bronze", "Silver", "Gold", "Diamond"] as const;
@@ -38,6 +43,10 @@ export const FAMILIES: Family[] = [
   { id: "protein", name: "Protein pro", emoji: "🥚", group: "habits", blurb: "Days you reached your protein goal", unit: ["day", "days"], tiers: [7, 30, 100, 200], from: "proteinDays" },
   { id: "water", name: "Hydrated", emoji: "💧", group: "habits", blurb: "Days with 8 glasses of water", unit: ["day", "days"], tiers: [7, 30, 100, 200], from: "waterDays" },
   { id: "weigh", name: "Check-in", emoji: "⚖️", group: "habits", blurb: "Days you logged your weight", unit: ["day", "days"], tiers: [7, 30, 100, 200], from: "weighDays" },
+  { id: "challenge-finisher", name: "Finisher", emoji: "🎖️", group: "akhada", blurb: "Challenges you completed", unit: ["challenge", "challenges"], tiers: [1, 3, 10, 25], from: "challengeFinishes" },
+  { id: "challenge-winner", name: "Champion", emoji: "👑", group: "akhada", blurb: "Challenges you won (first place, 2+ people)", unit: ["win", "wins"], tiers: [1, 3, 10, 25], from: "challengeWins" },
+  { id: "duel-winner", name: "Duel master", emoji: "⚔️", group: "akhada", blurb: "Weekly duels you won", unit: ["duel", "duels"], tiers: [1, 5, 15, 40], from: "duelWins" },
+  { id: "kudos", name: "Shabaash", emoji: "🙌", group: "akhada", blurb: "Days a friend cheered your workout", unit: ["day", "days"], tiers: [5, 25, 100, 250], from: "kudosDays" },
 ];
 
 export type SpecialId = "first-food" | "first-workout" | "early-bird" | "weekend" | "comeback" | "perfect-week" | "bw-bench" | "thali" | "routine-made";

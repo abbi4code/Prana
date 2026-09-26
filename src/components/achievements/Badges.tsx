@@ -104,6 +104,7 @@ const GROUPS: { id: Group | "special"; title: string; sub: string }[] = [
   { id: "streaks", title: "Streaks", sub: "Your best run ever counts, so a broken streak never takes a badge away" },
   { id: "training", title: "Training", sub: "Showing up, beating yourself, sticking to the plan" },
   { id: "habits", title: "Habits", sub: "The small daily things" },
+  { id: "akhada", title: "Akhada", sub: "Challenges, duels and cheers from friends. Join the Akhada to earn these" },
   { id: "special", title: "One-offs", sub: "Little moments worth a medal" },
 ];
 

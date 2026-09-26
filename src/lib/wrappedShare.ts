@@ -12,7 +12,7 @@ const H = 1920;
 
 type Tile = { big: string; small: string; tone: string };
 
-function tokens() {
+export function tokens() {
   const cs = getComputedStyle(document.documentElement);
   const v = (name: string) => cs.getPropertyValue(name).trim();
   return {
@@ -41,15 +41,15 @@ export function shareTiles(w: WrappedWeek, t: ReturnType<typeof tokens>): Tile[]
   return out.slice(0, 4);
 }
 
-const alpha = (ink: string, a: number) => `rgb(${ink} / ${a})`;
+export const alpha = (ink: string, a: number) => `rgb(${ink} / ${a})`;
 
-function roundRect(c: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, r: number) {
+export function roundRect(c: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, r: number) {
   c.beginPath();
   c.roundRect(x, y, w, h, r);
 }
 
 /** Wraps `text` to `maxW`, at most `maxLines` lines (last one gets "…"). Returns the lines. */
-function wrap(c: CanvasRenderingContext2D, text: string, maxW: number, maxLines: number) {
+export function wrap(c: CanvasRenderingContext2D, text: string, maxW: number, maxLines: number) {
   const words = text.split(" ");
   const lines: string[] = [];
   let line = "";

@@ -9,7 +9,7 @@ import { Avatar, SyncStatus } from "./account/AccountCard";
 import { APP_NAME } from "@/lib/app";
 import { mealForNow } from "@/lib/nutrition";
 import { useUI } from "@/lib/store";
-import { NAV_TABS } from "./BottomNav";
+import { NAV_TABS, isActive } from "./BottomNav";
 import { openQuickAdd } from "./log/QuickAdd";
 
 /** Desktop navigation (lg and up). Phones use BottomNav. */
@@ -61,7 +61,7 @@ export function Sidebar() {
 
       <nav className="mt-6 flex flex-col gap-1">
         {NAV_TABS.map(({ href, label, icon: Icon }) => {
-          const active = path === href;
+          const active = isActive(path, href);
           return (
             <Link
               key={href}

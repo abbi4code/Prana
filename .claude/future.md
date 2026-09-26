@@ -33,7 +33,7 @@
 
 ## Parked (not now)
 
-- Social feed / friends
+- Social feed (friends, boards and challenges are built: D46, D47)
 - Recipe pages
 - ~~Workout tracking~~: built 2026-09-24, see D27 / workouts.md. Step import from Google Fit / Apple Health still parked
 
@@ -79,3 +79,5 @@
 | 2026-09-25 | Weekly Wrapped (D42): `lib/wrapped.ts` + stories viewer + canvas share image; festival days (D43) and plan-ahead calorie bank (D44) decided; research for fasting (engagement.md) and barcode/photo logging (smart-logging.md) written up. No migration |
 | 2026-09-27 | BMR (D45): one shared Mifflin–St Jeor in `lib/energy.ts`; Me "Your energy" card (live since-midnight count, stacked goal bar, receipt), goal refresh nudge (Me + Progress, ≥ 50 kcal, calculator goals only, Undo), resting burn on the Progress weight card, resting context in the workout logger. No migration |
 | 2026-09-27 | Deployed on Vercel (prana-liart.vercel.app). Sign-in landed on localhost: the live URL wasn't in Supabase's redirect list, so `site_url` (localhost) was used. `config.toml` site_url + redirect URLs updated and pushed |
+| 2026-09-27 | Akhada (D46, D47): opt-in profiles, friends + invite links, block/report, inbox, server-computed leaderboard (active days → effort → verified), challenges (lift / days / minutes / team) with verify, flag and dispute; Awards moved into the Akhada tab. Migrations `…100000_social`, `…101000_challenges` **not pushed yet** |
+| 2026-09-27 | Akhada part 2 (D48, D49): weekly duels, lazy result settling (frozen places + notifications), Akhada badges in Awards, result share cards, Shabaash kudos + nudges with opt-out. Migration `…120000_duels_results_kudos` **not pushed yet** |

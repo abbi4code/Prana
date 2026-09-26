@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "motion/react";
-import { ChartLine, Dumbbell, House, Medal, Plus, UserRound } from "lucide-react";
+import { ChartLine, Dumbbell, House, Plus, Swords, UserRound } from "lucide-react";
 import { useUI } from "@/lib/store";
 import { mealForNow } from "@/lib/nutrition";
 
@@ -12,9 +12,12 @@ export const NAV_TABS = [
   { href: "/", label: "Today", short: "Today", icon: House },
   { href: "/workout", label: "Workout", short: "Workout", icon: Dumbbell },
   { href: "/progress", label: "Progress", short: "Progress", icon: ChartLine },
-  { href: "/achievements", label: "Achievements", short: "Awards", icon: Medal },
+  { href: "/akhada", label: "Akhada", short: "Akhada", icon: Swords },
   { href: "/me", label: "Me", short: "Me", icon: UserRound },
 ] as const;
+
+/** A tab is active on its page and its sub-pages (/akhada/c/…), except Today ("/") which matches only itself. */
+export const isActive = (path: string, href: string) => path === href || (href !== "/" && path.startsWith(`${href}/`));
 
 export function BottomNav() {
   const path = usePathname();
@@ -28,7 +31,7 @@ export function BottomNav() {
       <div className="pointer-events-auto mx-auto flex max-w-md items-center md:max-w-lg justify-between gap-3 px-4">
         <nav className="flex flex-1 items-center gap-1 rounded-full border border-line-strong bg-surface/80 p-1.5 shadow-2xl shadow-black/50 backdrop-blur-xl">
           {NAV_TABS.map(({ href, label, short, icon: Icon }) => {
-            const active = path === href;
+            const active = isActive(path, href);
             return (
               <Link
                 key={href}
