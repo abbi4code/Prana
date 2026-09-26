@@ -4,9 +4,10 @@
 project_id = "prana"
 
 [auth]
-site_url = "http://localhost:3000"
-# the app returns from Google to /auth/callback (src/app/auth/callback); add the deployed URL here later
-additional_redirect_urls = ["http://localhost:3000/**"]
+# Site URL = where Supabase sends you when a redirect isn't on the list below: the live site, never localhost.
+site_url = "https://prana-liart.vercel.app"
+# the app returns from Google to <current origin>/auth/callback (src/lib/auth.ts); every origin used must be listed
+additional_redirect_urls = ["https://prana-liart.vercel.app/**", "http://localhost:3000/**"]
 
 # Google sign-in (decision D18). Values come from .env via scripts/supabase.sh.
 [auth.external.google]

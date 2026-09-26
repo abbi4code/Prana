@@ -100,6 +100,11 @@ Note: Google deletes OAuth clients unused for 6 months (restorable for 30 days).
 3. You land back on Today. **Me** shows your name, photo and "Synced just now".
 4. Check: Supabase **Table Editor → food_logs**. Log a food in the app and it appears within ~2 seconds.
 
+## Deployed (2026-09-27)
+
+Live at **https://prana-liart.vercel.app**. `supabase/config.toml`: `site_url` = the live URL, `additional_redirect_urls` = live + localhost, pushed with `npm run auth:push` (only these 2 settings changed).
+Symptom if a domain is missing from that list: after Google you land on `localhost:3000/?code=…` (Supabase falls back to `site_url` and skips `/auth/callback`). A new domain (custom domain, another Vercel URL) → add `https://<domain>/**`, preview with `config diff`, then `auth:push`. Vercel preview deployments get random URLs, so sign-in only works on the listed ones.
+
 ## Later, when deploying (e.g. Vercel)
 
 Add the deployed address (e.g. `https://prana.vercel.app`) in three places:
