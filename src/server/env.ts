@@ -16,6 +16,8 @@ const Env = z.object({
   GEOAPIFY_API_KEY: z.string().min(10).optional(),
   PLACES_PER_MINUTE: z.coerce.number().int().positive().default(30),
   PLACES_PER_DAY: z.coerce.number().int().positive().default(300),
+  // admin panel (/admin, D51): comma-separated Google account emails. Empty = nobody is an admin
+  ADMIN_EMAILS: z.string().default(""),
 });
 
 let cached: z.infer<typeof Env> | null = null;

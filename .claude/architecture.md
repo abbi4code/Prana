@@ -29,6 +29,8 @@ src/app/
   workout/page.tsx      Workout tab: gym check-in card (D30), burn card, session list, workout streak, workout goals (D27)
   api/gym/              check-in, check-out, active, visit (fix end) (D30): sign-in required, server-written visits, lazy auto-close on every call
   api/places/search/    gym place search (D37): sign-in, rate limit, shared cache, provider behind an interface (Geoapify)
+  api/admin/            admin panel API (D51): me, stats?section=, users, user?id= (logged), reports (resolve); admin = ADMIN_EMAILS + Google, server-checked
+  admin/, admin/u/[id]/ admin panel pages (D51, admin.md)
   progress/page.tsx     Prana (global) + food streak cards, year heatmap (food/workout/both), weight, 14-day calories
   achievements/page.tsx badges (D38) + records (D36) tabs, summary hero
   me/page.tsx           goal calculator, goals, appearance, my foods, account + backup
@@ -46,6 +48,7 @@ src/components/
   today/                AddBar ("Add anything" + mic, D29), CalorieRing, MacroBars, DateStrip (+streak flame), Greeting (D31), QuickRow (chai/water), MealCard (swipe rows), BurnCard
   workout/              Routines + RoutineSheet (D34: cards, checklist, builder, picker), WorkoutWeek (week strip with streak marks + "Exercises" per day), WorkoutSheet (library, LiftDetail, CardioDetail), WorkoutList (swipe rows), ActivityRings (burn / Move / Strength dial, D33), MuscleMap (D41), RestTimer (D40), WorkoutCards (goals), ExercisePhoto
   akhada/               Akhada (D46–D49): Profile (gate, consent/edit, avatar), Leaderboard (+ Trained today), People (person / friends / inbox sheets, CheerButton), Challenges (tab, create, detail, Results), Duels (block, picker, DuelView), AkhadaCard (Me)
+  admin/                admin panel (D51): ui.tsx kit (Panel, Stat, Segmented, BarList, SplitBar, Ring), AdminGate, AdminLink, Overview, UsersTab, FoodTab, TrainingTab, SocialTab, SystemTab, UserDetail, UserDay, Corrections
   wrapped/              Weekly Wrapped (D42): WrappedViewer (stories), WrappedCards, WrappedEntry (Today banner, Progress card)
   progress/             StreakShell (one layout for every streak card) + StreakCard / PranaStreakCard / WorkoutStreakCard, YearHeatmap (fluid squares)
   account/              GoogleButton, AccountCard (+ SyncStatus, Avatar)
@@ -66,6 +69,7 @@ src/lib/
   burn.ts               PURE burn maths (Compendium MET, ACSM walk/run, minus Mifflin resting burn)
   exercises.ts          exercise/activity catalog, filters, search, setsSummary, lazy how-to steps
   gym/                  D30 check-in: config (thresholds), visits + verify (pure: Haversine, judge), location (browser permission/reading), schema (Zod, both sides), api (fetch + skew + offline flush), actions, gyms (currentGym: newest, never gyms[0]), places (search contract, Zod) + placesApi
+  admin/                admin client (D51): api.ts (fetch, 60 s cache, useIsAdmin, CSV/JSON download), types.ts, userModel.ts (member data through the app's own streak/PR rules)
   social/               Akhada client: api.ts (typed RPCs + failText), state.ts (profile store + social_sync on open, useRemote cache, avatars, resume after sign-in, trophy cache for badges)
   akhadaShare.ts        result / duel share cards (canvas, reuses wrappedShare helpers)
   wrapped.ts            PURE Weekly Wrapped (D42): week maths, stats, persona; useWrapped.ts feeds it; wrappedShare.ts draws the share image
@@ -78,7 +82,7 @@ src/lib/
   useTokens.ts, useMediaQuery.ts (useIsDesktop), app.ts (APP_NAME, TAGLINE)
   nl/                   natural-language logging: match, units, schema, prompt, request, ranking, workoutMatch, workoutDraft (PURE, node-runnable)
                         + client.ts, corrections.ts, useSpeech.ts (browser)
-src/server/             server-only: env (Zod), supabase-admin (service role), auth (getClaims), nl/{llm,cache,quota}, places/{provider,geoapify,cache}, rate (generic per-user limit: `consume_api_rate`)
+src/server/             server-only: env (Zod), supabase-admin (service role), auth (getClaims), nl/{llm,cache,quota}, places/{provider,geoapify,cache}, rate (generic per-user limit: `consume_api_rate`), admin/{auth,user} (D51)
 src/app/api/food/parse/ the parse route
 src/data/foods.generated.json   BUILT catalog; never edit by hand (+ food-prefer.generated.json)
 src/data/exercises.generated.json, exercise-steps.generated.json   BUILT by `npm run exercises`; never edit by hand
@@ -108,6 +112,7 @@ UI action → useStore action ─→ state (entries, goals, weights, water, cust
 
 ### Store (`lib/store.ts`)
 - `useStore` persisted fields: `entries, goals, profile, weights, water, customFoods, savedMeals, sync, guest` (see `partialize`).
+- Saved through `lib/localSave.ts` (`batchedStorage`), not zustand's default: see "Local storage" below.
 - `skipHydration: true`; `AppShell` calls `hydrateStore()` then `initAuth()`. Pages render skeletons until `hydrated` (so SSR HTML and the first client render match).
 - `merge` fills missing queue fields from `EMPTY_QUEUE` (old saves lack newer fields).
 - Entries **snapshot** nutrition at log time (D05); editing foods/thalis never rewrites history.
@@ -133,6 +138,13 @@ UI action → useStore action ─→ state (entries, goals, weights, water, cust
 
 ### Layout (D17)
 Phone < 768: bottom pill nav + round +, bottom sheet. `md`: wider single column, meals 2-up. `lg` ≥ 1024: left sidebar (`Sidebar`), sheets become centred modals (`Sheet.tsx`: `useIsDesktop` → `modal-pop` class, `handleOnly`; the workout picker is two-pane); Today stays one column (the sidebar leaves ~690 px). `xl` ≥ 1280 Today (D32): left = week strip, add bar, ring card (sticky); right = chai · water · burned tiles (`QuickRow` is `xl:contents`, `BurnCard` has a tile variant) + one meals list. Meal cards never stretch to their neighbour's height (`items-start`).
+
+### Local storage (D50)
+- Everything the store persists is **one localStorage key, `ct-v1`**, rewritten whole on each save (zustand persist stringifies all of it). Progress photos are the exception (IndexedDB, `lib/photos.ts`); other keys (theme, greeting history, seen badges, trophies, Supabase session) are a few KB.
+- **Measured (Chrome 153, 2026-09-27):** limit ~5.24 M characters per site (Devanagari counts the same); one food entry ≈ 294 characters, one 4-set lift ≈ 380; a typical user ≈ 1.4–1.5 M characters a year → full after ~3.5 years (heavy ~2 years). One save: 2 / 5 / 7 ms on a Mac at 1 / 2 / 3 years, 14 / 28 / 51 ms with the CPU throttled 6× (budget Android).
+- **`batchedStorage`:** keeps the latest state and writes at most every 500 ms (`WRITE_EVERY_MS`), and at once on `visibilitychange` → hidden and `pagehide`; `flushSaves()` forces it. A failed write (QuotaExceededError, blocked storage) is caught, sets `useSaveHealth` and the next change retries; nothing is thrown into tap handlers. `StorageNotice` (in AppShell) shows the banner + a one-time toast. After the first good write, `navigator.storage.persist()` is asked once (skipped in Firefox, which shows a prompt).
+- **Safari:** deletes a site's script-writable storage (localStorage, IndexedDB…) after 7 days of Safari use without visiting it; home-screen web apps count their own days ([WebKit](https://webkit.org/blog/10218/full-third-party-cookie-blocking-and-more/)). Signed-in users get everything back from Supabase; guests don't, hence the iPhone hint.
+- **Planned:** per-record IndexedDB (future.md).
 
 ## Checklists
 
@@ -181,6 +193,7 @@ Phone < 768: bottom pill nav + round +, bottom sheet. `md`: wider single column,
 - **`full` is a reserved word** in Postgres: not usable as a parameter name.
 - **Name filters vs Indian names:** plain substring bans hit Shital, Nazia, Gandhi, Chodankar; keep the banned list in `social_banned_terms` free of such collisions and test real names.
 - **Devanagari + letter-spacing:** tracking splits conjuncts (अखाड़ा → अ खा ड़ा). Hindi text never gets `tracking-*` or `uppercase`.
+- **A store update now saves up to 500 ms later** (batched). Tests that read `localStorage["ct-v1"]` right after an action must wait ~600 ms or hide the page first; seeding `ct-v1` before load is unchanged.
 - **Stale local servers:** a previous `next start` on the same port serves old chunk hashes (500s). Kill the port before restarting.
 
 ## Verifying changes

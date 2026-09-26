@@ -2,6 +2,7 @@
 
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { batchedStorage } from "./localSave";
 import { getFood, getUnit, setCustomFoods } from "./foods";
 import { DEFAULT_GOALS, portion } from "./nutrition";
 import { dayKey } from "./dates";
@@ -351,6 +352,8 @@ export const useStore = create<State>()(
     {
       name: "ct-v1",
       version: 1, // new fields fall back to INITIAL via the default shallow merge
+      // batched writes that survive a full localStorage (lib/localSave.ts)
+      storage: typeof window === "undefined" ? undefined : batchedStorage(),
       partialize: ({ entries, goals, profile, weights, water, customFoods, savedMeals, workouts, fitness, routines, measurements, gyms, visits, localVisits, pendingCheckout, locationConsent, locationConsentAt, sync, guest }) =>
         ({ entries, goals, profile, weights, water, customFoods, savedMeals, workouts, fitness, routines, measurements, gyms, visits, localVisits, pendingCheckout, locationConsent, locationConsentAt, sync, guest }),
       // queues persisted before a field existed would lack it

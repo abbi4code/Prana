@@ -10,6 +10,7 @@ import { BottomNav } from "./BottomNav";
 import { LogSheet } from "./log/LogSheet";
 import { QuickAddSheet, openQuickAdd } from "./log/QuickAdd";
 import { Sidebar } from "./Sidebar";
+import { StorageNotice } from "./StorageNotice";
 import { Toaster } from "./Toaster";
 import { NearbyBanner } from "./workout/NearbyBanner";
 import { PrCelebration } from "./PrCelebration";
@@ -83,7 +84,10 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     <>
       <Sidebar />
       <main className="mx-auto w-full max-w-md px-4 pb-[calc(7rem+var(--safe-bottom))] pt-[calc(1rem+var(--safe-top))] md:max-w-2xl md:px-6 lg:ml-64 lg:w-auto lg:max-w-none lg:px-10 lg:py-10">
-        <div className="lg:mx-auto lg:max-w-6xl">{children}</div>
+        <div className="lg:mx-auto lg:max-w-6xl">
+          <StorageNotice />
+          {children}
+        </div>
       </main>
       <BottomNav />
       <LogSheet />

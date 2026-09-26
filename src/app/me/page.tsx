@@ -8,6 +8,7 @@ import { AccountCard } from "@/components/account/AccountCard";
 import { EnergyCard } from "@/components/me/EnergyCard";
 import { YourGymCard } from "@/components/workout/YourGymCard";
 import { AkhadaCard } from "@/components/akhada/AkhadaCard";
+import { AdminCard } from "@/components/admin/AdminLink";
 import { APP_NAME } from "@/lib/app";
 import { suggestGoals } from "@/lib/nutrition";
 import { useStore } from "@/lib/store";
@@ -38,6 +39,7 @@ export default function MePage() {
           <GoalsCard key={JSON.stringify(goals)} goals={goals} />
           <YourGymCard />
           <AkhadaCard />
+          <AdminCard />
           <AppearanceCard />
           <MyFoodsCard />
           <DataCard />

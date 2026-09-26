@@ -18,7 +18,7 @@ Tagline: *"Discipline, one katori at a time."*
 - Solo owner, building this for personal use (and possibly others later). Writes casually (Indian English / Hinglish); reply plainly.
 - Wants **research-backed** data and decisions. When facts matter (nutrition values, current dashboard steps), search the web / read official sources. Do not guess.
 - **Git:** the owner commits and pushes. When a chunk of work is done, give a **short commit name only** (e.g. `feat: thalis and discipline streaks`). Do not commit, push or deploy unless asked.
-- **Deployment (Vercel etc.) is the owner's job.** Don't set it up. Before they deploy they need: prod URL added to `additional_redirect_urls` + `site_url` in `supabase/config.toml` → `npm run auth:push`; env vars on the host: the two `NEXT_PUBLIC_SUPABASE_*` plus server-only `SUPABASE_SECRET_KEY` and `OPENAI_API_KEY` (+ `GEOAPIFY_API_KEY` for gym place search); migrations pushed before new client code ships; function region near the DB (Mumbai).
+- **Deployment (Vercel etc.) is the owner's job.** Don't set it up. Before they deploy they need: prod URL added to `additional_redirect_urls` + `site_url` in `supabase/config.toml` → `npm run auth:push`; env vars on the host: the two `NEXT_PUBLIC_SUPABASE_*` plus server-only `SUPABASE_SECRET_KEY` and `OPENAI_API_KEY` (+ `GEOAPIFY_API_KEY` for gym place search, `ADMIN_EMAILS` for the admin panel); migrations pushed before new client code ships; function region near the DB (Mumbai).
 - "Focus on building features." Verify work in a real browser (see [architecture.md](architecture.md#verifying-changes)) before calling it done.
 - Keep these `.claude/*.md` docs updated as you go (see Working rules).
 
@@ -40,7 +40,8 @@ Working MVP+ on GitHub (`abbi4code/Prana`, public). Built:
 - **Weekly Wrapped** (D42, [engagement.md](engagement.md)): Monday–Sunday stories from Sunday 6 pm, share image drawn on the device. Festival days (D43) + plan-ahead calorie bank (D44) decided, not built.
 - **BMR** (D45): "Your energy" in Me (live resting burn + how the goal is built), goal refresh nudge when weight moves it, resting burn on Progress.
 - **Akhada** (D46, D47, [social.md](social.md)): opt-in profiles, friends + invite links, block/report, inbox, leaderboard (active days → effort → verified, server-computed), challenges (lift / days / minutes / team; ✓ verified, big-jump flag, disputes). Replaced the Awards tab (Leaderboard · Challenges · Awards). Part 2 (D48, D49): weekly duels, frozen results + notifications, Akhada badges, share cards, Shabaash kudos + nudges.
-- Supabase: 10 migrations pushed (latest `20260925160000_routines`). **Not pushed yet:** `20260925170000_gym_switch`, `20260925171000_place_search`, `20260927100000_social`, `20260927101000_challenges`, `20260927120000_duels_results_kudos` (push before running the new client against the hosted DB: sync sends `user_gyms.place`).
+- **Admin panel** (D51, [admin.md](admin.md)): `/admin` for accounts in `ADMIN_EMAILS` (server-checked, Google only): overview, members + per-member page (charts, day by day, streaks, PRs, JSON export), food, training, Akhada moderation queue, AI + storage; service-role functions only, every member view logged in `admin_audit`.
+- Supabase: 10 migrations pushed (latest `20260925160000_routines`). **Not pushed yet:** `20260925170000_gym_switch`, `20260925171000_place_search`, `20260927100000_social`, `20260927101000_challenges`, `20260927120000_duels_results_kudos`, `20260927130000_admin` (push before running the new client against the hosted DB: sync sends `user_gyms.place`).
 
 **Next up**: rest timer, then the roadmap ([features.md](features.md) / [future.md](future.md)): home vs restaurant oil toggle, hidden-calorie chips (+ghee, +sugar), fried-food fix (Q4), festival days (D43) → calorie bank (D44) → fasting, then barcode scan + thali photo (decisions pending, [smart-logging.md](smart-logging.md)).
 
@@ -60,6 +61,7 @@ Working MVP+ on GitHub (`abbi4code/Prana`, public). Built:
 | [workouts.md](workouts.md) | Workouts (built, phase 1): exercise library + photos, burn model and its sources, streak rules, data pipeline, phases 2–3 |
 | [engagement.md](engagement.md) | Weekly Wrapped, festival days, calorie bank, fasting: owner decisions, research (vrat foods with INDB/IFCT codes, calendars, IF safety copy), as-built |
 | [smart-logging.md](smart-logging.md) | Barcode scan + thali photo: research (scanner libs, Open Food Facts, FSSAI labels, vision accuracy + cost) and the decisions still needed |
+| [admin.md](admin.md) | Admin panel (D51): access model (ADMIN_EMAILS, service-role functions, audit log), every screen, files, setup, tests |
 | [social.md](social.md) | Leaderboard + challenges: owner's ask, research (Apple/Strava/Duolingo, motivation, anti-cheat, DPDP), proposed design, decisions |
 
 ## Commands

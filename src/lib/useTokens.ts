@@ -2,11 +2,11 @@
 
 import { useSyncExternalStore } from "react";
 
-const NAMES = ["turmeric", "saffron", "chilli", "leaf", "sky", "muted", "faint", "text"] as const;
+const NAMES = ["turmeric", "saffron", "chilli", "leaf", "sky", "jamun", "brass", "muted", "faint", "text"] as const;
 export type Tokens = Record<(typeof NAMES)[number], string>;
 
 const DARK: Tokens = {
-  turmeric: "#f6c343", saffron: "#ff8a3d", chilli: "#ff5a6e", leaf: "#6cc46f", sky: "#7dd3fc", muted: "#a89484", faint: "#6f5f52", text: "#f7ecdf",
+  turmeric: "#f6c343", saffron: "#ff8a3d", chilli: "#ff5a6e", leaf: "#6cc46f", sky: "#7dd3fc", jamun: "#b48cff", brass: "#c9974c", muted: "#a89484", faint: "#6f5f52", text: "#f7ecdf",
 };
 
 let cache: Tokens = DARK;

@@ -29,6 +29,7 @@
 | More packaged brands from official labels | Same method as Yogabar (data.md) |
 | Deployment | **Owner does it.** Before deploying: prod URL → `supabase/config.toml` redirect URLs + site_url → `npm run auth:push`; env vars on host |
 | Gym place search follow-ups (D37) | Smoke-test with the real Geoapify key; prune `place_cache` / `api_rate` (pg_cron, with the parse tables); compare Ola Maps on ~20 real gym names once its storage terms are confirmed in writing; maybe reverse-geocode a hand-placed pin for an area label |
+| **Per-record IndexedDB for user data** (D50) | Replace the single `ct-v1` localStorage blob: one IndexedDB record per entry/workout/…, write only what changed, quota becomes a share of the disk; one-time move of existing data; maybe `idb-keyval` (ask first). Needed before users reach ~2 years of logs |
 | Capacitor wrapper | Only if App Store/Play Store presence or native features are needed |
 
 ## Parked (not now)
@@ -81,3 +82,5 @@
 | 2026-09-27 | Deployed on Vercel (prana-liart.vercel.app). Sign-in landed on localhost: the live URL wasn't in Supabase's redirect list, so `site_url` (localhost) was used. `config.toml` site_url + redirect URLs updated and pushed |
 | 2026-09-27 | Akhada (D46, D47): opt-in profiles, friends + invite links, block/report, inbox, server-computed leaderboard (active days → effort → verified), challenges (lift / days / minutes / team) with verify, flag and dispute; Awards moved into the Akhada tab. Migrations `…100000_social`, `…101000_challenges` **not pushed yet** |
 | 2026-09-27 | Akhada part 2 (D48, D49): weekly duels, lazy result settling (frozen places + notifications), Akhada badges in Awards, result share cards, Shabaash kudos + nudges with opt-out. Migration `…120000_duels_results_kudos` **not pushed yet** |
+| 2026-09-27 | Local saving (D50): checked the localStorage limits (measured: ~5.24 M characters; typical user ~1.4 M a year; one save 2–51 ms), batched writes, failed saves caught + shown, storage.persist(), iPhone guest hint. IndexedDB move planned |
+| 2026-09-27 | Admin panel (D51, admin.md): `/admin` + member pages, service-role `admin_*` functions, `admin_audit` access log, report resolving, CSV/JSON export; `ADMIN_EMAILS` server env; `useTokens` gained jamun + brass. Migration `…130000_admin` **not pushed yet**. SQL tested on PGlite, UI in Chrome (phone + desktop, both themes) |

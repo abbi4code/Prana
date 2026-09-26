@@ -56,6 +56,8 @@ When something changes, mark the old entry **Superseded by Dxx** instead of dele
 | D47 | Challenges: 1:1 / group / open to everyone; lift targets need a real logged set of 1–5 reps (✓ when logged during a verified gym visit, else "self-reported"), impossible lifts blocked, big jumps flagged, members can dispute; video proof later | Decided (built; migrations not pushed) | 2026-09-27 |
 | D48 | Weekly duels: 1v1 with a friend, 7 days from the day after accepting; score = effort on your best 6 days (max 600); tie → verified gym days → draw; invites expire in 48 h; max 5 open | Decided (built; migration not pushed) | 2026-09-27 |
 | D49 | Results settle (frozen) 3 days after the last day, lazily on app open: notifications + Akhada badges (Finisher, Champion, Duel master, Shabaash); kudos once per friend per active day; nudges after 3 quiet days, once per 3 days, opt-out | Decided (built; migration not pushed) | 2026-09-27 |
+| D50 | Saving on the device: batched localStorage writes (≤ 1 per 500 ms, immediate when hidden), failed saves caught + shown, storage.persist(), iPhone guest hint; move to per-record IndexedDB before users have ~2 years of logs | Decided (steps 1–4 built) | 2026-09-27 |
+| D51 | Admin panel: server-decided admins (ADMIN_EMAILS, Google only), read through service-role Postgres functions, read-only except resolving reports, every member view/export logged | Decided (built; migration not pushed) | 2026-09-27 |
 
 ---
 
@@ -378,6 +380,19 @@ Owner, 2026-09-27: "1v1 weekly duels (Apple Watch style): pick a friend, whoever
 - **Badges** (Awards → Akhada, same tiers engine as D38): Finisher (challenges completed), Champion (1st place, 2+ people; ties share), Duel master (duels won), Shabaash (days a friend cheered you). Fed by `social_trophies()`, cached on the device so Awards works offline; the existing unlock banner celebrates them.
 - **Share cards:** the result or the duel score as a 1080 × 1920 image, drawn on the device (no calories, no body weight).
 - **Kudos:** one "🔥 Shabaash" per friend per active day (today or yesterday). **Nudges:** only when a friend has had no active day for 3 days, at most once every 3 days per friend, and anyone can turn them off (Me → Akhada profile). Positive by design: no "you're falling behind" messages.
+
+## D50 — Saving on the device
+Owner asked whether "one localStorage blob, rewritten on every change, capped at ~5 MB" is a real problem (2026-09-27). Checked, not assumed (architecture.md "Local storage"): **true, but years away.** Measured in Chrome 153: ~5.24 M characters per site; a typical user adds ~1.4–1.5 M a year (heavy ~2.3 M, light ~0.8 M), so saving fails after ~2–6 years; one save costs 2 ms (Mac) to ~14 ms (budget-Android CPU) at 1 year, 30–51 ms at 3 years. The real gaps were the failure mode (an uncaught QuotaExceededError: the change shows but isn't saved) and Safari deleting a site's storage after 7 days without a visit (home-screen apps exempt).
+- **Built now:** writes batched (latest state at most every 500 ms, at once when hidden/closed); failed saves caught → banner + toast (guests: "sign in to keep your logs"; signed in: "safe in your account"); `navigator.storage.persist()` asked once (not in Firefox, which prompts); iPhone guests in Safari get an "Add to Home Screen or sign in" hint (dismiss = 14 days).
+- **Next (Proposed):** per-record IndexedDB storage (only the changed item is written; quota becomes a share of the disk), with a one-time move of `ct-v1`. Do it before real users approach ~2 years of logs.
+
+## D51 — Admin panel
+Owner, 2026-09-27: "an admin panel where admin can see each user, what they are eating, doing workout, everything, on different charts and graphs … build it in a better way, I might forget to include something". Details: [admin.md](admin.md).
+- **Admins are decided on the server:** `ADMIN_EMAILS` (server env; not `NEXT_PUBLIC_`, not in the public repo) and a Google sign-in only. The browser only asks `/api/admin/me` to decide whether to show links.
+- **Data is read with the service role**, through `/api/admin/*` and Postgres functions granted only to `service_role` (aggregates run in the database, not by downloading every row). Member pages reuse the app's own rules (streaks, PRs, day status) so the admin sees what the member sees.
+- **Read-only**, except resolving Akhada reports (the moderation queue social.md left for later). No editing members' data.
+- **Every member view and export is written to `admin_audit`**, shown in the panel. Looking at someone's food and body data always leaves a trace; the privacy policy must say admins can see logged data (DPDP).
+- Included beyond the ask: retention, when-people-log heatmap, catalog gaps (custom foods), AI corrections + cost, gym verification health, storage, CSV + per-member JSON export.
 
 ## D12 — Project docs
 Decisions, features, future changes and data notes live as separate md files in `.claude/`, indexed in [CLAUDE.md](CLAUDE.md).

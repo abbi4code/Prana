@@ -122,6 +122,12 @@ Guiding rule: **logging fast beats everything.** People quit trackers because lo
 | Kudos + nudges (D49) | 🔥 Shabaash on a friend's active day, 👋 nudge after 3 quiet days (opt-out) | built |
 | Leagues, squads, gym boards, video proof, push notifications, moderation screen | Next phases | planned |
 
+## Admin (D51, see admin.md)
+
+| Feature | Notes | Status |
+|---|---|---|
+| Admin panel `/admin` | Overview (growth, DAU/WAU/MAU, come-back rate, when people log), Users (search, sort, CSV), member page (charts, year heatmap, day by day, streaks, PRs, gym, body, saved items, AI corrections, JSON export), Food, Training, Akhada (moderation queue), System (AI cost/cache, place search, storage, access log) | built; needs `ADMIN_EMAILS` + migration push |
+
 ## Explicitly not building (for now)
 
 Social feed (Akhada has boards + challenges, no feed) · recipe pages. See [future.md](future.md).
