@@ -112,6 +112,39 @@ Research prompt given to browser Claude → expected file `data/lift-energy.json
 - **Checks:** reproduces the sets it came from within 2–29 % (deadlift 2 %, calf 9 %, incline 12 %, squat 17 %, shrug 29 %); against Reis's independent measurements: bench +3 %, incline −35 %, squat −37 %. Owner's bench sets = 29 kcal at any rest, 35 kcal with +10 kg each. Workouts store `burn: "rep"`; past logs keep their snapshot.
 - **Known weak spots:** deadlift per-set cost (3 measured sets) makes hinges high (3 × 5 @ 80 kg ≈ 58 kcal); Reis coefficients are extrapolated beyond their 12–24 % 1RM loads; mapped exercises (rows→pulldown, raises→curl, hip thrust→leg press…) are judgement.
 
+## Routines (D34, built 2026-09-25)
+- **Model:** `Routine = { id, name, items: { kind: "lift" | "cardio"; refId }[], createdAt, starter? }` in the store (`routines`, synced via `dirtyRoutines`/`deletedRoutines` → `routines` table). Logged workouts get `routineId` (kept on edits, like `visitId`).
+- **Numbers (Option B):** `draftFor()` in `lib/routines.ts` = exact sets of your last session of that exercise (`lastTime`, before today's routine logs), else `liftValues`/`cardioValues` defaults. Burn via `draftWorkout()` → `exerciseBurn`/`cardioBurn`, same as the logger.
+- **Overload hint:** `overloadHint()`: the last two sessions both "complete" (≥ 2 sets, same kg, no set below the first set's reps) at the same weight → +`kgStep` (bodyweight at 0 kg: +1 rep). Timed and assisted moves: none. Source: ACSM position stand on progression (Ratamess et al. 2009), simplified because target reps aren't known. Only applied when tapped.
+- **UI:** `components/workout/Routines.tsx` (section at the top of the Workout tab's right column: cards / starter cards / new card; `useRoutinePlan`, `logRemaining`) and `RoutineSheet.tsx` (run checklist, builder with `Reorder`, picker). "Save as routine" on the Session card. Week strip shows the routine name for the day.
+- **One tap never blind:** the card's ⚡ Log all appears only when every remaining exercise has a last session and a body weight is known; else Start opens the checklist.
+
+## PRs (D36, built 2026-09-25)
+- `lib/records.ts` (pure, Node-tested in the scratchpad: baseline, ties, heavier-fewer-reps, Brzycki values, bodyweight, assisted, holds, cardio, delete restores the old best): `metrics(workout, info)` → `computeRecords(workouts, infoOf)` → `{ byRef, hitsByWorkout, recent }`; `wouldBreak()` for the live chip; `formatPr` / `formatGain`. `lib/useRecords.ts`: `refInfo` (catalog lookup), `useRecords`, `usePrDays`.
+- Kinds, in headline order: weight, e1rm, added, reps, assist, hold, set, distance, speed, minutes.
+- UI: `components/PrCelebration.tsx` (banner, mounted in AppShell; store watcher, 20 s freshness, each log celebrated once), `components/workout/RecordsCard.tsx`, PR chip in `WorkoutList`, "Best: … · est. 1-rep max" + live chip in `LiftDetail`, PR chips in the routine checklist, 🏆 in the week strip.
+
 ## Next (phases 2–3)
-2. Routines ("thalis for the gym": Push/Pull/Legs), rest timer (would give real durations), PRs (estimated 1RM) with celebration, last-session numbers beside each set.
-3. Weekly sets per muscle + body heatmap, body measurements, private progress photos.
+2. ~~Routines~~ (built, D34), ~~PRs~~ (built, D36), ~~rest timer~~ (built, D40), ~~last-session numbers beside each set~~ (built, D40).
+3. ~~Weekly sets per muscle + body heatmap~~ (built, D41), ~~body measurements, private progress photos~~ (built, D39).
+
+## Activity rings (D33, built 2026-09-25)
+The Workout tab's hero card (`components/workout/ActivityRings.tsx`), replacing the old "Burned" card (`BurnSummary`, removed).
+- **Burn** (outer): today's kcal vs `fitness.burnGoal`; no goal → full once anything is logged (matches the workout-streak rule). Burst + toast at the goal (unchanged).
+- **Move** (middle): this week's moderate-equivalent minutes vs 150. **Strength** (inner): days this week with a lift vs 2. Both from `lib/activity.ts` (PURE, Node-tested): cardio only for Move; `met ≥ 6` counts double, `met < 3` counts nothing; any `kind: "lift"` entry makes its date a strength day.
+- Source: WHO guidelines on physical activity and sedentary behaviour 2020 (Bull et al., Br J Sports Med 2020;54:1451–62; https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7719906/): adults 150–300 min moderate or 75–150 min vigorous aerobic activity a week (or an equivalent mix), plus muscle-strengthening on 2+ days a week. We use the lower bound, 150.
+- Known simplifications: a gym visit alone doesn't count for Strength (it could be cardio); METs come from the snapshotted `met` of each entry; lifting minutes never count for Move (the guideline treats them as a separate recommendation).
+- Layout: one card on every screen; container query puts the legend beside the dial from 22 rem wide, under it (3 columns) on narrow phones. Empty tracks are tinted in each ring's colour. Streak notes on this tab sit behind an (i) (`StreakShell noteBehindInfo`).
+
+## Week strip details (D35, built 2026-09-25)
+`components/workout/WorkoutWeek.tsx`. Desktop: hovering / focusing a day (with logs, or a rest / missed / freeze verdict) shows `Peek`, a floating card (spans only: it lives inside the day's button; edge days align to their side). Clicking a day selects it and stretches just that tile (`focus`; grid `items-start` so the others stay compact); clicking it again folds it. Days with workouts show a chevron. First-run hint: `DoodleHint` (hand-drawn SVG arrow, path drawn with `pathLength`, italic caption) on tablet/desktop, a ping ring on phones; gone for good after "Exercises" or a day has been opened (`prana-week-hint`).
+
+## Rest timer + last session per set (D40, built 2026-09-25)
+`lib/restTimer.ts` (zustand, persisted end time `prana-rest`, rehydrated on the client), `components/workout/RestTimer.tsx` (mounted in AppShell), `LiftDetail` in `WorkoutSheet.tsx` (set-number tick, `LastSet` under each row). Gotcha: a vaul/Radix modal sheet disables pointer events outside itself and treats outside presses as dismiss, so the pill has `pointer-events-auto` + `data-float-ui`, and `Sheet` ignores interactions on `[data-float-ui]`.
+
+## Muscles this week (D41, built 2026-09-25)
+`lib/muscles.ts` (PURE: `musclesOf`, `weeklySets`, `band`; 16 muscles from free-exercise-db names; extras without muscle data fall back to sub/group), `components/workout/MuscleMap.tsx` (stylised front/back SVG on a 100×220 grid, left shapes mirrored; hover/tap links figure ↔ list). Sources: Pelland et al., Sports Med 2025 (fractional sets); Schoenfeld, Ogborn & Krieger, J Sports Sci 2017 (< 5 / 5–9 / 10+).
+
+## Body (D39, built 2026-09-25)
+Progress → Body. `components/progress/BodyCards.tsx`: `MeasurementsCard` (site tiles with sparkline + change since first, waist ÷ height, history chips, add sheet with WHO measuring tips) and `PhotosCard` (IndexedDB via `lib/photos.ts`, before/after drag slider). Measurements sync like saved meals (jsonb doc; store `measurements`, queue `dirtyMeasurements`/`deletedMeasurements`). Photos never leave the device.
+

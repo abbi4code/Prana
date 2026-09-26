@@ -3,11 +3,12 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { AnimatePresence, motion } from "motion/react";
-import { Building2, Check, CloudOff, Crosshair, LoaderCircle, MapPin, MapPinOff, Pencil, RotateCcw, Settings2, ShieldCheck, ShieldQuestion, Timer } from "lucide-react";
+import { Building2, Check, CloudOff, Crosshair, LoaderCircle, MapPin, MapPinOff, Pencil, RotateCcw, ShieldCheck, ShieldQuestion, Timer } from "lucide-react";
 import { useAuth } from "@/lib/auth";
 import { dayKey } from "@/lib/dates";
 import { checkIn, checkOut, fixEnd, type CheckInResult, type Loc } from "@/lib/gym/actions";
 import { AUTO_CLOSE_HOURS, MIN_VISIT_MINUTES } from "@/lib/gym/config";
+import { currentGym } from "@/lib/gym/gyms";
 import { isIosChrome, permissionState, readLocation, unblockSteps, type Reading } from "@/lib/gym/location";
 import type { Verdict } from "@/lib/gym/schema";
 import { activeVisit, clock, counted, duration, finishedVisits, type FinishedVisit } from "@/lib/gym/visits";
@@ -56,7 +57,7 @@ type Step =
  * The timer is `now − started_at` from a stored timestamp, so it's right after closing and reopening the app.
  */
 export function GymCard() {
-  const gym = useStore((s) => s.gyms[0] ?? null);
+  const gym = useStore((s) => currentGym(s.gyms));
   const [editing, setEditing] = useState(false);
   if (!gym) return <SetupGym onOpen={() => setEditing(true)} sheet={<GymSheet open={editing} onClose={() => setEditing(false)} />} />;
   return <GymCardBody gym={gym} />;
@@ -176,9 +177,18 @@ function GymCardBody({ gym }: { gym: Gym }) {
           {active && <motion.span className="absolute inset-0 rounded-full bg-jamun" animate={{ scale: [1, 2.4], opacity: [0.6, 0] }} transition={{ duration: 1.6, repeat: Infinity }} />}
           <span className={`size-2.5 rounded-full ${active ? "bg-jamun" : hasLocation ? "bg-leaf" : "bg-line-strong"}`} />
         </span>
-        <p className="min-w-0 flex-1 truncate text-xs font-bold uppercase tracking-wider text-muted">{active ? `At ${gym.name}` : gym.name}</p>
-        <button onClick={() => setEditing(true)} aria-label="Gym settings" className="grid size-8 place-items-center rounded-full text-faint transition-colors hover:bg-surface-2 hover:text-text">
-          <Settings2 size={16} />
+        <div className="min-w-0 flex-1">
+          <p className="truncate text-xs font-bold uppercase tracking-wider text-muted">{active ? `At ${gym.name}` : gym.name}</p>
+          <p className="truncate text-[11px] text-faint">
+            {hasLocation ? `${gym.place?.label || "Location saved"} · ${gym.radiusM} m radius` : "No location yet"}
+          </p>
+        </div>
+        <button
+          onClick={() => setEditing(true)}
+          aria-label="Edit gym: location, name, switch"
+          className="flex h-8 shrink-0 items-center gap-1.5 rounded-full border border-line-strong px-3 text-xs font-semibold text-muted transition-colors hover:bg-surface-2 hover:text-text"
+        >
+          <Pencil size={12} /> Edit
         </button>
       </header>
 

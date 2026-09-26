@@ -8,6 +8,7 @@
 // Walking/running with a known speed use the ACSM metabolic equations instead of a fixed MET.
 // Realistic accuracy is about ±25 % (checked against published measurements), so the UI shows "~".
 
+import { mifflin } from "./energy.ts";
 import type { Activity, Exercise, Profile, RepGroup, WorkSet } from "./types";
 
 const O2_PER_MET = 3.5; // mL/kg/min
@@ -24,8 +25,7 @@ export type Person = { kg: number; restKcalPerMin: number; personal: boolean };
 /** Body weight for the day + resting burn. Without a full profile, resting = 1 MET. */
 export function person(kg: number, profile: Pick<Profile, "sex" | "age" | "heightCm"> | null): Person {
   if (profile && profile.age > 0 && profile.heightCm > 0) {
-    const bmr = 10 * kg + 6.25 * profile.heightCm - 5 * profile.age + (profile.sex === "male" ? 5 : -161);
-    return { kg, restKcalPerMin: bmr / 1440, personal: true };
+    return { kg, restKcalPerMin: mifflin(profile, kg) / 1440, personal: true };
   }
   return { kg, restKcalPerMin: grossPerMin(1, kg), personal: false };
 }

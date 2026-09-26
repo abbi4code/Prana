@@ -93,12 +93,15 @@ export function fits(g: Greeting, s: GreetState): boolean {
   if (g.ctx === "nothing_logged" && g.time === "any" && s.hour < 13) return false;
   if (g.t.includes("{name}") && !s.name) return false;
   if (g.t.includes("{streak}") && s.streak < MIN_STREAK) return false;
-  // gym lines: not for food-only users, and not on a rest day you're actually resting
-  if (g.topic === "gym" && (!s.gymUser || (s.restDay && !s.workoutDone && !s.atGym))) return false;
-  // general gym lines are mostly "go train" nudges: not once today's workout is done (unless still at the gym)
-  if (g.topic === "gym" && g.ctx === "any" && s.workoutDone && !s.atGym) return false;
+  // gym lines: not for food-only users, and not on a rest day you're actually resting (rest-day lines may say "gym kal")
+  if (g.topic === "gym" && !s.gymUser) return false;
+  if (g.topic === "gym" && s.restDay && !s.workoutDone && !s.atGym && g.ctx !== "rest_day") return false;
+  // general / Monday / weekend gym lines are mostly "go train" nudges: not once today's workout is done (unless still at the gym)
+  if (g.topic === "gym" && NUDGES.has(g.ctx) && s.workoutDone && !s.atGym) return false;
   return true;
 }
+
+const NUDGES = new Set<GreetCtx>(["any", "monday", "weekend"]);
 
 export function pickGreeting(pool: Greeting[], s: GreetState, recent: readonly string[], rand: () => number = Math.random): Greeting | null {
   const seen = new Set(recent);

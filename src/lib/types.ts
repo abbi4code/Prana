@@ -155,7 +155,15 @@ export type Workout = {
   burn?: "rep";
   /** gym visit this was logged during (D30); calories never come from the visit itself */
   visitId?: string;
+  /** logged from this routine (workouts.md "Routines") */
+  routineId?: string;
 };
+
+/** One exercise or cardio activity in a routine. Numbers aren't stored: they come from your last session (Option B). */
+export type RoutineItem = { kind: "lift" | "cardio"; refId: string };
+
+/** A named workout you repeat ("Chest day", "Push"): the exercises, in order. Synced (routines table). */
+export type Routine = { id: string; name: string; items: RoutineItem[]; createdAt: number; /** made from a built-in starter */ starter?: string };
 
 /** Workout goals. restDays uses JS weekday numbers (0 = Sunday). */
 export type Fitness = { burnGoal: number | null; restDays: number[] };
@@ -166,7 +174,14 @@ export type Fitness = { burnGoal: number | null; restDays: number[] };
 export type Verification = "verified" | "outside_radius" | "low_accuracy" | "permission_denied" | "unavailable" | "not_checked";
 
 /** The user's gym. lat/lng stay null until a location is saved (phase 3). Synced (user_gyms). */
-export type Gym = { id: string; name: string; lat: number | null; lng: number | null; radiusM: number; createdAt: number };
+export type Gym = {
+  id: string; name: string; lat: number | null; lng: number | null; radiusM: number; createdAt: number;
+  /** the search result the pin came from, if any (area label + attribution); lat/lng above is what the user confirmed */
+  place?: GymPlace | null;
+};
+
+/** A place picked in gym search (user_gyms.place): provider + its id, the area label, where the result was. */
+export type GymPlace = { provider: string; id: string; label: string; lat: number; lng: number };
 
 /** A visit as stored by the server (gym_visits). Written only by the API; the device keeps a read-only copy. */
 export type GymVisit = {
@@ -182,3 +197,9 @@ export type GymVisit = {
 
 /** A visit saved only on this device (offline, or as a guest), uploaded once signed in and online. */
 export type LocalVisit = { id: string; gymId: string | null; startedAt: number; endedAt: number | null };
+
+// ── Body measurements (D39, .claude/workouts.md "Body") ──
+
+export type MeasureSite = "waist" | "chest" | "arms" | "hips" | "thighs" | "neck";
+/** One day's tape measurements in cm (only the sites measured that day). Synced (measurements). */
+export type Measurement = { id: string; date: string; cm: Partial<Record<MeasureSite, number>>; createdAt: number };

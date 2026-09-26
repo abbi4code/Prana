@@ -23,7 +23,7 @@ When something changes, mark the old entry **Superseded by Dxx** instead of dele
 | D14 | Local-first: data lives on the device, Supabase syncs it | Decided | 2026-09-24 |
 | D15 | Hand-written service worker instead of Serwist | Decided | 2026-09-24 |
 | D16 | Unreliable food rows excluded at build time; fried rows badged | Decided | 2026-09-24 |
-| D17 | Responsive: phone, tablet and desktop layouts from one codebase | Decided | 2026-09-24 |
+| D17 | Responsive: phone, tablet and desktop layouts from one codebase | Decided (Today desktop columns superseded by D32) | 2026-09-24 |
 | D18 | Google sign-in (Supabase, PKCE) + offline-first sync; guest mode kept | Decided | 2026-09-24 |
 | D19 | App name: **Prana** (प्राण) | Decided | 2026-09-24 |
 | D20 | Light theme + per-device Appearance setting | Decided | 2026-09-24 |
@@ -37,7 +37,21 @@ When something changes, mark the old entry **Superseded by Dxx** instead of dele
 | D28 | Desktop log sheets are centred modals (workout: two-pane); supersedes the side panel in D17 | Decided (built) | 2026-09-25 |
 | D29 | "Add anything": one search bar on Today for food + workouts; + adds exactly what the row shows | Decided (built) | 2026-09-25 |
 | D30 | Gym check-in: manual (web can't geofence), server-written visits + append-only events, online by default with offline/guest fallback, server-side location verification | Decided (built, phases 1–4) | 2026-09-25 |
-| D31 | Today greeting: hardcoded desi lines picked for the moment, not a live LLM | Decided (built, batch 1) | 2026-09-25 |
+| D31 | Today greeting: hardcoded desi lines picked for the moment, not a live LLM | Decided (built, 1,940 lines) | 2026-09-25 |
+| D32 | Today on desktop: day summary left, trackers + one meals list right, two columns only from 1280 px | Decided (built) | 2026-09-25 |
+| D33 | Workout tab: activity rings (burn today, Move + Strength this week vs WHO 2020 targets); fine print behind (i) | Decided (built) | 2026-09-25 |
+| D34 | Routines: saved exercise lists; numbers follow your last session (Option B) with an ACSM overload hint; starters + custom | Decided (built) | 2026-09-25 |
+| D35 | Workout week: hover a day to peek, click to stretch that day open, doodle hint to Exercises until used once | Decided (built) | 2026-09-25 |
+| D36 | PRs: derived from the log (never stored), per exercise type; est. 1RM = Brzycki on sets of ≤ 10 reps; first log is a baseline; trophy banner on every logging path | Decided (built) | 2026-09-25 |
+| D37 | Gym: edit in place vs switch (old gym retired, keeps its visits) + remove; place search behind our server (Geoapify, provider-agnostic, cached, rate limited) | Decided (built; search needs `GEOAPIFY_API_KEY`) | 2026-09-25 |
+| D38 | Achievements menu: tiered badges for habits (derived, never stored) + the PR list, moved off the Workout tab; unlock banners queued with PRs | Decided (built) | 2026-09-25 |
+| D39 | Body: tape measurements (synced) + progress photos (this device only, never uploaded); waist ÷ height vs 0.5 | Decided (built) | 2026-09-25 |
+| D40 | Rest timer: tick a set's number to start it; floating pill above sheets; per-set "last time" with ▲/▼ | Decided (built) | 2026-09-25 |
+| D41 | Muscles this week: fractional weekly sets per muscle (Pelland 2025) on a front/back body, bands < 5 / 5–9 / 10+ (Schoenfeld 2017) | Decided (built) | 2026-09-25 |
+| D42 | Weekly Wrapped: Monday–Sunday story cards (current week from Sunday 6 pm), derived on the device; share image drawn on a canvas, habits only (no kcal eaten, no body weight) | Decided (built) | 2026-09-25 |
+| D43 | Festival / shaadi days: a marked day is skipped by the food streak (neither adds nor breaks), max 4 a month, mark on the day or up to 2 days after | Decided (not built) | 2026-09-25 |
+| D44 | Calorie bank = plan ahead: pick a splurge day, the extra comes evenly off the other days of that week (never below a safe floor); streaks judge each day against its adjusted goal | Decided (not built) | 2026-09-25 |
+| D45 | Resting burn (BMR) shown: "Your energy" card in Me (live count + how the goal is built), goal refresh nudge when weight moves it ≥ 50 kcal, BMR on the Progress weight card, resting context in the workout logger | Decided (built) | 2026-09-27 |
 
 ---
 
@@ -254,6 +268,93 @@ Owner, 2026-09-25: "a header with a greet msg … Indian tone … cool, motivati
 - **Same rules as the app (D23, D24):** celebrate habits, never food restriction or body shaming; bhai/bro lines skipped for a female profile; gym lines skipped for food-only users and on rest days.
 - Same line until the app has been away 30 min; tap it for another.
 - **Never wrong about the day:** office/commute lines only on weekdays; "log your lunch" nudges only when nothing is logged; no "go train" lines once today's workout is logged; weather is never stated as fact.
+
+## D32 — Today layout on desktop
+Owner, 2026-09-25: the desktop Today "looks very scattered" (long summary column on the left, four short meal cards stretched to equal heights on the right, a big empty area below). Supersedes the Today rows of D17.
+- **xl (≥ 1280):** left = your day (week strip, "Add anything" bar, calorie ring card; sticky); right = three equal tiles **Chai · Water · Burned**, then **Meals** as one list. Both columns end up about the same height.
+- **lg (1024–1279):** one column, like tablets (chai + water side by side, Burned as a row, meals 2-up). With the 256 px sidebar the right column would only be ~256 px: tiles crushed, dish names cut.
+- Meal cards keep their own height everywhere (no empty stretched cards). Phone order and layout unchanged.
+
+## D33 — Activity rings on the Workout tab
+Owner, 2026-09-25: the Workout tab "looks very standard, dull… no excitement in seeing those numbers". Owner picked **activity rings** (over a session scoreboard, a muscle map, or a streak redesign). Details: [workouts.md](workouts.md) "Activity rings".
+- One dial, three nested rings: **Burn** (outer, jamun→chilli) = today's estimate vs the burn goal (any workout fills it when there's no goal, same rule as the streak); **Move** (saffron→turmeric) = this week's moderate-equivalent cardio minutes vs **150**; **Strength** (leaf→sky) = this week's days with a lift vs **2**. Legend beside the dial (under it on narrow phones).
+- **Targets are sourced, not invented:** WHO 2020 guidelines (Bull et al., BJSM 2020): 150–300 min moderate or 75–150 min vigorous aerobic activity a week, and muscle-strengthening on 2+ days a week. Vigorous = ≥ 6 METs counts double; light (< 3 METs) doesn't count; lifting counts for Strength, not Move.
+- Hitting either weekly WHO mark gets a burst + toast, like the burn goal. The week is the Monday–Sunday of the selected day.
+- Fine print (burn method, WHO rules, streak rules) moves behind an **(i)** on the Workout tab. Progress keeps its streak notes visible (its grid is aligned on them).
+
+## D34 — Routines ("Chest day", "Push")
+Owner, 2026-09-25: "people can create a set … for chest or legs … a card that they can click, instant add … they keep on increasing wt, so they can edit each exercise". Details: [workouts.md](workouts.md) "Routines".
+- **A routine stores which exercises, in order, never numbers.** Each exercise repeats your **last session** of it (owner chose "Option B" over fixed numbers), so getting stronger never means editing the routine. No history yet → the logger's defaults, flagged "First time · check the numbers".
+- **Overload hint, never automatic:** "↑ 62.5 kg?" when every set at the same weight reached the first set's reps in your last two sessions (ACSM 2009 position stand: +2–10 % after two consecutive sessions with reps to spare; we don't know the target reps, so "no drop-off" stands in). Step = the app's kg step (2.5 kg / 1 kg dumbbells); bodyweight moves get +1 rep.
+- **Two ways to log:** a checklist (tick = logged at once, so closing the app mid-workout loses nothing; untick removes it) and **Log all**. One tap from the card only when every remaining exercise has a last session (D29 "never blind"); otherwise the card opens the checklist.
+- Logged workouts carry `routineId` (last done, progress, the week strip's "Chest day" label). Starters Push / Pull / Legs / Full body are copied into your routines when used; custom ones via the builder or "Save as routine" on a session.
+- Synced like thalis: `routines` table (jsonb, RLS), migration `20260925160000_routines`.
+
+## D35 — Discoverable week details on the Workout tab
+Owner, 2026-09-25: nobody would know "Exercises" opens each day's logs; wanted an arrow/SVG hint, and a day to stretch open on click (or show on hover).
+- **Hover (desktop):** a floating card under the day: routine, each exercise with photo + sets (or minutes), kcal, "Click to open". Keyboard focus shows it too. Nothing on the page moves.
+- **Click:** selects the day (as before) and stretches only that tile open; a second click folds it. "Exercises" still opens every day as a calendar.
+- **Cues:** days with workouts show a small chevron that bobs on hover; a hand-drawn arrow draws itself toward "Exercises" ("see every day's workout") on tablet/desktop, a soft ping around the button on phones, until "Exercises" or a day has been opened once (`localStorage["prana-week-hint"]`).
+
+## D36 — Personal records (PRs)
+Owner, 2026-09-25: "PR for each [exercise] … we don't have to ask, auto detect … our own logic to calculate and show". Details: [workouts.md](workouts.md) "PRs".
+- **Derived, never stored** (`lib/records.ts`, pure): walk the log oldest → newest; per exercise and record kind keep the best. Editing or deleting a log fixes records by itself; nothing to sync, no migration.
+- **What counts, by exercise type:** weighted lifts: heaviest weight, best est. 1-rep max, best set (kg × reps); bodyweight: most reps, most added kg; assisted: least counterweight (lower is better) + most reps; holds: longest; cardio: longest session, and for walks/runs of 5+ min fastest speed + farthest distance.
+- **Est. 1-rep max = Brzycki** (w × 36 / (37 − reps)), only on sets of 1–10 reps: accuracy falls as reps rise (LeSuer 1997: ≤ 10 reps to fatigue predicts 1RM well; Reynolds 2006: 5RM predicts best). Our sets aren't always to failure, so it's shown as "est." and reads as a floor.
+- **First log is a baseline, not a PR**; a PR must be strictly better than every earlier log (equal isn't).
+- **Celebration:** one trophy banner at the top (never covers the bottom Undo toast) for every logging path (sheet, routine, Add anything, voice), fed by a store watcher; only fresh logs (not sync pulls, reloads or undo-restores). Plus: live "New PR" chip while editing sets, 🏆 on session rows, routine rows, week strip days, and a Personal records card.
+
+## D37 — Editing and switching the gym, place search
+Owner, 2026-09-25: "user might change gym … allow editing the location"; for search: "production grade, think long term, not a shortcut". Details: [gym-checkin.md](gym-checkin.md) "Editing, switching and place search".
+- **Edit ≠ switch.** Edit (pin, name, radius) changes the same `user_gyms` row. **Switch** creates a new gym and soft-deletes the old one, so past visits keep pointing at the gym they happened at (same idea as D05: history is never rewritten). **Remove** soft-deletes. Switch/remove are blocked during a visit. Clear "Edit" button on the Gym card + **Me → Your gym**.
+- **Current gym = newest `createdAt`** (`currentGym()`), never `gyms[0]`: a device offline during a switch can bring the old row back (last write wins).
+- Offline/guest visits uploaded after a switch may reference your own retired gym (migration `…170000_gym_switch`); live check-ins still need a current gym.
+- **Place search goes through our route** `/api/places/search` (sign-in, per-user limit, shared Postgres cache, key on the server) behind a provider interface. **Provider: Geoapify** (OSM data; commercial use on the free tier; storing results allowed; any map). **Ruled out by their terms:** Google Places (no non-Google map, lat/lng max 30 days), Mapbox (POIs only on a Mapbox map, no storing temporary results), Mappls (no non-Mappls map, no cache), HERE (30-day storage), public Nominatim (no autocomplete), public Photon (no guarantee). Ola Maps: terms silent on storage, so not yet.
+- **Search only helps you get close; the pin you confirm is the gym.** OSM knows ~2,400 gyms in all of India, so area search → "Gyms nearby" → tap/drag the pin is the main path, and every empty/failed state points back to the map and current location. The picked result is kept as `user_gyms.place` (provider, id, area label) only while the pin stays within 1 km of it.
+
+## D38 — Achievements: badges + records
+Owner, 2026-09-25: "keep [PRs] in an achievements menu … a badge system … 5 days streak, PR breaker … if we put everything in the workout section this would be cluttered … nothing else should break … UI cool".
+- **New screen `/achievements`** (phone tab "Awards", sidebar "Achievements"): a summary hero (earned / total, count per metal, latest, "Next up" = the locked tier closest to done), then **Badges** and **Records** tabs. The Personal records card moved here from the Workout tab; the small PR signals (banner, row chips, week trophies) stay where you log.
+- **Badges are derived from history, never stored** (`lib/badges.ts` pure + `lib/useBadges.ts`), like PRs (D36): no migration, can't drift, deleting data can un-earn. Streak badges use your **best run ever** (`runStreak` now records `bestDates`), so a broken streak never takes a badge away.
+- **12 families × 4 metals (bronze, silver, gold, diamond) + 9 one-offs = 57.** Streaks (food 5/14/30/100, workout 5/14/30/60, Prana 3/7/21/50), Training (PR sessions 1/10/25/50, workout days, routine sessions, gym visits), Habits (days logged, on target, protein goal, 8 glasses, weigh-ins), One-offs (first meal, first workout, thali, routine, early bird, weekend warrior, comeback after a week away, perfect week, bench est. 1RM ≥ body weight).
+- **Habits only:** no weight-loss or eat-less badges (same rule as D23, D31).
+- **Unlock banner** shares one queue with PR banners (`lib/celebrate.ts`), so they never overlap; tapping opens Achievements. Announced-once per device via `localStorage["prana-badges-seen"]`; the first run and anything earned before yesterday (history pulled onto a new phone) are marked seen silently.
+- Medal art: SVG hexagon per metal; new tokens `bronze` + `silver` (both themes), gold = turmeric, diamond = sky → jamun.
+
+## D39 — Body measurements and progress photos
+Owner, 2026-09-25 (from the roadmap). Details: [workouts.md](workouts.md) "Body".
+- **Measurements** (Progress → Body): waist, hips, chest, arms, thighs, neck in cm, one entry per day, synced (`measurements` table, jsonb, migration `20260925180000_measurements`). Waist + hips measured the WHO way (2008 expert consultation). Only the waist trend is coloured (smaller = better); the rest depend on the goal.
+- **Waist ÷ height** vs **0.5** (Ashwell, Gunn & Gibson, Obes Rev 2012: better than BMI for cardiometabolic risk, same boundary for men and women across 14 countries).
+- **Progress photos stay on the device** (IndexedDB), never uploaded or synced: they're the most private thing in the app. Re-encoded on add (≤ 1280 px JPEG), which also strips EXIF/GPS. Before/after slider over any two dates. Not in backups or other devices, by design.
+
+## D40 — Rest timer and last session per set
+Owner, 2026-09-25. In the exercise logger (today's new logs), the set number is the done-tick: tapping it marks the set ✓ and starts a rest countdown of the chosen rest length (none after the last set). The countdown is a floating pill at the top of the screen, above sheets (`data-float-ui`; `Sheet` ignores clicks on it), with −15/+15/skip, vibration + a short WebAudio beep at the end, and the tab title counting down on desktop. Only the end time is stored (`prana-rest`), so a locked phone or reload keeps it right. Under each set: last session's same set and ▲/▼ (more weight, or same weight and more reps). The old one-line "Last time" pill became "vs <date>" in the Sets header.
+
+## D41 — Muscles this week
+Owner, 2026-09-25. A card on the Workout tab: front + back body, each muscle shaded by this week's sets, plus a bar per trained muscle with a 10-set mark. **Fractional counting** (1 per set for targeted muscles, ½ for assisting ones): Pelland et al., Sports Med 2025. **Bands** < 5, 5–9, 10+ weekly sets: Schoenfeld, Ogborn & Krieger, J Sports Sci 2017 (graded dose-response). Lifts only, Monday–Sunday. Phones list the top 6 muscles ("Show all").
+
+## D42 — Weekly Wrapped
+Owner, 2026-09-25 (roadmap order: Wrapped → festival → bank). Details: [engagement.md](engagement.md).
+- **Week = Monday–Sunday** (as the week strips). The current week opens on **Sunday from 6 pm**; earlier weeks any time (last 12 with data). Today shows a banner Sunday 6 pm → Tuesday until opened or dismissed (per device); Progress has a Wrapped card with earlier weeks.
+- **Derived, never stored:** `lib/wrapped.ts` (pure) from the store + the same day judges as the streak cards, PR hits (one per session, its headline kind) and badge unlocks. A new streak rule (D43, D44) reaches Wrapped with no change there.
+- **Same rules as D23/D24:** only habits are celebrated; no kcal eaten anywhere in Wrapped; not-on-target days are neutral ("logged"), never red. The share image (canvas, 1080 × 1920, live theme tokens + app fonts, drawn on the device) has no kcal and no body weight. Web Share with the file where supported, else download.
+- **Persona:** one title per week, most remarkable habit first (Perfect week, Record breaker, Gym regular, Protein pro, Never missed a log, On target, Hydration hero, Chai connoisseur, Food explorer, Moving well), fallback "Showing up".
+
+## D43 — Festival / shaadi days (Decided, not built)
+Owner's pick of three options (2026-09-25): a marked celebration day is **skipped** by the food streak like a workout rest day, **max 4 per month**, markable on the day or up to 2 days after. Rejected: unlimited (easy to abuse), counting as on target (too generous).
+
+## D44 — Calorie bank (Decided, not built)
+Owner's pick (2026-09-25): **plan ahead**. Choose a splurge day in advance (e.g. +600 on Saturday); the extra is taken evenly from the other days of that week, never pushing a day below a safe floor; streaks judge each day against its adjusted goal. Rejected: "save as you go" (rewards under-eating, against D24) and a pure weekly budget.
+
+## D45 — Resting burn (BMR) made visible
+Owner, 2026-09-27: "integrate BMR … plan where we will show this data … take care of UI", then "build all 4".
+- **One formula, `lib/energy.ts`** (pure): Mifflin–St Jeor, now shared by the goal calculator and the workout burn (they had separate copies; results are identical, tested). Frankenfield 2005 (systematic review): the most reliable common equation, within 10 % of measured for more people than any other, with individual errors and thin data for some groups; no solid validation found for Indian adults → always "~ estimate".
+- **Weight = 7-day average of weigh-ins** ending at the latest one (same smoothing as Progress), else the profile's weight. Before this, the goal only knew the weight typed into the calculator.
+- **Me → "Your energy"**: a live "~1,134.6 kcal burned since midnight" counter, a stacked bar (resting · daily life · aim hatched · pin at your goal) and a receipt: BMR + daily life = maintenance ± aim = goal.
+- **Goal refresh nudge** (Me + top of Progress): only when the goal came from the calculator (a goal you typed yourself is left alone) and today's weight moves the suggestion by ≥ 50 kcal. Neutral wording (weights, not "lighter/heavier"); Update (with Undo) sets profile weight + goals; "Not now" hides it until the suggestion moves another 50.
+- **Progress weight card:** "Resting burn ~1,690 · −39 kcal/day since 18 Aug".
+- **Workout logger footer:** "That's extra, on top of ~7 kcal your body burns resting anyway", explaining why burn numbers are lower than other apps (resting isn't counted twice).
+- Today is unchanged (owner's choice). No migration.
 
 ## D12 — Project docs
 Decisions, features, future changes and data notes live as separate md files in `.claude/`, indexed in [CLAUDE.md](CLAUDE.md).

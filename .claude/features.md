@@ -36,7 +36,7 @@ Guiding rule: **logging fast beats everything.** People quit trackers because lo
 
 | Feature | Notes | Status |
 |---|---|---|
-| Weekly Wrapped | Swipeable recap cards every Sunday, shareable as images | planned |
+| Weekly Wrapped (D42) | Story cards Monday–Sunday (from Sunday 6 pm; earlier weeks on Progress), persona, habits/training/wins, share image drawn on the device (habits only) | done |
 | Weekly calorie bank | Save calories on weekdays for weekends/festivals | planned |
 | Festival / shaadi mode | Celebration days don't break streaks | planned |
 | Fasting mode | Navratri, Ekadashi, intermittent fasting; vrat foods first in search | planned |
@@ -56,8 +56,14 @@ Guiding rule: **logging fast beats everything.** People quit trackers because lo
 | Today: Eaten · Burned · Net · Goal | Goal kcal editable inline (default stays the goal calculator) | done |
 | Workout week strip | 🔥 / 🌙 / ❄️ / 🥲 per day, streak band, weekly count; "Exercises" shows each day's exercises (list on phone, calendar on desktop) | done |
 | Workout + global streaks | Rest days picked by the user; global "Prana streak" = food on target + workout done; heatmap Food/Workout/Both | done |
-| Routines, rest timer, PRs, last-session beside each set | Phase 2 | planned |
-| Weekly volume + body heatmap, measurements, progress photos | Phase 3 | planned |
+| Week strip details (D35) | Hover a day to peek at its workouts, click to stretch it open; first-run doodle hint toward Exercises | done |
+| Activity rings (D33) | Burn today · Move + Strength this week vs WHO 2020 targets (150 min, 2 days), one dial; fine print behind (i) | done |
+| Routines (D34) | Cards with photo collage, muscles, ~kcal, last done, "Up next", done-today progress; checklist sheet (tick = logged, edit sets inline, ↑ overload hint, ring + burst when done); Log all; builder with drag reorder + multi-select picker; starters Push / Pull / Legs / Full body; "Save as routine" from a session | done |
+| PRs (D36) | Auto-detected per exercise (heaviest, est. 1RM, best set, reps, hold, assistance, cardio time/speed/distance); trophy banner on log, live "New PR" chip in the logger, 🏆 on session + routine rows and week days, Personal records card (latest + best for every exercise) | done |
+| Achievements + badges (D38) | Own menu: tiered badges (bronze → diamond) for streaks, training and habits + one-offs, unlock banner, detail sheets; PR list moved here | done |
+| Rest timer + last session per set (D40) | Tick a set's number → rest countdown pill above everything (±15, skip, buzz + beep); "last 50 kg × 10 ▲ +2.5 kg" under each set | done |
+| Muscles this week (D41) | Front/back body shaded by weekly sets per muscle (fractional), bars with a 10-set mark | done |
+| Body: measurements + progress photos (D39) | Progress → Body: 6 tape spots (synced), waist ÷ height, photos only on this device with before/after slider | done |
 
 ## v2.6: Gym check-in (D30, see gym-checkin.md)
 
@@ -67,17 +73,19 @@ Guiding rule: **logging fast beats everything.** People quit trackers because lo
 | Location verification | Consent + explainer, permission states, server distance check, iOS notes, verified / not verified tags | done (phase 2) |
 | Gym location | Current location + map picker (Leaflet/OSM, dark tiles), radius 100–300 m, gym settings sheet | done (phase 3) |
 | Nearby banner, auto-close (+ fix end), 20-min minimum, visit counts as workout day, recent visits | Nearby check on the phone; lazy auto-close on the server | done (phase 4) |
+| Edit / switch / remove your gym (D37) | Edit in place; switch keeps old visits with the old gym; "Edit" on the Gym card + Me → Your gym | done |
+| Gym place search (D37) | Area or gym name + "Gyms nearby" (Geoapify via our server, cached, rate limited), then confirm/drag the pin | built; needs `GEOAPIFY_API_KEY` |
 
 ## Also built
 | Feature | Status |
 |---|---|
-| Today greeting (D31): desi hype/funny line picked for the moment, tap for another | done (batches 1–4, 1,125 lines; moment batches 5–7 to generate) |
+| Today greeting (D31): desi hype/funny line picked for the moment, tap for another | done (1,940 lines, all times of day + moments) |
 | Multi-add: log several foods in one go, "Done · 3" | done |
 | Edit / delete a logged item (tap it) | done |
 | Calorie history chart (14 days) + days on target | done |
 | Backup download (JSON) | done |
 | "High estimate" badge for deep-fried items | done |
-| Desktop + tablet layouts (sidebar, multi-column), keyboard shortcuts N (food), W (workout), / or ⌘K (add anything) | done |
+| Desktop + tablet layouts (sidebar, multi-column; Today: summary left, tiles + meals right from 1280 px, D32), keyboard shortcuts N (food), W (workout), / or ⌘K (add anything) | done |
 | Desktop log sheets as centred modals; workout picker two-pane (library + logger side by side) (D28) | done |
 | Create your own food (from a packet label; per serving or per 100 g), synced; "My foods" in Me | done |
 | ~40 more foods: dahi, sugar, bread, butter, honey, jeera rice, kadhai paneer, khichdi, raitas, burfi, sandwiches… | done |
@@ -96,9 +104,10 @@ Guiding rule: **logging fast beats everything.** People quit trackers because lo
 - **Log sheet** (+ button, or N / on desktop): meal chips, search, My thalis, recent/frequent/popular, create food → food detail (drag katori, units, meal) · thali builder · create food.
 - **Workout** `/workout`: week strip + workout flame, Burned card, Exercise/Cardio buttons, session list, workout streak, workout goals (burn goal, rest days). Sheet: library → lift / cardio detail.
 - **Progress** `/progress`: bento grid: Prana, food and workout streak cards in one row (equal heights), full-width year heatmap (Food/Workout/Both; tapping a day lists its workouts), weight (7-day avg) | calories last 14 days (equal heights, goal line always visible).
-- **Me** `/me`: goal calculator, daily goals, appearance, my foods, account/sync, backup.
+- **Achievements** `/achievements` (D38; phone tab "Awards"): summary hero, Badges tab (12 tiered families + 9 one-offs, detail sheet per badge), Records tab (every PR, best for every exercise).
+- **Me** `/me`: "Your energy" (D45: live resting burn, goal breakdown, refresh nudge), then goal calculator, daily goals, appearance, my foods, account/sync, backup.
 - **Login** `/login`, **OAuth return** `/auth/callback`.
-- Planned: Weekly Wrapped (Progress), voice logging (log sheet).
+- **Weekly Wrapped** (D42): banner on Today (Sunday evening → Tuesday), card on Progress, full-screen stories.
 
 ## Explicitly not building (for now)
 

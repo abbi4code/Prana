@@ -34,6 +34,14 @@ export function Sheet({ open, onClose, size, children }: {
       <Drawer.Portal>
         <Drawer.Overlay className="fixed inset-0 z-50 bg-black/65 backdrop-blur-[3px]" />
         <Drawer.Content
+          // a field with something to clear (e.g. a search box) handles Esc itself: clear it, keep the sheet open
+          onEscapeKeyDown={(e) => {
+            if (document.activeElement?.closest("[data-escape-clears]")) e.preventDefault();
+          }}
+          // floating UI above the sheet (the rest timer, D40) is part of the workout, not a click "outside"
+          onInteractOutside={(e) => {
+            if ((e.target as HTMLElement | null)?.closest?.("[data-float-ui]")) e.preventDefault();
+          }}
           className={`fixed z-50 flex flex-col border-line-strong bg-surface outline-none after:hidden ${
             desktop
               ? `modal-pop inset-0 m-auto h-[min(84dvh,860px)] ${width} overflow-hidden rounded-[2rem] border pt-5 shadow-2xl shadow-black/60`

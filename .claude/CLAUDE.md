@@ -18,7 +18,7 @@ Tagline: *"Discipline, one katori at a time."*
 - Solo owner, building this for personal use (and possibly others later). Writes casually (Indian English / Hinglish); reply plainly.
 - Wants **research-backed** data and decisions. When facts matter (nutrition values, current dashboard steps), search the web / read official sources. Do not guess.
 - **Git:** the owner commits and pushes. When a chunk of work is done, give a **short commit name only** (e.g. `feat: thalis and discipline streaks`). Do not commit, push or deploy unless asked.
-- **Deployment (Vercel etc.) is the owner's job.** Don't set it up. Before they deploy they need: prod URL added to `additional_redirect_urls` + `site_url` in `supabase/config.toml` → `npm run auth:push`; env vars on the host: the two `NEXT_PUBLIC_SUPABASE_*` plus server-only `SUPABASE_SECRET_KEY` and `OPENAI_API_KEY`; migrations pushed before new client code ships; function region near the DB (Mumbai).
+- **Deployment (Vercel etc.) is the owner's job.** Don't set it up. Before they deploy they need: prod URL added to `additional_redirect_urls` + `site_url` in `supabase/config.toml` → `npm run auth:push`; env vars on the host: the two `NEXT_PUBLIC_SUPABASE_*` plus server-only `SUPABASE_SECRET_KEY` and `OPENAI_API_KEY` (+ `GEOAPIFY_API_KEY` for gym place search); migrations pushed before new client code ships; function region near the DB (Mumbai).
 - "Focus on building features." Verify work in a real browser (see [architecture.md](architecture.md#verifying-changes)) before calling it done.
 - Keep these `.claude/*.md` docs updated as you go (see Working rules).
 
@@ -32,18 +32,23 @@ Working MVP+ on GitHub (`abbi4code/Prana`, public). Built:
 - **Natural-language + voice logging** for food **and workouts** ("2 roti aur dal for dinner", "bench 3x10 60kg aur 20 min walk", "kal raat…" → one confirm card → log), signed-in users, via `/api/food/parse` + OpenAI `gpt-6-luna`. See [nl-logging.md](nl-logging.md). Eval 84/84.
 - **"Add anything"** (D29): one search bar on Today (+ sidebar, / or ⌘K) for food and workouts; + adds exactly what the row shows (last portion / last session) with Undo; sentences + voice in the same box.
 - **Workouts** (D27, [workouts.md](workouts.md)): Workout tab, 211 exercises with photos (free-exercise-db), sets × reps × kg, 20 cardio/sport activities, calorie-burn estimate (Compendium + ACSM, minus resting), Today Eaten · Burned · Net · Goal (goal editable inline), workout + global "Prana" streaks with user-picked rest days.
-- **Gym check-in** phases 1–3 (D30, [gym-checkin.md](gym-checkin.md)): gym sheet with current location + Leaflet/OSM map + radius; "I'm at the gym" / Done with a live timer; location consent + explainer, server-side distance verification (verified / not verified); offline + guest fallback; nearby banner, lazy auto-close (fix end), visits count as workout days.
-- **Greetings** (D31, [greetings.md](greetings.md)): a desi hype/funny line on top of Today, picked for the moment (streak, back after a break, at the gym, rest day…), no repeats for 80 picks, tap for another. Batches 1–4 in (1,125 lines, every time of day); batches 5–7 (moments: streak, welcome back, at gym, rest day…) to generate.
-- Supabase: 9 migrations pushed (latest `20260925150000_gym_autoclose`).
+- **Gym check-in** phases 1–3 (D30, [gym-checkin.md](gym-checkin.md)): gym sheet with current location + Leaflet/OSM map + radius; "I'm at the gym" / Done with a live timer; location consent + explainer, server-side distance verification (verified / not verified); offline + guest fallback; nearby banner, lazy auto-close (fix end), visits count as workout days. Gym **edit / switch / remove** + **place search** (D37: Geoapify behind `/api/places/search`, needs `GEOAPIFY_API_KEY`).
+- **Greetings** (D31, [greetings.md](greetings.md)): a desi hype/funny line on top of Today, picked for the moment (streak, back after a break, at the gym, rest day…), no repeats for 80 picks, tap for another. All 7 batches in: 1,940 reviewed lines covering every time of day and moment.
+- **Routines** (D34): saved exercise lists ("Chest day") as cards; numbers follow your last session with an ↑ overload hint; checklist or one-tap Log all; starters + custom.
+- **PRs** (D36): auto-detected per exercise from the log (heaviest, est. 1-rep max, best set, reps, holds, cardio), trophy banner, Personal records card.
+- **Achievements** (D38): own menu ("Awards" tab): 57 habit badges (bronze → diamond, derived from history) + the PR list; unlock banners.
+- **Weekly Wrapped** (D42, [engagement.md](engagement.md)): Monday–Sunday stories from Sunday 6 pm, share image drawn on the device. Festival days (D43) + plan-ahead calorie bank (D44) decided, not built.
+- **BMR** (D45): "Your energy" in Me (live resting burn + how the goal is built), goal refresh nudge when weight moves it, resting burn on Progress.
+- Supabase: 10 migrations pushed (latest `20260925160000_routines`). **Not pushed yet:** `20260925170000_gym_switch`, `20260925171000_place_search` (push before running the new client against the hosted DB: sync sends `user_gyms.place`).
 
-**Next up**: workouts phase 2 (routines, rest timer, PRs), then the roadmap ([features.md](features.md) / [future.md](future.md)): home vs restaurant oil toggle, hidden-calorie chips (+ghee, +sugar), fried-food fix (Q4), weekly Wrapped, calorie bank, festival/fasting modes, barcode scan.
+**Next up**: rest timer, then the roadmap ([features.md](features.md) / [future.md](future.md)): home vs restaurant oil toggle, hidden-calorie chips (+ghee, +sugar), fried-food fix (Q4), festival days (D43) → calorie bank (D44) → fasting, then barcode scan + thali photo (decisions pending, [smart-logging.md](smart-logging.md)).
 
 ## Docs index
 
 | File | What's in it |
 |---|---|
 | [architecture.md](architecture.md) | **How the code works**: data flow, store, sync, theming, food pipeline, checklists for common changes, gotchas, how to verify |
-| [decisions.md](decisions.md) | All decisions D01–D31 with reasons (stack, data model, units, design, UX, streak rules, thalis…) |
+| [decisions.md](decisions.md) | All decisions D01–D45 with reasons (stack, data model, units, design, UX, streak rules, thalis…) |
 | [features.md](features.md) | Feature list by phase with status |
 | [future.md](future.md) | Open questions, backlog, parked ideas, change log |
 | [data.md](data.md) | Food data: files, sources actually used, rules, review results, known gaps |
@@ -52,6 +57,8 @@ Working MVP+ on GitHub (`abbi4code/Prana`, public). Built:
 | [gym-checkin.md](gym-checkin.md) | Gym check-in (D30): owner's spec, mapping onto Prana, answers, as-built phases 1–4 |
 | [greetings.md](greetings.md) | Today greeting (D31): why hardcoded + context-picked, picking rules, data pipeline, **the browser-Claude prompt** for new batches |
 | [workouts.md](workouts.md) | Workouts (built, phase 1): exercise library + photos, burn model and its sources, streak rules, data pipeline, phases 2–3 |
+| [engagement.md](engagement.md) | Weekly Wrapped, festival days, calorie bank, fasting: owner decisions, research (vrat foods with INDB/IFCT codes, calendars, IF safety copy), as-built |
+| [smart-logging.md](smart-logging.md) | Barcode scan + thali photo: research (scanner libs, Open Food Facts, FSSAI labels, vision accuracy + cost) and the decisions still needed |
 
 ## Commands
 

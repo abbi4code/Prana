@@ -11,6 +11,11 @@ const Env = z.object({
   NL_MODEL: z.string().default(DEFAULT_MODEL),
   NL_PARSE_PER_MINUTE: z.coerce.number().int().positive().default(10),
   NL_PARSE_PER_DAY: z.coerce.number().int().positive().default(200),
+  // gym place search (/api/places/search). No key → search answers "not configured"; pin + current location still work
+  PLACES_PROVIDER: z.enum(["geoapify"]).default("geoapify"),
+  GEOAPIFY_API_KEY: z.string().min(10).optional(),
+  PLACES_PER_MINUTE: z.coerce.number().int().positive().default(30),
+  PLACES_PER_DAY: z.coerce.number().int().positive().default(300),
 });
 
 let cached: z.infer<typeof Env> | null = null;

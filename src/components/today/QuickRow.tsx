@@ -9,7 +9,7 @@ import { useStore, useUI } from "@/lib/store";
 export const CHAI_ID = "chai";
 const WATER_GOAL = 8;
 
-/** One-tap chai counter + water tracker. */
+/** One-tap chai counter + water tracker. On wide screens (xl) the two tiles join the parent grid, next to the Burned tile. */
 export function QuickRow({ date }: { date: string }) {
   const entries = useStore((s) => s.entries);
   const chai = useMemo(() => entries.filter((e) => e.date === date && e.foodId === CHAI_ID), [entries, date]);
@@ -21,7 +21,7 @@ export function QuickRow({ date }: { date: string }) {
   const waterHits = useGoalHits(water, WATER_GOAL, date, () => showToast("8 glasses. Hydrated."));
 
   return (
-    <div className="grid grid-cols-2 gap-3">
+    <div className="grid grid-cols-2 gap-3 xl:contents">
       <div className="card p-4">
         <div className="flex items-center gap-2 text-muted">
           <Coffee size={16} className="text-brass" />

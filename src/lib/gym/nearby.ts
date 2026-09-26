@@ -3,6 +3,7 @@
 import { useStore, useUI } from "../store";
 import { NEARBY_AFTER_VISIT_MINUTES, NEARBY_MAX_AGE_MS, NEARBY_SNOOZE_HOURS } from "./config";
 import { permissionState, readLocation } from "./location";
+import { currentGym } from "./gyms";
 import { verify } from "./verify";
 import { activeVisit, finishedVisits } from "./visits";
 
@@ -29,13 +30,21 @@ export function snoozeNearby(gymId: string) {
   useUI.setState({ nearby: null });
 }
 
+/** The gym moved, was switched or removed: an old "not now" or banner no longer applies. */
+export function resetNearby(gymId: string) {
+  try {
+    localStorage.removeItem(key(gymId));
+  } catch {}
+  if (useUI.getState().nearby) useUI.setState({ nearby: null });
+}
+
 let checking = false;
 export async function checkNearby() {
   if (checking) return;
   checking = true;
   try {
     const s = useStore.getState();
-    const gym = s.gyms[0];
+    const gym = currentGym(s.gyms);
     const clear = () => {
       if (useUI.getState().nearby) useUI.setState({ nearby: null });
     };

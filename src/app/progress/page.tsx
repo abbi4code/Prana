@@ -1,16 +1,21 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Link from "next/link";
 import { motion } from "motion/react";
 import { Scale, X } from "lucide-react";
 import { Bar, BarChart, CartesianGrid, Cell, Line, LineChart, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { addDays, dayKey, parseDay } from "@/lib/dates";
+import { MeasurementsCard, PhotosCard } from "@/components/progress/BodyCards";
 import { PranaStreakCard, StreakCard, WorkoutStreakCard } from "@/components/progress/StreakCard";
 import { YearHeatmap } from "@/components/progress/YearHeatmap";
+import { WrappedCard } from "@/components/wrapped/WrappedEntry";
 import { useStore } from "@/lib/store";
 import { dayStatus } from "@/lib/streaks";
 import { useTokens } from "@/lib/useTokens";
 import { useFitnessStreaks } from "@/lib/useWorkouts";
+import { GoalNudge } from "@/components/me/EnergyCard";
+import { mifflin } from "@/lib/energy";
 
 const short = (k: string) => parseDay(k).toLocaleDateString("en-IN", { day: "numeric", month: "short" });
 
@@ -19,6 +24,7 @@ export default function ProgressPage() {
   const entries = useStore((s) => s.entries);
   const weights = useStore((s) => s.weights);
   const goals = useStore((s) => s.goals);
+  const profile = useStore((s) => s.profile);
   const logWeight = useStore((s) => s.logWeight);
   const removeWeight = useStore((s) => s.removeWeight);
   const [kg, setKg] = useState("");
@@ -59,6 +65,10 @@ export default function ProgressPage() {
     <div className="space-y-4 lg:space-y-6">
       <h1 className="font-display text-[2rem] font-semibold lg:text-4xl">Progress</h1>
 
+      <GoalNudge />
+
+      <WrappedCard />
+
       <div className={`grid grid-cols-1 gap-4 lg:gap-6 md:grid-cols-2 ${started ? "xl:grid-cols-3" : ""}`}>
         {started && (
           <div className="md:col-span-2 xl:col-span-1">
@@ -77,7 +87,8 @@ export default function ProgressPage() {
             <p className="text-xs font-bold uppercase tracking-wider text-muted">Weight · 7-day avg</p>
             <Scale className="text-brass" size={20} />
           </div>
-          <div className="mt-2 min-h-[4.25rem]">
+          <div className="mt-2 flex min-h-[4.25rem] items-start justify-between gap-3">
+          <div>
             <p className="font-display text-4xl font-semibold leading-tight">
               {latest ? latest.avg : "–"}
               <span className="text-lg text-muted"> kg</span>
@@ -87,6 +98,19 @@ export default function ProgressPage() {
                 {latest.avg <= first.avg ? "↓" : "↑"} {Math.abs(Math.round((latest.avg - first.avg) * 10) / 10)} kg since {short(first.date)}
               </p>
             )}
+          </div>
+          {/* resting burn follows the weight (D45) */}
+          {latest && profile && profile.age > 0 && profile.heightCm > 0 && (
+            <Link href="/me" className="shrink-0 rounded-2xl bg-leaf/10 px-3 py-2 text-right hover:bg-leaf/15">
+              <span className="block text-[10px] font-bold uppercase tracking-wider text-leaf">Resting burn</span>
+              <span className="block font-display text-lg font-semibold leading-tight tabular">~{Math.round(mifflin(profile, latest.avg)).toLocaleString("en-IN")}</span>
+              <span className="block text-[10px] text-muted tabular">
+                {first && latest !== first
+                  ? `${Math.round(mifflin(profile, latest.avg) - mifflin(profile, first.avg)) >= 0 ? "+" : "−"}${Math.abs(Math.round(mifflin(profile, latest.avg) - mifflin(profile, first.avg)))} kcal/day since ${short(first.date)}`
+                  : "kcal / day"}
+              </span>
+            </Link>
+          )}
           </div>
 
           {weightSeries.length > 1 ? (
@@ -181,6 +205,15 @@ export default function ProgressPage() {
           <p className="mt-auto pt-3 text-xs text-faint">Dashed line = your goal ({goals.kcal.toLocaleString("en-IN")} kcal)</p>
         </section>
       </div>
+
+      {/* Body (D39): tape measurements (synced) + progress photos (this device only) */}
+      <section aria-labelledby="body-h" className="space-y-3 pt-2">
+        <h2 id="body-h" className="font-display text-2xl font-semibold">Body</h2>
+        <div className="grid grid-cols-1 items-start gap-4 md:grid-cols-2 lg:gap-6">
+          <MeasurementsCard />
+          <PhotosCard />
+        </div>
+      </section>
     </div>
   );
 }

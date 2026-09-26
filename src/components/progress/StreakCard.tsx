@@ -1,7 +1,8 @@
 "use client";
 
-import { motion } from "motion/react";
-import { Dumbbell, Flame, Snowflake, Sparkles, Trophy, UtensilsCrossed } from "lucide-react";
+import { useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
+import { Dumbbell, Flame, Info, Snowflake, Sparkles, Trophy, UtensilsCrossed } from "lucide-react";
 import { RollingNumber } from "@/components/RollingNumber";
 import { MAX_FREEZES, FREEZE_EVERY } from "@/lib/streaks";
 import { useStreaks } from "@/lib/useStreaks";
@@ -12,7 +13,7 @@ import { useFitnessStreaks } from "@/lib/useWorkouts";
  * same header, badge + big number, three stat tiles, note pinned to the bottom. It's a container, so a wide
  * card (tablet, full-width row) puts the stats beside the number instead of under it.
  */
-export function StreakShell({ label, badge, badgeOn, glow, live, current, caption, stats, note }: {
+export function StreakShell({ label, badge, badgeOn, glow, live, current, caption, stats, note, noteBehindInfo = false }: {
   label: React.ReactNode;
   badge: React.ReactNode;
   /** classes for the badge when the streak is alive */
@@ -25,7 +26,10 @@ export function StreakShell({ label, badge, badgeOn, glow, live, current, captio
   caption: string;
   stats: React.ReactNode;
   note: React.ReactNode;
+  /** tuck the note behind an (i) button (Workout tab); Progress keeps it visible so its grid lines up */
+  noteBehindInfo?: boolean;
 }) {
+  const [info, setInfo] = useState(false);
   return (
     <section className="card @container relative flex h-full flex-col overflow-hidden p-5">
       <div
@@ -33,7 +37,19 @@ export function StreakShell({ label, badge, badgeOn, glow, live, current, captio
         className="pointer-events-none absolute -right-10 -top-12 size-48 rounded-full opacity-40 blur-3xl transition-opacity duration-700"
         style={{ background: glow, opacity: current ? 0.4 : 0 }}
       />
-      <p className="relative flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-muted">{label}</p>
+      <div className="relative flex items-center justify-between">
+        <p className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-muted">{label}</p>
+        {noteBehindInfo && (
+          <button
+            onClick={() => setInfo(!info)}
+            aria-expanded={info}
+            aria-label="How the streak works"
+            className={`-my-1.5 grid size-8 place-items-center rounded-full transition-colors ${info ? "bg-surface-2 text-text" : "text-faint hover:text-muted"}`}
+          >
+            <Info size={16} />
+          </button>
+        )}
+      </div>
       <div className="relative mt-3 flex flex-col gap-5 @[34rem]:flex-row @[34rem]:items-end @[34rem]:justify-between">
         <div className="flex items-end gap-3">
           <motion.span
@@ -52,7 +68,17 @@ export function StreakShell({ label, badge, badgeOn, glow, live, current, captio
         </div>
         <div className="grid grid-cols-3 gap-2 text-center @[34rem]:w-[19rem] @[34rem]:shrink-0">{stats}</div>
       </div>
-      <p className="relative mt-auto pt-4 text-xs leading-relaxed text-faint">{note}</p>
+      {noteBehindInfo ? (
+        <AnimatePresence initial={false}>
+          {info && (
+            <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="relative overflow-hidden">
+              <p className="mt-4 rounded-2xl bg-surface-2 p-3.5 text-xs leading-relaxed text-muted">{note}</p>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      ) : (
+        <p className="relative mt-auto pt-4 text-xs leading-relaxed text-faint">{note}</p>
+      )}
     </section>
   );
 }
@@ -136,7 +162,7 @@ export function PranaStreakCard() {
   );
 }
 
-export function WorkoutStreakCard() {
+export function WorkoutStreakCard({ noteBehindInfo = false }: { noteBehindInfo?: boolean }) {
   const { workout, today, started } = useFitnessStreaks();
   const todayOn = workout.status.get(today) === "hit";
   const { current, best, freezes, hits } = workout;
@@ -156,6 +182,7 @@ export function WorkoutStreakCard() {
           <FreezeStat freezes={freezes} />
         </>
       }
+      noteBehindInfo={noteBehindInfo}
       note={
         <>
           A workout day = your burn goal reached (or any workout, if you haven&apos;t set one), or a gym visit of 20+ min. Rest days you picked

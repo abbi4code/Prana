@@ -6,7 +6,7 @@ import { getFood, getUnit, setCustomFoods } from "./foods";
 import { DEFAULT_GOALS, portion } from "./nutrition";
 import { dayKey } from "./dates";
 import { activeVisit } from "./gym/visits";
-import type { Entry, Fitness, Food, Goals, Gym, GymVisit, LocalVisit, LogSource, Meal, Profile, SavedMeal, ThaliItem, WeightLog, Workout } from "./types";
+import type { Entry, Fitness, Food, Goals, Gym, GymVisit, LocalVisit, LogSource, Meal, Measurement, Profile, Routine, RoutineItem, SavedMeal, ThaliItem, WeightLog, Workout } from "./types";
 
 /**
  * Local changes not yet pushed to Supabase (decision D14).
@@ -28,13 +28,17 @@ export type SyncQueue = {
   deletedWorkouts: string[];
   dirtyGyms: string[];
   deletedGyms: string[];
+  dirtyRoutines: string[];
+  deletedRoutines: string[];
+  dirtyMeasurements: string[];
+  deletedMeasurements: string[];
   /** goals, profile or fitness changed (all live in user_goals) */
   goalsDirty: boolean;
 };
 
 export const EMPTY_QUEUE: SyncQueue = {
   userId: null, lastPulledAt: null, dirtyEntries: [], deletedEntries: [],
-  dirtyWeights: [], deletedWeights: [], dirtyWater: [], dirtyFoods: [], deletedFoods: [], dirtyMeals: [], deletedMeals: [], dirtyWorkouts: [], deletedWorkouts: [], dirtyGyms: [], deletedGyms: [], goalsDirty: false,
+  dirtyWeights: [], deletedWeights: [], dirtyWater: [], dirtyFoods: [], deletedFoods: [], dirtyMeals: [], deletedMeals: [], dirtyWorkouts: [], deletedWorkouts: [], dirtyGyms: [], deletedGyms: [], dirtyRoutines: [], deletedRoutines: [], dirtyMeasurements: [], deletedMeasurements: [], goalsDirty: false,
 };
 
 type Data = {
@@ -49,6 +53,10 @@ type Data = {
   /** logged exercises + cardio (D27) */
   workouts: Workout[];
   fitness: Fitness;
+  /** saved workouts ("Chest day"), logged in one tap or as a checklist */
+  routines: Routine[];
+  /** body measurements, one per day (D39); progress photos live only on the device (lib/photos.ts) */
+  measurements: Measurement[];
   /** gym check-in (D30): the user's gym (synced), server visits (read-only copy), visits saved only on this device */
   gyms: Gym[];
   visits: GymVisit[];
@@ -86,12 +94,25 @@ type State = Data & {
   /** log every item of a saved meal; returns the new entry ids */
   logSavedMeal: (id: string, meal: Meal, date: string) => string[];
   addWorkout: (w: Omit<Workout, "id" | "createdAt">) => string;
+  /** log several at once (a routine's "Log all"); returns the new ids in order */
+  addWorkouts: (list: Omit<Workout, "id" | "createdAt">[]) => string[];
   updateWorkout: (id: string, patch: Omit<Workout, "id" | "createdAt" | "date">) => void;
   removeWorkout: (id: string) => void;
   /** undo a delete: put the same workout (same id) back */
   restoreWorkout: (w: Workout) => void;
   setFitness: (f: Fitness) => void;
+  /** create or update (also undoes a delete: same id) */
+  saveRoutine: (r: Routine) => void;
+  deleteRoutine: (id: string) => void;
+  /** add or replace a day's measurements (same date = same entry) */
+  saveMeasurement: (m: Measurement) => void;
+  deleteMeasurement: (id: string) => void;
+  /** create the gym, or edit it in place (same gym: fix the pin, rename, radius) */
   saveGym: (g: Gym) => void;
+  /** moved to a different gym: `next` becomes the gym, the old one is retired (soft delete) so past visits keep pointing at it */
+  switchGym: (next: Gym) => void;
+  /** no gym any more; past visits stay */
+  removeGym: (id: string) => void;
   /** server answer from a gym API call */
   putVisit: (v: GymVisit) => void;
   startLocalVisit: (gymId: string | null) => LocalVisit;
@@ -110,7 +131,7 @@ export const DEFAULT_FITNESS: Fitness = { burnGoal: null, restDays: [0] };
 
 const INITIAL: Data = {
   entries: [], goals: DEFAULT_GOALS, profile: null, weights: [], water: {}, customFoods: [], savedMeals: [],
-  workouts: [], fitness: DEFAULT_FITNESS, gyms: [], visits: [], localVisits: [], pendingCheckout: null,
+  workouts: [], fitness: DEFAULT_FITNESS, routines: [], measurements: [], gyms: [], visits: [], localVisits: [], pendingCheckout: null,
   locationConsent: null, locationConsentAt: null, sync: EMPTY_QUEUE, guest: false,
 };
 
@@ -237,9 +258,23 @@ export const useStore = create<State>()(
         set((s) => ({ workouts: [...s.workouts, made], sync: { ...s.sync, dirtyWorkouts: add(s.sync.dirtyWorkouts, made.id) } }));
         return made.id;
       },
+      addWorkouts: (list) => {
+        const s0 = get();
+        const active = activeVisit(s0.visits, s0.localVisits, s0.pendingCheckout?.visitId ?? null);
+        const now = Date.now();
+        // createdAt + i keeps the routine's order in the session list
+        const made: Workout[] = list.map((w, i) => ({
+          ...w, id: uid(), createdAt: now + i, ...(active && w.date === dayKey() && !w.visitId ? { visitId: active.id } : {}),
+        }));
+        set((s) => ({ workouts: [...s.workouts, ...made], sync: { ...s.sync, dirtyWorkouts: add(s.sync.dirtyWorkouts, ...made.map((w) => w.id)) } }));
+        return made.map((w) => w.id);
+      },
       updateWorkout: (id, patch) =>
         set((s) => ({
-          workouts: s.workouts.map((w) => (w.id === id ? { id, createdAt: w.createdAt, date: w.date, ...patch } : w)),
+          // links (gym visit, routine) aren't part of an edit: keep them
+          workouts: s.workouts.map((w) =>
+            w.id === id ? { id, createdAt: w.createdAt, date: w.date, ...(w.visitId ? { visitId: w.visitId } : {}), ...(w.routineId ? { routineId: w.routineId } : {}), ...patch } : w,
+          ),
           sync: { ...s.sync, dirtyWorkouts: add(s.sync.dirtyWorkouts, id) },
         })),
       removeWorkout: (id) =>
@@ -253,10 +288,52 @@ export const useStore = create<State>()(
           sync: { ...s.sync, dirtyWorkouts: add(s.sync.dirtyWorkouts, w.id), deletedWorkouts: drop(s.sync.deletedWorkouts, w.id) },
         })),
       setFitness: (fitness) => set((s) => ({ fitness, sync: { ...s.sync, goalsDirty: true } })),
+      saveRoutine: (r) =>
+        set((s) => ({
+          routines: [...s.routines.filter((x) => x.id !== r.id), r],
+          sync: { ...s.sync, dirtyRoutines: add(s.sync.dirtyRoutines, r.id), deletedRoutines: drop(s.sync.deletedRoutines, r.id) },
+        })),
+      deleteRoutine: (id) =>
+        set((s) => ({
+          routines: s.routines.filter((x) => x.id !== id),
+          sync: { ...s.sync, dirtyRoutines: drop(s.sync.dirtyRoutines, id), deletedRoutines: add(s.sync.deletedRoutines, id) },
+        })),
+      saveMeasurement: (m) =>
+        set((s) => {
+          // one entry per day: a second save the same day updates it (keeps its id, so sync stays clean)
+          const same = s.measurements.find((x) => x.date === m.date && x.id !== m.id);
+          const item = same ? { ...m, id: same.id } : m;
+          return {
+            measurements: [...s.measurements.filter((x) => x.id !== item.id), item].sort((a, b) => a.date.localeCompare(b.date)),
+            sync: { ...s.sync, dirtyMeasurements: add(s.sync.dirtyMeasurements, item.id), deletedMeasurements: drop(s.sync.deletedMeasurements, item.id) },
+          };
+        }),
+      deleteMeasurement: (id) =>
+        set((s) => ({
+          measurements: s.measurements.filter((x) => x.id !== id),
+          sync: { ...s.sync, dirtyMeasurements: drop(s.sync.dirtyMeasurements, id), deletedMeasurements: add(s.sync.deletedMeasurements, id) },
+        })),
       saveGym: (g) =>
         set((s) => ({
           gyms: [...s.gyms.filter((x) => x.id !== g.id), g],
           sync: { ...s.sync, dirtyGyms: add(s.sync.dirtyGyms, g.id), deletedGyms: drop(s.sync.deletedGyms, g.id) },
+        })),
+      switchGym: (next) =>
+        set((s) => {
+          const old = s.gyms.filter((x) => x.id !== next.id).map((x) => x.id);
+          return {
+            gyms: [next],
+            sync: {
+              ...s.sync,
+              dirtyGyms: add(s.sync.dirtyGyms.filter((id) => !old.includes(id)), next.id),
+              deletedGyms: add(drop(s.sync.deletedGyms, next.id), ...old),
+            },
+          };
+        }),
+      removeGym: (id) =>
+        set((s) => ({
+          gyms: s.gyms.filter((x) => x.id !== id),
+          sync: { ...s.sync, dirtyGyms: drop(s.sync.dirtyGyms, id), deletedGyms: add(s.sync.deletedGyms, id) },
         })),
       putVisit: (v) => set((s) => ({ visits: [...s.visits.filter((x) => x.id !== v.id), v] })),
       startLocalVisit: (gymId) => {
@@ -274,8 +351,8 @@ export const useStore = create<State>()(
     {
       name: "ct-v1",
       version: 1, // new fields fall back to INITIAL via the default shallow merge
-      partialize: ({ entries, goals, profile, weights, water, customFoods, savedMeals, workouts, fitness, gyms, visits, localVisits, pendingCheckout, locationConsent, locationConsentAt, sync, guest }) =>
-        ({ entries, goals, profile, weights, water, customFoods, savedMeals, workouts, fitness, gyms, visits, localVisits, pendingCheckout, locationConsent, locationConsentAt, sync, guest }),
+      partialize: ({ entries, goals, profile, weights, water, customFoods, savedMeals, workouts, fitness, routines, measurements, gyms, visits, localVisits, pendingCheckout, locationConsent, locationConsentAt, sync, guest }) =>
+        ({ entries, goals, profile, weights, water, customFoods, savedMeals, workouts, fitness, routines, measurements, gyms, visits, localVisits, pendingCheckout, locationConsent, locationConsentAt, sync, guest }),
       // queues persisted before a field existed would lack it
       merge: (persisted, current) => {
         const p = persisted as Partial<State>;
@@ -301,7 +378,8 @@ useStore.subscribe((s, prev) => {
 export const pendingCount = (q: SyncQueue) =>
   q.dirtyEntries.length + q.deletedEntries.length + q.dirtyWeights.length + q.deletedWeights.length + q.dirtyWater.length +
   q.dirtyFoods.length + q.deletedFoods.length + q.dirtyMeals.length + q.deletedMeals.length +
-  q.dirtyWorkouts.length + q.deletedWorkouts.length + q.dirtyGyms.length + q.deletedGyms.length + (q.goalsDirty ? 1 : 0);
+  q.dirtyWorkouts.length + q.deletedWorkouts.length + q.dirtyGyms.length + q.deletedGyms.length +
+  q.dirtyRoutines.length + q.deletedRoutines.length + q.dirtyMeasurements.length + q.deletedMeasurements.length + (q.goalsDirty ? 1 : 0);
 
 export type Toast = { id: number; text: string; action?: { label: string; run: () => void } };
 
@@ -340,6 +418,11 @@ type UI = {
   quick: boolean;
   openQuick: () => void;
   closeQuick: () => void;
+  /** routine sheet: run one (checklist + Log all), or build/edit one (prefill = "Save as routine" from a session) */
+  routine: null | { mode: "run"; id: string } | { mode: "edit"; id?: string; prefill?: RoutineItem[]; starter?: string };
+  runRoutine: (id: string) => void;
+  editRoutine: (opts: { id?: string; prefill?: RoutineItem[]; starter?: string }) => void;
+  closeRoutine: () => void;
 };
 
 export const useUI = create<UI>((set) => ({
@@ -368,4 +451,8 @@ export const useUI = create<UI>((set) => ({
   quick: false,
   openQuick: () => set({ quick: true }),
   closeQuick: () => set({ quick: false }),
+  routine: null,
+  runRoutine: (id) => set({ routine: { mode: "run", id } }),
+  editRoutine: (opts) => set({ routine: { mode: "edit", ...opts } }),
+  closeRoutine: () => set({ routine: null }),
 }));

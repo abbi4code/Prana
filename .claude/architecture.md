@@ -28,7 +28,9 @@ src/app/
   page.tsx              Today
   workout/page.tsx      Workout tab: gym check-in card (D30), burn card, session list, workout streak, workout goals (D27)
   api/gym/              check-in, check-out, active, visit (fix end) (D30): sign-in required, server-written visits, lazy auto-close on every call
+  api/places/search/    gym place search (D37): sign-in, rate limit, shared cache, provider behind an interface (Geoapify)
   progress/page.tsx     Prana (global) + food streak cards, year heatmap (food/workout/both), weight, 14-day calories
+  achievements/page.tsx badges (D38) + records (D36) tabs, summary hero
   me/page.tsx           goal calculator, goals, appearance, my foods, account + backup
   login/, auth/callback/  login screen (full-screen, no nav), OAuth return page
   manifest.ts, icon.tsx, apple-icon.tsx, pwa-icon/[size]/route.tsx   PWA manifest + generated icons
@@ -42,7 +44,8 @@ src/components/
   log/                  LogSheet (add/edit/thali flows), FoodDetail, PortionVisual (katori/glass/pieces), CreateFood, NlLog + ConfirmParse + ConfirmWorkoutRow (NL confirm card, used by all three sheets), QuickAdd ("Add anything" sheet, D29)
   thali/                ThaliPlate (steel thali art), ThaliBuilder
   today/                AddBar ("Add anything" + mic, D29), CalorieRing, MacroBars, DateStrip (+streak flame), Greeting (D31), QuickRow (chai/water), MealCard (swipe rows), BurnCard
-  workout/              WorkoutWeek (week strip with streak marks + "Exercises" per day), WorkoutSheet (library, LiftDetail, CardioDetail), WorkoutList (swipe rows), WorkoutCards (burn, goals), ExercisePhoto
+  workout/              Routines + RoutineSheet (D34: cards, checklist, builder, picker), WorkoutWeek (week strip with streak marks + "Exercises" per day), WorkoutSheet (library, LiftDetail, CardioDetail), WorkoutList (swipe rows), ActivityRings (burn / Move / Strength dial, D33), MuscleMap (D41), RestTimer (D40), WorkoutCards (goals), ExercisePhoto
+  wrapped/              Weekly Wrapped (D42): WrappedViewer (stories), WrappedCards, WrappedEntry (Today banner, Progress card)
   progress/             StreakShell (one layout for every streak card) + StreakCard / PranaStreakCard / WorkoutStreakCard, YearHeatmap (fluid squares)
   account/              GoogleButton, AccountCard (+ SyncStatus, Avatar)
 src/lib/
@@ -51,10 +54,18 @@ src/lib/
   nutrition.ts          portion maths, MEALS, qtyOptions per unit kind, Mifflin–St Jeor goals
   store.ts              useStore (persisted data + sync queue + actions) and useUI (sheet, date, toast, fresh ids)
   thali.ts              resolveItems / thaliTotals for saved meals
+  energy.ts             D45: PURE Mifflin–St Jeor (shared by goals + burn), goal breakdown, currentWeight (7-day avg); useEnergy.ts adds the refresh rule
+  badges.ts             D38: PURE badge catalogue + evaluate(facts); useBadges.ts builds the facts from the store; celebrate.ts = banner queue (PRs + badges)
+  records.ts            D36: PRs derived from the log (metrics, computeRecords, wouldBreak, Brzycki e1RM); useRecords.ts wraps it
+  routines.ts           D34: STARTERS, draftFor (last session → defaults), overloadHint, draftWorkout (burn), summaries
   streaks.ts            PURE streak rules (dayStatus, runStreak engine with rest days, workoutDay, globalDay); useStreaks.ts wraps the food one
+  muscles.ts            PURE weekly sets per muscle, fractional (D41)
+  restTimer.ts          rest countdown store (D40) · photos.ts: progress photos in IndexedDB, device only (D39)
+  activity.ts           PURE weekly Move minutes + Strength days vs WHO 2020 targets (D33)
   burn.ts               PURE burn maths (Compendium MET, ACSM walk/run, minus Mifflin resting burn)
   exercises.ts          exercise/activity catalog, filters, search, setsSummary, lazy how-to steps
-  gym/                  D30 check-in: config (thresholds), visits + verify (pure: Haversine, judge), location (browser permission/reading), schema (Zod, both sides), api (fetch + skew + offline flush), actions
+  gym/                  D30 check-in: config (thresholds), visits + verify (pure: Haversine, judge), location (browser permission/reading), schema (Zod, both sides), api (fetch + skew + offline flush), actions, gyms (currentGym: newest, never gyms[0]), places (search contract, Zod) + placesApi
+  wrapped.ts            PURE Weekly Wrapped (D42): week maths, stats, persona; useWrapped.ts feeds it; wrappedShare.ts draws the share image
   greet.ts              PURE greeting picker (D31): moments, fits, pickGreeting, greetParts
   useWorkouts.ts        usePerson (body weight for a day), useDayWorkouts, lastTime, useFitnessStreaks (workout + global)
   auth.ts               useAuth, initAuth, signInWithGoogle, signOut, adoptLocalData
@@ -64,7 +75,7 @@ src/lib/
   useTokens.ts, useMediaQuery.ts (useIsDesktop), app.ts (APP_NAME, TAGLINE)
   nl/                   natural-language logging: match, units, schema, prompt, request, ranking, workoutMatch, workoutDraft (PURE, node-runnable)
                         + client.ts, corrections.ts, useSpeech.ts (browser)
-src/server/             server-only: env (Zod), supabase-admin (service role), auth (getClaims), nl/{llm,cache,quota}
+src/server/             server-only: env (Zod), supabase-admin (service role), auth (getClaims), nl/{llm,cache,quota}, places/{provider,geoapify,cache}, rate (generic per-user limit: `consume_api_rate`)
 src/app/api/food/parse/ the parse route
 src/data/foods.generated.json   BUILT catalog; never edit by hand (+ food-prefer.generated.json)
 src/data/exercises.generated.json, exercise-steps.generated.json   BUILT by `npm run exercises`; never edit by hand
@@ -100,7 +111,7 @@ UI action → useStore action ─→ state (entries, goals, weights, water, cust
 - `useUI` (not persisted): selected `date` (null = today), `sheet` (`add` | `edit` | `thali`), `toast`, `fresh` (entry ids to glow once).
 
 ### Sync (`lib/sync`, `lib/auth.ts`, D18)
-- Tables: `food_logs`, `user_goals` (+ `profile`, `fitness` jsonb), `weights`, `water`, `custom_foods` (jsonb), `saved_meals` (jsonb), `workouts` (jsonb), `user_gyms` (columns). **Read-only on the device:** `gym_visits` (pulled, never pushed; written by `/api/gym/*` through Postgres functions), `gym_events` (server only). Device-only gym visits (offline/guest) upload through `flushGym()` inside the sync run. All have RLS `user_id = auth.uid()`, `updated_at` trigger, soft delete via `deleted_at`.
+- Tables: `food_logs`, `user_goals` (+ `profile`, `fitness` jsonb), `weights`, `water`, `custom_foods` (jsonb), `saved_meals` (jsonb), `workouts` (jsonb), `routines` (jsonb), `measurements` (jsonb, D39), `user_gyms` (columns). **Read-only on the device:** `gym_visits` (pulled, never pushed; written by `/api/gym/*` through Postgres functions), `gym_events` (server only). Device-only gym visits (offline/guest) upload through `flushGym()` inside the sync run. All have RLS `user_id = auth.uid()`, `updated_at` trigger, soft delete via `deleted_at`.
 - Push upserts dirty rows, soft-deletes deleted ids, then clears only what it pushed (edits made mid-push stay queued).
 - Pull fetches rows with `updated_at > lastPulledAt` (paged by 1000) and merges: server wins, **except** ids with unpushed local changes.
 - Sign-in: `adoptLocalData` pushes guest data into the account (goals only if edited as guest). Another user's leftover data is wiped first. Sign-out: sync, `signOut`, `resetLocal()`.
@@ -118,7 +129,7 @@ UI action → useStore action ─→ state (entries, goals, weights, water, cust
 - Light theme = `prefers-color-scheme` unless `localStorage["prana-theme"]` is `light`/`dark` (set in Me → Appearance, applied by the inline script in `layout.tsx` via `data-theme` on `<html>`).
 
 ### Layout (D17)
-Phone < 768: bottom pill nav + round +, bottom sheet. `md`: wider single column, meals 2-up. `lg` ≥ 1024: left sidebar (`Sidebar`), Today = sticky summary column + meals column, sheets become centred modals (`Sheet.tsx`: `useIsDesktop` → `modal-pop` class, `handleOnly`; the workout picker is two-pane). `xl`: meals 2×2.
+Phone < 768: bottom pill nav + round +, bottom sheet. `md`: wider single column, meals 2-up. `lg` ≥ 1024: left sidebar (`Sidebar`), sheets become centred modals (`Sheet.tsx`: `useIsDesktop` → `modal-pop` class, `handleOnly`; the workout picker is two-pane); Today stays one column (the sidebar leaves ~690 px). `xl` ≥ 1280 Today (D32): left = week strip, add bar, ring card (sticky); right = chai · water · burned tiles (`QuickRow` is `xl:contents`, `BurnCard` has a tile variant) + one meals list. Meal cards never stretch to their neighbour's height (`items-start`).
 
 ## Checklists
 
@@ -159,6 +170,9 @@ Phone < 768: bottom pill nav + round +, bottom sheet. `md`: wider single column,
 - **Migrations before clients:** new client code that sends a new column must ship after the migration is pushed, or sync upserts fail.
 - **Node-runnable TS modules** (`src/lib/nl/*` pure files, `sync/rows.ts`, `streaks.ts`) use relative imports with `.ts` extensions (`allowImportingTsExtensions` is on) and no `@/` aliases, so tests/evals can import them with plain `node`.
 - **Chrome exposes unprefixed `SpeechRecognition`** as well as `webkitSpeechRecognition`; tests that fake it must replace both.
+- **Toasts sit above sheets**, and a tap outside a sheet closes it: a toast over a sheet's lower part eats taps (and closes the sheet) for its 4.5 s. Browser tests wait for it to clear.
+- **Esc closes a vaul sheet from a capture listener** (Radix), so an input's `stopPropagation` is too late. A field that clears itself on Esc sets `data-escape-clears` (only while it has something to clear); `Sheet.tsx` then keeps the sheet open.
+- **Headless Chrome paints sheets late:** a screenshot within ~2 s of opening one can show only the Leaflet map on black. Wait ~2.5 s before screenshots (the DOM is already there for assertions).
 - **Stale local servers:** a previous `next start` on the same port serves old chunk hashes (500s). Kill the port before restarting.
 
 ## Verifying changes

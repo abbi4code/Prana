@@ -3,15 +3,17 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "motion/react";
-import { ChartLine, Dumbbell, House, Plus, UserRound } from "lucide-react";
+import { ChartLine, Dumbbell, House, Medal, Plus, UserRound } from "lucide-react";
 import { useUI } from "@/lib/store";
 import { mealForNow } from "@/lib/nutrition";
 
+/** `short` is the phone label (only the active tab shows it, and five must fit beside the + button). */
 export const NAV_TABS = [
-  { href: "/", label: "Today", icon: House },
-  { href: "/workout", label: "Workout", icon: Dumbbell },
-  { href: "/progress", label: "Progress", icon: ChartLine },
-  { href: "/me", label: "Me", icon: UserRound },
+  { href: "/", label: "Today", short: "Today", icon: House },
+  { href: "/workout", label: "Workout", short: "Workout", icon: Dumbbell },
+  { href: "/progress", label: "Progress", short: "Progress", icon: ChartLine },
+  { href: "/achievements", label: "Achievements", short: "Awards", icon: Medal },
+  { href: "/me", label: "Me", short: "Me", icon: UserRound },
 ] as const;
 
 export function BottomNav() {
@@ -25,7 +27,7 @@ export function BottomNav() {
     <div className="pointer-events-none fixed inset-x-0 bottom-0 z-40 pb-[calc(0.9rem+var(--safe-bottom))] lg:hidden">
       <div className="pointer-events-auto mx-auto flex max-w-md items-center md:max-w-lg justify-between gap-3 px-4">
         <nav className="flex flex-1 items-center gap-1 rounded-full border border-line-strong bg-surface/80 p-1.5 shadow-2xl shadow-black/50 backdrop-blur-xl">
-          {NAV_TABS.map(({ href, label, icon: Icon }) => {
+          {NAV_TABS.map(({ href, label, short, icon: Icon }) => {
             const active = path === href;
             return (
               <Link
@@ -44,8 +46,8 @@ export function BottomNav() {
                   />
                 )}
                 <Icon size={17} strokeWidth={2.2} className="relative" />
-                {/* four tabs + the round button don't fit with labels on a phone: only the active tab shows its name */}
-                <span className={`relative ${active ? "" : "hidden md:inline"}`}>{label}</span>
+                {/* five tabs + the round button don't fit with labels on a phone: only the active tab shows its name */}
+                <span className={`relative ${active ? "" : "hidden md:inline"}`}>{short}</span>
               </Link>
             );
           })}

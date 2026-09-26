@@ -1,13 +1,17 @@
 "use client";
 
 import { motion } from "motion/react";
-import { Dumbbell, Footprints } from "lucide-react";
+import { BookmarkPlus, Dumbbell, Footprints } from "lucide-react";
 import { WorkoutStreakCard } from "@/components/progress/StreakCard";
 import { GymCard } from "@/components/workout/GymCard";
-import { BurnSummary, WorkoutGoalsCard } from "@/components/workout/WorkoutCards";
+import { RoutinesSection } from "@/components/workout/Routines";
+import { ActivityRings } from "@/components/workout/ActivityRings";
+import { MuscleMap } from "@/components/workout/MuscleMap";
+import { WorkoutGoalsCard } from "@/components/workout/WorkoutCards";
 import { WorkoutList } from "@/components/workout/WorkoutList";
 import { WorkoutWeek } from "@/components/workout/WorkoutWeek";
 import { dayKey } from "@/lib/dates";
+import { itemsFromSession } from "@/lib/routines";
 import { useStore, useUI } from "@/lib/store";
 import { isRestDay, useDayWorkouts } from "@/lib/useWorkouts";
 
@@ -17,6 +21,7 @@ export default function WorkoutPage() {
   const date = useUI((s) => s.date) ?? dayKey();
   const setDate = useUI((s) => s.setDate);
   const openGym = useUI((s) => s.openGym);
+  const editRoutine = useUI((s) => s.editRoutine);
   const { day, kcal, minutes, sets } = useDayWorkouts(date);
   const rest = isRestDay(fitness.restDays, date);
 
@@ -29,7 +34,7 @@ export default function WorkoutPage() {
       <div className="space-y-4 lg:grid lg:grid-cols-[400px_minmax(0,1fr)] lg:items-start lg:gap-8 lg:space-y-0">
         <div className="space-y-4 lg:sticky lg:top-10">
           <GymCard />
-          <BurnSummary date={date} kcal={kcal} minutes={minutes} sets={sets} rest={rest} />
+          <ActivityRings date={date} kcal={kcal} minutes={minutes} sets={sets} rest={rest} />
           <div className="grid grid-cols-2 gap-3">
             <motion.button
               whileTap={{ scale: 0.96 }}
@@ -49,6 +54,7 @@ export default function WorkoutPage() {
         </div>
 
         <div className="space-y-4">
+          <RoutinesSection date={date} />
           <section className="card overflow-hidden">
             <header className="flex items-center justify-between px-4 pb-2 pt-4">
               <div>
@@ -57,6 +63,15 @@ export default function WorkoutPage() {
                   {day.length ? `${day.length} ${day.length === 1 ? "entry" : "entries"} · ~${kcal.toLocaleString("en-IN")} kcal` : rest ? "Rest day. Recovery is training too." : "Nothing logged yet"}
                 </p>
               </div>
+              {day.length > 0 && !day.every((w) => w.routineId) && (
+                <motion.button
+                  whileTap={{ scale: 0.94 }}
+                  onClick={() => editRoutine({ prefill: itemsFromSession(day) })}
+                  className="flex h-9 shrink-0 items-center gap-1.5 rounded-full border border-line-strong px-3.5 text-xs font-bold text-muted hover:border-jamun/50 hover:text-jamun"
+                >
+                  <BookmarkPlus size={14} /> Save as routine
+                </motion.button>
+              )}
             </header>
             {day.length ? (
               <WorkoutList workouts={day} />
@@ -73,8 +88,9 @@ export default function WorkoutPage() {
               </button>
             )}
           </section>
+          <MuscleMap date={date} />
           <div className="space-y-4 xl:grid xl:grid-cols-2 xl:gap-4 xl:space-y-0">
-            <WorkoutStreakCard />
+            <WorkoutStreakCard noteBehindInfo />
             <WorkoutGoalsCard key={JSON.stringify(fitness)} fitness={fitness} />
           </div>
         </div>

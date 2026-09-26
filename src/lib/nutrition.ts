@@ -1,3 +1,4 @@
+import { energy } from "./energy";
 import type { Entry, Food, FoodUnit, Goals, Meal, Profile } from "./types";
 
 export const MEALS: { id: Meal; label: string }[] = [
@@ -31,11 +32,9 @@ export function totals(entries: Entry[]) {
 
 export const DEFAULT_GOALS: Goals = { kcal: 2000, p: 90, c: 250, f: 65 };
 
-/** Mifflin–St Jeor BMR × activity, adjusted for the aim. Protein 1.6 g/kg, fat 25% of kcal, rest carbs. */
+/** Mifflin–St Jeor BMR × activity, adjusted for the aim (lib/energy.ts). Protein 1.6 g/kg, fat 25% of kcal, rest carbs. */
 export function suggestGoals(p: Profile): Goals {
-  const bmr = 10 * p.weightKg + 6.25 * p.heightCm - 5 * p.age + (p.sex === "male" ? 5 : -161);
-  const tdee = bmr * p.activity;
-  const kcal = Math.round((tdee + (p.aim === "lose" ? -500 : p.aim === "gain" ? 300 : 0)) / 10) * 10;
+  const kcal = energy(p).goal;
   const protein = Math.round(p.weightKg * 1.6);
   const fat = Math.round((kcal * 0.25) / 9);
   const carbs = Math.max(0, Math.round((kcal - protein * 4 - fat * 9) / 4));

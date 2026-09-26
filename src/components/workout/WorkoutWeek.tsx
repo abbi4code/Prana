@@ -1,21 +1,24 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "motion/react";
 import { ChevronDown, ChevronLeft, ChevronRight, Dumbbell, Flame } from "lucide-react";
 import { NavBtn } from "@/components/today/DateStrip";
 import { addDays, dayKey, dayLabel, parseDay } from "@/lib/dates";
-import { GROUP_LABEL, getExercise, photoUrl } from "@/lib/exercises";
+import { GROUP_LABEL, getExercise, photoUrl, setsSummary } from "@/lib/exercises";
 import { MIN_VISIT_MINUTES } from "@/lib/gym/config";
 import { counted, duration, finishedVisits } from "@/lib/gym/visits";
 import { useStore } from "@/lib/store";
 import type { Workout } from "@/lib/types";
+import { usePrDays } from "@/lib/useRecords";
 import { useFitnessStreaks } from "@/lib/useWorkouts";
 import { ActivityIcon } from "./ExercisePhoto";
 
 // The Workout tab's week (D27): every day shows how it went for the workout streak, and "Exercises" opens
 // what was done each day (phone: a list under the strip; desktop: inside each day of a week calendar).
+// Desktop also (D35): hover a day to peek at it, click a day to stretch just that one open; a doodle arrow
+// points at "Exercises" until it has been used once.
 
 /** How a day went for the workout streak. "pending" = today, nothing yet (today never breaks a streak). */
 type Mark = "fire" | "frozen" | "rest" | "miss" | "pending" | "none";
@@ -27,6 +30,8 @@ const LABEL: Record<Mark, string> = {
 const LEGEND: Mark[] = ["fire", "rest", "frozen", "miss"];
 
 const PREF = "prana-week-exercises";
+/** set once "Exercises" or a day's details have been opened: the doodle hint is gone for good */
+const HINT = "prana-week-hint";
 const readPref = () => {
   try {
     return localStorage.getItem(PREF) === "1";
@@ -46,12 +51,48 @@ export function WorkoutWeek({ date, onChange }: { date: string; onChange: (d: st
   const pendingCheckout = useStore((s) => s.pendingCheckout);
   const { workout: run, today } = useFitnessStreaks();
   const [open, setOpen] = useState(readPref);
+  // desktop: one day stretched open by a click (the rest stay compact), and the day being peeked at on hover
+  const [focus, setFocus] = useState<string | null>(null);
+  const [peek, setPeek] = useState<string | null>(null);
+  const peekTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const [hint, setHint] = useState(false);
+  useEffect(() => {
+    let seen = true;
+    try {
+      seen = localStorage.getItem(HINT) === "1" || readPref();
+    } catch {}
+    if (seen) return;
+    const t = setTimeout(() => setHint(true), 600); // after the page has settled, so the arrow draws where you look
+    return () => clearTimeout(t);
+  }, []);
+  const discovered = () => {
+    setHint(false);
+    try {
+      localStorage.setItem(HINT, "1");
+    } catch {}
+  };
   const toggle = () => {
     setOpen(!open);
+    setFocus(null);
+    discovered();
     try {
       localStorage.setItem(PREF, open ? "0" : "1");
     } catch {}
   };
+  const pick = (d: string) => {
+    onChange(d);
+    setPeek(null);
+    // a second click on the open day folds it back
+    const next = focus === d ? null : d;
+    setFocus(next);
+    if (next) discovered();
+  };
+  const hover = (d: string | null) => {
+    clearTimeout(peekTimer.current);
+    if (d) peekTimer.current = setTimeout(() => setPeek(d), 140);
+    else setPeek(null);
+  };
+  useEffect(() => () => clearTimeout(peekTimer.current), []);
 
   const monday = addDays(date, -((parseDay(date).getDay() + 6) % 7));
   const days: Day[] = useMemo(() => {
@@ -122,10 +163,26 @@ export function WorkoutWeek({ date, onChange }: { date: string; onChange: (d: st
         </div>
       </div>
 
-      <div className="mt-3 grid grid-cols-7 gap-1.5 lg:gap-3">
-        {days.map((x, i) => (
-          <DayTile key={x.d} day={x} active={x.d === date} today={today} open={open} linkLeft={linked[i - 1] ?? false} linkRight={linked[i]} onPick={() => onChange(x.d)} />
-        ))}
+      {/* all open = a calendar (equal heights); one open = only that day grows */}
+      <div className={`mt-3 grid grid-cols-7 gap-1.5 lg:gap-3 ${open ? "" : "lg:items-start"}`}>
+        {days.map((x, i) => {
+          const expanded = open || focus === x.d;
+          return (
+            <DayTile
+              key={x.d}
+              day={x}
+              index={i}
+              active={x.d === date}
+              today={today}
+              expanded={expanded}
+              peek={!expanded && peek === x.d}
+              onHover={(on) => hover(on && peekable(x) ? x.d : null)}
+              linkLeft={linked[i - 1] ?? false}
+              linkRight={linked[i]}
+              onPick={() => pick(x.d)}
+            />
+          );
+        })}
       </div>
 
       <div className="mt-3 flex items-center justify-between gap-3">
@@ -139,14 +196,17 @@ export function WorkoutWeek({ date, onChange }: { date: string; onChange: (d: st
             "No workout days yet this week"
           )}
         </p>
+        <AnimatePresence>{hint && !open && <DoodleHint />}</AnimatePresence>
         <motion.button
           whileTap={{ scale: 0.95 }}
           onClick={toggle}
           aria-expanded={open}
-          className={`flex h-9 shrink-0 items-center gap-1.5 rounded-full border px-3.5 text-xs font-bold transition-colors ${
+          title="Show what you did each day"
+          className={`relative flex h-9 shrink-0 items-center gap-1.5 rounded-full border px-3.5 text-xs font-bold transition-colors ${
             open ? "border-jamun/50 bg-jamun/12 text-jamun" : "border-line-strong text-muted hover:text-text"
           }`}
         >
+          {hint && !open && <span aria-hidden className="absolute inset-0 animate-ping rounded-full border-2 border-jamun/50 [animation-duration:1.8s] sm:hidden" />}
           <Dumbbell size={14} /> Exercises
           <motion.span animate={{ rotate: open ? 180 : 0 }} className="grid place-items-center">
             <ChevronDown size={14} />
@@ -187,23 +247,38 @@ export function WorkoutWeek({ date, onChange }: { date: string; onChange: (d: st
   );
 }
 
-/** One day of the strip. On desktop with "Exercises" open it grows into a calendar day listing what was done. */
-function DayTile({ day, active, today, open, linkLeft, linkRight, onPick }: {
-  day: Day; active: boolean; today: string; open: boolean; linkLeft: boolean; linkRight: boolean; onPick: () => void;
+/** Days worth a peek: something was logged, or the day has a verdict (rest, missed, freeze). */
+const peekable = (x: Day) => x.list.length > 0 || x.visitMs > 0 || x.mark === "rest" || x.mark === "miss" || x.mark === "frozen";
+
+/**
+ * One day of the strip. On desktop it grows into a calendar day listing what was done when "Exercises" is open
+ * or when it's clicked (`expanded`), and shows a floating peek while hovered (`peek`).
+ */
+function DayTile({ day, index, active, today, expanded, peek, onHover, linkLeft, linkRight, onPick }: {
+  day: Day; index: number; active: boolean; today: string; expanded: boolean; peek: boolean; onHover: (on: boolean) => void;
+  linkLeft: boolean; linkRight: boolean; onPick: () => void;
 }) {
   const { d, mark } = day;
   const future = d > today;
   const date = parseDay(d);
+  const pr = usePrDays().has(d);
   // desktop calendar: a ring marks the chosen day, so its contents stay readable
+  const open = expanded;
   const pill = open ? "bg-cream lg:bg-transparent lg:ring-2 lg:ring-cream" : "bg-cream";
   const ink = active ? (open ? "text-bg lg:text-text" : "text-bg") : "";
+  const hasLogs = day.list.length > 0;
   return (
     <button
       disabled={future}
       onClick={onPick}
-      aria-label={`${date.toLocaleDateString("en-IN", { weekday: "long", day: "numeric", month: "short" })}: ${LABEL[mark]}`}
+      onMouseEnter={() => onHover(true)}
+      onMouseLeave={() => onHover(false)}
+      onFocus={() => onHover(true)}
+      onBlur={() => onHover(false)}
+      aria-label={`${date.toLocaleDateString("en-IN", { weekday: "long", day: "numeric", month: "short" })}: ${LABEL[mark]}${hasLogs ? `, ${day.list.length} logged` : ""}`}
       aria-pressed={active}
-      className={`relative flex flex-col items-center rounded-2xl py-2 transition-colors disabled:opacity-30 lg:justify-start lg:rounded-3xl lg:border lg:border-line lg:bg-surface/60 lg:py-3 lg:hover:bg-surface ${ink}`}
+      aria-expanded={hasLogs ? open : undefined}
+      className={`group relative flex flex-col items-center rounded-2xl py-2 transition-colors disabled:opacity-30 lg:justify-start lg:rounded-3xl lg:border lg:border-line lg:bg-surface/60 lg:py-3 lg:hover:bg-surface ${ink}`}
     >
       {active && (
         <motion.span layoutId="wday-pill" className={`absolute inset-0 rounded-2xl lg:rounded-3xl ${pill}`} transition={{ type: "spring", stiffness: 500, damping: 40 }} />
@@ -216,8 +291,27 @@ function DayTile({ day, active, today, open, linkLeft, linkRight, onPick }: {
         {linkLeft && <Band side="left" />}
         {linkRight && <Band side="right" />}
         <MarkIcon mark={mark} live={d === today && mark === "fire"} />
+        {pr && (
+          <motion.span
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ type: "spring", stiffness: 500, damping: 16, delay: 0.2 }}
+            title="Personal record set"
+            aria-hidden
+            className="absolute -right-0.5 -top-1.5 text-[11px] leading-none lg:right-3 lg:text-sm"
+          >
+            🏆
+          </motion.span>
+        )}
       </span>
+      {/* desktop: a day with workouts says it opens (the chevron bobs on hover) */}
+      {!open && (
+        <span aria-hidden className={`relative -mb-1 mt-0.5 hidden transition-transform duration-300 group-hover:translate-y-0.5 lg:block ${hasLogs ? "" : "invisible"} ${active ? "text-bg/60" : "text-faint group-hover:text-jamun"}`}>
+          <ChevronDown size={14} strokeWidth={2.6} />
+        </span>
+      )}
       {open && <TileBody day={day} />}
+      <AnimatePresence>{peek && <Peek day={day} index={index} today={today} />}</AnimatePresence>
     </button>
   );
 }
@@ -262,14 +356,23 @@ function MarkIcon({ mark, live }: { mark: Mark; live?: boolean }) {
   );
 }
 
-/** Desktop calendar content: up to four exercises with a thumbnail, then the day's burn. */
+/** Names of the routines a day's workouts came from ("Chest day"), in the order they were logged. */
+function useRoutineNames(list: Workout[]) {
+  const routines = useStore((s) => s.routines);
+  const ids = [...new Set(list.map((w) => w.routineId).filter(Boolean))];
+  return ids.map((id) => routines.find((r) => r.id === id)?.name).filter(Boolean) as string[];
+}
+
+/** Desktop calendar content: the routine's name, up to four exercises with a thumbnail, then the day's burn. */
 function TileBody({ day }: { day: Day }) {
   const { list, kcal, mark, visitMs } = day;
+  const routineNames = useRoutineNames(list);
   const extra = list.length - 4;
   return (
     <motion.span initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className="relative mt-3 hidden w-full flex-1 flex-col gap-1.5 px-2.5 text-left lg:flex">
       {list.length ? (
         <>
+          {routineNames.length > 0 && <span className="truncate text-[11px] font-bold uppercase tracking-wider text-jamun">{routineNames.join(" + ")}</span>}
           {list.slice(0, 4).map((w) => (
             <span key={w.id} className="flex min-w-0 items-center gap-2">
               <Thumb w={w} size={26} />
@@ -288,11 +391,123 @@ function TileBody({ day }: { day: Day }) {
   );
 }
 
+/**
+ * Desktop hover card under a day: routine, each exercise with photo + sets (or minutes), burn. Nothing on the page
+ * moves. Spans only (it lives inside the day's button). Edge days align to their side so it never leaves the strip.
+ */
+function Peek({ day, index, today }: { day: Day; index: number; today: string }) {
+  const { d, list, kcal, mark, visitMs } = day;
+  const routineNames = useRoutineNames(list);
+  const date = parseDay(d);
+  const align = index === 0 ? "left-0" : index === 6 ? "right-0" : "left-1/2";
+  const caret = index === 0 ? "left-8" : index === 6 ? "right-8" : "left-1/2 -ml-1.5";
+  const extra = list.length - 5;
+  return (
+    <motion.span
+      role="tooltip"
+      initial={{ opacity: 0, y: -6, scale: 0.97, x: index === 0 || index === 6 ? 0 : "-50%" }}
+      animate={{ opacity: 1, y: 0, scale: 1, x: index === 0 || index === 6 ? 0 : "-50%" }}
+      exit={{ opacity: 0, y: -4, scale: 0.98, transition: { duration: 0.12 } }}
+      transition={{ type: "spring", stiffness: 520, damping: 34 }}
+      className={`pointer-events-none absolute top-full z-30 mt-2.5 hidden w-72 origin-top flex-col rounded-2xl border border-line-strong bg-surface p-3 text-left text-text shadow-[0_18px_50px_-18px_rgb(0_0_0/0.7)] lg:flex ${align}`}
+    >
+      <span aria-hidden className={`absolute -top-1.5 size-3 rotate-45 border-l border-t border-line-strong bg-surface ${caret}`} />
+      <span className="flex items-center justify-between gap-2">
+        <span className="text-xs font-bold">{d === today ? "Today" : date.toLocaleDateString("en-IN", { weekday: "short", day: "numeric", month: "short" })}</span>
+        <span className="flex items-center gap-1 text-[11px] text-muted">
+          {EMOJI[mark] && <span aria-hidden>{EMOJI[mark]}</span>}
+          {LABEL[mark]}
+        </span>
+      </span>
+      {routineNames.length > 0 && <span className="mt-1.5 truncate text-[11px] font-bold uppercase tracking-wider text-jamun">{routineNames.join(" + ")}</span>}
+      {list.length > 0 ? (
+        <span className="mt-2 flex flex-col gap-2">
+          {list.slice(0, 5).map((w) => {
+            const ex = w.kind === "lift" ? getExercise(w.refId) : undefined;
+            return (
+              <span key={w.id} className="flex min-w-0 items-center gap-2.5">
+                <Thumb w={w} size={32} />
+                <span className="min-w-0 flex-1">
+                  <span className="block truncate text-xs font-semibold">{w.name}</span>
+                  <span className="block truncate text-[11px] text-muted tabular">
+                    {w.kind === "lift" ? `${w.sets?.length ?? 0} sets · ${setsSummary(w, ex)}` : `${Math.round(w.minutes)} min${w.speedKmh ? ` · ${w.speedKmh} km/h` : ""}`}
+                  </span>
+                </span>
+                <span className="shrink-0 font-display text-sm font-semibold text-jamun tabular">~{w.kcal}</span>
+              </span>
+            );
+          })}
+          {extra > 0 && <span className="pl-[42px] text-[11px] text-muted">+{extra} more</span>}
+        </span>
+      ) : (
+        <span className="mt-1.5 text-xs text-muted">
+          {visitMs ? `Gym visit · ${duration(visitMs)}` : mark === "rest" ? "Rest day. Recovery is training too." : mark === "frozen" ? "Saved by a freeze" : "No workout this day"}
+        </span>
+      )}
+      <span className="mt-3 flex items-center justify-between border-t border-line pt-2 text-[11px]">
+        <span className="font-semibold text-jamun tabular">{kcal ? `~${kcal} kcal` : ""}</span>
+        <span className="flex items-center gap-1 text-faint">
+          Click to open <ChevronDown size={12} />
+        </span>
+      </span>
+    </motion.span>
+  );
+}
+
+/**
+ * Hand-drawn arrow toward "Exercises" (draws itself), shown until the week's details have been opened once.
+ * Tablet + desktop only; phones get a soft ping around the button instead (no room beside it).
+ */
+function DoodleHint() {
+  return (
+    <motion.span
+      aria-hidden
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0, transition: { duration: 0.2 } }}
+      className="pointer-events-none ml-auto hidden shrink-0 items-center gap-1 text-jamun sm:flex"
+    >
+      <motion.span
+        initial={{ opacity: 0, y: 4 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.55 }}
+        className="-translate-y-2 -rotate-3 font-display text-sm italic"
+      >
+        see every day&apos;s workout
+      </motion.span>
+      <svg width="52" height="30" viewBox="0 0 52 30" fill="none" className="-translate-y-1 overflow-visible">
+        <motion.path
+          d="M3 22 C 9 8, 20 6, 22 15 C 24 24, 13 24, 17 14 C 21 5, 36 6, 47 17"
+          style={{ stroke: "currentColor" }}
+          strokeWidth={2}
+          strokeLinecap="round"
+          initial={{ pathLength: 0 }}
+          animate={{ pathLength: 1 }}
+          transition={{ duration: 0.9, ease: "easeInOut" }}
+        />
+        <motion.path
+          d="M39 16.5 L47.5 17.5 L45 9.5"
+          style={{ stroke: "currentColor" }}
+          strokeWidth={2}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          initial={{ pathLength: 0, opacity: 0 }}
+          animate={{ pathLength: 1, opacity: 1 }}
+          transition={{ delay: 0.85, duration: 0.3 }}
+        />
+      </svg>
+    </motion.span>
+  );
+}
+
 /** Phone list row: emoji, day, muscle groups, exercises, photos, burn. Tap = show that day's session. */
 function DayRow({ day, active, today, burnGoal, onPick }: { day: Day; active: boolean; today: string; burnGoal: number | null; onPick: () => void }) {
+  const prDay = usePrDays().has(day.d);
   const { d, mark, list, kcal, visitMs } = day;
   const date = parseDay(d);
-  const groups = [...new Set(list.map((w) => {
+  const routineNames = useRoutineNames(list);
+  // a routine's name says it best ("Chest day"); otherwise the muscle groups
+  const groups = routineNames.length ? routineNames : [...new Set(list.map((w) => {
     const ex = w.kind === "lift" ? getExercise(w.refId) : undefined;
     return ex ? GROUP_LABEL[ex.group] : w.name;
   }))];
@@ -317,7 +532,7 @@ function DayRow({ day, active, today, burnGoal, onPick }: { day: Day; active: bo
       </span>
       <span className="min-w-0 flex-1">
         <span className="flex items-baseline gap-1.5 text-sm">
-          <span className="shrink-0 font-semibold">{d === today ? "Today" : date.toLocaleDateString("en-IN", { weekday: "short", day: "numeric" })}</span>
+          <span className="shrink-0 font-semibold">{d === today ? "Today" : date.toLocaleDateString("en-IN", { weekday: "short", day: "numeric" })}{prDay ? " 🏆" : ""}</span>
           {groups.length > 0 && <span className="truncate text-muted">· {groups.join(" · ")}</span>}
         </span>
         <span className="block truncate text-xs text-faint">{underGoal ? `Under your burn goal (~${kcal} of ${burnGoal})` : sub}</span>

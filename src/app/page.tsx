@@ -8,6 +8,7 @@ import { BurnCard } from "@/components/today/BurnCard";
 import { CalorieRing } from "@/components/today/CalorieRing";
 import { DateStrip } from "@/components/today/DateStrip";
 import { Greeting } from "@/components/today/Greeting";
+import { WrappedBanner } from "@/components/wrapped/WrappedEntry";
 import { MacroBars } from "@/components/today/MacroBars";
 import { MealCard } from "@/components/today/MealCard";
 import { CHAI_ID, QuickRow } from "@/components/today/QuickRow";
@@ -45,14 +46,17 @@ export default function TodayPage() {
 
   if (!hydrated) return <TodaySkeleton />;
 
-  // greeting on top (full width), then phone: one column. desktop: summary column (sticky) + meals grid
+  // greeting on top (full width). Phone, tablet and small laptops (< 1280, next to the 256 px sidebar): one column in this order.
+  // xl: your day (strip, add bar, ring; sticky) on the left; chai · water · burned tiles and the meals list on the right,
+  // so both columns end up about the same height
   return (
     <>
       <div className="mb-4 lg:mb-7">
         <Greeting streak={flame.n} />
       </div>
-      <div className="space-y-4 lg:grid lg:grid-cols-[400px_minmax(0,1fr)] lg:items-start lg:gap-8 lg:space-y-0">
-        <div className="space-y-4 lg:sticky lg:top-10">
+      <WrappedBanner />
+      <div className="space-y-4 xl:grid xl:grid-cols-[380px_minmax(0,1fr)] xl:items-start xl:gap-8 xl:space-y-0">
+        <div className="space-y-4 xl:sticky xl:top-10">
           <DateStrip date={date} onChange={setDate} logged={logged} streak={flame.n} streakLive={flame.live} />
           <AddBar />
 
@@ -68,21 +72,23 @@ export default function TodayPage() {
               <MacroBars totals={t} goals={goals} date={date} />
             </div>
           </section>
-
-          <QuickRow date={date} />
-          <BurnCard date={date} />
         </div>
 
         <div className="space-y-4">
-          <div className="hidden pt-9 lg:block">
+          <div className="space-y-4 xl:grid xl:grid-cols-3 xl:gap-4 xl:space-y-0">
+            <QuickRow date={date} />
+            <BurnCard date={date} />
+          </div>
+          <div className="hidden items-baseline justify-between gap-4 pt-3 lg:flex">
             <h2 className="font-display text-2xl font-semibold">Meals</h2>
-            <p className="text-sm text-muted">
+            <p className="text-sm text-muted tabular">
               {day.length
                 ? `${day.length} item${day.length === 1 ? "" : "s"} · ${t.kcal.toLocaleString("en-IN")} kcal`
                 : "Nothing logged yet. Press / to add food or a workout."}
             </p>
           </div>
-          <div className="space-y-4 md:grid md:grid-cols-2 md:gap-4 md:space-y-0 lg:block lg:space-y-4 xl:grid xl:space-y-0">
+          {/* cards keep their own height (no stretched empty cards); 2-up on tablets and small laptops, one list beside the summary from xl */}
+          <div className="space-y-4 md:grid md:grid-cols-2 md:items-start md:gap-4 md:space-y-0 xl:block xl:space-y-4">
             {MEALS.map((m) => (
               <MealCard
                 key={m.id}
@@ -172,19 +178,24 @@ function TodaySkeleton() {
       <div className="mb-4 min-h-[3.6rem] lg:mb-7 lg:min-h-[2.6rem]">
         <div className="skeleton h-7 w-2/3 lg:h-9 lg:w-1/2" />
       </div>
-      <div className="space-y-4 lg:grid lg:grid-cols-[400px_minmax(0,1fr)] lg:gap-8 lg:space-y-0">
+      <div className="space-y-4 xl:grid xl:grid-cols-[380px_minmax(0,1fr)] xl:gap-8 xl:space-y-0">
         <div className="space-y-4">
           <div className="skeleton h-28" />
           <div className="skeleton h-16" />
           <div className="skeleton h-[26rem]" />
-          <div className="grid grid-cols-2 gap-3">
-            <div className="skeleton h-28" />
-            <div className="skeleton h-28" />
-          </div>
-          <div className="skeleton h-20" />
         </div>
-        <div className="space-y-4 md:grid md:grid-cols-2 md:gap-4 md:space-y-0 lg:block lg:space-y-4 lg:pt-24 xl:grid xl:space-y-0">
-          {[0, 1, 2, 3].map((i) => <div key={i} className="skeleton h-24" />)}
+        <div className="space-y-4">
+          <div className="space-y-4 xl:grid xl:grid-cols-3 xl:gap-4 xl:space-y-0">
+            <div className="grid grid-cols-2 gap-3 xl:contents">
+              <div className="skeleton h-28" />
+              <div className="skeleton h-28" />
+            </div>
+            <div className="skeleton h-20 xl:h-28" />
+          </div>
+          <div className="hidden pt-3 lg:block"><div className="skeleton h-8 w-40" /></div>
+          <div className="space-y-4 md:grid md:grid-cols-2 md:gap-4 md:space-y-0 xl:block xl:space-y-4">
+            {[0, 1, 2, 3].map((i) => <div key={i} className="skeleton h-24" />)}
+          </div>
         </div>
       </div>
     </>

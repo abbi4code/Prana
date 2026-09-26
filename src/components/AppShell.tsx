@@ -12,6 +12,9 @@ import { QuickAddSheet, openQuickAdd } from "./log/QuickAdd";
 import { Sidebar } from "./Sidebar";
 import { Toaster } from "./Toaster";
 import { NearbyBanner } from "./workout/NearbyBanner";
+import { PrCelebration } from "./PrCelebration";
+import { RestTimer } from "./workout/RestTimer";
+import { RoutineSheet } from "./workout/RoutineSheet";
 import { WorkoutSheet } from "./workout/WorkoutSheet";
 
 export function AppShell({ children }: { children: React.ReactNode }) {
@@ -53,7 +56,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       const t = e.target as HTMLElement;
       if (location.pathname === "/login" || location.pathname.startsWith("/auth/")) return;
       const ui = useUI.getState();
-      if (ui.sheet || ui.gym || ui.quick) return;
+      if (ui.sheet || ui.gym || ui.quick || ui.routine) return;
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
         e.preventDefault();
         return openQuickAdd();
@@ -86,8 +89,11 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       <LogSheet />
       <WorkoutSheet />
       <QuickAddSheet />
+      <RoutineSheet />
       <NearbyBanner />
       <Toaster />
+      <PrCelebration />
+      <RestTimer />
     </>
   );
 }

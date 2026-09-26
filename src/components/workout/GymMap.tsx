@@ -14,11 +14,17 @@ const INDIA: LatLngExpression = [22.5, 79];
  * Tap the map or drag the pin to place the gym; the jamun circle is the check-in radius, the dashed one the
  * last reading's accuracy. Leaflet is loaded on demand, only when this map is shown.
  */
-export function GymMap({ pin, radiusM, accuracy, onPick, className = "" }: {
+export function GymMap({ pin, radiusM, accuracy, onPick, start, onView, focus, className = "" }: {
   pin: LatLng | null;
   radiusM: number;
   accuracy?: { at: LatLng; m: number } | null;
   onPick: (p: LatLng) => void;
+  /** where to open when there's no pin yet (e.g. near your old gym when switching); read once */
+  start?: LatLng | null;
+  /** the visible centre after every pan/zoom (place search prefers results near it) */
+  onView?: (center: LatLng, zoom: number) => void;
+  /** fly here without placing the pin (a searched area); a new `n` flies again to the same spot */
+  focus?: { at: LatLng; zoom: number; n: number } | null;
   className?: string;
 }) {
   const box = useRef<HTMLDivElement>(null);
@@ -28,10 +34,13 @@ export function GymMap({ pin, radiusM, accuracy, onPick, className = "" }: {
   const circle = useRef<Circle | null>(null);
   const acc = useRef<Circle | null>(null);
   const pick = useRef(onPick);
+  const view = useRef(onView);
+  const startAt = useRef(start);
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
     pick.current = onPick;
+    view.current = onView;
   });
 
   // create the map once
@@ -41,7 +50,8 @@ export function GymMap({ pin, radiusM, accuracy, onPick, className = "" }: {
       const L = (await import("leaflet")).default;
       if (dead || !box.current) return;
       lib.current = L;
-      const m = L.map(box.current, { zoomControl: false, attributionControl: true, center: INDIA, zoom: 4 });
+      const s = startAt.current;
+      const m = L.map(box.current, { zoomControl: false, attributionControl: true, center: s ? [s.lat, s.lng] : INDIA, zoom: s ? 14 : 4 });
       L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
         maxZoom: 19,
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">OpenStreetMap</a>',
@@ -49,6 +59,12 @@ export function GymMap({ pin, radiusM, accuracy, onPick, className = "" }: {
       L.control.zoom({ position: "bottomright" }).addTo(m);
       m.attributionControl.setPrefix(false);
       m.on("click", (e) => pick.current({ lat: e.latlng.lat, lng: e.latlng.lng }));
+      const report = () => {
+        const c = m.getCenter();
+        view.current?.({ lat: c.lat, lng: c.lng }, m.getZoom());
+      };
+      m.on("moveend", report);
+      report();
       map.current = m;
       setReady(true);
       // the sheet is still animating in: measure again once it has its final size
@@ -98,6 +114,14 @@ export function GymMap({ pin, radiusM, accuracy, onPick, className = "" }: {
   useEffect(() => {
     circle.current?.setRadius(radiusM);
   }, [radiusM, ready]);
+
+  const focusN = focus?.n ?? 0;
+  useEffect(() => {
+    const m = map.current;
+    if (!ready || !m || !focus) return;
+    m.flyTo([focus.at.lat, focus.at.lng], focus.zoom, { duration: 0.8 });
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- focusN stands for focus
+  }, [ready, focusN]);
 
   const accKey = accuracy ? `${accuracy.at.lat},${accuracy.at.lng},${accuracy.m}` : "";
   useEffect(() => {

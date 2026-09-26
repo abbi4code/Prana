@@ -1,6 +1,7 @@
 // Row mapping + merge rules between the local store and Supabase tables.
 // Pure functions (no imports with side effects) so they can be tested in isolation.
-import type { Entry, Fitness, Food, Gym, GymVisit, SavedMeal, WeightLog, Workout } from "../types";
+import type { Entry, Fitness, Food, Gym, GymVisit, Measurement, Routine, SavedMeal, WeightLog, Workout } from "../types";
+import { readGymPlace } from "../gym/places.ts";
 
 export type LogRow = {
   id: string;
@@ -28,6 +29,8 @@ export type WaterRow = { user_id?: string; logged_on: string; glasses: number; u
 export type FoodRow = { id: string; user_id?: string; data: Food; updated_at?: string; deleted_at: string | null };
 export type MealRow = { id: string; user_id?: string; data: SavedMeal; updated_at?: string; deleted_at: string | null };
 export type WorkoutRow = { id: string; user_id?: string; data: Workout; updated_at?: string; deleted_at: string | null };
+export type RoutineRow = { id: string; user_id?: string; data: Routine; updated_at?: string; deleted_at: string | null };
+export type MeasurementRow = { id: string; user_id?: string; data: Measurement; updated_at?: string; deleted_at: string | null };
 
 const num = (v: unknown) => (v == null ? null : Number(v));
 
@@ -108,15 +111,15 @@ export function maxUpdated(current: string | null, ...lists: { updated_at?: stri
 // ── Gym check-in (D30) ──
 export type GymRow = {
   id: string; user_id?: string; name: string; lat: number | null; lng: number | null; radius_m: number;
-  created_at?: string; updated_at?: string; deleted_at: string | null;
+  place?: unknown; created_at?: string; updated_at?: string; deleted_at: string | null;
 };
 export const gymToRow = (g: Gym, userId: string): GymRow => ({
-  id: g.id, user_id: userId, name: g.name, lat: g.lat, lng: g.lng, radius_m: g.radiusM,
+  id: g.id, user_id: userId, name: g.name, lat: g.lat, lng: g.lng, radius_m: g.radiusM, place: g.place ?? null,
   created_at: new Date(g.createdAt).toISOString(), deleted_at: null,
 });
 export const rowToGym = (r: GymRow): Gym => ({
   id: r.id, name: r.name, lat: r.lat == null ? null : Number(r.lat), lng: r.lng == null ? null : Number(r.lng),
-  radiusM: Number(r.radius_m), createdAt: r.created_at ? Date.parse(r.created_at) : 0,
+  radiusM: Number(r.radius_m), createdAt: r.created_at ? Date.parse(r.created_at) : 0, place: readGymPlace(r.place),
 });
 export function mergeGyms(local: Gym[], rows: GymRow[], skip: Set<string>): Gym[] {
   const byId = new Map(local.map((g) => [g.id, g]));

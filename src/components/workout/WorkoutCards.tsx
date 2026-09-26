@@ -3,63 +3,8 @@
 import { useState } from "react";
 import { motion } from "motion/react";
 import { Moon, Target } from "lucide-react";
-import { Burst, useGoalHits } from "@/components/Burst";
-import { RollingNumber } from "@/components/RollingNumber";
-import { useStore, useUI } from "@/lib/store";
+import { useStore } from "@/lib/store";
 import type { Fitness } from "@/lib/types";
-
-/** Big "burned" number, bar toward the optional daily burn goal, time and sets. */
-export function BurnSummary({ date, kcal, minutes, sets, rest }: { date: string; kcal: number; minutes: number; sets: number; rest: boolean }) {
-  const goal = useStore((s) => s.fitness.burnGoal);
-  const showToast = useUI((s) => s.showToast);
-  const hits = useGoalHits(kcal, goal ?? 0, date, () => showToast("Burn goal done. Strong session."));
-  const pct = goal ? Math.min(kcal / goal, 1) : 0;
-
-  return (
-    <section className="card relative overflow-hidden p-5">
-      <Burst trigger={hits} />
-      <div aria-hidden className="pointer-events-none absolute -right-12 -top-12 size-48 rounded-full opacity-35 blur-3xl" style={{ background: kcal ? "var(--color-jamun)" : "transparent" }} />
-      <p className="text-xs font-bold uppercase tracking-wider text-muted">Burned</p>
-      <div className="mt-1 flex items-end justify-between gap-3">
-        <p className="font-display text-6xl font-semibold leading-none tracking-tight">
-          <RollingNumber value={kcal} />
-          <span className="ml-1.5 text-lg font-medium text-muted">kcal</span>
-        </p>
-        {goal ? <p className="pb-1 text-sm text-muted tabular">of {goal.toLocaleString("en-IN")}</p> : null}
-      </div>
-      <div className="mt-4 h-2.5 overflow-hidden rounded-full bg-surface-3">
-        <motion.div
-          className="h-full rounded-full bg-gradient-to-r from-jamun to-chilli"
-          style={{ boxShadow: "0 0 14px var(--color-jamun)" }}
-          initial={{ width: 0 }}
-          animate={{ width: goal ? `${pct * 100}%` : kcal ? "100%" : "0%" }}
-          transition={{ type: "spring", stiffness: 70, damping: 18 }}
-        />
-      </div>
-      <div className="mt-4 flex gap-5 text-sm">
-        <Stat value={minutes} label="minutes" />
-        <Stat value={sets} label="sets" />
-        {rest && !kcal ? (
-          <p className="ml-auto flex items-center gap-1.5 self-center rounded-full bg-sky/12 px-3 py-1 text-xs font-semibold text-sky">
-            <Moon size={13} /> Rest day
-          </p>
-        ) : null}
-      </div>
-      <p className="mt-3 text-[11px] leading-relaxed text-faint">
-        Estimates (roughly ±30%), calories above resting only. Lifts: measured energy per rep, so weight and reps count and rest doesn&apos;t. Cardio: Compendium of Physical Activities 2024. Kept separate from your food goal.
-      </p>
-    </section>
-  );
-}
-
-function Stat({ value, label }: { value: number; label: string }) {
-  return (
-    <div>
-      <p className="font-display text-xl font-semibold tabular">{value}</p>
-      <p className="text-[11px] font-bold uppercase tracking-wider text-faint">{label}</p>
-    </div>
-  );
-}
 
 // Monday first, JS weekday numbers (0 = Sunday)
 const WEEK = [

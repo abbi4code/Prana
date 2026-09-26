@@ -2,14 +2,17 @@
 
 import { useRef } from "react";
 import { AnimatePresence, motion, useMotionValue, useTransform } from "motion/react";
-import { Trash } from "lucide-react";
+import { Trash, Trophy } from "lucide-react";
 import { getActivity, getExercise, setsSummary } from "@/lib/exercises";
+import { PR_LABEL, formatPr, type PrHit } from "@/lib/records";
 import { useStore, useUI } from "@/lib/store";
+import { useRecords } from "@/lib/useRecords";
 import type { Workout } from "@/lib/types";
 import { ActivityIcon, ExercisePhoto } from "./ExercisePhoto";
 
 /** A day's exercises and cardio. Tap to edit; swipe left to delete (with undo), like meal rows. */
 export function WorkoutList({ workouts }: { workouts: Workout[] }) {
+  const { hitsByWorkout } = useRecords();
   const removeWorkout = useStore((s) => s.removeWorkout);
   const restoreWorkout = useStore((s) => s.restoreWorkout);
   const showToast = useUI((s) => s.showToast);
@@ -25,7 +28,7 @@ export function WorkoutList({ workouts }: { workouts: Workout[] }) {
       <AnimatePresence initial={false}>
         {workouts.map((w) => (
           <motion.li key={w.id} layout initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0, transition: { duration: 0.22 } }}>
-            <Row w={w} onDelete={() => remove(w)} />
+            <Row w={w} pr={hitsByWorkout.get(w.id)} onDelete={() => remove(w)} />
           </motion.li>
         ))}
       </AnimatePresence>
@@ -35,7 +38,7 @@ export function WorkoutList({ workouts }: { workouts: Workout[] }) {
 
 const DELETE_AT = -88;
 
-function Row({ w, onDelete }: { w: Workout; onDelete: () => void }) {
+function Row({ w, pr, onDelete }: { w: Workout; pr?: PrHit[]; onDelete: () => void }) {
   const editWorkout = useUI((s) => s.editWorkout);
   const fresh = useUI((s) => s.fresh.includes(w.id));
   const clearFresh = useUI((s) => s.clearFresh);
@@ -93,7 +96,17 @@ function Row({ w, onDelete }: { w: Workout; onDelete: () => void }) {
         >
           {ex ? <ExercisePhoto ex={ex} className="w-16 shrink-0 rounded-xl" /> : <ActivityIcon id={w.refId} />}
           <div className="min-w-0 flex-1">
-            <p className="truncate text-[15px] font-semibold">{w.name}</p>
+            <p className="flex min-w-0 items-center gap-1.5">
+              <span className="truncate text-[15px] font-semibold">{w.name}</span>
+              {pr?.length ? (
+                <span
+                  title={pr.map((h) => `${PR_LABEL[h.kind]}: ${formatPr(h.kind, h)}`).join(" · ")}
+                  className="flex shrink-0 items-center gap-0.5 rounded-full bg-gradient-to-r from-turmeric to-saffron px-1.5 py-0.5 text-[10px] font-bold text-on-accent"
+                >
+                  <Trophy size={10} strokeWidth={2.6} /> PR
+                </span>
+              ) : null}
+            </p>
             <p className="truncate text-xs text-muted tabular">{detail}</p>
           </div>
           <span className="font-display font-semibold tabular text-jamun">

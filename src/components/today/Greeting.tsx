@@ -37,7 +37,7 @@ function save(v: Saved) {
 }
 
 /** "Abhishek" from the Google profile; null for guests. */
-function firstName(user: User | null): string | null {
+export function firstName(user: User | null): string | null {
   const m = user?.user_metadata ?? {};
   const full = String(m.full_name ?? m.name ?? m.given_name ?? "").trim();
   return full ? full.split(/\s+/)[0] : null;

@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { Drawer } from "vaul";
 import { AnimatePresence, motion } from "motion/react";
-import { Check, ChevronDown, ChevronLeft, Dumbbell, History, Minus, Plus, Scale, Search, Trash, X } from "lucide-react";
+import { Check, ChevronDown, ChevronLeft, Dumbbell, History, Minus, Plus, Scale, Search, Trash, Trophy, X } from "lucide-react";
 import { RollingNumber } from "@/components/RollingNumber";
 import { DEFAULT_REST, REST_CHOICES, cardioBurn, type Person } from "@/lib/burn";
 import { dayKey, dayLabel, parseDay } from "@/lib/dates";
@@ -12,6 +12,9 @@ import {
 } from "@/lib/exercises";
 import { MicButton, NlConfirm, SignInHint, UnderstandRow, isSentence, useNlLog } from "@/components/log/NlLog";
 import { mealForNow } from "@/lib/nutrition";
+import { computeRecords, formatPr, metrics, wouldBreak } from "@/lib/records";
+import { refInfo } from "@/lib/useRecords";
+import { useRest } from "@/lib/restTimer";
 import { useStore, useUI } from "@/lib/store";
 import type { Activity, Exercise, MuscleGroup, WorkSet, Workout } from "@/lib/types";
 import { useIsDesktop } from "@/lib/useMediaQuery";
@@ -344,13 +347,31 @@ export function LiftDetail({ ex, date, initial, embedded, onBack, onDone }: { ex
   const [intense, setIntense] = useState(initial?.intense ?? false);
   const [steps, setSteps] = useState<string[] | null>(null);
   const [showSteps, setShowSteps] = useState(false);
+  // sets ticked off while training (D40): ticking one starts the rest timer; only for today's new logs
+  const [done, setDone] = useState<boolean[]>([]);
+  const live = !initial && date === dayKey();
+  const prev = last?.sets ?? [];
 
   const est = p ? exerciseBurn(ex, sets, rest, intense, p) : null;
+  // records without the log being edited, so editing a PR doesn't compare it with itself
+  const rec = useMemo(() => computeRecords(workouts.filter((w) => w.refId === ex.id && w.id !== initial?.id), refInfo).byRef.get(ex.id), [workouts, ex.id, initial?.id]);
+  const now = metrics({ kind: "lift", sets, minutes: 0 }, { kind: "lift", load: ex.load });
+  const breaking = wouldBreak(now, rec)[0];
+  const top = rec && (rec.best.weight ?? rec.best.reps ?? rec.best.hold ?? rec.best.assist);
   const timed = ex.load === "timed";
   const kgLabel = ex.load === "assisted" ? "assist kg" : ex.load === "bodyweight" ? "+ kg" : ex.rep?.perSide ? "kg each" : "kg";
   const step = kgStep(ex.equip);
 
   const patch = (i: number, v: Partial<WorkSet>) => setSets((list) => list.map((s, j) => (j === i ? { ...s, ...v } : s)));
+  const tick = (i: number) => {
+    const on = !done[i];
+    setDone((d) => { const n = [...d]; n[i] = on; return n; });
+    if (!on) return;
+    navigator.vibrate?.(10);
+    // rest after every set but the last one
+    if (i < sets.length - 1) useRest.getState().start(rest, `${ex.name} · set ${i + 2} of ${sets.length} next`);
+    else useRest.getState().stop();
+  };
 
   const save = () => {
     if (!est || !sets.length) return;
@@ -397,16 +418,40 @@ export function LiftDetail({ ex, date, initial, embedded, onBack, onDone }: { ex
           <span className="rounded-full border border-line-strong px-2.5 py-1 text-xs text-muted">{equipLabel(ex.equip)}</span>
         </div>
 
-        {last && !initial && (
-          <p className="mt-3 flex items-center gap-2 rounded-2xl bg-surface-2 px-3 py-2 text-[13px] text-muted">
-            <History size={14} className="shrink-0 text-jamun" />
+        {top && rec && (
+          <p className="mt-2 flex items-center gap-2 rounded-2xl bg-turmeric/10 px-3 py-2 text-[13px] text-muted">
+            <Trophy size={14} className="shrink-0 text-turmeric" />
             <span className="truncate">
-              Last time ({parseDay(last.date).toLocaleDateString("en-IN", { day: "numeric", month: "short" })}): <span className="font-semibold text-text">{setsSummary(last, ex)}</span>
+              Best: <span className="font-semibold text-text">{formatPr(rec.best.weight ? "weight" : rec.best.reps ? "reps" : rec.best.hold ? "hold" : "assist", top)}</span>
+              {rec.best.e1rm && <> · est. 1-rep max <span className="font-semibold text-text">{formatPr("e1rm", rec.best.e1rm)}</span></>}
             </span>
           </p>
         )}
 
-        <Label>Sets</Label>
+        <div className="mb-2 mt-6 flex items-center justify-between gap-2">
+          <p className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-faint">
+            Sets
+            {last && (
+              <span className="flex items-center gap-1 normal-case tracking-normal text-muted">
+                <History size={12} className="text-jamun" /> vs {parseDay(last.date).toLocaleDateString("en-IN", { day: "numeric", month: "short" })}
+              </span>
+            )}
+          </p>
+          <AnimatePresence>
+            {breaking && now[breaking] && (
+              <motion.span
+                key={breaking}
+                initial={{ opacity: 0, scale: 0.6, y: 4 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                transition={{ type: "spring", stiffness: 500, damping: 22 }}
+                className="flex items-center gap-1 rounded-full bg-gradient-to-r from-turmeric to-saffron px-2.5 py-1 text-[11px] font-bold text-on-accent shadow-[0_6px_18px_-6px_var(--color-saffron)]"
+              >
+                <Trophy size={12} strokeWidth={2.6} /> New PR · {formatPr(breaking, now[breaking]!)}
+              </motion.span>
+            )}
+          </AnimatePresence>
+        </div>
         <ul className="space-y-2">
           <AnimatePresence initial={false}>
             {sets.map((s, i) => (
@@ -416,9 +461,24 @@ export function LiftDetail({ ex, date, initial, embedded, onBack, onDone }: { ex
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
-                className="flex items-center gap-2"
               >
-                <span className="grid size-8 shrink-0 place-items-center rounded-full bg-surface-2 text-xs font-bold text-muted tabular">{i + 1}</span>
+                <div className="flex items-center gap-2">
+                {live ? (
+                  <motion.button
+                    whileTap={{ scale: 0.85 }}
+                    onClick={() => tick(i)}
+                    aria-pressed={!!done[i]}
+                    aria-label={done[i] ? `Set ${i + 1} done. Tap to undo` : `Set ${i + 1} done: start rest`}
+                    title={done[i] ? "Done" : "Done? Tap to start the rest timer"}
+                    className={`grid size-8 shrink-0 place-items-center rounded-full text-xs font-bold tabular transition-colors ${
+                      done[i] ? "bg-leaf text-bg" : "bg-surface-2 text-muted ring-1 ring-inset ring-line-strong hover:text-jamun hover:ring-jamun/50"
+                    }`}
+                  >
+                    {done[i] ? <Check size={15} strokeWidth={3} /> : i + 1}
+                  </motion.button>
+                ) : (
+                  <span className="grid size-8 shrink-0 place-items-center rounded-full bg-surface-2 text-xs font-bold text-muted tabular">{i + 1}</span>
+                )}
                 {timed ? (
                   <NumStepper label="sec" value={s.secs ?? 30} step={5} min={5} onChange={(v) => patch(i, { secs: v })} />
                 ) : (
@@ -436,10 +496,15 @@ export function LiftDetail({ ex, date, initial, embedded, onBack, onDone }: { ex
                 >
                   <X size={16} />
                 </button>
+                </div>
+                {prev[i] && <LastSet was={prev[i]} now={s} timed={timed} bodyweight={ex.load === "bodyweight" || ex.load === "assisted"} />}
               </motion.li>
             ))}
           </AnimatePresence>
         </ul>
+        {live && sets.length > 1 && !done.some(Boolean) && (
+          <p className="mt-2 text-center text-[11px] text-faint">Tap a set&apos;s number when you finish it: the rest timer starts.</p>
+        )}
         <motion.button
           whileTap={{ scale: 0.97 }}
           onClick={() => setSets((list) => [...list, { ...(list.at(-1) ?? fresh(ex)[0]) }])}
@@ -617,6 +682,12 @@ function Footer({ p, est, label, onSave, disabled, basis }: { p: Person | null; 
               {basis ?? (p.personal ? `for ${p.kg} kg` : <span className="text-faint">add age + height in Me for a personal estimate</span>)}
             </p>
           </div>
+          {/* D45: why our number is lower than other apps: resting burn isn't counted twice */}
+          {est && est.minutes > 0 && (
+            <p className="-mt-2 mb-3 text-[11px] text-faint tabular">
+              That&apos;s extra, on top of ~{Math.max(1, Math.round(p.restKcalPerMin * est.minutes))} kcal your body burns resting anyway.
+            </p>
+          )}
           <motion.button
             whileTap={{ scale: 0.97 }}
             onClick={onSave}
@@ -632,7 +703,7 @@ function Footer({ p, est, label, onSave, disabled, basis }: { p: Person | null; 
 }
 
 /** Burn needs a body weight; we never guess one. Logs today's weight (same as Progress). */
-function WeightPrompt() {
+export function WeightPrompt() {
   const logWeight = useStore((s) => s.logWeight);
   const [kg, setKg] = useState("");
   return (
@@ -684,8 +755,37 @@ function DeleteButton({ workout, onDone, inline }: { workout: Workout; onDone: (
   );
 }
 
+/**
+ * Under a set row: what you did in the same set last session, and how today's compares (D40). Up = progress
+ * (more weight, or same weight and more reps / longer hold).
+ */
+function LastSet({ was, now, timed, bodyweight }: { was: WorkSet; now: WorkSet; timed: boolean; bodyweight: boolean }) {
+  const fmtKg = (kg: number) => (Number.isInteger(kg) ? String(kg) : kg.toFixed(1));
+  const text = timed ? `${was.secs ?? 0} s` : bodyweight && !was.kg ? `${was.reps} reps` : `${fmtKg(was.kg)} kg × ${was.reps}`;
+  const dKg = Math.round((now.kg - was.kg) * 10) / 10;
+  const dReps = now.reps - was.reps;
+  const dSecs = (now.secs ?? 0) - (was.secs ?? 0);
+  const delta = timed
+    ? dSecs ? { up: dSecs > 0, text: `${dSecs > 0 ? "+" : "−"}${Math.abs(dSecs)} s` } : null
+    : dKg ? { up: dKg > 0, text: `${dKg > 0 ? "+" : "−"}${fmtKg(Math.abs(dKg))} kg` }
+    : dReps ? { up: dReps > 0, text: `${dReps > 0 ? "+" : "−"}${Math.abs(dReps)} rep${Math.abs(dReps) === 1 ? "" : "s"}` }
+    : null;
+  return (
+    <p className="ml-10 mt-1 flex items-center gap-1.5 text-[11px] text-faint tabular">
+      last {text}
+      {delta ? (
+        <span className={`flex items-center gap-0.5 rounded-full px-1.5 py-px font-bold ${delta.up ? "bg-leaf/15 text-leaf" : "bg-surface-2 text-muted"}`}>
+          {delta.up ? "▲" : "▼"} {delta.text}
+        </span>
+      ) : (
+        <span className="text-muted">· same</span>
+      )}
+    </p>
+  );
+}
+
 /** Compact −/value/+ used in each set row. Typing works too. */
-function NumStepper({ label, value, step, min, decimal, onChange }: { label: string; value: number; step: number; min: number; decimal?: boolean; onChange: (v: number) => void }) {
+export function NumStepper({ label, value, step, min, decimal, onChange }: { label: string; value: number; step: number; min: number; decimal?: boolean; onChange: (v: number) => void }) {
   const [text, setText] = useState<string | null>(null);
   const bump = (dir: 1 | -1) => onChange(Math.max(min, Math.round((value + dir * step) * 10) / 10));
   return (

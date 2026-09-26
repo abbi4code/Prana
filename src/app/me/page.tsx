@@ -5,6 +5,8 @@ import { motion } from "motion/react";
 import { Download, Monitor, Moon, Sparkles, Sun, Trash } from "lucide-react";
 import { FoodIcon } from "@/components/FoodIcon";
 import { AccountCard } from "@/components/account/AccountCard";
+import { EnergyCard } from "@/components/me/EnergyCard";
+import { YourGymCard } from "@/components/workout/YourGymCard";
 import { APP_NAME } from "@/lib/app";
 import { suggestGoals } from "@/lib/nutrition";
 import { useStore } from "@/lib/store";
@@ -27,9 +29,13 @@ export default function MePage() {
     <div className="space-y-4">
       <h1 className="font-display text-[2rem] font-semibold lg:text-4xl">Me</h1>
       <div className="space-y-4 lg:grid lg:grid-cols-2 lg:items-start lg:gap-6 lg:space-y-0">
-        <ProfileCard key={JSON.stringify(profile)} profile={profile} />
+        <div className="space-y-4 lg:space-y-6">
+          <EnergyCard />
+          <ProfileCard key={JSON.stringify(profile)} profile={profile} />
+        </div>
         <div className="space-y-4 lg:space-y-6">
           <GoalsCard key={JSON.stringify(goals)} goals={goals} />
+          <YourGymCard />
           <AppearanceCard />
           <MyFoodsCard />
           <DataCard />

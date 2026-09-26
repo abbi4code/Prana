@@ -21,6 +21,8 @@ export type StreakResult = {
   frozen: Set<string>;
   status: Map<string, DayStatus>;
   onTargetDays: number;
+  /** bestDates[n - 1] = the day the streak first reached n (badges) */
+  bestDates: string[];
 };
 
 const next = (key: string) => {
@@ -32,7 +34,11 @@ const next = (key: string) => {
 /** How one day counts for a streak. "rest" = a planned rest day: it neither adds to nor breaks the streak. */
 export type Judged = "hit" | "miss" | "rest";
 
-export type RunResult = { current: number; best: number; freezes: number; frozen: Set<string>; hits: number };
+export type RunResult = {
+  current: number; best: number; freezes: number; frozen: Set<string>; hits: number;
+  /** bestDates[n - 1] = the day the streak first reached n days (for badges) */
+  bestDates: string[];
+};
 
 /**
  * Walks every day from `first` to today.
@@ -44,13 +50,15 @@ export type RunResult = { current: number; best: number; freezes: number; frozen
 export function runStreak(first: string | null, today: string, judge: (day: string) => Judged): RunResult {
   const frozen = new Set<string>();
   let current = 0, best = 0, freezes = 0, hits = 0;
-  if (!first) return { current, best, freezes, frozen, hits };
+  const bestDates: string[] = [];
+  if (!first) return { current, best, freezes, frozen, hits, bestDates };
 
   for (let d = first; d <= today; d = next(d)) {
     const j = judge(d);
     if (j === "hit") {
       hits++;
       current++;
+      if (current > best) bestDates.push(d);
       best = Math.max(best, current);
       if (current % FREEZE_EVERY === 0 && freezes < MAX_FREEZES) freezes++;
     } else if (j === "rest" || d === today) {
@@ -62,7 +70,7 @@ export function runStreak(first: string | null, today: string, judge: (day: stri
       current = 0;
     }
   }
-  return { current, best, freezes, frozen, hits };
+  return { current, best, freezes, frozen, hits, bestDates };
 }
 
 /** Food streak (D24): on target = logged and 80–105% of the goal. */
@@ -74,7 +82,7 @@ export function computeStreaks(kcalByDay: Map<string, number>, goal: number, tod
     status.set(d, s);
     return s === "on" ? "hit" : "miss";
   });
-  return { current: r.current, best: r.best, freezes: r.freezes, frozen: r.frozen, status, onTargetDays: r.hits };
+  return { current: r.current, best: r.best, freezes: r.freezes, frozen: r.frozen, status, onTargetDays: r.hits, bestDates: r.bestDates };
 }
 
 /**

@@ -6,7 +6,7 @@ import { flushGym } from "../gym/api";
 import { useStore, type SyncQueue } from "../store";
 import {
   entryToRow, gymToRow, maxUpdated, mergeDocs, mergeEntries, mergeFoods, mergeGyms, mergeVisits, mergeWater, mergeWeights, rowToFitness,
-  type FoodRow, type GymRow, type LogRow, type MealRow, type VisitRow, type WaterRow, type WeightRow, type WorkoutRow,
+  type FoodRow, type GymRow, type LogRow, type MealRow, type MeasurementRow, type RoutineRow, type VisitRow, type WaterRow, type WeightRow, type WorkoutRow,
 } from "./rows";
 
 const PAGE = 1000; // PostgREST max rows per request
@@ -99,6 +99,16 @@ async function push(userId: string) {
   if (q.deletedWorkouts.length)
     check(await supabase.from("workouts").update({ deleted_at: now }).in("id", q.deletedWorkouts));
 
+  const routines = s.routines.filter((r) => q.dirtyRoutines.includes(r.id));
+  if (routines.length) check(await supabase.from("routines").upsert(routines.map((r) => ({ id: r.id, user_id: userId, data: r, deleted_at: null }))));
+  if (q.deletedRoutines.length)
+    check(await supabase.from("routines").update({ deleted_at: now }).in("id", q.deletedRoutines));
+
+  const measurements = s.measurements.filter((m) => q.dirtyMeasurements.includes(m.id));
+  if (measurements.length) check(await supabase.from("measurements").upsert(measurements.map((m) => ({ id: m.id, user_id: userId, data: m, deleted_at: null }))));
+  if (q.deletedMeasurements.length)
+    check(await supabase.from("measurements").update({ deleted_at: now }).in("id", q.deletedMeasurements));
+
   const gyms = s.gyms.filter((g) => q.dirtyGyms.includes(g.id));
   if (gyms.length) check(await supabase.from("user_gyms").upsert(gyms.map((g) => gymToRow(g, userId))));
   if (q.deletedGyms.length)
@@ -128,6 +138,10 @@ async function push(userId: string) {
       deletedMeals: minus(cur.sync.deletedMeals, q.deletedMeals),
       dirtyWorkouts: minus(cur.sync.dirtyWorkouts, workouts.map((w) => w.id)),
       deletedWorkouts: minus(cur.sync.deletedWorkouts, q.deletedWorkouts),
+      dirtyRoutines: minus(cur.sync.dirtyRoutines, routines.map((r) => r.id)),
+      dirtyMeasurements: minus(cur.sync.dirtyMeasurements, measurements.map((m) => m.id)),
+      deletedMeasurements: minus(cur.sync.deletedMeasurements, q.deletedMeasurements),
+      deletedRoutines: minus(cur.sync.deletedRoutines, q.deletedRoutines),
       dirtyGyms: minus(cur.sync.dirtyGyms, gyms.map((g) => g.id)),
       deletedGyms: minus(cur.sync.deletedGyms, q.deletedGyms),
       // if goals changed again mid-push, keep the flag
@@ -152,7 +166,7 @@ async function fetchSince<T>(table: string, since: string | null): Promise<T[]> 
 async function pull() {
   const supabase = getSupabase()!;
   const since = useStore.getState().sync.lastPulledAt;
-  const [logs, weights, water, foods, meals, workouts, gyms, visits, goalsRes] = await Promise.all([
+  const [logs, weights, water, foods, meals, workouts, gyms, visits, routines, measurements, goalsRes] = await Promise.all([
     fetchSince<LogRow>("food_logs", since),
     fetchSince<WeightRow>("weights", since),
     fetchSince<WaterRow>("water", since),
@@ -161,6 +175,8 @@ async function pull() {
     fetchSince<WorkoutRow>("workouts", since),
     fetchSince<GymRow>("user_gyms", since),
     fetchSince<VisitRow>("gym_visits", since),
+    fetchSince<RoutineRow>("routines", since),
+    fetchSince<MeasurementRow>("measurements", since),
     supabase.from("user_goals").select("*").maybeSingle(),
   ]);
   if (goalsRes.error) throw new Error(goalsRes.error.message);
@@ -177,7 +193,9 @@ async function pull() {
       workouts: mergeDocs(s.workouts, workouts, new Set([...q.dirtyWorkouts, ...q.deletedWorkouts])),
       gyms: mergeGyms(s.gyms, gyms, new Set([...q.dirtyGyms, ...q.deletedGyms])),
       visits: mergeVisits(s.visits, visits),
-      sync: { ...q, lastPulledAt: maxUpdated(q.lastPulledAt, logs, weights, water, foods, meals, workouts, gyms, visits) },
+      routines: mergeDocs(s.routines, routines, new Set([...q.dirtyRoutines, ...q.deletedRoutines])),
+      measurements: mergeDocs(s.measurements, measurements, new Set([...q.dirtyMeasurements, ...q.deletedMeasurements])).sort((a, b) => a.date.localeCompare(b.date)),
+      sync: { ...q, lastPulledAt: maxUpdated(q.lastPulledAt, logs, weights, water, foods, meals, workouts, gyms, visits, routines, measurements) },
     };
     if (g && !q.goalsDirty) {
       next.goals = { kcal: g.daily_kcal, p: g.protein_g, c: g.carbs_g, f: g.fat_g };
