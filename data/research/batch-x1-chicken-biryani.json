@@ -1,0 +1,55 @@
+{
+ "batch": "x1",
+ "theme": "Chicken biryani (researched in Claude Code, 2026-09-28)",
+ "generated_on": "2026-09-28",
+ "foods": [
+  {
+   "id": "chicken-biryani",
+   "name": "Chicken Biryani",
+   "name_hi": "चिकन बिरयानी",
+   "aliases": ["chicken biryani", "chicken biriyani", "murgh biryani", "chicken dum biryani", "hyderabadi chicken biryani", "biryani chicken", "chicken briyani"],
+   "category": "rice",
+   "diet": "non_veg",
+   "form": "cooked",
+   "per_100g": null,
+   "units": [
+    { "unit": "plate", "label": "1 plate (~350 g)", "grams": 350, "basis": "estimated standard household measure" },
+    { "unit": "cup", "label": "1 cup", "grams": 196, "basis": "USDA portion: FNDDS 27243100 'Biryani with chicken', 1 cup = 196 g" },
+    { "unit": "katori", "label": "1 katori (150 ml)", "grams": 150, "basis": "estimated standard household measure" }
+   ],
+   "default_unit": "plate",
+   "source": {
+    "id": "DERIVED",
+    "ref": "INDB ASC122 (Mutton biryani) recipe with chicken thigh (IFCT N002) for mutton; cooked weight by dry-matter balance (USDA SR Legacy water)",
+    "url": "https://github.com/lindsayjaacks/Indian-Nutrient-Databank-INDB-/blob/main/recipes.xlsx"
+   },
+   "recipe": {
+    "ingredients": [
+     { "name": "Rice, parboiled, milled (100 g raw → 304.1 g cooked)", "grams": 100, "source": { "id": "IFCT2017", "ref": "A014", "row_name": "Rice, parboiled, milled" } },
+     { "name": "Chicken thigh, skinless, boneless (replaces INDB's 100 g boneless mutton; 100 g raw → 73.9 g cooked)", "grams": 100, "source": { "id": "IFCT2017", "ref": "N002", "row_name": "Chicken, poultry, thigh, skinless" } },
+     { "name": "Onion (100 g → 89.7 g)", "grams": 100, "source": { "id": "IFCT2017", "ref": "G017", "row_name": "Onion, big" } },
+     { "name": "Tomato (50 g → 48.4 g)", "grams": 50, "source": { "id": "IFCT2017", "ref": "D075", "row_name": "Tomato, ripe, hybrid" } },
+     { "name": "Garlic", "grams": 2.2, "source": { "id": "IFCT2017", "ref": "G012", "row_name": "Garlic, small clove" } },
+     { "name": "Ginger", "grams": 6.33, "source": { "id": "IFCT2017", "ref": "G014", "row_name": "Ginger, fresh" } },
+     { "name": "Black cardamom (0.25 tsp)", "grams": 0.5, "source": { "id": "IFCT2017", "ref": "G021", "row_name": "Cardamom, black" } },
+     { "name": "Cloves (0.5 tsp)", "grams": 1, "source": { "id": "IFCT2017", "ref": "G023", "row_name": "Cloves" } },
+     { "name": "Cumin (0.5 tsp)", "grams": 1, "source": { "id": "IFCT2017", "ref": "G025", "row_name": "Cumin seeds" } },
+     { "name": "Black pepper (0.875 tsp)", "grams": 1.75, "source": { "id": "IFCT2017", "ref": "G031", "row_name": "Pepper, black" } },
+     { "name": "Poppy seeds (0.25 tsp)", "grams": 0.5, "source": { "id": "IFCT2017", "ref": "G032", "row_name": "Poppy seeds" } },
+     { "name": "Turmeric (0.25 tsp)", "grams": 0.5, "source": { "id": "IFCT2017", "ref": "G033", "row_name": "Turmeric powder" } },
+     { "name": "Milk (1 tbsp)", "grams": 15, "source": { "id": "IFCT2017", "ref": "L002", "row_name": "Milk, whole, Cow" } },
+     { "name": "Curd (1 tbsp)", "grams": 15, "source": { "id": "USDA", "ref": "search: Yogurt, plain, whole milk" } },
+     { "name": "Oil (4 tbsp, as in the original recipe)", "grams": 54, "source": { "id": "IFCT2017", "ref": "T012", "row_name": "Sunflower oil" } }
+    ],
+    "cooked_weight_g": 613.95,
+    "cooked_weight_basis": "dry-matter balance with USDA SR Legacy water contents: rice parboiled dry 9.86 % (fdcId 169707) → cooked 70.36 % (169708), ×3.041; chicken meat raw 75.46 % (171052) → stewed 66.81 % (171451), ×0.739; onion raw 89.11 % (170000) → cooked 87.86 % (170001), ×0.897; tomato raw 94.52 % (170457) → cooked 94.34 % (170050), ×0.968; everything else at its raw weight",
+    "method": "INDB ASC122 dum biryani: rice cooked with whole spices, layered with chicken cooked in onion-tomato-curd masala, saffron milk, sealed and steamed"
+   },
+   "confidence": "medium",
+   "notes": "Built from INDB's own recipe for mutton biryani (ASC122, 2 servings: 100 g rice, 100 g boneless meat) with chicken thigh in place of mutton. INDB publishes per 100 g of RAW ingredients (INDB.do: total nutrients / raw weight, no cooking water), so its 191 kcal/100 g is denser than biryani on the plate; here the cooked weight comes from USDA water contents. Oil: the original recipe says 4 tbsp (54 g); INDB's processed file has 4 tsp, which looks like a transcription slip. Bay leaf, saffron, chilli powder and cinnamon (~2.6 g, INDB's UK codes) and salt are left out (~5 kcal). IFCT chicken leg (N001) is not used: its energy contradicts its own macros. Restaurant biryani often has more ghee and more meat. Cross-check: a lab analysis of Hyderabad chicken biryani (Journal of Meat Science 2019, doi:10.5958/2581-6616.2019.00006.9) reports 434.7 kcal, 18.3 g fat and 16.5 g protein per 100 g on DRY weight; at 55–60 % moisture that is ~175–195 kcal per 100 g as eaten.",
+   "image_prompt": "Hyderabadi chicken dum biryani in a copper handi, long-grain rice with saffron streaks, chicken pieces, fried onions, mint, raita on the side"
+  }
+ ],
+ "not_found": [],
+ "alias_suggestions": {}
+}

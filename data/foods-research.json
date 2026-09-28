@@ -9,7 +9,13 @@
       "category": "snack",
       "diet": "egg",
       "form": "cooked",
-      "aliases": [],
+      "aliases": [
+        "paneer roll",
+        "paneer kaathi roll",
+        "paneer frankie",
+        "paneer wrap",
+        "kathi roll"
+      ],
       "per_100g": {
         "kcal": 285.94,
         "protein_g": 6.92,
@@ -43,7 +49,13 @@
       "category": "condiment",
       "diet": "vegan",
       "form": "cooked",
-      "aliases": [],
+      "aliases": [
+        "khajoor chutney",
+        "khajur ki chutney",
+        "dates chutney",
+        "khajoor imli chutney",
+        "meethi khajoor chutney"
+      ],
       "per_100g": {
         "kcal": 103.57,
         "protein_g": 1.07,
@@ -83,7 +95,13 @@
       "category": "condiment",
       "diet": "vegan",
       "form": "cooked",
-      "aliases": [],
+      "aliases": [
+        "poondu chutney",
+        "lahsun ki chutney",
+        "lehsun chutney",
+        "garlic chutney",
+        "vellulli pachadi"
+      ],
       "per_100g": {
         "kcal": 255.51,
         "protein_g": 3.34,
@@ -117,7 +135,12 @@
       "category": "condiment",
       "diet": "vegan",
       "form": "cooked",
-      "aliases": [],
+      "aliases": [
+        "schezwan sauce",
+        "szechuan chutney",
+        "shezwan chutney",
+        "sezwan sauce"
+      ],
       "per_100g": {
         "kcal": 205.19,
         "protein_g": 3.33,
@@ -151,7 +174,14 @@
       "category": "snack",
       "diet": "egg",
       "form": "cooked",
-      "aliases": [],
+      "aliases": [
+        "egg roll",
+        "anda roll",
+        "kolkata egg roll",
+        "egg kathi roll",
+        "egg frankie",
+        "anda paratha roll"
+      ],
       "per_100g": {
         "kcal": 220.39,
         "protein_g": 7.09,
@@ -237,7 +267,13 @@
       "category": "snack",
       "diet": "vegan",
       "form": "cooked",
-      "aliases": [],
+      "aliases": [
+        "chana chaat",
+        "black chana chaat",
+        "chane ki chaat",
+        "boiled chana chaat",
+        "chana chat"
+      ],
       "per_100g": {
         "kcal": 101.25,
         "protein_g": 6.25,
@@ -347,7 +383,14 @@
       "category": "snack",
       "diet": "vegan",
       "form": "cooked",
-      "aliases": [],
+      "aliases": [
+        "corn cup",
+        "sweet corn cup",
+        "masala corn",
+        "butter corn",
+        "bhutta cup",
+        "boiled corn chaat"
+      ],
       "per_100g": {
         "kcal": 96.33,
         "protein_g": 4.06,
@@ -421,14 +464,7 @@
       "category": "snack",
       "diet": "vegan",
       "form": "cooked",
-      "aliases": [
-        "golgappa puri",
-        "pani puri puri",
-        "puchka shell",
-        "phuchka puri",
-        "gol gappe",
-        "suji puri"
-      ],
+      "aliases": [],
       "per_100g": {
         "kcal": 476.97,
         "protein_g": 9.04,
@@ -495,12 +531,7 @@
       "category": "snack",
       "diet": "vegan",
       "form": "cooked",
-      "aliases": [
-        "papdi",
-        "papri",
-        "chaat papdi",
-        "papdi chaat base"
-      ],
+      "aliases": [],
       "per_100g": {
         "kcal": 517.64,
         "protein_g": 8.26,
@@ -576,13 +607,7 @@
       "category": "snack",
       "diet": "vegan",
       "form": "cooked",
-      "aliases": [
-        "sev",
-        "nylon sev",
-        "bhujia sev",
-        "omapodi",
-        "karapusa"
-      ],
+      "aliases": [],
       "per_100g": {
         "kcal": 454.62,
         "protein_g": 18.87,
@@ -655,14 +680,7 @@
       "category": "snack",
       "diet": "vegan",
       "form": "cooked",
-      "aliases": [
-        "batata vada",
-        "batata wada",
-        "aloo bonda",
-        "potato bonda",
-        "alu bonda",
-        "vada pav vada"
-      ],
+      "aliases": [],
       "per_100g": {
         "kcal": 240.74,
         "protein_g": 6.33,
@@ -1088,12 +1106,7 @@
       "category": "snack",
       "diet": "vegan",
       "form": "cooked",
-      "aliases": [
-        "crispy corn",
-        "fried corn",
-        "besan corn",
-        "corn pakoda"
-      ],
+      "aliases": [],
       "per_100g": {
         "kcal": 377.59,
         "protein_g": 14.28,
@@ -1160,15 +1173,7 @@
       "category": "snack",
       "diet": "vegan",
       "form": "cooked",
-      "aliases": [
-        "golgappa",
-        "gol gappe",
-        "puchka",
-        "phuchka",
-        "gupchup",
-        "pani batashe",
-        "pani ke batashe"
-      ],
+      "aliases": [],
       "per_100g": {
         "kcal": 91.48,
         "protein_g": 1.97,
@@ -1269,12 +1274,7 @@
       "category": "snack",
       "diet": "vegan",
       "form": "cooked",
-      "aliases": [
-        "sev puri",
-        "sev poori",
-        "sevpuri",
-        "mumbai sev puri"
-      ],
+      "aliases": [],
       "per_100g": {
         "kcal": 194.19,
         "protein_g": 4.69,
@@ -1387,12 +1387,7 @@
       "category": "snack",
       "diet": "veg",
       "form": "cooked",
-      "aliases": [
-        "dahi puri",
-        "dahi batata puri",
-        "dahi poori",
-        "dahi golgappa"
-      ],
+      "aliases": [],
       "per_100g": {
         "kcal": 156.3,
         "protein_g": 4.91,
@@ -1504,13 +1499,7 @@
       "category": "snack",
       "diet": "veg",
       "form": "cooked",
-      "aliases": [
-        "papdi chaat",
-        "papri chaat",
-        "papri chat",
-        "dahi papdi chaat",
-        "delhi chaat"
-      ],
+      "aliases": [],
       "per_100g": {
         "kcal": 176.8,
         "protein_g": 5.01,
@@ -1622,14 +1611,7 @@
       "category": "snack",
       "diet": "vegan",
       "form": "cooked",
-      "aliases": [
-        "aloo tikki",
-        "alu tikki",
-        "potato tikki",
-        "aloo patties",
-        "pattice",
-        "tikki"
-      ],
+      "aliases": [],
       "per_100g": {
         "kcal": 153.19,
         "protein_g": 2.07,
@@ -1715,12 +1697,7 @@
       "category": "snack",
       "diet": "veg",
       "form": "cooked",
-      "aliases": [
-        "tikki chaat",
-        "aloo tikki chaat",
-        "tikki chole",
-        "chole tikki"
-      ],
+      "aliases": [],
       "per_100g": {
         "kcal": 146.58,
         "protein_g": 3.86,
@@ -1823,13 +1800,7 @@
       "category": "snack",
       "diet": "vegan",
       "form": "cooked",
-      "aliases": [
-        "ragda pattice",
-        "ragda patties",
-        "ragda patis",
-        "ragda pattis",
-        "ragda"
-      ],
+      "aliases": [],
       "per_100g": {
         "kcal": 151.81,
         "protein_g": 5.19,
@@ -1942,12 +1913,7 @@
       "category": "snack",
       "diet": "veg",
       "form": "cooked",
-      "aliases": [
-        "samosa chaat",
-        "samosa chat",
-        "samosa chole",
-        "chole samosa"
-      ],
+      "aliases": [],
       "per_100g": {
         "kcal": 192.37,
         "protein_g": 5.25,
@@ -2041,12 +2007,7 @@
       "category": "snack",
       "diet": "veg",
       "form": "cooked",
-      "aliases": [
-        "kachori chaat",
-        "kachori chat",
-        "khasta kachori chaat",
-        "dahi kachori"
-      ],
+      "aliases": [],
       "per_100g": {
         "kcal": 205.38,
         "protein_g": 4.82,
@@ -2149,12 +2110,7 @@
       "category": "snack",
       "diet": "veg",
       "form": "cooked",
-      "aliases": [
-        "raj kachori",
-        "raj kachauri",
-        "raaj kachori",
-        "big kachori chaat"
-      ],
+      "aliases": [],
       "per_100g": {
         "kcal": 144.62,
         "protein_g": 4.64,
@@ -2284,14 +2240,7 @@
       "category": "snack",
       "diet": "vegan",
       "form": "cooked",
-      "aliases": [
-        "jhalmuri",
-        "jhal muri",
-        "jhaal muri",
-        "muri masala",
-        "masala muri",
-        "kolkata jhalmuri"
-      ],
+      "aliases": [],
       "per_100g": {
         "kcal": 256.6,
         "protein_g": 5.86,
@@ -2413,14 +2362,7 @@
       "category": "snack",
       "diet": "vegan",
       "form": "cooked",
-      "aliases": [
-        "bhel",
-        "bhelpuri",
-        "bhel poori",
-        "mumbai bhel",
-        "sukhi bhel",
-        "geeli bhel"
-      ],
+      "aliases": [],
       "per_100g": {
         "kcal": 220.13,
         "protein_g": 5.49,
@@ -2557,12 +2499,7 @@
       "category": "snack",
       "diet": "vegan",
       "form": "cooked",
-      "aliases": [
-        "corn chaat",
-        "crispy corn chaat",
-        "makai chaat",
-        "bhutte ki chaat"
-      ],
+      "aliases": [],
       "per_100g": {
         "kcal": 337.07,
         "protein_g": 12.71,
@@ -2648,12 +2585,7 @@
       "category": "snack",
       "diet": "vegan",
       "form": "cooked",
-      "aliases": [
-        "khakhra chaat",
-        "khakra chaat",
-        "khakhra chat",
-        "gujarati khakhra chaat"
-      ],
+      "aliases": [],
       "per_100g": {
         "kcal": 141.15,
         "protein_g": 3.94,
@@ -2766,13 +2698,7 @@
       "category": "snack",
       "diet": "non_veg",
       "form": "cooked",
-      "aliases": [
-        "chicken roll",
-        "chicken kathi roll",
-        "chicken frankie",
-        "chicken tikka roll",
-        "chicken wrap"
-      ],
+      "aliases": [],
       "per_100g": {
         "kcal": 181.99,
         "protein_g": 9.32,
@@ -2858,14 +2784,7 @@
       "category": "snack",
       "diet": "vegan",
       "form": "cooked",
-      "aliases": [
-        "veg frankie",
-        "aloo frankie",
-        "veg roll",
-        "aloo roll",
-        "potato wrap",
-        "frankie"
-      ],
+      "aliases": [],
       "per_100g": {
         "kcal": 170.15,
         "protein_g": 2.99,
@@ -2951,13 +2870,7 @@
       "category": "snack",
       "diet": "egg",
       "form": "cooked",
-      "aliases": [
-        "egg chowmein",
-        "egg noodles",
-        "egg hakka noodles",
-        "anda chowmein",
-        "egg chowmin"
-      ],
+      "aliases": [],
       "per_100g": {
         "kcal": 136.52,
         "protein_g": 4.94,
@@ -3016,13 +2929,7 @@
       "category": "snack",
       "diet": "veg",
       "form": "cooked",
-      "aliases": [
-        "chole kulche",
-        "chhole kulche",
-        "matar kulcha",
-        "kulcha chole",
-        "chole kulcha"
-      ],
+      "aliases": [],
       "per_100g": {
         "kcal": 203.42,
         "protein_g": 6.54,
@@ -3099,13 +3006,7 @@
       "category": "snack",
       "diet": "veg",
       "form": "cooked",
-      "aliases": [
-        "chole bhature",
-        "chhole bhature",
-        "chole bhatura",
-        "chana bhatura",
-        "bhature chole"
-      ],
+      "aliases": [],
       "per_100g": {
         "kcal": 253.44,
         "protein_g": 6.15,
@@ -3165,6 +3066,201 @@
       "notes": "Portion assumed. Pickle and green chilli not included. per_100g left for the pipeline (frying-model bhatura).",
       "image_prompt": "Chole bhature with two puffed bhature, chole, onion and pickle",
       "research": "batch-1b.json"
+    },
+    {
+      "id": "chicken-biryani",
+      "name": "Chicken Biryani",
+      "name_hi": "चिकन बिरयानी",
+      "category": "rice",
+      "diet": "non_veg",
+      "form": "cooked",
+      "aliases": [
+        "chicken biryani",
+        "chicken biriyani",
+        "murgh biryani",
+        "chicken dum biryani",
+        "hyderabadi chicken biryani",
+        "biryani chicken",
+        "chicken briyani"
+      ],
+      "per_100g": {
+        "kcal": 185.22,
+        "protein_g": 4.85,
+        "carbs_g": 15.08,
+        "fat_g": 11.57,
+        "fiber_g": 1.47
+      },
+      "units": [
+        {
+          "unit": "plate",
+          "label": "1 plate (~350 g)",
+          "grams": 350,
+          "basis": "estimated standard household measure"
+        },
+        {
+          "unit": "cup",
+          "label": "1 cup",
+          "grams": 196,
+          "basis": "USDA portion: FNDDS 27243100 'Biryani with chicken', 1 cup = 196 g"
+        },
+        {
+          "unit": "katori",
+          "label": "1 katori (150 ml)",
+          "grams": 150,
+          "basis": "estimated standard household measure"
+        }
+      ],
+      "default_unit": "plate",
+      "source": {
+        "id": "DERIVED",
+        "ref": "INDB ASC122 (Mutton biryani) recipe with chicken thigh (IFCT N002) for mutton; cooked weight by dry-matter balance (USDA SR Legacy water)",
+        "url": "https://github.com/lindsayjaacks/Indian-Nutrient-Databank-INDB-/blob/main/recipes.xlsx"
+      },
+      "recipe": {
+        "ingredients": [
+          {
+            "name": "Rice, parboiled, milled (100 g raw → 304.1 g cooked)",
+            "grams": 100,
+            "source": {
+              "id": "IFCT2017",
+              "ref": "A014",
+              "row_name": "Rice, parboiled, milled"
+            }
+          },
+          {
+            "name": "Chicken thigh, skinless, boneless (replaces INDB's 100 g boneless mutton; 100 g raw → 73.9 g cooked)",
+            "grams": 100,
+            "source": {
+              "id": "IFCT2017",
+              "ref": "N002",
+              "row_name": "Chicken, poultry, thigh, skinless"
+            }
+          },
+          {
+            "name": "Onion (100 g → 89.7 g)",
+            "grams": 100,
+            "source": {
+              "id": "IFCT2017",
+              "ref": "G017",
+              "row_name": "Onion, big"
+            }
+          },
+          {
+            "name": "Tomato (50 g → 48.4 g)",
+            "grams": 50,
+            "source": {
+              "id": "IFCT2017",
+              "ref": "D075",
+              "row_name": "Tomato, ripe, hybrid"
+            }
+          },
+          {
+            "name": "Garlic",
+            "grams": 2.2,
+            "source": {
+              "id": "IFCT2017",
+              "ref": "G012",
+              "row_name": "Garlic, small clove"
+            }
+          },
+          {
+            "name": "Ginger",
+            "grams": 6.33,
+            "source": {
+              "id": "IFCT2017",
+              "ref": "G014",
+              "row_name": "Ginger, fresh"
+            }
+          },
+          {
+            "name": "Black cardamom (0.25 tsp)",
+            "grams": 0.5,
+            "source": {
+              "id": "IFCT2017",
+              "ref": "G021",
+              "row_name": "Cardamom, black"
+            }
+          },
+          {
+            "name": "Cloves (0.5 tsp)",
+            "grams": 1,
+            "source": {
+              "id": "IFCT2017",
+              "ref": "G023",
+              "row_name": "Cloves"
+            }
+          },
+          {
+            "name": "Cumin (0.5 tsp)",
+            "grams": 1,
+            "source": {
+              "id": "IFCT2017",
+              "ref": "G025",
+              "row_name": "Cumin seeds"
+            }
+          },
+          {
+            "name": "Black pepper (0.875 tsp)",
+            "grams": 1.75,
+            "source": {
+              "id": "IFCT2017",
+              "ref": "G031",
+              "row_name": "Pepper, black"
+            }
+          },
+          {
+            "name": "Poppy seeds (0.25 tsp)",
+            "grams": 0.5,
+            "source": {
+              "id": "IFCT2017",
+              "ref": "G032",
+              "row_name": "Poppy seeds"
+            }
+          },
+          {
+            "name": "Turmeric (0.25 tsp)",
+            "grams": 0.5,
+            "source": {
+              "id": "IFCT2017",
+              "ref": "G033",
+              "row_name": "Turmeric powder"
+            }
+          },
+          {
+            "name": "Milk (1 tbsp)",
+            "grams": 15,
+            "source": {
+              "id": "IFCT2017",
+              "ref": "L002",
+              "row_name": "Milk, whole, Cow"
+            }
+          },
+          {
+            "name": "Curd (1 tbsp)",
+            "grams": 15,
+            "source": {
+              "id": "USDA",
+              "ref": "search: Yogurt, plain, whole milk"
+            }
+          },
+          {
+            "name": "Oil (4 tbsp, as in the original recipe)",
+            "grams": 54,
+            "source": {
+              "id": "IFCT2017",
+              "ref": "T012",
+              "row_name": "Sunflower oil"
+            }
+          }
+        ],
+        "cooked_weight_g": 613.95,
+        "cooked_weight_basis": "dry-matter balance with USDA SR Legacy water contents: rice parboiled dry 9.86 % (fdcId 169707) → cooked 70.36 % (169708), ×3.041; chicken meat raw 75.46 % (171052) → stewed 66.81 % (171451), ×0.739; onion raw 89.11 % (170000) → cooked 87.86 % (170001), ×0.897; tomato raw 94.52 % (170457) → cooked 94.34 % (170050), ×0.968; everything else at its raw weight",
+        "method": "INDB ASC122 dum biryani: rice cooked with whole spices, layered with chicken cooked in onion-tomato-curd masala, saffron milk, sealed and steamed"
+      },
+      "confidence": "medium",
+      "notes": "Built from INDB's own recipe for mutton biryani (ASC122, 2 servings: 100 g rice, 100 g boneless meat) with chicken thigh in place of mutton. INDB publishes per 100 g of RAW ingredients (INDB.do: total nutrients / raw weight, no cooking water), so its 191 kcal/100 g is denser than biryani on the plate; here the cooked weight comes from USDA water contents. Oil: the original recipe says 4 tbsp (54 g); INDB's processed file has 4 tsp, which looks like a transcription slip. Bay leaf, saffron, chilli powder and cinnamon (~2.6 g, INDB's UK codes) and salt are left out (~5 kcal). IFCT chicken leg (N001) is not used: its energy contradicts its own macros. Restaurant biryani often has more ghee and more meat. Cross-check: a lab analysis of Hyderabad chicken biryani (Journal of Meat Science 2019, doi:10.5958/2581-6616.2019.00006.9) reports 434.7 kcal, 18.3 g fat and 16.5 g protein per 100 g on DRY weight; at 55–60 % moisture that is ~175–195 kcal per 100 g as eaten.",
+      "image_prompt": "Hyderabadi chicken dum biryani in a copper handi, long-grain rice with saffron streaks, chicken pieces, fried onions, mint, raita on the side",
+      "research": "batch-x1-chicken-biryani.json"
     }
   ]
 }

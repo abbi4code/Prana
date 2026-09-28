@@ -128,6 +128,10 @@ async function sourced(src) {
     if (!r) throw new Error(`IFCT code ${src.ref} not found`);
     const kcal = r.kJ ? r.kJ / 4.184 : r.f != null && r.f > 90 ? r.f * 9 : null; // IFCT pure fats carry no energy: 9 kcal/g fat
     if (kcal == null) throw new Error(`IFCT ${src.ref} (${r.name}) has no energy value`);
+    // a few IFCT rows contradict themselves (N001 chicken leg: 384 kcal from kJ, 192 from its own protein + fat)
+    const fromMacros = 4 * (r.p ?? 0) + 4 * (r.c ?? 0) + 9 * (r.f ?? 0);
+    if (r.kJ && Math.abs(kcal - fromMacros) > Math.max(40, kcal * 0.2)) // organic acids (lemon: 37 vs 8) stay under this
+      throw new Error(`IFCT ${src.ref} (${r.name}) is inconsistent: ${Math.round(kcal)} kcal from energy vs ${Math.round(fromMacros)} from its macros; use another row`);
     return { name: r.name, kcal, p: r.p, c: r.c, f: r.f, fib: r.fib };
   }
   if (src.id === "USDA") {
