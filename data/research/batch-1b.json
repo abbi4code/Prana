@@ -1,0 +1,3149 @@
+{
+ "batch": "1b",
+ "theme": "Street food & chaat (redo: not-found dishes + deep-fried items on the absorbed-oil model)",
+ "generated_on": "2026-09-28",
+ "foods": [
+  {
+   "id": "golgappa-puri",
+   "name": "Golgappa Puri (Pani Puri Shell)",
+   "name_hi": "गोलगप्पे की पूरी",
+   "aliases": [
+    "golgappa puri",
+    "pani puri puri",
+    "puchka shell",
+    "phuchka puri",
+    "gol gappe",
+    "suji puri"
+   ],
+   "category": "snack",
+   "diet": "vegan",
+   "form": "cooked",
+   "per_100g": null,
+   "units": [
+    {
+     "unit": "puri",
+     "label": "1 puri (empty shell)",
+     "grams": 3,
+     "basis": "estimated standard household measure"
+    }
+   ],
+   "default_unit": "puri",
+   "source": {
+    "id": "DERIVED",
+    "ref": "Golgappa shells: suji + maida dough, deep-fried",
+    "url": "https://github.com/lindsayjaacks/Indian-Nutrient-Databank-INDB-/blob/main/INDB.xlsx"
+   },
+   "recipe": {
+    "ingredients": [
+     {
+      "name": "Semolina (suji)",
+      "grams": 100,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "A022",
+       "row_name": "Wheat, semolina"
+      }
+     },
+     {
+      "name": "Refined flour (maida)",
+      "grams": 20,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "A018",
+       "row_name": "Wheat flour, refined"
+      }
+     }
+    ],
+    "method": "stiff suji-maida dough rolled thin, cut into rounds and deep-fried until puffed and crisp"
+   },
+   "frying": {
+    "fat_pct": null,
+    "fat_basis": "dry",
+    "fat_source": {
+     "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11465016/",
+     "table": "Jain, Passi & Selvamurthy 2024, total fat (% dry weight) table: Poori, 180 °C, 32nd frying cycle. VALUE NOT READ: the PMC page returns a reCAPTCHA to my fetcher and the Springer version is paywalled, so fat_pct is left null for you to fill from this exact cell."
+    },
+    "moisture_pct": 4,
+    "moisture_source": "assumed"
+   },
+   "confidence": "low",
+   "notes": "Fried (absorbed-oil model). Street/shop shells, so the 32nd-cycle (reused oil) value is intended; proxy food = Poori (wheat dough) at 180 °C. Dough quantities from a standard suji-maida golgappa recipe (assumed ratio 5:1). Also used as the Raj Kachori shell below.",
+   "image_prompt": "Pile of crisp puffed golgappa shells in a steel bowl"
+  },
+  {
+   "id": "chaat-papdi",
+   "name": "Chaat Papdi",
+   "name_hi": "पापड़ी",
+   "aliases": [
+    "papdi",
+    "papri",
+    "chaat papdi",
+    "papdi chaat base"
+   ],
+   "category": "snack",
+   "diet": "vegan",
+   "form": "cooked",
+   "per_100g": null,
+   "units": [
+    {
+     "unit": "piece",
+     "label": "1 papdi",
+     "grams": 4,
+     "basis": "estimated standard household measure"
+    }
+   ],
+   "default_unit": "piece",
+   "source": {
+    "id": "DERIVED",
+    "ref": "Papdi: maida dough with oil, deep-fried",
+    "url": "https://github.com/lindsayjaacks/Indian-Nutrient-Databank-INDB-/blob/main/INDB.xlsx"
+   },
+   "recipe": {
+    "ingredients": [
+     {
+      "name": "Refined flour (maida)",
+      "grams": 120,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "A018",
+       "row_name": "Wheat flour, refined"
+      }
+     },
+     {
+      "name": "Groundnut oil (in dough / tempering)",
+      "grams": 20.4,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "T005",
+       "row_name": "Groundnut oil"
+      }
+     },
+     {
+      "name": "Cumin seeds",
+      "grams": 2,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "G025",
+       "row_name": "Cumin seeds"
+      }
+     }
+    ],
+    "method": "maida dough with oil (moyan) and cumin, rolled, pricked and deep-fried flat"
+   },
+   "frying": {
+    "fat_pct": null,
+    "fat_basis": "dry",
+    "fat_source": {
+     "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11465016/",
+     "table": "Jain, Passi & Selvamurthy 2024, total fat (% dry weight) table: Mathri, 160 °C, 32nd frying cycle. VALUE NOT READ: the PMC page returns a reCAPTCHA to my fetcher and the Springer version is paywalled, so fat_pct is left null for you to fill from this exact cell."
+    },
+    "moisture_pct": 3,
+    "moisture_source": "assumed"
+   },
+   "confidence": "low",
+   "notes": "Fried (absorbed-oil model). Street/shop, so the 32nd-cycle value; proxy food = Mathri (maida dough with fat, 160 °C), the closest measured match. Dough quantities from INDB recipe OSR148 (maida 120 g, oil 1.5 tbsp taken as 20.4 g, cumin 1 tsp taken as 2 g).",
+   "image_prompt": "Flat round crisp papdis stacked on a plate"
+  },
+  {
+   "id": "nylon-sev",
+   "name": "Sev (Besan Sev)",
+   "name_hi": "सेव",
+   "aliases": [
+    "sev",
+    "nylon sev",
+    "bhujia sev",
+    "omapodi",
+    "karapusa"
+   ],
+   "category": "snack",
+   "diet": "vegan",
+   "form": "cooked",
+   "per_100g": null,
+   "units": [
+    {
+     "unit": "tbsp",
+     "label": "1 tbsp sprinkled",
+     "grams": 5,
+     "basis": "estimated standard household measure"
+    },
+    {
+     "unit": "handful",
+     "label": "1 handful",
+     "grams": 30,
+     "basis": "estimated standard household measure"
+    }
+   ],
+   "default_unit": "tbsp",
+   "source": {
+    "id": "DERIVED",
+    "ref": "Sev: besan dough, extruded and deep-fried",
+    "url": "https://github.com/lindsayjaacks/Indian-Nutrient-Databank-INDB-/blob/main/INDB.xlsx"
+   },
+   "recipe": {
+    "ingredients": [
+     {
+      "name": "Besan (proxy: Bengal gram dal, ground)",
+      "grams": 184,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "B001",
+       "row_name": "Bengal gram, dal"
+      }
+     },
+     {
+      "name": "Groundnut oil (in dough / tempering)",
+      "grams": 4.5,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "T005",
+       "row_name": "Groundnut oil"
+      }
+     }
+    ],
+    "method": "besan dough pressed through a sev maker into hot oil"
+   },
+   "frying": {
+    "fat_pct": null,
+    "fat_basis": "dry",
+    "fat_source": {
+     "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11465016/",
+     "table": "Jain, Passi & Selvamurthy 2024, total fat (% dry weight) table: Bread Pakora, 180 °C, 32nd frying cycle. VALUE NOT READ: the PMC page returns a reCAPTCHA to my fetcher and the Springer version is paywalled, so fat_pct is left null for you to fill from this exact cell."
+    },
+    "moisture_pct": 3,
+    "moisture_source": "assumed"
+   },
+   "confidence": "low",
+   "notes": "Fried (absorbed-oil model). Shop sev, so the 32nd-cycle value; proxy food = Bread Pakora (besan) at 180 °C per the besan rule. Sev is drier and thinner than a pakora, so real fat may differ. Besan uses IFCT Bengal gram dal (B001) as proxy (besan is ground chana dal). Quantities from INDB recipe OSR147 (besan 184 g, oil 1 tsp).",
+   "image_prompt": "Fine yellow sev in a small katori"
+  },
+  {
+   "id": "batata-vada",
+   "name": "Batata Vada / Aloo Bonda",
+   "name_hi": "बटाटा वड़ा / आलू बोंडा",
+   "aliases": [
+    "batata vada",
+    "batata wada",
+    "aloo bonda",
+    "potato bonda",
+    "alu bonda",
+    "vada pav vada"
+   ],
+   "category": "snack",
+   "diet": "vegan",
+   "form": "cooked",
+   "per_100g": null,
+   "units": [
+    {
+     "unit": "piece",
+     "label": "1 vada / bonda",
+     "grams": 50,
+     "basis": "estimated standard household measure"
+    }
+   ],
+   "default_unit": "piece",
+   "source": {
+    "id": "DERIVED",
+    "ref": "Batata vada: spiced potato ball in besan batter, deep-fried",
+    "url": "https://github.com/lindsayjaacks/Indian-Nutrient-Databank-INDB-/blob/main/INDB.xlsx"
+   },
+   "recipe": {
+    "ingredients": [
+     {
+      "name": "Potato (boiled)",
+      "grams": 100,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "F006",
+       "row_name": "Potato, brown skin, big"
+      }
+     },
+     {
+      "name": "Green peas",
+      "grams": 20,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "D061",
+       "row_name": "Peas, fresh"
+      }
+     },
+     {
+      "name": "Onion",
+      "grams": 15,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "G017",
+       "row_name": "Onion, big"
+      }
+     },
+     {
+      "name": "Green chilli",
+      "grams": 3.33,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "G008",
+       "row_name": "Chillies, green - all varieties"
+      }
+     },
+     {
+      "name": "Ginger",
+      "grams": 5,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "G014",
+       "row_name": "Ginger, fresh"
+      }
+     },
+     {
+      "name": "Cashew nut",
+      "grams": 2.5,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "H005",
+       "row_name": "Cashew nut"
+      }
+     },
+     {
+      "name": "Rice flour (proxy: raw milled rice)",
+      "grams": 6,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "A015",
+       "row_name": "Rice, raw, milled"
+      }
+     },
+     {
+      "name": "Besan (proxy: Bengal gram dal, ground)",
+      "grams": 16,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "B001",
+       "row_name": "Bengal gram, dal"
+      }
+     },
+     {
+      "name": "Groundnut oil (tempering)",
+      "grams": 4.5,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "T005",
+       "row_name": "Groundnut oil"
+      }
+     }
+    ],
+    "method": "boiled potato filling tempered and spiced, dipped in besan batter and deep-fried"
+   },
+   "frying": {
+    "fat_pct": null,
+    "fat_basis": "dry",
+    "fat_source": {
+     "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11465016/",
+     "table": "Jain, Passi & Selvamurthy 2024, total fat (% dry weight) table: Bread Pakora, 180 °C, 32nd frying cycle. VALUE NOT READ: the PMC page returns a reCAPTCHA to my fetcher and the Springer version is paywalled, so fat_pct is left null for you to fill from this exact cell."
+    },
+    "moisture_pct": 50,
+    "moisture_source": "assumed"
+   },
+   "confidence": "low",
+   "notes": "Fried (absorbed-oil model). Street, so the 32nd-cycle value; proxy food = Bread Pakora (besan batter around a filling) at 180 °C. Quantities from INDB recipe ASC360 (besan 2 tbsp taken as 16 g, rice flour 2 tsp as 6 g, oil 1 tsp as 4.5 g). Moisture is an assumption for a potato-filled fritter.",
+   "image_prompt": "Golden round batata vadas with fried green chillies"
+  },
+  {
+   "id": "bhatura-fried",
+   "name": "Bhatura (absorbed-oil model)",
+   "name_hi": "भटूरा",
+   "aliases": [
+    "bhatura",
+    "bhature",
+    "bhatoora",
+    "batura",
+    "chole wala bhatura"
+   ],
+   "category": "roti_bread",
+   "diet": "veg",
+   "form": "cooked",
+   "per_100g": null,
+   "units": [
+    {
+     "unit": "bhatura",
+     "label": "1 bhatura",
+     "grams": 70,
+     "basis": "estimated standard household measure"
+    }
+   ],
+   "default_unit": "bhatura",
+   "source": {
+    "id": "DERIVED",
+    "ref": "Bhatura: maida + curd dough, deep-fried",
+    "url": "https://github.com/lindsayjaacks/Indian-Nutrient-Databank-INDB-/blob/main/INDB.xlsx"
+   },
+   "recipe": {
+    "ingredients": [
+     {
+      "name": "Refined flour (maida)",
+      "grams": 80,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "A018",
+       "row_name": "Wheat flour, refined"
+      }
+     },
+     {
+      "name": "Curd",
+      "grams": 20,
+      "source": {
+       "id": "USDA",
+       "ref": "search: Yogurt, plain, whole milk"
+      }
+     },
+     {
+      "name": "Sugar",
+      "grams": 1,
+      "source": {
+       "id": "USDA",
+       "ref": "search: Sugars, granulated"
+      }
+     }
+    ],
+    "method": "maida dough with curd and a pinch of sugar and baking powder, rested, rolled and deep-fried until puffed"
+   },
+   "frying": {
+    "fat_pct": null,
+    "fat_basis": "dry",
+    "fat_source": {
+     "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11465016/",
+     "table": "Jain, Passi & Selvamurthy 2024, total fat (% dry weight) table: Poori, 180 °C, 32nd frying cycle. VALUE NOT READ: the PMC page returns a reCAPTCHA to my fetcher and the Springer version is paywalled, so fat_pct is left null for you to fill from this exact cell."
+    },
+    "moisture_pct": 28,
+    "moisture_source": "assumed"
+   },
+   "confidence": "low",
+   "notes": "Fried (absorbed-oil model). Restaurant/street, so the 32nd-cycle value; proxy food = Poori at 180 °C. Dough from INDB recipe ASC143 (maida 80 g, curd 20 g, sugar 1/4 tsp taken as 1 g). Meant to replace the INDB Bhatura row (ASC143), which counts 480 ml of frying oil.",
+   "image_prompt": "Large puffed golden bhatura on a steel plate"
+  },
+  {
+   "id": "bread-pakora",
+   "name": "Bread Pakora",
+   "name_hi": "ब्रेड पकोड़ा",
+   "aliases": [
+    "bread pakora",
+    "bread pakoda",
+    "bread pakore",
+    "bread bhajiya",
+    "bread bajji"
+   ],
+   "category": "snack",
+   "diet": "veg",
+   "form": "cooked",
+   "per_100g": null,
+   "units": [
+    {
+     "unit": "piece",
+     "label": "1 bread pakora (1 slice)",
+     "grams": 75,
+     "basis": "estimated standard household measure"
+    }
+   ],
+   "default_unit": "piece",
+   "source": {
+    "id": "DERIVED",
+    "ref": "Bread pakora: white bread in besan batter, deep-fried",
+    "url": "https://github.com/lindsayjaacks/Indian-Nutrient-Databank-INDB-/blob/main/INDB.xlsx"
+   },
+   "recipe": {
+    "ingredients": [
+     {
+      "name": "White bread",
+      "grams": 60,
+      "source": {
+       "id": "USDA",
+       "ref": "search: Bread, white, commercially prepared (includes soft bread crumbs)"
+      }
+     },
+     {
+      "name": "Besan (proxy: Bengal gram dal, ground)",
+      "grams": 50,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "B001",
+       "row_name": "Bengal gram, dal"
+      }
+     },
+     {
+      "name": "Groundnut oil (in batter)",
+      "grams": 2.25,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "T005",
+       "row_name": "Groundnut oil"
+      }
+     }
+    ],
+    "method": "bread slices dipped in spiced besan batter and deep-fried"
+   },
+   "frying": {
+    "fat_pct": null,
+    "fat_basis": "dry",
+    "fat_source": {
+     "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11465016/",
+     "table": "Jain, Passi & Selvamurthy 2024, total fat (% dry weight) table: Bread Pakora, 180 °C, 32nd frying cycle. VALUE NOT READ: the PMC page returns a reCAPTCHA to my fetcher and the Springer version is paywalled, so fat_pct is left null for you to fill from this exact cell."
+    },
+    "moisture_pct": 35,
+    "moisture_source": "assumed"
+   },
+   "confidence": "low",
+   "notes": "Fried (absorbed-oil model). Street, so the 32nd-cycle value; measured food = Bread Pakora itself (no proxy needed). Quantities from INDB recipe ASC358 (2 slices = 60 g bread, 50 g besan, 0.5 tsp oil). Piece weight assumed. Replaces the rejected INDB row.",
+   "image_prompt": "Golden triangular bread pakoras with green chutney"
+  },
+  {
+   "id": "aloo-samosa-fried",
+   "name": "Aloo Samosa (absorbed-oil model)",
+   "name_hi": "आलू समोसा",
+   "aliases": [
+    "samosa",
+    "aloo samosa",
+    "samose",
+    "singara",
+    "punjabi samosa"
+   ],
+   "category": "snack",
+   "diet": "veg",
+   "form": "cooked",
+   "per_100g": null,
+   "units": [
+    {
+     "unit": "piece",
+     "label": "1 samosa",
+     "grams": 80,
+     "basis": "estimated standard household measure"
+    }
+   ],
+   "default_unit": "piece",
+   "source": {
+    "id": "DERIVED",
+    "ref": "Samosa: maida pastry with potato-pea filling, deep-fried",
+    "url": "https://github.com/lindsayjaacks/Indian-Nutrient-Databank-INDB-/blob/main/INDB.xlsx"
+   },
+   "recipe": {
+    "ingredients": [
+     {
+      "name": "Refined flour (maida)",
+      "grams": 60,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "A018",
+       "row_name": "Wheat flour, refined"
+      }
+     },
+     {
+      "name": "Potato (boiled)",
+      "grams": 150,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "F006",
+       "row_name": "Potato, brown skin, big"
+      }
+     },
+     {
+      "name": "Green peas",
+      "grams": 75,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "D061",
+       "row_name": "Peas, fresh"
+      }
+     },
+     {
+      "name": "Green chilli",
+      "grams": 3.3,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "G008",
+       "row_name": "Chillies, green - all varieties"
+      }
+     },
+     {
+      "name": "Ginger",
+      "grams": 6.33,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "G014",
+       "row_name": "Ginger, fresh"
+      }
+     },
+     {
+      "name": "Groundnut oil (dough / filling)",
+      "grams": 12,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "T005",
+       "row_name": "Groundnut oil"
+      }
+     },
+     {
+      "name": "Ghee (dough)",
+      "grams": 9,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "T013",
+       "row_name": "Ghee"
+      }
+     }
+    ],
+    "method": "maida pastry with ghee, filled with spiced potato and peas, shaped into cones and deep-fried"
+   },
+   "frying": {
+    "fat_pct": null,
+    "fat_basis": "dry",
+    "fat_source": {
+     "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11465016/",
+     "table": "Jain, Passi & Selvamurthy 2024, total fat (% dry weight) table: Mathri, 160 °C, 32nd frying cycle. VALUE NOT READ: the PMC page returns a reCAPTCHA to my fetcher and the Springer version is paywalled, so fat_pct is left null for you to fill from this exact cell."
+    },
+    "moisture_pct": 38,
+    "moisture_source": "assumed"
+   },
+   "confidence": "low",
+   "notes": "Fried (absorbed-oil model). Street/shop, so the 32nd-cycle value; proxy food = Mathri (fat-rich maida dough fried at 160 °C, like samosa). Quantities from INDB recipe ASC361 (ghee 2 tsp taken as 9 g). Meant to replace existing Potato Samosa (ASC361), which counts 480 ml frying oil.",
+   "image_prompt": "Two triangular samosas with tamarind chutney"
+  },
+  {
+   "id": "khasta-kachori-fried",
+   "name": "Khasta Kachori (absorbed-oil model)",
+   "name_hi": "खस्ता कचौड़ी",
+   "aliases": [
+    "kachori",
+    "khasta kachori",
+    "dal kachori",
+    "urad dal kachori",
+    "khasta"
+   ],
+   "category": "snack",
+   "diet": "vegan",
+   "form": "cooked",
+   "per_100g": null,
+   "units": [
+    {
+     "unit": "piece",
+     "label": "1 kachori",
+     "grams": 45,
+     "basis": "estimated standard household measure"
+    }
+   ],
+   "default_unit": "piece",
+   "source": {
+    "id": "DERIVED",
+    "ref": "Khasta kachori: maida pastry with urad dal filling, deep-fried",
+    "url": "https://github.com/lindsayjaacks/Indian-Nutrient-Databank-INDB-/blob/main/INDB.xlsx"
+   },
+   "recipe": {
+    "ingredients": [
+     {
+      "name": "Refined flour (maida)",
+      "grams": 100,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "A018",
+       "row_name": "Wheat flour, refined"
+      }
+     },
+     {
+      "name": "Urad dal",
+      "grams": 30,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "B003",
+       "row_name": "Black gram, dal"
+      }
+     },
+     {
+      "name": "Lemon juice",
+      "grams": 17.5,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "E033",
+       "row_name": "Lemon, juice"
+      }
+     },
+     {
+      "name": "Groundnut oil (dough / filling)",
+      "grams": 29.4,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "T005",
+       "row_name": "Groundnut oil"
+      }
+     }
+    ],
+    "method": "flaky maida dough with oil, stuffed with spiced urad dal, deep-fried slowly"
+   },
+   "frying": {
+    "fat_pct": null,
+    "fat_basis": "dry",
+    "fat_source": {
+     "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11465016/",
+     "table": "Jain, Passi & Selvamurthy 2024, total fat (% dry weight) table: Mathri, 160 °C, 32nd frying cycle. VALUE NOT READ: the PMC page returns a reCAPTCHA to my fetcher and the Springer version is paywalled, so fat_pct is left null for you to fill from this exact cell."
+    },
+    "moisture_pct": 10,
+    "moisture_source": "assumed"
+   },
+   "confidence": "low",
+   "notes": "Fried (absorbed-oil model). Shop, so the 32nd-cycle value; proxy food = Mathri at 160 °C (slow-fried fat-rich maida dough). Quantities from INDB recipe ASC365 (oil 1.5 tbsp + 2 tsp taken as 29.4 g). Meant to replace existing Khasta Kachori (ASC365).",
+   "image_prompt": "Round flaky khasta kachoris in a basket"
+  },
+  {
+   "id": "crispy-besan-corn",
+   "name": "Crispy Fried Corn",
+   "name_hi": "क्रिस्पी कॉर्न",
+   "aliases": [
+    "crispy corn",
+    "fried corn",
+    "besan corn",
+    "corn pakoda"
+   ],
+   "category": "snack",
+   "diet": "vegan",
+   "form": "cooked",
+   "per_100g": null,
+   "units": [
+    {
+     "unit": "katori",
+     "label": "1 katori",
+     "grams": 80,
+     "basis": "estimated standard household measure"
+    }
+   ],
+   "default_unit": "katori",
+   "source": {
+    "id": "DERIVED",
+    "ref": "Crispy corn: sweet corn in besan coating, deep-fried",
+    "url": "https://github.com/lindsayjaacks/Indian-Nutrient-Databank-INDB-/blob/main/INDB.xlsx"
+   },
+   "recipe": {
+    "ingredients": [
+     {
+      "name": "Sweet corn kernels",
+      "grams": 217.5,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "A008",
+       "row_name": "Maize, tender, sweet"
+      }
+     },
+     {
+      "name": "Besan (proxy: Bengal gram dal, ground)",
+      "grams": 184,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "B001",
+       "row_name": "Bengal gram, dal"
+      }
+     }
+    ],
+    "method": "boiled sweet corn tossed in spiced besan and deep-fried until crisp"
+   },
+   "frying": {
+    "fat_pct": null,
+    "fat_basis": "dry",
+    "fat_source": {
+     "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11465016/",
+     "table": "Jain, Passi & Selvamurthy 2024, total fat (% dry weight) table: Bread Pakora, 180 °C, 32nd frying cycle. VALUE NOT READ: the PMC page returns a reCAPTCHA to my fetcher and the Springer version is paywalled, so fat_pct is left null for you to fill from this exact cell."
+    },
+    "moisture_pct": 20,
+    "moisture_source": "assumed"
+   },
+   "confidence": "low",
+   "notes": "Fried (absorbed-oil model). Restaurant/street, so the 32nd-cycle value; proxy food = Bread Pakora (besan) at 180 °C. Quantities from INDB recipe OSR116 (corn 1.5 cups = 217.5 g, besan 2 cups = 184 g). Base for Spicy Corn Chaat.",
+   "image_prompt": "Golden crispy fried corn kernels in a bowl"
+  },
+  {
+   "id": "pani-puri",
+   "name": "Pani Puri",
+   "name_hi": "पानी पूरी",
+   "aliases": [
+    "golgappa",
+    "gol gappe",
+    "puchka",
+    "phuchka",
+    "gupchup",
+    "pani batashe",
+    "pani ke batashe"
+   ],
+   "category": "snack",
+   "diet": "vegan",
+   "form": "cooked",
+   "per_100g": null,
+   "units": [
+    {
+     "unit": "plate",
+     "label": "1 plate (6 puris)",
+     "grams": 190.0,
+     "basis": "recipe"
+    },
+    {
+     "unit": "puri",
+     "label": "1 filled puri with pani",
+     "grams": 31.67,
+     "basis": "recipe"
+    }
+   ],
+   "default_unit": "plate",
+   "source": {
+    "id": "DERIVED",
+    "ref": "Pani puri plate of 6",
+    "url": "https://github.com/lindsayjaacks/Indian-Nutrient-Databank-INDB-/blob/main/INDB.xlsx"
+   },
+   "recipe": {
+    "ingredients": [
+     {
+      "name": "Golgappa puris x6",
+      "grams": 18,
+      "source": {
+       "id": "FOOD",
+       "ref": "golgappa-puri",
+       "row_name": "Golgappa Puri (Pani Puri Shell)"
+      }
+     },
+     {
+      "name": "Potato (boiled)",
+      "grams": 30,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "F006",
+       "row_name": "Potato, brown skin, big"
+      }
+     },
+     {
+      "name": "Black chana, dry (boiled)",
+      "grams": 5,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "B002",
+       "row_name": "Bengal gram, whole"
+      }
+     },
+     {
+      "name": "Jal jeera (pani)",
+      "grams": 120,
+      "source": {
+       "id": "INDB",
+       "ref": "BFP024",
+       "row_name": "Jal jeera"
+      }
+     },
+     {
+      "name": "Saunth / imli chutney",
+      "grams": 10,
+      "source": {
+       "id": "INDB",
+       "ref": "ASC281",
+       "row_name": "Saunth/Sonth chutney with tamarind/imli"
+      }
+     },
+     {
+      "name": "Chaat masala",
+      "grams": 1,
+      "source": {
+       "id": "INDB",
+       "ref": "BFP002",
+       "row_name": "Chat masala"
+      }
+     }
+    ],
+    "cooked_weight_g": 190.0,
+    "cooked_weight_basis": "sum of served parts; boiled potato taken as raw weight (assumed), dry chana x2.2 after boiling (assumed); fried parts at the unit weights given",
+    "method": "6 shells filled with potato and chana, dipped in spiced jal jeera pani with a little sweet chutney"
+   },
+   "confidence": "low",
+   "notes": "Plate composition (6 puris, ~20 ml pani each, filling amounts) is assumed from a standard street serving. Pani uses INDB Jal jeera (BFP024), which has sugar; street pani is often less sweet. per_100g left for the pipeline because the shell uses the frying model.",
+   "image_prompt": "Six pani puris on a leaf plate with a cup of green pani"
+  },
+  {
+   "id": "sev-puri",
+   "name": "Sev Puri",
+   "name_hi": "सेव पूरी",
+   "aliases": [
+    "sev puri",
+    "sev poori",
+    "sevpuri",
+    "mumbai sev puri"
+   ],
+   "category": "snack",
+   "diet": "vegan",
+   "form": "cooked",
+   "per_100g": null,
+   "units": [
+    {
+     "unit": "plate",
+     "label": "1 plate (6 pieces)",
+     "grams": 132,
+     "basis": "recipe"
+    }
+   ],
+   "default_unit": "plate",
+   "source": {
+    "id": "DERIVED",
+    "ref": "Sev puri plate of 6",
+    "url": "https://github.com/lindsayjaacks/Indian-Nutrient-Databank-INDB-/blob/main/INDB.xlsx"
+   },
+   "recipe": {
+    "ingredients": [
+     {
+      "name": "Papdi x6",
+      "grams": 24,
+      "source": {
+       "id": "FOOD",
+       "ref": "chaat-papdi",
+       "row_name": "Chaat Papdi"
+      }
+     },
+     {
+      "name": "Potato (boiled)",
+      "grams": 40,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "F006",
+       "row_name": "Potato, brown skin, big"
+      }
+     },
+     {
+      "name": "Onion",
+      "grams": 15,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "G017",
+       "row_name": "Onion, big"
+      }
+     },
+     {
+      "name": "Tomato",
+      "grams": 10,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "D075",
+       "row_name": "Tomato, ripe, hybrid"
+      }
+     },
+     {
+      "name": "Mint coriander chutney",
+      "grams": 10,
+      "source": {
+       "id": "INDB",
+       "ref": "ASC387",
+       "row_name": "Mint and coriander chutney (Pudinay aur dhaniye ki chutney)"
+      }
+     },
+     {
+      "name": "Dates chutney",
+      "grams": 15,
+      "source": {
+       "id": "INDB",
+       "ref": "OSR085",
+       "row_name": "Dates chutney (Khajoor ki chutney)"
+      }
+     },
+     {
+      "name": "Sev",
+      "grams": 15,
+      "source": {
+       "id": "FOOD",
+       "ref": "nylon-sev",
+       "row_name": "Sev (Besan Sev)"
+      }
+     },
+     {
+      "name": "Lemon juice",
+      "grams": 3,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "E033",
+       "row_name": "Lemon, juice"
+      }
+     }
+    ],
+    "cooked_weight_g": 132,
+    "cooked_weight_basis": "sum of served parts; boiled potato taken as raw weight (assumed), dry chana x2.2 after boiling (assumed); fried parts at the unit weights given",
+    "method": "flat papdis topped with potato, onion, tomato, green and sweet chutneys and a heap of sev"
+   },
+   "confidence": "low",
+   "notes": "Plate composition assumed from a standard Mumbai street serving. Sweet chutney = INDB dates chutney. per_100g left for the pipeline (papdi and sev use the frying model).",
+   "image_prompt": "Mumbai sev puri on a paper plate, topped with sev and coriander"
+  },
+  {
+   "id": "dahi-puri",
+   "name": "Dahi Puri",
+   "name_hi": "दही पूरी",
+   "aliases": [
+    "dahi puri",
+    "dahi batata puri",
+    "dahi poori",
+    "dahi golgappa"
+   ],
+   "category": "snack",
+   "diet": "veg",
+   "form": "cooked",
+   "per_100g": null,
+   "units": [
+    {
+     "unit": "plate",
+     "label": "1 plate (6 pieces)",
+     "grams": 148.0,
+     "basis": "recipe"
+    }
+   ],
+   "default_unit": "plate",
+   "source": {
+    "id": "DERIVED",
+    "ref": "Dahi puri plate of 6",
+    "url": "https://github.com/lindsayjaacks/Indian-Nutrient-Databank-INDB-/blob/main/INDB.xlsx"
+   },
+   "recipe": {
+    "ingredients": [
+     {
+      "name": "Golgappa puris x6",
+      "grams": 18,
+      "source": {
+       "id": "FOOD",
+       "ref": "golgappa-puri",
+       "row_name": "Golgappa Puri (Pani Puri Shell)"
+      }
+     },
+     {
+      "name": "Potato (boiled)",
+      "grams": 30,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "F006",
+       "row_name": "Potato, brown skin, big"
+      }
+     },
+     {
+      "name": "Curd (dahi)",
+      "grams": 60,
+      "source": {
+       "id": "USDA",
+       "ref": "search: Yogurt, plain, whole milk"
+      }
+     },
+     {
+      "name": "Saunth / imli chutney",
+      "grams": 12,
+      "source": {
+       "id": "INDB",
+       "ref": "ASC281",
+       "row_name": "Saunth/Sonth chutney with tamarind/imli"
+      }
+     },
+     {
+      "name": "Mint coriander chutney",
+      "grams": 8,
+      "source": {
+       "id": "INDB",
+       "ref": "ASC387",
+       "row_name": "Mint and coriander chutney (Pudinay aur dhaniye ki chutney)"
+      }
+     },
+     {
+      "name": "Sev",
+      "grams": 8,
+      "source": {
+       "id": "FOOD",
+       "ref": "nylon-sev",
+       "row_name": "Sev (Besan Sev)"
+      }
+     },
+     {
+      "name": "Chaat masala",
+      "grams": 1,
+      "source": {
+       "id": "INDB",
+       "ref": "BFP002",
+       "row_name": "Chat masala"
+      }
+     },
+     {
+      "name": "Black chana, dry (boiled)",
+      "grams": 5,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "B002",
+       "row_name": "Bengal gram, whole"
+      }
+     }
+    ],
+    "cooked_weight_g": 148.0,
+    "cooked_weight_basis": "sum of served parts; boiled potato taken as raw weight (assumed), dry chana x2.2 after boiling (assumed); fried parts at the unit weights given",
+    "method": "puris filled with potato and chana, topped with sweet curd, chutneys, sev and chaat masala"
+   },
+   "confidence": "low",
+   "notes": "Composition assumed. Street dahi is often sweetened (sugar not included). per_100g left for the pipeline (frying-model shell, USDA curd).",
+   "image_prompt": "Dahi puri with white curd, red and green chutney, sev on top"
+  },
+  {
+   "id": "papdi-chaat",
+   "name": "Papdi Chaat",
+   "name_hi": "पापड़ी चाट",
+   "aliases": [
+    "papdi chaat",
+    "papri chaat",
+    "papri chat",
+    "dahi papdi chaat",
+    "delhi chaat"
+   ],
+   "category": "snack",
+   "diet": "veg",
+   "form": "cooked",
+   "per_100g": null,
+   "units": [
+    {
+     "unit": "plate",
+     "label": "1 plate",
+     "grams": 187.0,
+     "basis": "recipe"
+    }
+   ],
+   "default_unit": "plate",
+   "source": {
+    "id": "DERIVED",
+    "ref": "Papdi chaat plate",
+    "url": "https://github.com/lindsayjaacks/Indian-Nutrient-Databank-INDB-/blob/main/INDB.xlsx"
+   },
+   "recipe": {
+    "ingredients": [
+     {
+      "name": "Papdi",
+      "grams": 30,
+      "source": {
+       "id": "FOOD",
+       "ref": "chaat-papdi",
+       "row_name": "Chaat Papdi"
+      }
+     },
+     {
+      "name": "Potato (boiled)",
+      "grams": 40,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "F006",
+       "row_name": "Potato, brown skin, big"
+      }
+     },
+     {
+      "name": "Black chana, dry (boiled)",
+      "grams": 10,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "B002",
+       "row_name": "Bengal gram, whole"
+      }
+     },
+     {
+      "name": "Curd (dahi)",
+      "grams": 60,
+      "source": {
+       "id": "USDA",
+       "ref": "search: Yogurt, plain, whole milk"
+      }
+     },
+     {
+      "name": "Saunth / imli chutney",
+      "grams": 15,
+      "source": {
+       "id": "INDB",
+       "ref": "ASC281",
+       "row_name": "Saunth/Sonth chutney with tamarind/imli"
+      }
+     },
+     {
+      "name": "Mint coriander chutney",
+      "grams": 10,
+      "source": {
+       "id": "INDB",
+       "ref": "ASC387",
+       "row_name": "Mint and coriander chutney (Pudinay aur dhaniye ki chutney)"
+      }
+     },
+     {
+      "name": "Sev",
+      "grams": 8,
+      "source": {
+       "id": "FOOD",
+       "ref": "nylon-sev",
+       "row_name": "Sev (Besan Sev)"
+      }
+     },
+     {
+      "name": "Chaat masala",
+      "grams": 2,
+      "source": {
+       "id": "INDB",
+       "ref": "BFP002",
+       "row_name": "Chat masala"
+      }
+     }
+    ],
+    "cooked_weight_g": 187.0,
+    "cooked_weight_basis": "sum of served parts; boiled potato taken as raw weight (assumed), dry chana x2.2 after boiling (assumed); fried parts at the unit weights given",
+    "method": "crushed papdi layered with potato, chana, curd, both chutneys, sev and chaat masala"
+   },
+   "confidence": "low",
+   "notes": "Composition assumed from a standard Delhi plate. per_100g left for the pipeline.",
+   "image_prompt": "Delhi papdi chaat with curd, chutneys, sev and pomegranate"
+  },
+  {
+   "id": "aloo-tikki",
+   "name": "Aloo Tikki (shallow-fried)",
+   "name_hi": "आलू टिक्की",
+   "aliases": [
+    "aloo tikki",
+    "alu tikki",
+    "potato tikki",
+    "aloo patties",
+    "pattice",
+    "tikki"
+   ],
+   "category": "snack",
+   "diet": "vegan",
+   "form": "cooked",
+   "per_100g": {
+    "kcal": 153.19,
+    "protein_g": 2.07,
+    "carbs_g": 17.87,
+    "fat_g": 7.9,
+    "fiber_g": 1.94
+   },
+   "units": [
+    {
+     "unit": "tikki",
+     "label": "1 tikki",
+     "grams": 52.5,
+     "basis": "recipe"
+    }
+   ],
+   "default_unit": "tikki",
+   "source": {
+    "id": "DERIVED",
+    "ref": "Aloo tikki: potato patties shallow-fried on a tawa",
+    "url": "https://github.com/lindsayjaacks/Indian-Nutrient-Databank-INDB-/blob/main/INDB.xlsx"
+   },
+   "recipe": {
+    "ingredients": [
+     {
+      "name": "Potato (boiled)",
+      "grams": 100,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "F006",
+       "row_name": "Potato, brown skin, big"
+      }
+     },
+     {
+      "name": "Refined flour (binder)",
+      "grams": 5,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "A018",
+       "row_name": "Wheat flour, refined"
+      }
+     },
+     {
+      "name": "Green chilli",
+      "grams": 2,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "G008",
+       "row_name": "Chillies, green - all varieties"
+      }
+     },
+     {
+      "name": "Coriander leaves",
+      "grams": 2,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "G009",
+       "row_name": "Coriander leaves"
+      }
+     },
+     {
+      "name": "Groundnut oil (shallow frying, all counted)",
+      "grams": 8,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "T005",
+       "row_name": "Groundnut oil"
+      }
+     }
+    ],
+    "cooked_weight_g": 105,
+    "cooked_weight_basis": "assumed: raw total minus a little water lost on the tawa",
+    "method": "mashed boiled potato with binder and spices, shaped and shallow-fried on a tawa"
+   },
+   "confidence": "low",
+   "notes": "Shallow-fried, not deep-fried: all 8 g oil counted as eaten (assumed standard tawa quantity for 2 tikkis). Binder and cooked weight (taken as 105 g, water loss assumed to offset) are assumptions. Street tikki is often fried in much more oil or ghee.",
+   "image_prompt": "Two crisp brown aloo tikkis on a tawa"
+  },
+  {
+   "id": "aloo-tikki-chaat",
+   "name": "Aloo Tikki Chaat",
+   "name_hi": "आलू टिक्की चाट",
+   "aliases": [
+    "tikki chaat",
+    "aloo tikki chaat",
+    "tikki chole",
+    "chole tikki"
+   ],
+   "category": "snack",
+   "diet": "veg",
+   "form": "cooked",
+   "per_100g": null,
+   "units": [
+    {
+     "unit": "plate",
+     "label": "1 plate (2 tikkis)",
+     "grams": 243,
+     "basis": "recipe"
+    }
+   ],
+   "default_unit": "plate",
+   "source": {
+    "id": "DERIVED",
+    "ref": "Tikki chaat plate",
+    "url": "https://github.com/lindsayjaacks/Indian-Nutrient-Databank-INDB-/blob/main/INDB.xlsx"
+   },
+   "recipe": {
+    "ingredients": [
+     {
+      "name": "Aloo tikki x2",
+      "grams": 105,
+      "source": {
+       "id": "FOOD",
+       "ref": "aloo-tikki",
+       "row_name": "Aloo Tikki (shallow-fried)"
+      }
+     },
+     {
+      "name": "Chole",
+      "grams": 60,
+      "source": {
+       "id": "INDB",
+       "ref": "ASC162",
+       "row_name": "Chickpeas curry (Safed channa curry)"
+      }
+     },
+     {
+      "name": "Curd (dahi)",
+      "grams": 40,
+      "source": {
+       "id": "USDA",
+       "ref": "search: Yogurt, plain, whole milk"
+      }
+     },
+     {
+      "name": "Saunth / imli chutney",
+      "grams": 12,
+      "source": {
+       "id": "INDB",
+       "ref": "ASC281",
+       "row_name": "Saunth/Sonth chutney with tamarind/imli"
+      }
+     },
+     {
+      "name": "Mint coriander chutney",
+      "grams": 8,
+      "source": {
+       "id": "INDB",
+       "ref": "ASC387",
+       "row_name": "Mint and coriander chutney (Pudinay aur dhaniye ki chutney)"
+      }
+     },
+     {
+      "name": "Onion",
+      "grams": 10,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "G017",
+       "row_name": "Onion, big"
+      }
+     },
+     {
+      "name": "Sev",
+      "grams": 8,
+      "source": {
+       "id": "FOOD",
+       "ref": "nylon-sev",
+       "row_name": "Sev (Besan Sev)"
+      }
+     }
+    ],
+    "cooked_weight_g": 243,
+    "cooked_weight_basis": "sum of served parts; boiled potato taken as raw weight (assumed), dry chana x2.2 after boiling (assumed); fried parts at the unit weights given",
+    "method": "two tikkis topped with chole, curd, chutneys, onion and sev"
+   },
+   "confidence": "low",
+   "notes": "Composition assumed. per_100g left for the pipeline (USDA curd, frying-model sev).",
+   "image_prompt": "Aloo tikki chaat with chole, curd and chutneys in a steel plate"
+  },
+  {
+   "id": "ragda-pattice",
+   "name": "Ragda Pattice",
+   "name_hi": "रगड़ा पैटीस",
+   "aliases": [
+    "ragda pattice",
+    "ragda patties",
+    "ragda patis",
+    "ragda pattis",
+    "ragda"
+   ],
+   "category": "snack",
+   "diet": "vegan",
+   "form": "cooked",
+   "per_100g": null,
+   "units": [
+    {
+     "unit": "plate",
+     "label": "1 plate (2 pattice)",
+     "grams": 283,
+     "basis": "recipe"
+    }
+   ],
+   "default_unit": "plate",
+   "source": {
+    "id": "DERIVED",
+    "ref": "Ragda pattice plate",
+    "url": "https://github.com/lindsayjaacks/Indian-Nutrient-Databank-INDB-/blob/main/INDB.xlsx"
+   },
+   "recipe": {
+    "ingredients": [
+     {
+      "name": "Pattice (aloo tikki) x2",
+      "grams": 105,
+      "source": {
+       "id": "FOOD",
+       "ref": "aloo-tikki",
+       "row_name": "Aloo Tikki (shallow-fried)"
+      }
+     },
+     {
+      "name": "White peas, dry (for ragda)",
+      "grams": 50,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "B017",
+       "row_name": "Peas, dry"
+      }
+     },
+     {
+      "name": "Onion",
+      "grams": 20,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "G017",
+       "row_name": "Onion, big"
+      }
+     },
+     {
+      "name": "Tomato",
+      "grams": 20,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "D075",
+       "row_name": "Tomato, ripe, hybrid"
+      }
+     },
+     {
+      "name": "Groundnut oil (ragda tadka)",
+      "grams": 5,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "T005",
+       "row_name": "Groundnut oil"
+      }
+     },
+     {
+      "name": "Saunth / imli chutney",
+      "grams": 10,
+      "source": {
+       "id": "INDB",
+       "ref": "ASC281",
+       "row_name": "Saunth/Sonth chutney with tamarind/imli"
+      }
+     },
+     {
+      "name": "Mint coriander chutney",
+      "grams": 8,
+      "source": {
+       "id": "INDB",
+       "ref": "ASC387",
+       "row_name": "Mint and coriander chutney (Pudinay aur dhaniye ki chutney)"
+      }
+     },
+     {
+      "name": "Sev",
+      "grams": 8,
+      "source": {
+       "id": "FOOD",
+       "ref": "nylon-sev",
+       "row_name": "Sev (Besan Sev)"
+      }
+     }
+    ],
+    "cooked_weight_g": 283,
+    "cooked_weight_basis": "assumed: pattice 105 g + ragda ~140 g + chutneys and toppings",
+    "method": "potato pattice topped with white-pea ragda, chutneys, onion and sev"
+   },
+   "confidence": "low",
+   "notes": "Ragda built from IFCT dry peas (B017); dry peas assumed to take up water to give ~110 g cooked ragda with onion, tomato and oil (all assumed). per_100g left for the pipeline (frying-model sev).",
+   "image_prompt": "Ragda pattice with yellow ragda, chutneys, sev and onion"
+  },
+  {
+   "id": "samosa-chaat",
+   "name": "Samosa Chaat",
+   "name_hi": "समोसा चाट",
+   "aliases": [
+    "samosa chaat",
+    "samosa chat",
+    "samosa chole",
+    "chole samosa"
+   ],
+   "category": "snack",
+   "diet": "veg",
+   "form": "cooked",
+   "per_100g": null,
+   "units": [
+    {
+     "unit": "plate",
+     "label": "1 plate (1 samosa)",
+     "grams": 250,
+     "basis": "recipe"
+    }
+   ],
+   "default_unit": "plate",
+   "source": {
+    "id": "DERIVED",
+    "ref": "Samosa chaat plate",
+    "url": "https://github.com/lindsayjaacks/Indian-Nutrient-Databank-INDB-/blob/main/INDB.xlsx"
+   },
+   "recipe": {
+    "ingredients": [
+     {
+      "name": "Samosa",
+      "grams": 80,
+      "source": {
+       "id": "FOOD",
+       "ref": "aloo-samosa-fried",
+       "row_name": "Aloo Samosa (absorbed-oil model)"
+      }
+     },
+     {
+      "name": "Chole",
+      "grams": 100,
+      "source": {
+       "id": "INDB",
+       "ref": "ASC162",
+       "row_name": "Chickpeas curry (Safed channa curry)"
+      }
+     },
+     {
+      "name": "Curd (dahi)",
+      "grams": 40,
+      "source": {
+       "id": "USDA",
+       "ref": "search: Yogurt, plain, whole milk"
+      }
+     },
+     {
+      "name": "Saunth / imli chutney",
+      "grams": 12,
+      "source": {
+       "id": "INDB",
+       "ref": "ASC281",
+       "row_name": "Saunth/Sonth chutney with tamarind/imli"
+      }
+     },
+     {
+      "name": "Mint coriander chutney",
+      "grams": 8,
+      "source": {
+       "id": "INDB",
+       "ref": "ASC387",
+       "row_name": "Mint and coriander chutney (Pudinay aur dhaniye ki chutney)"
+      }
+     },
+     {
+      "name": "Onion",
+      "grams": 10,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "G017",
+       "row_name": "Onion, big"
+      }
+     }
+    ],
+    "cooked_weight_g": 250,
+    "cooked_weight_basis": "sum of served parts; boiled potato taken as raw weight (assumed), dry chana x2.2 after boiling (assumed); fried parts at the unit weights given",
+    "method": "a crushed samosa topped with chole, curd, both chutneys and onion"
+   },
+   "confidence": "low",
+   "notes": "Composition assumed. per_100g left for the pipeline.",
+   "image_prompt": "Crushed samosa with chole, curd and chutneys"
+  },
+  {
+   "id": "kachori-chaat",
+   "name": "Kachori Chaat",
+   "name_hi": "कचौड़ी चाट",
+   "aliases": [
+    "kachori chaat",
+    "kachori chat",
+    "khasta kachori chaat",
+    "dahi kachori"
+   ],
+   "category": "snack",
+   "diet": "veg",
+   "form": "cooked",
+   "per_100g": null,
+   "units": [
+    {
+     "unit": "plate",
+     "label": "1 plate (1 kachori)",
+     "grams": 170,
+     "basis": "recipe"
+    }
+   ],
+   "default_unit": "plate",
+   "source": {
+    "id": "DERIVED",
+    "ref": "Kachori chaat plate",
+    "url": "https://github.com/lindsayjaacks/Indian-Nutrient-Databank-INDB-/blob/main/INDB.xlsx"
+   },
+   "recipe": {
+    "ingredients": [
+     {
+      "name": "Khasta kachori",
+      "grams": 45,
+      "source": {
+       "id": "FOOD",
+       "ref": "khasta-kachori-fried",
+       "row_name": "Khasta Kachori (absorbed-oil model)"
+      }
+     },
+     {
+      "name": "Dry potato (aloo sabzi)",
+      "grams": 50,
+      "source": {
+       "id": "INDB",
+       "ref": "ASC178",
+       "row_name": "Dry potato (Sookhe aloo)"
+      }
+     },
+     {
+      "name": "Curd (dahi)",
+      "grams": 40,
+      "source": {
+       "id": "USDA",
+       "ref": "search: Yogurt, plain, whole milk"
+      }
+     },
+     {
+      "name": "Saunth / imli chutney",
+      "grams": 12,
+      "source": {
+       "id": "INDB",
+       "ref": "ASC281",
+       "row_name": "Saunth/Sonth chutney with tamarind/imli"
+      }
+     },
+     {
+      "name": "Mint coriander chutney",
+      "grams": 8,
+      "source": {
+       "id": "INDB",
+       "ref": "ASC387",
+       "row_name": "Mint and coriander chutney (Pudinay aur dhaniye ki chutney)"
+      }
+     },
+     {
+      "name": "Onion",
+      "grams": 10,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "G017",
+       "row_name": "Onion, big"
+      }
+     },
+     {
+      "name": "Sev",
+      "grams": 5,
+      "source": {
+       "id": "FOOD",
+       "ref": "nylon-sev",
+       "row_name": "Sev (Besan Sev)"
+      }
+     }
+    ],
+    "cooked_weight_g": 170,
+    "cooked_weight_basis": "sum of served parts; boiled potato taken as raw weight (assumed), dry chana x2.2 after boiling (assumed); fried parts at the unit weights given",
+    "method": "a cracked khasta kachori filled with aloo sabzi, curd, chutneys, onion and sev"
+   },
+   "confidence": "low",
+   "notes": "Composition assumed. per_100g left for the pipeline.",
+   "image_prompt": "Kachori chaat in a leaf bowl with curd and chutneys"
+  },
+  {
+   "id": "raj-kachori",
+   "name": "Raj Kachori",
+   "name_hi": "राज कचौड़ी",
+   "aliases": [
+    "raj kachori",
+    "raj kachauri",
+    "raaj kachori",
+    "big kachori chaat"
+   ],
+   "category": "snack",
+   "diet": "veg",
+   "form": "cooked",
+   "per_100g": null,
+   "units": [
+    {
+     "unit": "piece",
+     "label": "1 raj kachori (filled)",
+     "grams": 220.8,
+     "basis": "recipe"
+    }
+   ],
+   "default_unit": "piece",
+   "source": {
+    "id": "DERIVED",
+    "ref": "Raj kachori",
+    "url": "https://github.com/lindsayjaacks/Indian-Nutrient-Databank-INDB-/blob/main/INDB.xlsx"
+   },
+   "recipe": {
+    "ingredients": [
+     {
+      "name": "Raj kachori shell (golgappa dough)",
+      "grams": 25,
+      "source": {
+       "id": "FOOD",
+       "ref": "golgappa-puri",
+       "row_name": "Golgappa Puri (Pani Puri Shell)"
+      }
+     },
+     {
+      "name": "Potato (boiled)",
+      "grams": 40,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "F006",
+       "row_name": "Potato, brown skin, big"
+      }
+     },
+     {
+      "name": "Black chana, dry (boiled)",
+      "grams": 9,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "B002",
+       "row_name": "Bengal gram, whole"
+      }
+     },
+     {
+      "name": "Sprouted moong salad",
+      "grams": 20,
+      "source": {
+       "id": "INDB",
+       "ref": "ASC259",
+       "row_name": "Sprouted moong salad "
+      }
+     },
+     {
+      "name": "Curd (dahi)",
+      "grams": 70,
+      "source": {
+       "id": "USDA",
+       "ref": "search: Yogurt, plain, whole milk"
+      }
+     },
+     {
+      "name": "Saunth / imli chutney",
+      "grams": 15,
+      "source": {
+       "id": "INDB",
+       "ref": "ASC281",
+       "row_name": "Saunth/Sonth chutney with tamarind/imli"
+      }
+     },
+     {
+      "name": "Mint coriander chutney",
+      "grams": 10,
+      "source": {
+       "id": "INDB",
+       "ref": "ASC387",
+       "row_name": "Mint and coriander chutney (Pudinay aur dhaniye ki chutney)"
+      }
+     },
+     {
+      "name": "Sev",
+      "grams": 10,
+      "source": {
+       "id": "FOOD",
+       "ref": "nylon-sev",
+       "row_name": "Sev (Besan Sev)"
+      }
+     },
+     {
+      "name": "Pomegranate seeds",
+      "grams": 10,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "E055",
+       "row_name": "Pomegranate, maroon seeds"
+      }
+     },
+     {
+      "name": "Chaat masala",
+      "grams": 1,
+      "source": {
+       "id": "INDB",
+       "ref": "BFP002",
+       "row_name": "Chat masala"
+      }
+     }
+    ],
+    "cooked_weight_g": 220.8,
+    "cooked_weight_basis": "sum of served parts; boiled potato taken as raw weight (assumed), dry chana x2.2 after boiling (assumed); fried parts at the unit weights given",
+    "method": "a large crisp shell filled with potato, chana, sprouts, curd, chutneys, sev and pomegranate"
+   },
+   "confidence": "low",
+   "notes": "Shell uses the golgappa dough (suji-maida) at a larger size, weight assumed. Composition assumed. per_100g left for the pipeline.",
+   "image_prompt": "Raj kachori overflowing with curd, chutneys, sev and pomegranate"
+  },
+  {
+   "id": "jhalmuri",
+   "name": "Jhalmuri",
+   "name_hi": "झालमुड़ी",
+   "aliases": [
+    "jhalmuri",
+    "jhal muri",
+    "jhaal muri",
+    "muri masala",
+    "masala muri",
+    "kolkata jhalmuri"
+   ],
+   "category": "snack",
+   "diet": "vegan",
+   "form": "cooked",
+   "per_100g": {
+    "kcal": 256.6,
+    "protein_g": 5.86,
+    "carbs_g": 35.92,
+    "fat_g": 9.48,
+    "fiber_g": 2.99
+   },
+   "units": [
+    {
+     "unit": "cone",
+     "label": "1 paper cone",
+     "grams": 103,
+     "basis": "recipe"
+    }
+   ],
+   "default_unit": "cone",
+   "source": {
+    "id": "DERIVED",
+    "ref": "Jhalmuri: puffed rice with mustard oil and toppings",
+    "url": "https://github.com/lindsayjaacks/Indian-Nutrient-Databank-INDB-/blob/main/INDB.xlsx"
+   },
+   "recipe": {
+    "ingredients": [
+     {
+      "name": "Puffed rice (muri)",
+      "grams": 40,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "A012",
+       "row_name": "Rice puffed"
+      }
+     },
+     {
+      "name": "Mustard oil",
+      "grams": 5,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "T006",
+       "row_name": "Mustard oil"
+      }
+     },
+     {
+      "name": "Onion",
+      "grams": 15,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "G017",
+       "row_name": "Onion, big"
+      }
+     },
+     {
+      "name": "Tomato",
+      "grams": 10,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "D075",
+       "row_name": "Tomato, ripe, hybrid"
+      }
+     },
+     {
+      "name": "Potato (boiled)",
+      "grams": 15,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "F006",
+       "row_name": "Potato, brown skin, big"
+      }
+     },
+     {
+      "name": "Groundnut (roasted peanuts; raw row as proxy)",
+      "grams": 10,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "H012",
+       "row_name": "Ground nut"
+      }
+     },
+     {
+      "name": "Green chilli",
+      "grams": 3,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "G008",
+       "row_name": "Chillies, green - all varieties"
+      }
+     },
+     {
+      "name": "Coriander leaves",
+      "grams": 2,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "G009",
+       "row_name": "Coriander leaves"
+      }
+     },
+     {
+      "name": "Lemon juice",
+      "grams": 3,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "E033",
+       "row_name": "Lemon, juice"
+      }
+     }
+    ],
+    "cooked_weight_g": 103,
+    "cooked_weight_basis": "no cooking: sum of ingredients",
+    "method": "puffed rice tossed with raw mustard oil, onion, tomato, boiled potato, peanuts, chilli, coriander and lemon"
+   },
+   "confidence": "low",
+   "notes": "No cooking, so weight is the sum of ingredients. Quantities assumed from a standard Kolkata cone. Mustard oil energy taken as 9 kcal/g fat (IFCT package lists 0 kJ). Chanachur (a fried mix often added) is not included.",
+   "image_prompt": "Jhalmuri in a newspaper cone with mustard oil, peanuts and green chilli"
+  },
+  {
+   "id": "bhel-puri",
+   "name": "Bhel Puri",
+   "name_hi": "भेल पूरी",
+   "aliases": [
+    "bhel",
+    "bhelpuri",
+    "bhel poori",
+    "mumbai bhel",
+    "sukhi bhel",
+    "geeli bhel"
+   ],
+   "category": "snack",
+   "diet": "vegan",
+   "form": "cooked",
+   "per_100g": null,
+   "units": [
+    {
+     "unit": "plate",
+     "label": "1 street plate",
+     "grams": 135,
+     "basis": "recipe"
+    },
+    {
+     "unit": "katori",
+     "label": "1 katori",
+     "grams": 50,
+     "basis": "estimated standard household measure"
+    }
+   ],
+   "default_unit": "plate",
+   "source": {
+    "id": "DERIVED",
+    "ref": "Bhel puri: puffed rice, sev, papdi, potato, chutneys",
+    "url": "https://github.com/lindsayjaacks/Indian-Nutrient-Databank-INDB-/blob/main/INDB.xlsx"
+   },
+   "recipe": {
+    "ingredients": [
+     {
+      "name": "Puffed rice (murmura)",
+      "grams": 35,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "A012",
+       "row_name": "Rice puffed"
+      }
+     },
+     {
+      "name": "Sev",
+      "grams": 15,
+      "source": {
+       "id": "FOOD",
+       "ref": "nylon-sev",
+       "row_name": "Sev (Besan Sev)"
+      }
+     },
+     {
+      "name": "Papdi",
+      "grams": 10,
+      "source": {
+       "id": "FOOD",
+       "ref": "chaat-papdi",
+       "row_name": "Chaat Papdi"
+      }
+     },
+     {
+      "name": "Potato (boiled)",
+      "grams": 20,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "F006",
+       "row_name": "Potato, brown skin, big"
+      }
+     },
+     {
+      "name": "Onion",
+      "grams": 15,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "G017",
+       "row_name": "Onion, big"
+      }
+     },
+     {
+      "name": "Tomato",
+      "grams": 10,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "D075",
+       "row_name": "Tomato, ripe, hybrid"
+      }
+     },
+     {
+      "name": "Mint coriander chutney",
+      "grams": 10,
+      "source": {
+       "id": "INDB",
+       "ref": "ASC387",
+       "row_name": "Mint and coriander chutney (Pudinay aur dhaniye ki chutney)"
+      }
+     },
+     {
+      "name": "Dates chutney",
+      "grams": 15,
+      "source": {
+       "id": "INDB",
+       "ref": "OSR085",
+       "row_name": "Dates chutney (Khajoor ki chutney)"
+      }
+     },
+     {
+      "name": "Lemon juice",
+      "grams": 3,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "E033",
+       "row_name": "Lemon, juice"
+      }
+     },
+     {
+      "name": "Coriander leaves",
+      "grams": 2,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "G009",
+       "row_name": "Coriander leaves"
+      }
+     }
+    ],
+    "cooked_weight_g": 135,
+    "cooked_weight_basis": "no cooking: sum of parts",
+    "method": "puffed rice tossed with sev, crushed papdi, potato, onion, tomato, green and sweet chutneys and lemon"
+   },
+   "confidence": "low",
+   "notes": "Replaces the rejected INDB bhel row. Composition assumed from a standard Mumbai plate. per_100g left for the pipeline (frying-model sev and papdi).",
+   "image_prompt": "Mumbai bhel puri in a paper cone with sev and coriander"
+  },
+  {
+   "id": "spicy-corn-chaat",
+   "name": "Spicy Corn Chaat",
+   "name_hi": "स्पाइसी कॉर्न चाट",
+   "aliases": [
+    "corn chaat",
+    "crispy corn chaat",
+    "makai chaat",
+    "bhutte ki chaat"
+   ],
+   "category": "snack",
+   "diet": "vegan",
+   "form": "cooked",
+   "per_100g": null,
+   "units": [
+    {
+     "unit": "katori",
+     "label": "1 katori",
+     "grams": 114,
+     "basis": "recipe"
+    }
+   ],
+   "default_unit": "katori",
+   "source": {
+    "id": "DERIVED",
+    "ref": "Crispy corn chaat",
+    "url": "https://github.com/lindsayjaacks/Indian-Nutrient-Databank-INDB-/blob/main/INDB.xlsx"
+   },
+   "recipe": {
+    "ingredients": [
+     {
+      "name": "Crispy fried corn",
+      "grams": 100,
+      "source": {
+       "id": "FOOD",
+       "ref": "crispy-besan-corn",
+       "row_name": "Crispy Fried Corn"
+      }
+     },
+     {
+      "name": "Onion",
+      "grams": 5,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "G017",
+       "row_name": "Onion, big"
+      }
+     },
+     {
+      "name": "Tomato",
+      "grams": 5,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "D075",
+       "row_name": "Tomato, ripe, hybrid"
+      }
+     },
+     {
+      "name": "Lemon juice",
+      "grams": 3,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "E033",
+       "row_name": "Lemon, juice"
+      }
+     },
+     {
+      "name": "Chaat masala",
+      "grams": 1,
+      "source": {
+       "id": "INDB",
+       "ref": "BFP002",
+       "row_name": "Chat masala"
+      }
+     }
+    ],
+    "cooked_weight_g": 114,
+    "cooked_weight_basis": "no cooking after frying: sum of parts",
+    "method": "crispy fried corn tossed with onion, tomato, lemon and chaat masala"
+   },
+   "confidence": "low",
+   "notes": "Replaces the rejected INDB row (OSR116). INDB recipe adds butter after frying; not included (log separately). Composition assumed. per_100g left for the pipeline.",
+   "image_prompt": "Crispy corn chaat in a bowl with onion, tomato and lemon"
+  },
+  {
+   "id": "khakhra-chaat",
+   "name": "Khakhra Chaat",
+   "name_hi": "खाखरा चाट",
+   "aliases": [
+    "khakhra chaat",
+    "khakra chaat",
+    "khakhra chat",
+    "gujarati khakhra chaat"
+   ],
+   "category": "snack",
+   "diet": "vegan",
+   "form": "cooked",
+   "per_100g": null,
+   "units": [
+    {
+     "unit": "plate",
+     "label": "1 plate (2 khakhras)",
+     "grams": 271.38,
+     "basis": "recipe"
+    }
+   ],
+   "default_unit": "plate",
+   "source": {
+    "id": "DERIVED",
+    "ref": "Khakhra chaat plate",
+    "url": "https://github.com/lindsayjaacks/Indian-Nutrient-Databank-INDB-/blob/main/INDB.xlsx"
+   },
+   "recipe": {
+    "ingredients": [
+     {
+      "name": "Khakhra x2 (INDB serving each)",
+      "grams": 151.38,
+      "source": {
+       "id": "INDB",
+       "ref": "OSR102",
+       "row_name": "Khakhra"
+      }
+     },
+     {
+      "name": "Potato (boiled)",
+      "grams": 40,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "F006",
+       "row_name": "Potato, brown skin, big"
+      }
+     },
+     {
+      "name": "Onion",
+      "grams": 20,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "G017",
+       "row_name": "Onion, big"
+      }
+     },
+     {
+      "name": "Tomato",
+      "grams": 20,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "D075",
+       "row_name": "Tomato, ripe, hybrid"
+      }
+     },
+     {
+      "name": "Pomegranate seeds",
+      "grams": 10,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "E055",
+       "row_name": "Pomegranate, maroon seeds"
+      }
+     },
+     {
+      "name": "Mint coriander chutney",
+      "grams": 10,
+      "source": {
+       "id": "INDB",
+       "ref": "ASC387",
+       "row_name": "Mint and coriander chutney (Pudinay aur dhaniye ki chutney)"
+      }
+     },
+     {
+      "name": "Dates chutney",
+      "grams": 10,
+      "source": {
+       "id": "INDB",
+       "ref": "OSR085",
+       "row_name": "Dates chutney (Khajoor ki chutney)"
+      }
+     },
+     {
+      "name": "Sev",
+      "grams": 10,
+      "source": {
+       "id": "FOOD",
+       "ref": "nylon-sev",
+       "row_name": "Sev (Besan Sev)"
+      }
+     }
+    ],
+    "cooked_weight_g": 271.38,
+    "cooked_weight_basis": "no cooking: sum of parts",
+    "method": "roasted khakhras topped with potato, onion, tomato, pomegranate, chutneys and sev"
+   },
+   "confidence": "low",
+   "notes": "Replaces the rejected INDB row (OSR108). Khakhra uses INDB OSR102 with its serving weight (75.69 g, which looks heavy for a crisp khakhra). Composition assumed. per_100g left for the pipeline.",
+   "image_prompt": "Two khakhras topped with chaat toppings and sev"
+  },
+  {
+   "id": "pav",
+   "name": "Pav (Bread Roll)",
+   "name_hi": "पाव",
+   "aliases": [
+    "pav",
+    "pao",
+    "ladi pav",
+    "bun pav",
+    "dinner roll",
+    "pav bun"
+   ],
+   "category": "roti_bread",
+   "diet": "veg",
+   "form": "cooked",
+   "per_100g": null,
+   "units": [
+    {
+     "unit": "pav",
+     "label": "1 pav",
+     "grams": 40,
+     "basis": "estimated standard household measure"
+    }
+   ],
+   "default_unit": "pav",
+   "source": {
+    "id": "USDA",
+    "ref": "search: Rolls, dinner, plain, commercially prepared (includes brown-and-serve)",
+    "url": "https://fdc.nal.usda.gov/",
+    "row_name": "Rolls, dinner, plain, commercially prepared (includes brown-and-serve)"
+   },
+   "confidence": "medium",
+   "notes": "USDA proxy: soft white dinner roll, the closest match to Mumbai ladi pav. Pav weight assumed (ladi pav ~35-45 g). Values fetched by your pipeline.",
+   "image_prompt": "A row of soft golden ladi pav joined together"
+  },
+  {
+   "id": "veg-momos-steamed",
+   "name": "Veg Momos (Steamed)",
+   "name_hi": "वेज मोमोज़",
+   "aliases": [
+    "veg momos",
+    "veg momo",
+    "steamed momos",
+    "momo",
+    "veg dumplings",
+    "dim sum veg"
+   ],
+   "category": "snack",
+   "diet": "vegan",
+   "form": "cooked",
+   "per_100g": null,
+   "units": [
+    {
+     "unit": "momo",
+     "label": "1 momo",
+     "grams": 25,
+     "basis": "estimated standard household measure"
+    },
+    {
+     "unit": "plate",
+     "label": "1 plate (6 momos)",
+     "grams": 150,
+     "basis": "estimated standard household measure"
+    }
+   ],
+   "default_unit": "plate",
+   "source": {
+    "id": "USDA",
+    "ref": "search: Dumpling, no meat",
+    "url": "https://fdc.nal.usda.gov/"
+   },
+   "confidence": "medium",
+   "notes": "USDA FNDDS vegetable dumpling as proxy for Indian veg momos (maida wrapper, cabbage-carrot-onion filling). Momo weight assumed. If the exact FNDDS name differs, the closest steamed vegetable dumpling row is intended. Checker: USDA description corrected to the exact FNDDS name.",
+   "image_prompt": "Six white steamed veg momos with red chutney"
+  },
+  {
+   "id": "chicken-momos-steamed",
+   "name": "Chicken Momos (Steamed)",
+   "name_hi": "चिकन मोमोज़",
+   "aliases": [
+    "chicken momos",
+    "chicken momo",
+    "steamed chicken momos",
+    "chicken dumplings",
+    "momo"
+   ],
+   "category": "snack",
+   "diet": "non_veg",
+   "form": "cooked",
+   "per_100g": null,
+   "units": [
+    {
+     "unit": "momo",
+     "label": "1 momo",
+     "grams": 25,
+     "basis": "estimated standard household measure"
+    },
+    {
+     "unit": "plate",
+     "label": "1 plate (6 momos)",
+     "grams": 150,
+     "basis": "estimated standard household measure"
+    }
+   ],
+   "default_unit": "plate",
+   "source": {
+    "id": "USDA",
+    "ref": "search: Dumpling, steamed, filled with meat, poultry, or seafood",
+    "url": "https://fdc.nal.usda.gov/",
+    "row_name": "Dumpling, steamed, filled with meat, poultry, or seafood"
+   },
+   "confidence": "medium",
+   "notes": "USDA FNDDS steamed meat/poultry dumpling as proxy for chicken momos (the FNDDS recipe is pork-and-vegetable based, so fat may be higher than a chicken momo). Momo weight assumed.",
+   "image_prompt": "Six steamed chicken momos with spicy red chutney"
+  },
+  {
+   "id": "veg-momos-fried",
+   "name": "Veg Momos (Fried)",
+   "name_hi": "फ्राइड वेज मोमोज़",
+   "aliases": [
+    "fried momos",
+    "fried veg momos",
+    "fried momo",
+    "veg fried momos",
+    "crispy momos"
+   ],
+   "category": "snack",
+   "diet": "vegan",
+   "form": "cooked",
+   "per_100g": null,
+   "units": [
+    {
+     "unit": "momo",
+     "label": "1 momo",
+     "grams": 25,
+     "basis": "estimated standard household measure"
+    },
+    {
+     "unit": "plate",
+     "label": "1 plate (6 momos)",
+     "grams": 150,
+     "basis": "estimated standard household measure"
+    }
+   ],
+   "default_unit": "plate",
+   "source": {
+    "id": "USDA",
+    "ref": "search: Wonton, dumpling or pot sticker, fried, no meat",
+    "url": "https://fdc.nal.usda.gov/"
+   },
+   "confidence": "low",
+   "notes": "USDA FNDDS fried vegetable dumpling as a measured-value proxy (not the frying model). If this exact name doesn't exist, the closest fried vegetable dumpling / vegetable egg roll row is intended. Momo weight assumed. Checker: USDA description corrected to the exact FNDDS name.",
+   "image_prompt": "Golden deep-fried veg momos with mayonnaise and red chutney"
+  },
+  {
+   "id": "chicken-momos-fried",
+   "name": "Chicken Momos (Fried)",
+   "name_hi": "फ्राइड चिकन मोमोज़",
+   "aliases": [
+    "fried chicken momos",
+    "chicken fried momos",
+    "fried momo",
+    "crispy chicken momos"
+   ],
+   "category": "snack",
+   "diet": "non_veg",
+   "form": "cooked",
+   "per_100g": null,
+   "units": [
+    {
+     "unit": "momo",
+     "label": "1 momo",
+     "grams": 25,
+     "basis": "estimated standard household measure"
+    },
+    {
+     "unit": "plate",
+     "label": "1 plate (6 momos)",
+     "grams": 150,
+     "basis": "estimated standard household measure"
+    }
+   ],
+   "default_unit": "plate",
+   "source": {
+    "id": "USDA",
+    "ref": "search: Dumpling, fried, filled with meat, poultry, or seafood",
+    "url": "https://fdc.nal.usda.gov/",
+    "row_name": "Dumpling, fried, filled with meat, poultry, or seafood"
+   },
+   "confidence": "medium",
+   "notes": "USDA FNDDS fried meat/poultry dumpling as a measured-value proxy for fried chicken momos. Momo weight assumed.",
+   "image_prompt": "Crispy fried chicken momos on a plate with red chutney"
+  },
+  {
+   "id": "vada-pav",
+   "name": "Vada Pav",
+   "name_hi": "वड़ा पाव",
+   "aliases": [
+    "vada pav",
+    "wada pav",
+    "vadapav",
+    "batata vada pav",
+    "bombay burger"
+   ],
+   "category": "snack",
+   "diet": "veg",
+   "form": "cooked",
+   "per_100g": null,
+   "units": [
+    {
+     "unit": "piece",
+     "label": "1 vada pav",
+     "grams": 105,
+     "basis": "recipe"
+    }
+   ],
+   "default_unit": "piece",
+   "source": {
+    "id": "DERIVED",
+    "ref": "Vada pav",
+    "url": "https://github.com/lindsayjaacks/Indian-Nutrient-Databank-INDB-/blob/main/INDB.xlsx"
+   },
+   "recipe": {
+    "ingredients": [
+     {
+      "name": "Pav x1",
+      "grams": 40,
+      "source": {
+       "id": "FOOD",
+       "ref": "pav",
+       "row_name": "Pav (Bread Roll)"
+      }
+     },
+     {
+      "name": "Batata vada",
+      "grams": 50,
+      "source": {
+       "id": "FOOD",
+       "ref": "batata-vada",
+       "row_name": "Batata Vada / Aloo Bonda"
+      }
+     },
+     {
+      "name": "Mint coriander chutney",
+      "grams": 10,
+      "source": {
+       "id": "INDB",
+       "ref": "ASC387",
+       "row_name": "Mint and coriander chutney (Pudinay aur dhaniye ki chutney)"
+      }
+     },
+     {
+      "name": "Saunth / imli chutney",
+      "grams": 5,
+      "source": {
+       "id": "INDB",
+       "ref": "ASC281",
+       "row_name": "Saunth/Sonth chutney with tamarind/imli"
+      }
+     }
+    ],
+    "cooked_weight_g": 105,
+    "cooked_weight_basis": "sum of parts",
+    "method": "batata vada in a pav with green and sweet chutney"
+   },
+   "confidence": "low",
+   "notes": "Dry red garlic chutney (standard in Mumbai) not included: no allowed source found. Composition assumed. per_100g left for the pipeline (USDA pav, frying-model vada).",
+   "image_prompt": "Mumbai vada pav with green chutney and a fried green chilli"
+  },
+  {
+   "id": "dabeli",
+   "name": "Dabeli",
+   "name_hi": "दाबेली",
+   "aliases": [
+    "dabeli",
+    "kutchi dabeli",
+    "kacchi dabeli",
+    "double roti dabeli"
+   ],
+   "category": "snack",
+   "diet": "veg",
+   "form": "cooked",
+   "per_100g": null,
+   "units": [
+    {
+     "unit": "piece",
+     "label": "1 dabeli",
+     "grams": 131,
+     "basis": "recipe"
+    }
+   ],
+   "default_unit": "piece",
+   "source": {
+    "id": "DERIVED",
+    "ref": "Kutchi dabeli",
+    "url": "https://github.com/lindsayjaacks/Indian-Nutrient-Databank-INDB-/blob/main/INDB.xlsx"
+   },
+   "recipe": {
+    "ingredients": [
+     {
+      "name": "Pav x1",
+      "grams": 40,
+      "source": {
+       "id": "FOOD",
+       "ref": "pav",
+       "row_name": "Pav (Bread Roll)"
+      }
+     },
+     {
+      "name": "Potato (boiled)",
+      "grams": 50,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "F006",
+       "row_name": "Potato, brown skin, big"
+      }
+     },
+     {
+      "name": "Dates chutney",
+      "grams": 10,
+      "source": {
+       "id": "INDB",
+       "ref": "OSR085",
+       "row_name": "Dates chutney (Khajoor ki chutney)"
+      }
+     },
+     {
+      "name": "Groundnut (masala peanuts; raw row as proxy)",
+      "grams": 8,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "H012",
+       "row_name": "Ground nut"
+      }
+     },
+     {
+      "name": "Pomegranate seeds",
+      "grams": 5,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "E055",
+       "row_name": "Pomegranate, maroon seeds"
+      }
+     },
+     {
+      "name": "Onion",
+      "grams": 10,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "G017",
+       "row_name": "Onion, big"
+      }
+     },
+     {
+      "name": "Groundnut oil (toasting)",
+      "grams": 3,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "T005",
+       "row_name": "Groundnut oil"
+      }
+     },
+     {
+      "name": "Sev",
+      "grams": 5,
+      "source": {
+       "id": "FOOD",
+       "ref": "nylon-sev",
+       "row_name": "Sev (Besan Sev)"
+      }
+     }
+    ],
+    "cooked_weight_g": 131,
+    "cooked_weight_basis": "sum of parts",
+    "method": "pav stuffed with sweet-spicy potato filling, peanuts, pomegranate, onion and sev, toasted"
+   },
+   "confidence": "low",
+   "notes": "Dabeli masala spices ignored (small). Often toasted with butter instead of oil (assumed oil here). Composition assumed. per_100g left for the pipeline.",
+   "image_prompt": "Kutchi dabeli with pomegranate, peanuts and sev peeking out"
+  },
+  {
+   "id": "misal-pav",
+   "name": "Misal Pav",
+   "name_hi": "मिसल पाव",
+   "aliases": [
+    "misal pav",
+    "misal",
+    "misal paav",
+    "puneri misal",
+    "kolhapuri misal"
+   ],
+   "category": "breakfast",
+   "diet": "veg",
+   "form": "cooked",
+   "per_100g": null,
+   "units": [
+    {
+     "unit": "plate",
+     "label": "1 plate (misal + 2 pav)",
+     "grams": 323,
+     "basis": "recipe"
+    }
+   ],
+   "default_unit": "plate",
+   "source": {
+    "id": "DERIVED",
+    "ref": "Misal pav plate",
+    "url": "https://github.com/lindsayjaacks/Indian-Nutrient-Databank-INDB-/blob/main/INDB.xlsx"
+   },
+   "recipe": {
+    "ingredients": [
+     {
+      "name": "Whole moth dal (usal base)",
+      "grams": 200,
+      "source": {
+       "id": "INDB",
+       "ref": "ASC158",
+       "row_name": "Whole moth (Moth ki dal)"
+      }
+     },
+     {
+      "name": "Farsan (sev as proxy)",
+      "grams": 25,
+      "source": {
+       "id": "FOOD",
+       "ref": "nylon-sev",
+       "row_name": "Sev (Besan Sev)"
+      }
+     },
+     {
+      "name": "Onion",
+      "grams": 15,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "G017",
+       "row_name": "Onion, big"
+      }
+     },
+     {
+      "name": "Lemon juice",
+      "grams": 3,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "E033",
+       "row_name": "Lemon, juice"
+      }
+     },
+     {
+      "name": "Pav x2",
+      "grams": 80,
+      "source": {
+       "id": "FOOD",
+       "ref": "pav",
+       "row_name": "Pav (Bread Roll)"
+      }
+     }
+    ],
+    "cooked_weight_g": 323,
+    "cooked_weight_basis": "sum of parts",
+    "method": "spicy moth-bean usal topped with farsan and onion, served with 2 pav"
+   },
+   "confidence": "low",
+   "notes": "Usal uses INDB Whole moth dal (ASC158), which is milder and much less oily than a restaurant misal with its red oil 'tarri', so this under-counts. Farsan uses sev as proxy. per_100g left for the pipeline.",
+   "image_prompt": "Misal pav with red spicy gravy, farsan, onion, lemon and two pav"
+  },
+  {
+   "id": "chicken-kathi-roll",
+   "name": "Chicken Kathi Roll",
+   "name_hi": "चिकन काठी रोल",
+   "aliases": [
+    "chicken roll",
+    "chicken kathi roll",
+    "chicken frankie",
+    "chicken tikka roll",
+    "chicken wrap"
+   ],
+   "category": "snack",
+   "diet": "non_veg",
+   "form": "cooked",
+   "per_100g": {
+    "kcal": 181.99,
+    "protein_g": 9.32,
+    "carbs_g": 14.35,
+    "fat_g": 9.49,
+    "fiber_g": 2.71
+   },
+   "units": [
+    {
+     "unit": "roll",
+     "label": "1 roll",
+     "grams": 158.75,
+     "basis": "recipe"
+    }
+   ],
+   "default_unit": "roll",
+   "source": {
+    "id": "DERIVED",
+    "ref": "Chicken kathi roll",
+    "url": "https://github.com/lindsayjaacks/Indian-Nutrient-Databank-INDB-/blob/main/INDB.xlsx"
+   },
+   "recipe": {
+    "ingredients": [
+     {
+      "name": "Plain paratha (1 INDB serving)",
+      "grams": 55.75,
+      "source": {
+       "id": "INDB",
+       "ref": "ASC097",
+       "row_name": "Plain parantha/paratha"
+      }
+     },
+     {
+      "name": "Tandoori chicken, boneless pieces",
+      "grams": 70,
+      "source": {
+       "id": "INDB",
+       "ref": "ASC241",
+       "row_name": "Tandoori chicken"
+      }
+     },
+     {
+      "name": "Onion",
+      "grams": 20,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "G017",
+       "row_name": "Onion, big"
+      }
+     },
+     {
+      "name": "Mint coriander chutney",
+      "grams": 10,
+      "source": {
+       "id": "INDB",
+       "ref": "ASC387",
+       "row_name": "Mint and coriander chutney (Pudinay aur dhaniye ki chutney)"
+      }
+     },
+     {
+      "name": "Lemon juice",
+      "grams": 3,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "E033",
+       "row_name": "Lemon, juice"
+      }
+     }
+    ],
+    "cooked_weight_g": 158.75,
+    "cooked_weight_basis": "sum of parts (all already cooked)",
+    "method": "paratha rolled with tandoori chicken pieces, onion, green chutney and lemon"
+   },
+   "confidence": "low",
+   "notes": "Chicken filling amount assumed (70 g boneless). Uses INDB Tandoori chicken because INDB has no chicken tikka row. Street rolls often add egg and more oil.",
+   "image_prompt": "Chicken kathi roll in paper with chicken tikka pieces and onion"
+  },
+  {
+   "id": "veg-frankie",
+   "name": "Veg Frankie (Aloo Roll)",
+   "name_hi": "वेज फ्रैंकी",
+   "aliases": [
+    "veg frankie",
+    "aloo frankie",
+    "veg roll",
+    "aloo roll",
+    "potato wrap",
+    "frankie"
+   ],
+   "category": "snack",
+   "diet": "vegan",
+   "form": "cooked",
+   "per_100g": {
+    "kcal": 170.15,
+    "protein_g": 2.99,
+    "carbs_g": 20.41,
+    "fat_g": 8.24,
+    "fiber_g": 3.51
+   },
+   "units": [
+    {
+     "unit": "roll",
+     "label": "1 roll",
+     "grams": 151.75,
+     "basis": "recipe"
+    }
+   ],
+   "default_unit": "roll",
+   "source": {
+    "id": "DERIVED",
+    "ref": "Aloo frankie",
+    "url": "https://github.com/lindsayjaacks/Indian-Nutrient-Databank-INDB-/blob/main/INDB.xlsx"
+   },
+   "recipe": {
+    "ingredients": [
+     {
+      "name": "Plain paratha (1 INDB serving)",
+      "grams": 55.75,
+      "source": {
+       "id": "INDB",
+       "ref": "ASC097",
+       "row_name": "Plain parantha/paratha"
+      }
+     },
+     {
+      "name": "Dry potato (aloo sabzi)",
+      "grams": 70,
+      "source": {
+       "id": "INDB",
+       "ref": "ASC178",
+       "row_name": "Dry potato (Sookhe aloo)"
+      }
+     },
+     {
+      "name": "Onion",
+      "grams": 15,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "G017",
+       "row_name": "Onion, big"
+      }
+     },
+     {
+      "name": "Mint coriander chutney",
+      "grams": 10,
+      "source": {
+       "id": "INDB",
+       "ref": "ASC387",
+       "row_name": "Mint and coriander chutney (Pudinay aur dhaniye ki chutney)"
+      }
+     },
+     {
+      "name": "Chaat masala",
+      "grams": 1,
+      "source": {
+       "id": "INDB",
+       "ref": "BFP002",
+       "row_name": "Chat masala"
+      }
+     }
+    ],
+    "cooked_weight_g": 151.75,
+    "cooked_weight_basis": "sum of parts (all already cooked)",
+    "method": "paratha rolled with spiced dry potato, onion, green chutney and chaat masala"
+   },
+   "confidence": "low",
+   "notes": "Filling amount assumed. Mumbai frankie uses a thinner maida wrap, sometimes egg-washed; INDB plain paratha used as the wrap. Paratha may contain ghee, so check diet if strict vegan.",
+   "image_prompt": "Veg frankie roll with potato filling and onion"
+  },
+  {
+   "id": "egg-chowmein",
+   "name": "Egg Chowmein",
+   "name_hi": "एग चाउमीन",
+   "aliases": [
+    "egg chowmein",
+    "egg noodles",
+    "egg hakka noodles",
+    "anda chowmein",
+    "egg chowmin"
+   ],
+   "category": "snack",
+   "diet": "egg",
+   "form": "cooked",
+   "per_100g": {
+    "kcal": 136.52,
+    "protein_g": 4.94,
+    "carbs_g": 11.79,
+    "fat_g": 7.88,
+    "fiber_g": 1.44
+   },
+   "units": [
+    {
+     "unit": "plate",
+     "label": "1 plate",
+     "grams": 270,
+     "basis": "recipe"
+    }
+   ],
+   "default_unit": "plate",
+   "source": {
+    "id": "DERIVED",
+    "ref": "Egg chowmein",
+    "url": "https://github.com/lindsayjaacks/Indian-Nutrient-Databank-INDB-/blob/main/INDB.xlsx"
+   },
+   "recipe": {
+    "ingredients": [
+     {
+      "name": "Vegetable chowmein",
+      "grams": 200,
+      "source": {
+       "id": "INDB",
+       "ref": "ASC134",
+       "row_name": "Vegetable chowmein"
+      }
+     },
+     {
+      "name": "Scrambled egg (1 INDB serving)",
+      "grams": 70,
+      "source": {
+       "id": "INDB",
+       "ref": "ASC059",
+       "row_name": "Scrambled egg (Ande ki bhurji)"
+      }
+     }
+    ],
+    "cooked_weight_g": 270,
+    "cooked_weight_basis": "sum of parts (both already cooked)",
+    "method": "veg chowmein tossed with one scrambled egg"
+   },
+   "confidence": "low",
+   "notes": "Portion (200 g noodles + 1 egg) assumed. Street versions use more oil and sauces.",
+   "image_prompt": "Plate of egg chowmein with scrambled egg bits and vegetables"
+  },
+  {
+   "id": "chole-kulche",
+   "name": "Chole Kulche",
+   "name_hi": "छोले कुलचे",
+   "aliases": [
+    "chole kulche",
+    "chhole kulche",
+    "matar kulcha",
+    "kulcha chole",
+    "chole kulcha"
+   ],
+   "category": "snack",
+   "diet": "veg",
+   "form": "cooked",
+   "per_100g": {
+    "kcal": 203.42,
+    "protein_g": 6.54,
+    "carbs_g": 31.51,
+    "fat_g": 5.7,
+    "fiber_g": 3.46
+   },
+   "units": [
+    {
+     "unit": "plate",
+     "label": "1 plate (2 kulche)",
+     "grams": 274.34,
+     "basis": "recipe"
+    }
+   ],
+   "default_unit": "plate",
+   "source": {
+    "id": "DERIVED",
+    "ref": "Chole kulche plate",
+    "url": "https://github.com/lindsayjaacks/Indian-Nutrient-Databank-INDB-/blob/main/INDB.xlsx"
+   },
+   "recipe": {
+    "ingredients": [
+     {
+      "name": "Kulcha (proxy: naan, 1 INDB serving each) x2",
+      "grams": 106.34,
+      "source": {
+       "id": "INDB",
+       "ref": "ASC142",
+       "row_name": "Naan"
+      }
+     },
+     {
+      "name": "Chole",
+      "grams": 150,
+      "source": {
+       "id": "INDB",
+       "ref": "ASC162",
+       "row_name": "Chickpeas curry (Safed channa curry)"
+      }
+     },
+     {
+      "name": "Onion",
+      "grams": 15,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "G017",
+       "row_name": "Onion, big"
+      }
+     },
+     {
+      "name": "Lemon juice",
+      "grams": 3,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "E033",
+       "row_name": "Lemon, juice"
+      }
+     }
+    ],
+    "cooked_weight_g": 274.34,
+    "cooked_weight_basis": "sum of parts (all already cooked)",
+    "method": "two soft kulchas with chole, onion and lemon"
+   },
+   "confidence": "low",
+   "notes": "Kulcha uses INDB Naan (ASC142) as proxy: both are leavened maida flatbreads. Delhi street 'matar kulche' use white peas instead of chickpeas. Portion assumed.",
+   "image_prompt": "Chole kulche with onion rings and lemon on a steel plate"
+  },
+  {
+   "id": "chole-bhature-plate",
+   "name": "Chole Bhature (plate)",
+   "name_hi": "छोले भटूरे",
+   "aliases": [
+    "chole bhature",
+    "chhole bhature",
+    "chole bhatura",
+    "chana bhatura",
+    "bhature chole"
+   ],
+   "category": "snack",
+   "diet": "veg",
+   "form": "cooked",
+   "per_100g": null,
+   "units": [
+    {
+     "unit": "plate",
+     "label": "1 plate (2 bhature)",
+     "grams": 305,
+     "basis": "recipe"
+    }
+   ],
+   "default_unit": "plate",
+   "source": {
+    "id": "DERIVED",
+    "ref": "Chole bhature plate",
+    "url": "https://github.com/lindsayjaacks/Indian-Nutrient-Databank-INDB-/blob/main/INDB.xlsx"
+   },
+   "recipe": {
+    "ingredients": [
+     {
+      "name": "Bhatura x2",
+      "grams": 140,
+      "source": {
+       "id": "FOOD",
+       "ref": "bhatura-fried",
+       "row_name": "Bhatura (absorbed-oil model)"
+      }
+     },
+     {
+      "name": "Chole",
+      "grams": 150,
+      "source": {
+       "id": "INDB",
+       "ref": "ASC162",
+       "row_name": "Chickpeas curry (Safed channa curry)"
+      }
+     },
+     {
+      "name": "Onion",
+      "grams": 15,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "G017",
+       "row_name": "Onion, big"
+      }
+     }
+    ],
+    "cooked_weight_g": 305,
+    "cooked_weight_basis": "sum of parts",
+    "method": "two bhature with a bowl of chole and onion"
+   },
+   "confidence": "low",
+   "notes": "Portion assumed. Pickle and green chilli not included. per_100g left for the pipeline (frying-model bhatura).",
+   "image_prompt": "Chole bhature with two puffed bhature, chole, onion and pickle"
+  }
+ ],
+ "not_found": [
+  {
+   "dish": "Dry red garlic chutney (lahsun chutney for vada pav / dabeli)",
+   "reason": "No INDB or IFCT row for the dry Maharashtrian version (INDB OSR080 is the wet South Indian poondu chutney). Left out of Vada Pav and Dabeli.",
+   "searched": [
+    "INDB.xlsx",
+    "IFCT 2017"
+   ]
+  }
+ ],
+ "alias_suggestions": {}
+}

@@ -78,6 +78,65 @@
     ],
     "mango-kesar": [
       "mango"
+    ],
+    "chole": [
+      "chole",
+      "pindi chole",
+      "safed chana curry",
+      "chickpea curry",
+      "chana masala",
+      "chole masala"
+    ],
+    "veg-chowmein": [
+      "veg chowmein",
+      "hakka noodles",
+      "chowmin"
+    ],
+    "chicken-chowmein": [
+      "chicken noodles",
+      "chicken hakka noodles",
+      "chicken chowmin"
+    ],
+    "samosa": [
+      "samose",
+      "singara"
+    ],
+    "kachori": [
+      "khasta",
+      "dal kachori",
+      "moong dal kachori"
+    ],
+    "dahi-vada": [
+      "dahi bade",
+      "dahi wada"
+    ],
+    "pav-bhaji": [
+      "pao bhaji",
+      "pav bhajji"
+    ],
+    "sprouted-moong-chat": [
+      "sprouts chaat",
+      "moong chaat",
+      "ankurit moong chaat"
+    ],
+    "saunth-chutney": [
+      "meethi chutney",
+      "imli ki chutney",
+      "sonth",
+      "saunth chutney"
+    ],
+    "green-chutney": [
+      "dhaniya pudina chutney"
+    ],
+    "onion-pakora": [
+      "onion bhajiya",
+      "kanda bhaji",
+      "onion pakoda"
+    ],
+    "aloo-pakora": [
+      "aloo bhajiya",
+      "batata bhaji",
+      "aloo bajji"
     ]
   },
   "remove": {

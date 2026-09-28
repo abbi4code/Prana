@@ -58,6 +58,7 @@ When something changes, mark the old entry **Superseded by Dxx** instead of dele
 | D49 | Results settle (frozen) 3 days after the last day, lazily on app open: notifications + Akhada badges (Finisher, Champion, Duel master, Shabaash); kudos once per friend per active day; nudges after 3 quiet days, once per 3 days, opt-out | Decided (built; migration not pushed) | 2026-09-27 |
 | D50 | Saving on the device: batched localStorage writes (≤ 1 per 500 ms, immediate when hidden), failed saves caught + shown, storage.persist(), iPhone guest hint; move to per-record IndexedDB before users have ~2 years of logs | Decided (steps 1–4 built) | 2026-09-27 |
 | D51 | Admin panel: server-decided admins (ADMIN_EMAILS, Google only), read through service-role Postgres functions, read-only except resolving reports, every member view/export logged | Decided (built; migration not pushed) | 2026-09-27 |
+| D52 | Deep-fried foods: absorbed-oil model (sourced dough + measured fat of the fried food, dry basis × (1 − moisture)); INDB deep-fried rows no longer added; fresh-oil values for home food, reused-oil for street food | Decided (checker built; existing fried rows not converted yet) | 2026-09-28 |
 
 ---
 
@@ -393,6 +394,13 @@ Owner, 2026-09-27: "an admin panel where admin can see each user, what they are 
 - **Read-only**, except resolving Akhada reports (the moderation queue social.md left for later). No editing members' data.
 - **Every member view and export is written to `admin_audit`**, shown in the panel. Looking at someone's food and body data always leaves a trace; the privacy policy must say admins can see logged data (DPDP).
 - Included beyond the ask: retention, when-people-log heatmap, catalog gaps (custom foods), AI corrections + cost, gym verification health, storage, CSV + per-member JSON export.
+
+## D52 — Deep-fried foods: absorbed-oil model (resolves Q4)
+Owner's pick, 2026-09-28, over "keep holding fried foods" and "ship INDB rows with the badge" (D16). INDB recipes count the whole pan of frying oil: bread pakora 711 kcal and 74 g fat per 100 g, aloo bonda 633, bhatura 793.
+- **Model:** a fried food = its dough / batter / filling from INDB / IFCT / USDA (no frying oil) + the fat that kind of food actually holds, from a measurement. Fat as eaten = fat on dry weight × (1 − moisture); protein, carbs and fiber fill the rest of the dry matter in the dough's proportions (ash ignored, so kcal reads a little high). Computed by `scripts/check-research.mjs` (`recipe.frying`), never typed in.
+- **Anchor measurement:** Jain, Passi & Selvamurthy, J Food Sci Technol 2024 (https://pmc.ncbi.nlm.nih.gov/articles/PMC11465016/): poori, bread pakora, french fries, potato chips, mathri fried in groundnut oil; total fat reported on **dry weight** (Soxhlet), rising with frying cycles (e.g. poori 20.8 % at the 1st cycle → 25.1 % at the 32nd); moisture reported for mathri (~24 %) and poori (> 32 %). The per-food table lives in `scripts/check-research.mjs` (`JPS2024`); the full text is behind a reCAPTCHA / paywall, and the values were checked against the abstract (NCBI E-utilities): they average exactly to its stated 22.5 % (1st cycle) and 27.4 % (32nd). Research files name the cell (`fat_ref: "JPS2024:poori:180:32"`), the checker supplies the number. The earlier research notes quoted "22.5–27.4 % fat by weight" as if as eaten: that was dry basis. Example: home poori (atta, 20.78 % dry-basis fat, 32 % moisture) → 14.1 g fat, ~314 kcal / 100 g (INDB: 443).
+- **Fresh vs reused oil:** 1st-cycle values for home-made food, 32nd-cycle values for street / shop food (vendors reuse oil). Foods without their own measurement use the closest measured food of the same type (wheat dough → poori / mathri, besan batter → bread pakora, potato → fries / chips), named in notes, confidence low.
+- New INDB deep-fried rows are refused. The 13 fried rows already in the catalog (samosa, kachori, pakora, poori, bhatura, vada, gulab jamun…) keep their "high estimate" badge until they're rebuilt with the model (future.md).
 
 ## D12 — Project docs
 Decisions, features, future changes and data notes live as separate md files in `.claude/`, indexed in [CLAUDE.md](CLAUDE.md).

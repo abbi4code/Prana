@@ -1,12 +1,14 @@
 // Builds the app's food catalog from the research dataset.
 //   input:  data/foods.json            (research output, see .claude/data.md)
 //           data/foods-extra.json      (added later from INDB/USDA/derived, built by scripts/import-extra.mjs)
+//           data/foods-research.json   (verified research batches, written by scripts/check-research.mjs --write)
 //   output: src/data/foods.generated.json
 // Run: npm run foods
 
-import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync, mkdirSync } from "node:fs";
 
-const SOURCES = ["data/foods.json", "data/foods-extra.json"];
+// data/foods-research.json: browser-Claude research that passed scripts/check-research.mjs (numbers re-read from sources)
+const SOURCES = ["data/foods.json", "data/foods-extra.json", "data/foods-research.json"].filter((f) => existsSync(f));
 const ALIASES = JSON.parse(readFileSync("data/aliases.json", "utf8")); // reviewed search names (nl-logging.md)
 const PREFER_OUT = "src/data/food-prefer.generated.json";
 const OUT = "src/data/foods.generated.json";
@@ -36,7 +38,10 @@ const YIELD_UNITS = { curry_bowl: "bowl", soup_bowl: "bowl", tall_glass: "glass"
 
 const round = (n, d = 1) => (n == null ? null : Math.round(n * 10 ** d) / 10 ** d);
 
-const all = SOURCES.flatMap((f) => JSON.parse(readFileSync(f, "utf8")).foods);
+// a research row with `replaces` (D52 fried-food rebuilds) takes over that id: the old catalog row is dropped
+const loaded = SOURCES.map((f) => ({ f, foods: JSON.parse(readFileSync(f, "utf8")).foods }));
+const replaced = new Set(loaded.flatMap(({ foods }) => foods.filter((x) => x.replaces).map((x) => x.replaces)));
+const all = loaded.flatMap(({ f, foods }) => foods.filter((x) => f === "data/foods-research.json" || !replaced.has(x.id)));
 const dupes = all.map((f) => f.id).filter((id, i, ids) => ids.indexOf(id) !== i);
 if (dupes.length) throw new Error(`duplicate food ids: ${dupes.join(", ")}`);
 const out = [];
@@ -117,3 +122,4 @@ console.log(`excluded (${report.excluded.length}):\n  ${report.excluded.join("\n
 console.log(`high-estimate fried items (${report.fried.length}): ${report.fried.join(", ")}`);
 console.log(`macros unknown (${report.macroNulled.length}): ${report.macroNulled.join(", ")}`);
 console.log(`recipe-yield units dropped: ${report.unitsDropped}`);
+console.log(`replaced by research rows (D52): ${[...replaced].join(", ") || "none"}`);

@@ -78,6 +78,7 @@ node scripts/import-extra.mjs /path/to/INDB.xlsx   # regenerate data/foods-extra
 npm run db:push      # push supabase/migrations to the hosted project (reads .env)
 npm run auth:push    # push supabase/config.toml auth settings (preview first: npx supabase config diff --project-ref <ref>)
 npm run env:keys     # write NEXT_PUBLIC_SUPABASE_URL + publishable key into .env
+node --env-file-if-exists=.env scripts/check-research.mjs /path/INDB.xlsx [--write]   # verify data/research/batch-*.json (data.md)
 npm run eval:parse   # NL parsing eval (calls OpenAI, ~$0.01): run after ANY prompt/model/alias change
 npx next typegen     # regenerate route types (needed for LayoutProps/RouteContext, and after deleting a route)
 ```

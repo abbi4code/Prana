@@ -1,0 +1,355 @@
+{
+  "batch": 1,
+  "theme": "Street food & chaat",
+  "generated_on": "2026-09-28",
+  "foods": [
+    {
+      "id": "bhel-puri",
+      "name": "Bhel Puri",
+      "name_hi": "भेल पूरी",
+      "aliases": ["bhel", "bhelpuri", "bhel poori", "mumbai bhel", "sukhi bhel", "geeli bhel"],
+      "category": "snack",
+      "diet": "vegan",
+      "form": "cooked",
+      "per_100g": { "kcal": 509.89, "protein_g": 3.52, "carbs_g": 16.47, "fat_g": 47.91, "fiber_g": 2.24 },
+      "units": [
+        { "unit": "katori", "label": "1 katori (small bowl, loosely filled)", "grams": 50, "basis": "estimated standard household measure" },
+        { "unit": "plate", "label": "1 street plate", "grams": 120, "basis": "estimated standard household measure" }
+      ],
+      "default_unit": "plate",
+      "source": {
+        "id": "INDB",
+        "ref": "OSR114",
+        "url": "https://github.com/lindsayjaacks/Indian-Nutrient-Databank-INDB-/blob/main/INDB.xlsx",
+        "row_name": "Bhel puri "
+      },
+      "confidence": "low",
+      "notes": "DEEP-FRIED. The INDB recipe fries its own maida puris in oil, and the full frying oil is counted, so fat and kcal are far higher than bhel as eaten. INDB serving ('plate', 3,573.64 kcal) is the whole recipe yield, so it isn't used as a unit. Unit weights are estimates.",
+      "image_prompt": "Mumbai-style bhel puri in a paper cone, puffed rice tossed with sev, onion, tomato, coriander and chutneys"
+    },
+    {
+      "id": "paneer-kathi-roll",
+      "name": "Paneer Kathi Roll",
+      "name_hi": "पनीर काठी रोल",
+      "aliases": ["paneer roll", "paneer kathi roll", "paneer kaathi roll", "paneer frankie", "paneer wrap", "kathi roll"],
+      "category": "snack",
+      "diet": "egg",
+      "form": "cooked",
+      "per_100g": { "kcal": 285.94, "protein_g": 6.92, "carbs_g": 20.1, "fat_g": 19.55, "fiber_g": 2.4 },
+      "units": [
+        { "unit": "roll", "label": "1 kathi roll", "grams": 148.34, "basis": "INDB serving size (derived: per-serving kcal / per-100g kcal x 100)" }
+      ],
+      "default_unit": "roll",
+      "source": {
+        "id": "INDB",
+        "ref": "ASC149",
+        "url": "https://github.com/lindsayjaacks/Indian-Nutrient-Databank-INDB-/blob/main/INDB.xlsx",
+        "row_name": "Paneer kaathi roll"
+      },
+      "confidence": "high",
+      "notes": "INDB recipe uses a maida + atta wrap brushed with half a beaten egg, so diet is 'egg'. Street versions often use more oil and sauces.",
+      "image_prompt": "Paneer kathi roll wrapped in paper, flaky paratha with paneer tikka, onion rings and green chutney"
+    },
+    {
+      "id": "bread-pakora",
+      "name": "Bread Pakora",
+      "name_hi": "ब्रेड पकोड़ा",
+      "aliases": ["bread pakoda", "bread pakore", "bread bhajiya", "bread bajji", "bread fritter"],
+      "category": "snack",
+      "diet": "veg",
+      "form": "cooked",
+      "per_100g": { "kcal": 710.99, "protein_g": 2.57, "carbs_g": 8.87, "fat_g": 74.2, "fiber_g": 1.11 },
+      "units": [
+        { "unit": "piece", "label": "1 bread pakora (1 slice, besan-coated)", "grams": 70, "basis": "estimated standard household measure" }
+      ],
+      "default_unit": "piece",
+      "source": {
+        "id": "INDB",
+        "ref": "ASC358",
+        "url": "https://github.com/lindsayjaacks/Indian-Nutrient-Databank-INDB-/blob/main/INDB.xlsx",
+        "row_name": "Bread pakora/pakoda"
+      },
+      "confidence": "low",
+      "notes": "DEEP-FRIED. INDB counts 480 ml frying oil in the recipe, so kcal and fat are heavily over-counted versus what the pakora absorbs. INDB serving ('plate', 4,653.42 kcal) is the whole recipe and isn't used. Piece weight is an estimate; stuffed (aloo) bread pakora will be heavier.",
+      "image_prompt": "Golden bread pakora triangles on a steel plate with green chutney and ketchup"
+    },
+    {
+      "id": "aloo-bonda",
+      "name": "Aloo Bonda (Batata Vada)",
+      "name_hi": "आलू बोंडा / बटाटा वड़ा",
+      "aliases": ["aloo bonda", "batata vada", "batata wada", "potato bonda", "alu bonda", "urulai bonda"],
+      "category": "snack",
+      "diet": "vegan",
+      "form": "cooked",
+      "per_100g": { "kcal": 632.84, "protein_g": 1.09, "carbs_g": 4.53, "fat_g": 67.8, "fiber_g": 0.83 },
+      "units": [
+        { "unit": "piece", "label": "1 bonda / batata vada", "grams": 50, "basis": "estimated standard household measure" }
+      ],
+      "default_unit": "piece",
+      "source": {
+        "id": "INDB",
+        "ref": "ASC360",
+        "url": "https://github.com/lindsayjaacks/Indian-Nutrient-Databank-INDB-/blob/main/INDB.xlsx",
+        "row_name": "Potato bonda (Aloo bonda)"
+      },
+      "confidence": "low",
+      "notes": "DEEP-FRIED. INDB counts 480 ml frying oil, so this over-counts heavily. INDB serving ('bonda', 1,134.09 kcal) implies over 1,000 kcal per piece, so it isn't used; the piece weight is an estimate. This is the vada inside vada pav (pav itself not sourced in this batch).",
+      "image_prompt": "Round golden aloo bondas with a crisp besan coating, served with coconut chutney"
+    },
+    {
+      "id": "spicy-corn-chaat",
+      "name": "Spicy Corn Chaat",
+      "name_hi": "स्पाइसी कॉर्न चाट",
+      "aliases": ["corn chaat", "makai chaat", "bhutte ki chaat", "crispy corn chaat", "masala corn chaat"],
+      "category": "snack",
+      "diet": "veg",
+      "form": "cooked",
+      "per_100g": { "kcal": 479.8, "protein_g": 4.61, "carbs_g": 11.45, "fat_g": 46.55, "fiber_g": 2.17 },
+      "units": [
+        { "unit": "katori", "label": "1 katori", "grams": 100, "basis": "estimated standard household measure" }
+      ],
+      "default_unit": "katori",
+      "source": {
+        "id": "INDB",
+        "ref": "OSR116",
+        "url": "https://github.com/lindsayjaacks/Indian-Nutrient-Databank-INDB-/blob/main/INDB.xlsx",
+        "row_name": "Spicy corn chaat "
+      },
+      "confidence": "low",
+      "notes": "DEEP-FRIED. The INDB recipe coats sweet corn in besan and deep-fries it (2 cups oil counted) plus butter, so this is the crispy-fried corn chaat, not plain boiled corn; for boiled corn cups use 'Masala Sweet Corn'. INDB serving ('plate', 2,659.17 kcal) is the whole recipe.",
+      "image_prompt": "Crispy fried corn chaat in a bowl with onion, tomato, lemon and chaat masala"
+    },
+    {
+      "id": "khakhra-chaat",
+      "name": "Khakhra Chaat",
+      "name_hi": "खाखरा चाट",
+      "aliases": ["khakhra chat", "khakra chaat", "khakhra chaat", "gujarati khakhra chaat"],
+      "category": "snack",
+      "diet": "veg",
+      "form": "cooked",
+      "per_100g": { "kcal": 358.66, "protein_g": 4.52, "carbs_g": 16.64, "fat_g": 30.65, "fiber_g": 3.04 },
+      "units": [
+        { "unit": "plate", "label": "1 plate (2 topped khakhras)", "grams": 100, "basis": "estimated standard household measure" }
+      ],
+      "default_unit": "plate",
+      "source": {
+        "id": "INDB",
+        "ref": "OSR108",
+        "url": "https://github.com/lindsayjaacks/Indian-Nutrient-Databank-INDB-/blob/main/INDB.xlsx",
+        "row_name": "Khakhra chaat"
+      },
+      "confidence": "low",
+      "notes": "DEEP-FRIED. The INDB recipe includes a deep-fried besan component (2 cups oil counted), so kcal is over-counted. INDB serving ('plate', 2,996.46 kcal) is the whole recipe; the plate weight here is an estimate.",
+      "image_prompt": "Crisp wheat khakhras topped with potato, onion, pomegranate, sev and chutneys on a plate"
+    },
+    {
+      "id": "khajoor-chutney",
+      "name": "Dates Chutney (Khajoor Chutney)",
+      "name_hi": "खजूर की चटनी",
+      "aliases": ["khajoor chutney", "khajur ki chutney", "dates chutney", "khajoor imli chutney", "meethi khajoor chutney"],
+      "category": "condiment",
+      "diet": "vegan",
+      "form": "cooked",
+      "per_100g": { "kcal": 103.57, "protein_g": 1.07, "carbs_g": 21.69, "fat_g": 1.12, "fiber_g": 3.41 },
+      "units": [
+        { "unit": "tbsp", "label": "1 tbsp", "grams": 18, "basis": "estimated standard household measure" },
+        { "unit": "tsp", "label": "1 tsp", "grams": 6, "basis": "estimated standard household measure" }
+      ],
+      "default_unit": "tbsp",
+      "source": {
+        "id": "INDB",
+        "ref": "OSR085",
+        "url": "https://github.com/lindsayjaacks/Indian-Nutrient-Databank-INDB-/blob/main/INDB.xlsx",
+        "row_name": "Dates chutney (Khajoor ki chutney)"
+      },
+      "confidence": "medium",
+      "notes": "The sweet chutney used on chaat. INDB recipe has no added sugar (dates only); street versions often add jaggery or sugar. INDB serving ('small bowl', ~264 g) is the recipe yield, so tbsp/tsp are used instead (estimated weights).",
+      "image_prompt": "Glossy dark brown dates chutney in a small steel katori with a spoon"
+    },
+    {
+      "id": "garlic-chutney-poondu",
+      "name": "Garlic Chutney (Poondu)",
+      "name_hi": "लहसुन की चटनी",
+      "aliases": ["poondu chutney", "lahsun ki chutney", "lehsun chutney", "garlic chutney", "vellulli pachadi"],
+      "category": "condiment",
+      "diet": "vegan",
+      "form": "cooked",
+      "per_100g": { "kcal": 255.51, "protein_g": 3.34, "carbs_g": 20.44, "fat_g": 17.55, "fiber_g": 5.15 },
+      "units": [
+        { "unit": "tbsp", "label": "1 tbsp", "grams": 15, "basis": "estimated standard household measure" }
+      ],
+      "default_unit": "tbsp",
+      "source": {
+        "id": "INDB",
+        "ref": "OSR080",
+        "url": "https://github.com/lindsayjaacks/Indian-Nutrient-Databank-INDB-/blob/main/INDB.xlsx",
+        "row_name": "Garlic chutney/Poondu chutney (Lahasun ki chutney)"
+      },
+      "confidence": "medium",
+      "notes": "This is the South Indian wet chutney (garlic, shallots, tamarind, dried red chilli, tempered in oil). It is NOT the dry red lahsun chutney used in vada pav and dabeli, which was not found in the allowed sources. INDB serving ('small bowl', ~79 g) is too large for one person; tbsp is estimated.",
+      "image_prompt": "Deep red South Indian garlic chutney in a small bowl with curry leaves on top"
+    },
+    {
+      "id": "schezwan-chutney",
+      "name": "Schezwan Chutney",
+      "name_hi": "शेज़वान चटनी",
+      "aliases": ["schezwan sauce", "szechuan chutney", "shezwan chutney", "sezwan sauce", "schezwan chutney"],
+      "category": "condiment",
+      "diet": "vegan",
+      "form": "cooked",
+      "per_100g": { "kcal": 205.19, "protein_g": 3.33, "carbs_g": 10.79, "fat_g": 17.72, "fiber_g": 5.72 },
+      "units": [
+        { "unit": "tbsp", "label": "1 tbsp", "grams": 15, "basis": "estimated standard household measure" }
+      ],
+      "default_unit": "tbsp",
+      "source": {
+        "id": "INDB",
+        "ref": "OSR081",
+        "url": "https://github.com/lindsayjaacks/Indian-Nutrient-Databank-INDB-/blob/main/INDB.xlsx",
+        "row_name": "Schezwan chutney"
+      },
+      "confidence": "medium",
+      "notes": "Homemade Indo-Chinese chutney (garlic, ginger, dried chillies, oil, soy, tomato sauce). Bottled brands differ; use their labels when available. INDB serving ('box', 1,553.26 kcal) is the whole jar, so tbsp is estimated. Macro check passes (+5.3%).",
+      "image_prompt": "Bright red schezwan chutney in a small dip bowl next to momos"
+    },
+    {
+      "id": "egg-roll-kolkata",
+      "name": "Egg Roll (Kolkata Style)",
+      "name_hi": "एग रोल",
+      "aliases": ["egg roll", "anda roll", "kolkata egg roll", "egg kathi roll", "egg frankie", "anda paratha roll"],
+      "category": "snack",
+      "diet": "egg",
+      "form": "cooked",
+      "per_100g": { "kcal": 220.39, "protein_g": 7.09, "carbs_g": 13.89, "fat_g": 14.93, "fiber_g": 2.74 },
+      "units": [
+        { "unit": "roll", "label": "1 egg roll (single egg)", "grams": 139.5, "basis": "recipe" }
+      ],
+      "default_unit": "roll",
+      "source": {
+        "id": "DERIVED",
+        "ref": "Egg roll: paratha + fried egg + onion",
+        "url": "https://github.com/lindsayjaacks/Indian-Nutrient-Databank-INDB-/blob/main/INDB.xlsx"
+      },
+      "recipe": {
+        "ingredients": [
+          { "name": "Plain paratha (1 INDB serving)", "grams": 55.75, "source": { "id": "INDB", "ref": "ASC097", "row_name": "Plain parantha/paratha" } },
+          { "name": "Fried egg (1 INDB serving)", "grams": 57.75, "source": { "id": "INDB", "ref": "ASC057", "row_name": "Fried Egg" } },
+          { "name": "Onion, raw", "grams": 20, "source": { "id": "IFCT2017", "ref": "G017", "row_name": "Onion, big" } },
+          { "name": "Lemon juice", "grams": 3, "source": { "id": "IFCT2017", "ref": "E033", "row_name": "Lemon, juice" } },
+          { "name": "Green chilli", "grams": 3, "source": { "id": "IFCT2017", "ref": "G008", "row_name": "Chillies, green - all varieties" } }
+        ],
+        "cooked_weight_g": 139.5,
+        "cooked_weight_basis": "sum of parts; paratha and egg are already-cooked INDB servings, garnish added raw",
+        "method": "paratha with a fried egg on one side, topped with raw onion, green chilli and lemon, rolled"
+      },
+      "confidence": "low",
+      "notes": "Garnish quantities are assumed. Street rolls in Kolkata often use a flakier maida paratha fried in more oil plus sauce, so they run higher. IFCT energy converted as kcal = kJ / 4.184.",
+      "image_prompt": "Kolkata egg roll in butter paper, paratha with egg layer, onion, green chilli and lemon"
+    },
+    {
+      "id": "kala-chana-chaat",
+      "name": "Kala Chana Chaat",
+      "name_hi": "काले चने की चाट",
+      "aliases": ["chana chaat", "kala chana chaat", "black chana chaat", "chane ki chaat", "boiled chana chaat", "chana chat"],
+      "category": "snack",
+      "diet": "vegan",
+      "form": "cooked",
+      "per_100g": { "kcal": 101.25, "protein_g": 6.25, "carbs_g": 14.17, "fat_g": 1.78, "fiber_g": 8.61 },
+      "units": [
+        { "unit": "katori", "label": "1 katori", "grams": 100, "basis": "estimated standard household measure" },
+        { "unit": "plate", "label": "1 plate", "grams": 150, "basis": "estimated standard household measure" }
+      ],
+      "default_unit": "katori",
+      "source": {
+        "id": "DERIVED",
+        "ref": "Kala chana chaat (boiled black chana, onion, tomato, lemon)",
+        "url": "https://www.npmjs.com/package/@ifct2017/compositions"
+      },
+      "recipe": {
+        "ingredients": [
+          { "name": "Black chana (whole Bengal gram), dry", "grams": 60, "source": { "id": "IFCT2017", "ref": "B002", "row_name": "Bengal gram, whole" } },
+          { "name": "Onion, raw", "grams": 25, "source": { "id": "IFCT2017", "ref": "G017", "row_name": "Onion, big" } },
+          { "name": "Tomato, raw", "grams": 25, "source": { "id": "IFCT2017", "ref": "D075", "row_name": "Tomato, ripe, hybrid" } },
+          { "name": "Lemon juice", "grams": 5, "source": { "id": "IFCT2017", "ref": "E033", "row_name": "Lemon, juice" } },
+          { "name": "Green chilli", "grams": 3, "source": { "id": "IFCT2017", "ref": "G008", "row_name": "Chillies, green - all varieties" } },
+          { "name": "Coriander leaves", "grams": 3, "source": { "id": "IFCT2017", "ref": "G009", "row_name": "Coriander leaves" } },
+          { "name": "Chaat masala", "grams": 2, "source": { "id": "INDB", "ref": "BFP002", "row_name": "Chat masala" } }
+        ],
+        "cooked_weight_g": 195,
+        "cooked_weight_basis": "assumed: 60 g dry chana taken as 132 g after soaking and boiling (x2.2), plus raw toppings",
+        "method": "soaked and boiled black chana tossed with chopped onion, tomato, chilli, coriander, lemon and chaat masala"
+      },
+      "confidence": "low",
+      "notes": "IFCT has no kabuli (white) chickpea row, so this uses black chana; kabuli chana chaat will be similar but not identical. Boiled yield is an assumption. IFCT energy converted as kcal = kJ / 4.184.",
+      "image_prompt": "Bowl of kala chana chaat with onion, tomato, green chilli, coriander and a lemon wedge"
+    },
+    {
+      "id": "masala-sweet-corn",
+      "name": "Masala Sweet Corn (Corn Cup)",
+      "name_hi": "मसाला स्वीट कॉर्न",
+      "aliases": ["corn cup", "sweet corn cup", "masala corn", "butter corn", "bhutta cup", "boiled corn chaat"],
+      "category": "snack",
+      "diet": "vegan",
+      "form": "cooked",
+      "per_100g": { "kcal": 96.33, "protein_g": 4.06, "carbs_g": 15.79, "fat_g": 1.48, "fiber_g": 3.43 },
+      "units": [
+        { "unit": "cup", "label": "1 small corn cup", "grams": 100, "basis": "estimated standard household measure" },
+        { "unit": "katori", "label": "1 katori", "grams": 120, "basis": "estimated standard household measure" }
+      ],
+      "default_unit": "cup",
+      "source": {
+        "id": "DERIVED",
+        "ref": "Steamed sweet corn with lemon and chaat masala",
+        "url": "https://www.npmjs.com/package/@ifct2017/compositions"
+      },
+      "recipe": {
+        "ingredients": [
+          { "name": "Sweet corn kernels", "grams": 100, "source": { "id": "IFCT2017", "ref": "A008", "row_name": "Maize, tender, sweet" } },
+          { "name": "Lemon juice", "grams": 5, "source": { "id": "IFCT2017", "ref": "E033", "row_name": "Lemon, juice" } },
+          { "name": "Chaat masala", "grams": 2, "source": { "id": "INDB", "ref": "BFP002", "row_name": "Chat masala" } }
+        ],
+        "cooked_weight_g": 107,
+        "cooked_weight_basis": "assumed: steamed corn kernels taken as unchanged in weight",
+        "method": "steamed sweet corn kernels tossed with lemon juice and chaat masala"
+      },
+      "confidence": "low",
+      "notes": "WITHOUT butter. Mall and street corn cups usually add butter (roughly 5 to 10 g), which is not included here; log butter separately. IFCT energy converted as kcal = kJ / 4.184.",
+      "image_prompt": "Paper cup of steamed sweet corn kernels with lemon and chaat masala and a small spoon"
+    }
+  ],
+  "not_found": [
+    { "dish": "Pani Puri / Golgappa", "reason": "No INDB or IFCT row. The only fried-shell rows in INDB (Papdi OSR148, Poori ASC107) count the full frying oil, so they can't stand in for golgappa shells. USDA FoodData Central could not be opened from my research environment (API and food-detail pages not reachable), so no measured value was available.", "searched": ["INDB.xlsx (all 1,014 rows by name)", "IFCT 2017 (@ifct2017/compositions)", "USDA FDC (not reachable)"] },
+    { "dish": "Sev Puri", "reason": "Same as pani puri: needs a measured value for papdi and sev; INDB Papdi (OSR148) and Sev (OSR147) both count full frying oil. USDA not reachable.", "searched": ["INDB.xlsx", "IFCT 2017", "USDA FDC (not reachable)"] },
+    { "dish": "Dahi Puri", "reason": "No INDB/IFCT row; would need a measured puri shell plus curd. USDA (curd and shells) not reachable.", "searched": ["INDB.xlsx", "IFCT 2017", "USDA FDC (not reachable)"] },
+    { "dish": "Papdi Chaat", "reason": "Could be DERIVED from INDB Papdi (OSR148), but that row counts 2 cups of frying oil (709 kcal/100 g), so the chaat would inherit a large over-count. Held back until a measured papdi value exists.", "searched": ["INDB.xlsx", "IFCT 2017", "USDA FDC (not reachable)"] },
+    { "dish": "Aloo Tikki and Tikki Chaat", "reason": "No aloo tikki row in INDB (only Soyabean tikki ASC457 and deep-fried cutlets). Pan-fried oil quantity for a derived version would be a nutrient assumption, which isn't allowed. USDA not reachable.", "searched": ["INDB.xlsx", "IFCT 2017", "USDA FDC (not reachable)"] },
+    { "dish": "Ragda Pattice", "reason": "No INDB row for ragda or pattice; IFCT has dry white peas (B017) but pattice needs a shallow-fry oil figure that isn't sourced.", "searched": ["INDB.xlsx", "IFCT 2017"] },
+    { "dish": "Samosa Chaat", "reason": "Could be DERIVED from the existing Potato Samosa (ASC361) + Chickpea Curry (ASC162), but the samosa row counts full frying oil (577 kcal/100 g); the chaat would inherit the over-count. Held back until a measured samosa exists (e.g. from a brand label in batch 12).", "searched": ["INDB.xlsx", "existing foods list"] },
+    { "dish": "Kachori Chaat / Raj Kachori", "reason": "Would be built on existing Khasta Kachori (ASC365, 713 kcal/100 g, full frying oil counted). Raj kachori has no row at all.", "searched": ["INDB.xlsx", "existing foods list"] },
+    { "dish": "Jhalmuri", "reason": "Could be DERIVED from IFCT puffed rice (A012), groundnut (H012), onion, tomato and mustard oil, but the IFCT 2017 package lists mustard oil (T006) with 0 kJ energy (a data gap), so a derived value would under-count. Not built rather than estimating the oil energy.", "searched": ["IFCT 2017 (@ifct2017/compositions)", "INDB.xlsx"] },
+    { "dish": "Vada Pav", "reason": "Vada is available (Aloo Bonda ASC360, deep-fried over-count) but pav/bread roll has no INDB/IFCT row and USDA was not reachable. Dry lahsun chutney also not found.", "searched": ["INDB.xlsx", "IFCT 2017", "USDA FDC (not reachable)"] },
+    { "dish": "Pav (plain)", "reason": "No INDB or IFCT row for pav / soft bread roll; USDA FDC not reachable.", "searched": ["INDB.xlsx", "IFCT 2017", "USDA FDC (not reachable)"] },
+    { "dish": "Dabeli", "reason": "No INDB row; needs pav (not sourced) and a dabeli masala filling.", "searched": ["INDB.xlsx", "IFCT 2017"] },
+    { "dish": "Misal Pav", "reason": "No INDB row for misal or usal (only Whole moth dal ASC158); pav not sourced; farsan topping is deep-fried.", "searched": ["INDB.xlsx", "IFCT 2017"] },
+    { "dish": "Chicken Kathi Roll / Chicken Frankie", "reason": "INDB has no chicken tikka row to build the filling from (only Chicken kebab ASC243, deep-fried with full oil). USDA not reachable.", "searched": ["INDB.xlsx", "USDA FDC (not reachable)"] },
+    { "dish": "Veg (aloo) Frankie", "reason": "No INDB row; only Paneer kaathi roll exists (added above).", "searched": ["INDB.xlsx"] },
+    { "dish": "Momos (veg / chicken; steamed / fried)", "reason": "No INDB or IFCT row. USDA FNDDS has steamed and fried dumpling foods (e.g. food code 58112510 'Dumpling, steamed, filled with meat, poultry, or seafood'), but FDC could not be opened from my environment, so no fdcId values were read.", "searched": ["INDB.xlsx", "IFCT 2017", "USDA FDC (not reachable)"] },
+    { "dish": "Chowmein variants (egg chowmein, hakka noodles)", "reason": "INDB only has Vegetable chowmein (ASC134) and Chicken chowmein (ASC135), which already exist. No egg or hakka variant row.", "searched": ["INDB.xlsx"] },
+    { "dish": "Chole Kulche", "reason": "No kulcha row in INDB or IFCT; USDA not reachable.", "searched": ["INDB.xlsx", "IFCT 2017", "USDA FDC (not reachable)"] },
+    { "dish": "Chole Bhature plate", "reason": "Could be DERIVED from existing Bhatura (ASC143) + Chickpea Curry (ASC162), but the bhatura row counts full frying oil (793 kcal/100 g, 82.6 g fat), so the plate would be badly over-counted. Held back until a measured bhatura value exists.", "searched": ["INDB.xlsx", "existing foods list"] }
+  ],
+  "alias_suggestions": {
+    "Chickpea Curry": ["chole", "chhole", "pindi chole", "safed chana curry", "chana curry"],
+    "Vegetable Chowmein": ["veg chowmein", "veg noodles", "hakka noodles", "chowmin"],
+    "Chicken Chowmein": ["chicken noodles", "chicken hakka noodles", "chicken chowmin"],
+    "Potato Samosa": ["samosa", "aloo samosa", "samose", "singara"],
+    "Khasta Kachori": ["kachori", "khasta", "dal kachori", "moong dal kachori"],
+    "Dahi Vada": ["dahi bhalla", "dahi bhalle", "dahi bade", "dahi wada"],
+    "Pav Bhaji": ["pao bhaji", "bhaji pav", "pav bhajji"],
+    "Sprouted Moong Chat": ["sprouts chaat", "moong chaat", "ankurit moong chaat"],
+    "Saunth / Imli Chutney": ["meethi chutney", "imli ki chutney", "sonth", "saunth chutney"],
+    "Mint Coriander Chutney": ["hari chutney", "green chutney", "dhaniya pudina chutney"],
+    "Pyaaz ke Pakode": ["onion bhajiya", "kanda bhaji", "onion pakoda"],
+    "Aloo Pakora": ["aloo bhajiya", "batata bhaji", "aloo bajji"]
+  }
+}

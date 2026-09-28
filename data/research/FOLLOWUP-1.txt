@@ -1,0 +1,23 @@
+Batch 1 checked against the sources: every INDB number you gave matched the spreadsheet exactly and every recipe recomputed correctly. Thank you. 7 foods were accepted. Four rule changes before you continue (they replace the earlier rules where they differ):
+
+1. **USDA when FDC won't open for you:** still include the food. Use "source": { "id": "USDA", "ref": "search: <the exact FoodData Central description>" } and "per_100g": null. Example descriptions: "Potato, french fries, from fresh, fried", "Ice cream, vanilla". We fetch the numbers ourselves and match the description exactly (FNDDS, SR Legacy, Foundation). A slightly wrong description isn't a problem: we get the closest names back. Only for things INDB or IFCT don't have.
+
+2. **Deep-fried foods: never send the INDB row** (it counts the whole pan of oil: bread pakora 711 kcal/100 g). Send them as DERIVED with a "frying" block:
+   - ingredients = the dough / batter / filling BEFORE frying, each from INDB / IFCT / USDA, no frying oil;
+   - "frying": { "fat_pct": <number>, "fat_basis": "dry" | "as_eaten", "fat_source": { "url": "...", "table": "<table, row, frying cycle, or the proxy food used>" }, "moisture_pct": <number>, "moisture_source": { "url": "...", "table": "..." } or "assumed" };
+   - fat_pct comes from a measurement of that kind of fried food (peer-reviewed or NIN/ICMR). Anchor study: Jain, Passi & Selvamurthy, J Food Sci Technol 2024, https://pmc.ncbi.nlm.nih.gov/articles/PMC11465016/ (poori, bread pakora, french fries, potato chips, mathri; total fat on DRY weight at the 1st, 16th and 32nd frying cycle). Read the values from its tables yourself;
+   - use the 1st-cycle (fresh oil) value for home-made food and the 32nd-cycle (reused oil) value for street/shop food, and say which in notes;
+   - no measurement for that food? Use the closest measured food of the same type (wheat dough → poori or mathri; besan batter → bread pakora; potato → fries or chips) and name the proxy in notes;
+   - moisture_pct = water in the fried food as eaten, from a study (the same paper reports some); if none, give your best figure with moisture_source "assumed";
+   - per_100g: null (we compute: fat as eaten = fat_pct × (1 − moisture) on dry basis; protein/carbs/fiber fill the rest of the dry matter in the dough's proportions). cooked_weight_g can be omitted. confidence "low"; notes start with "Fried (absorbed-oil model). ".
+
+3. **IFCT oils and ghee** show 0 kJ in the npm package: use them anyway, energy = 9 kcal per g of fat. (Jhalmuri with mustard oil is fine now.)
+
+4. **Recipe quantities** (oil to shallow-fry a tikki, garnish, water) may come from a standard recipe: say which, or "assumed", confidence "low". Only the nutrient values per ingredient must be sourced. (Aloo tikki, ragda pattice etc. are fine now.)
+
+Now redo batch 1 as **batch "1b"**, covering ONLY:
+- every dish in your batch 1 not_found list (pani puri, sev puri, dahi puri, papdi chaat, aloo tikki + tikki chaat, ragda pattice, samosa chaat, kachori chaat / raj kachori, jhalmuri, vada pav, pav, dabeli, misal pav, chicken kathi roll, veg frankie, momos (veg/chicken, steamed/fried), chowmein variants, chole kulche, chole bhature plate), and
+- the 5 deep-fried ones I couldn't accept: bhel puri, bread pakora, aloo bonda / batata vada, spicy corn chaat, khakhra chaat.
+For fried parts inside a combo (golgappa shells, the vada in vada pav, bhatura in chole bhature, papdi, sev), build the fried part with the frying model first as its own food, then use it in the combo.
+
+Same output format, with "batch": "1b". After that I'll say "next" for batch 2.

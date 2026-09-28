@@ -7,7 +7,7 @@
 | ~~Q1~~ | ~~App name?~~ | **Resolved 2026-09-24: "Prana"** (D19) |
 | Q2 | Sign off "Modern Masala" visual identity (D08)? | Owner likes it but wants it pushed further ("good, not best yet"); keep polishing |
 | ~~Q3~~ | ~~Meal slots~~ | In daily use, no objections (D10) |
-| Q4 | How to handle fried foods (samosa, puri, pakora, jalebi, namkeen)? | INDB counts the *full* frying oil, not the absorbed amount. For now the app shows them with "~" and a "high estimate" note (D16). Options for a real fix: (a) use INDB value with a documented absorbed-oil adjustment, flagged `low`; (b) find a published absorbed-oil study; (c) manufacturer label for packaged namkeen. |
+| ~~Q4~~ | ~~How to handle fried foods (samosa, puri, pakora, jalebi, namkeen)?~~ | INDB counts the *full* frying oil, not the absorbed amount. For now the app shows them with "~" and a "high estimate" note (D16). Options for a real fix: (a) use INDB value with a documented absorbed-oil adjustment, flagged `low`; (b) find a published absorbed-oil study; (c) manufacturer label for packaged namkeen. | **Resolved 2026-09-28: D52 (absorbed-oil model).**
 | Q5 | Food images: AI-generated illustrations vs photos? | D11 proposes illustrations |
 | ~~Q6~~ | ~~Chai value~~ | **Resolved:** derived chai (80 g milk + 8 g sugar per 150 ml cup = 89 kcal) + no-sugar variant (D22) |
 | ~~Q7~~ | ~~Missing basics~~ | **Resolved:** USDA values for dahi/sugar/honey/butter/bread/cheese/cola (D22); packaged items (toned milk, Parle-G…) via custom foods (D21) |
@@ -18,7 +18,7 @@
 |---|---|
 | **Home vs restaurant toggle** | Restaurant/dhaba food ≈ 1.5–2× the oil; biggest source of hidden calories |
 | **Hidden-calorie chips** | "+ ghee on roti", "+ tadka", "+ sugar in chai" on the food detail |
-| **Fried-food fix** (Q4) | Replace "~ high estimate" with a sourced absorbed-oil adjustment |
+| **Rebuild existing fried rows with D52** | done: bhatura, samosa (potato), kachori (khasta). Left: veg samosa, matar kachori, aloo + onion pakora, poori, medu vada, dahi vada, gulab jamun, besan kadhi pakodi, fried fish: send them through `recipe.frying` and drop the INDB rows (old logs keep their snapshots) |
 | NL logging follow-ups | Real-phone voice test (Android + iPhone); prune `parse_cache` / `parse_usage` (pg_cron); grow `evals/nl-parse.jsonl` from real corrections; maybe server STT later (nl-logging.md) |
 | Thali photo logging | Photo → items + katori counts (Claude vision) |
 | Weekly Wrapped, calorie bank, festival/shaadi mode, fasting mode | Engagement features from the roadmap (features.md v2) |
@@ -84,3 +84,6 @@
 | 2026-09-27 | Akhada part 2 (D48, D49): weekly duels, lazy result settling (frozen places + notifications), Akhada badges in Awards, result share cards, Shabaash kudos + nudges with opt-out. Migration `…120000_duels_results_kudos` **not pushed yet** |
 | 2026-09-27 | Local saving (D50): checked the localStorage limits (measured: ~5.24 M characters; typical user ~1.4 M a year; one save 2–51 ms), batched writes, failed saves caught + shown, storage.persist(), iPhone guest hint. IndexedDB move planned |
 | 2026-09-27 | Admin panel (D51, admin.md): `/admin` + member pages, service-role `admin_*` functions, `admin_audit` access log, report resolving, CSV/JSON export; `ADMIN_EMAILS` server env; `useTokens` gained jamun + brass. Migration `…130000_admin` **not pushed yet**. SQL tested on PGlite, UI in Chrome (phone + desktop, both themes) |
+| 2026-09-28 | Food research prompt for browser Claude (data.md "Adding foods at scale"): 12 themed batches, sources INDB → IFCT → USDA (incl. FNDDS) → official labels/chains → DERIVED recipes, exact refs so every number is re-read before import; returns go in `data/research/batch-N.json` |
+| 2026-09-28 | Food research round 1: `scripts/check-research.mjs` (re-reads INDB / IFCT / USDA, recomputes DERIVED, D52 fried model, USDA `search:` refs), `data/foods-research.json` in the build, batch 1 → 7 foods + 12 alias sets, chole renamed; D52 fried-food model (Q4 resolved). Eval 84/84. Catalog 283 foods |
+| 2026-09-28 | Food research batch 1b: 34 street foods (pani puri, chaats, bhel, tikki, rolls, chole bhature…) through the D52 fried model; bhatura / samosa / kachori replaced in place (577 → 321 kcal/100 g for samosa); USDA cache; FOOD refs for combos. Catalog 307. Eval 84/84 |

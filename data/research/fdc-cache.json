@@ -1,0 +1,37 @@
+{
+ "foods": {
+  "746784": {
+   "name": "Sugars, granulated",
+   "dataType": "Foundation",
+   "kcal": 385,
+   "p": 0,
+   "c": 99.6,
+   "f": 0.32,
+   "fib": null,
+   "portions": [
+    "1 teaspoon = 4 g",
+    "1 cup = 188 g",
+    "1 RACC = 8 g"
+   ],
+   "fetched": "2026-09-28"
+  },
+  "2259793": {
+   "name": "Yogurt, plain, whole milk",
+   "dataType": "Foundation",
+   "kcal": 77.3185458,
+   "p": 3.824172,
+   "c": 5.574928,
+   "f": 4.484,
+   "fib": null,
+   "portions": [
+    "1 RACC = 170 g"
+   ],
+   "fetched": "2026-09-28"
+  }
+ },
+ "search": {
+  "Yogurt, plain, whole milk": 2259793,
+  "Sugars, granulated": 746784,
+  "Rolls, dinner, plain, commercially prepared (includes brown-and-serve)": 172793
+ }
+}
