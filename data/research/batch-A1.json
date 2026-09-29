@@ -1,0 +1,864 @@
+{
+ "batch": "A1",
+ "theme": "Beer",
+ "generated_on": "2026-09-29",
+ "foods": [
+  {
+   "id": "bira-91-white",
+   "name": "Bira 91 White",
+   "name_hi": "बीरा 91 व्हाइट",
+   "aliases": [
+    "bira white",
+    "bira",
+    "bira 91",
+    "bira wheat beer",
+    "beera white",
+    "bira91 white"
+   ],
+   "category": "alcohol",
+   "diet": "vegan",
+   "form": "beverage",
+   "drink": {
+    "type": "beer",
+    "style": "wheat (Belgian-style witbier)",
+    "brand": "Bira 91",
+    "maker": "B9 Beverages Pvt. Ltd.",
+    "made_in": "India",
+    "abv_pct": 4.7,
+    "abv_source": {
+     "url": "https://bira91.com/beer-details-white",
+     "text": "ABV 4.7%"
+    },
+    "stated_nutrition": null
+   },
+   "per_100g": {
+    "kcal": null,
+    "protein_g": null,
+    "carbs_g": null,
+    "fat_g": null,
+    "fiber_g": null,
+    "alcohol_g": 3.71,
+    "sugars_g": null
+   },
+   "units": [
+    {
+     "unit": "bottle_650",
+     "label": "1 bottle (650 ml)",
+     "grams": 650,
+     "basis": "brand site"
+    },
+    {
+     "unit": "bottle_330",
+     "label": "1 bottle (330 ml)",
+     "grams": 330,
+     "basis": "brand site"
+    },
+    {
+     "unit": "can_500",
+     "label": "1 can (500 ml)",
+     "grams": 500,
+     "basis": "brand site"
+    }
+   ],
+   "default_unit": "bottle_650",
+   "source": {
+    "id": "USDA",
+    "ref": "search: Alcoholic beverage, beer, regular, all",
+    "url": "https://fdc.nal.usda.gov/",
+    "row_name": "Alcoholic beverage, beer, regular, all"
+   },
+   "confidence": "medium",
+   "notes": "ABV and pack sizes (draft, 500 ml can, 330 and 650 ml bottles) from the Bira 91 India product page. Bira publishes no nutrition, so protein/carbs/sugars come from the USDA regular-beer style row (to be fetched); a cloudy wheat beer may carry slightly more carbs. Ingredients listed: wheat, barley malt, oats, hops, orange peel, coriander.",
+   "image_prompt": "Cloudy pale-gold wheat beer in a tall glass with a thick white head and an orange slice"
+  },
+  {
+   "id": "bira-91-blonde",
+   "name": "Bira 91 Blonde",
+   "name_hi": "बीरा 91 ब्लॉन्ड",
+   "aliases": [
+    "bira blonde",
+    "bira lager",
+    "bira 91 blonde",
+    "bira summer lager",
+    "beera blonde"
+   ],
+   "category": "alcohol",
+   "diet": "vegan",
+   "form": "beverage",
+   "drink": {
+    "type": "beer",
+    "style": "lager",
+    "brand": "Bira 91",
+    "maker": "B9 Beverages Pvt. Ltd.",
+    "made_in": "India",
+    "abv_pct": 4.5,
+    "abv_source": {
+     "url": "https://bira91.com/beer-details-blonde",
+     "text": "ABV 4.5%"
+    },
+    "stated_nutrition": null
+   },
+   "per_100g": {
+    "kcal": null,
+    "protein_g": null,
+    "carbs_g": null,
+    "fat_g": null,
+    "fiber_g": null,
+    "alcohol_g": 3.55,
+    "sugars_g": null
+   },
+   "units": [
+    {
+     "unit": "bottle_650",
+     "label": "1 bottle (650 ml)",
+     "grams": 650,
+     "basis": "brand site"
+    },
+    {
+     "unit": "bottle_330",
+     "label": "1 bottle (330 ml)",
+     "grams": 330,
+     "basis": "brand site"
+    },
+    {
+     "unit": "can_500",
+     "label": "1 can (500 ml)",
+     "grams": 500,
+     "basis": "brand site"
+    }
+   ],
+   "default_unit": "bottle_650",
+   "source": {
+    "id": "USDA",
+    "ref": "search: Alcoholic beverage, beer, regular, all",
+    "url": "https://fdc.nal.usda.gov/",
+    "row_name": "Alcoholic beverage, beer, regular, all"
+   },
+   "confidence": "medium",
+   "notes": "ABV and packs from the Bira 91 India page ('Blonde Summer Lager'). Older sources quote 4.9% for Blonde; the current brand page says 4.5%. Carbs etc. from the USDA regular-beer style row.",
+   "image_prompt": "Clear golden lager in a pint glass with a white head"
+  },
+  {
+   "id": "bira-91-boom-classic",
+   "name": "Bira 91 Boom Classic",
+   "name_hi": "बीरा 91 बूम क्लासिक",
+   "aliases": [
+    "boom classic",
+    "bira boom",
+    "boom beer",
+    "boom pilsner",
+    "bira boom classic"
+   ],
+   "category": "alcohol",
+   "diet": "vegan",
+   "form": "beverage",
+   "drink": {
+    "type": "beer",
+    "style": "pilsner",
+    "brand": "Bira 91 Boom",
+    "maker": "B9 Beverages Pvt. Ltd.",
+    "made_in": "India",
+    "abv_pct": 4.2,
+    "abv_source": {
+     "url": "https://bira91.com/beer-details-boom",
+     "text": "ABV 4.2% (spec field); the same page's description says 'this 4.5% abv beer'"
+    },
+    "stated_nutrition": null
+   },
+   "per_100g": {
+    "kcal": null,
+    "protein_g": null,
+    "carbs_g": null,
+    "fat_g": null,
+    "fiber_g": null,
+    "alcohol_g": 3.31,
+    "sugars_g": null
+   },
+   "units": [
+    {
+     "unit": "bottle_650",
+     "label": "1 bottle (650 ml)",
+     "grams": 650,
+     "basis": "brand site"
+    },
+    {
+     "unit": "bottle_330",
+     "label": "1 bottle (330 ml)",
+     "grams": 330,
+     "basis": "brand site"
+    },
+    {
+     "unit": "can_500",
+     "label": "1 can (500 ml)",
+     "grams": 500,
+     "basis": "brand site"
+    }
+   ],
+   "default_unit": "bottle_650",
+   "source": {
+    "id": "USDA",
+    "ref": "search: Alcoholic beverage, beer, regular, all",
+    "url": "https://fdc.nal.usda.gov/",
+    "row_name": "Alcoholic beverage, beer, regular, all"
+   },
+   "confidence": "low",
+   "notes": "The brand page contradicts itself: ABV field 4.2%, description 4.5%. The spec field is used; check a physical label. Carbs etc. from the USDA regular-beer style row.",
+   "image_prompt": "Sparkling clear pilsner in a tall glass"
+  },
+  {
+   "id": "bira-91-boom-super-strong",
+   "name": "Bira 91 Boom Super Strong",
+   "name_hi": "बीरा 91 बूम सुपर स्ट्रॉन्ग",
+   "aliases": [
+    "boom strong",
+    "boom super strong",
+    "bira strong",
+    "bira boom strong",
+    "boom beer strong"
+   ],
+   "category": "alcohol",
+   "diet": "vegan",
+   "form": "beverage",
+   "drink": {
+    "type": "beer",
+    "style": "strong lager (Munich-style malty)",
+    "brand": "Bira 91 Boom",
+    "maker": "B9 Beverages Pvt. Ltd.",
+    "made_in": "India",
+    "abv_pct": 8,
+    "abv_source": {
+     "url": "https://bira91.com/beer-details-boom-strong",
+     "text": "ABV <8% — 8 used as the stated ceiling"
+    },
+    "stated_nutrition": null
+   },
+   "per_100g": {
+    "kcal": null,
+    "protein_g": null,
+    "carbs_g": null,
+    "fat_g": null,
+    "fiber_g": null,
+    "alcohol_g": 6.31,
+    "sugars_g": null
+   },
+   "units": [
+    {
+     "unit": "bottle_650",
+     "label": "1 bottle (650 ml)",
+     "grams": 650,
+     "basis": "brand site"
+    },
+    {
+     "unit": "bottle_330",
+     "label": "1 bottle (330 ml)",
+     "grams": 330,
+     "basis": "brand site"
+    },
+    {
+     "unit": "can_500",
+     "label": "1 can (500 ml)",
+     "grams": 500,
+     "basis": "brand site"
+    }
+   ],
+   "default_unit": "bottle_650",
+   "source": {
+    "id": "USDA",
+    "ref": "search: Alcoholic beverage, beer, regular, all",
+    "url": "https://fdc.nal.usda.gov/",
+    "row_name": "Alcoholic beverage, beer, regular, all"
+   },
+   "confidence": "low",
+   "notes": "Brand page gives only '<8%' (the Indian strong-beer ceiling); 8 is an upper bound, so alcohol may be slightly over-counted. USDA has no strong-lager row; the regular-beer row likely under-counts residual carbs of a malty strong lager.",
+   "image_prompt": "Deep golden strong lager in a mug"
+  },
+  {
+   "id": "bira-91-plus-super-strong",
+   "name": "Bira 91 Plus Super Strong",
+   "name_hi": "बीरा 91 प्लस सुपर स्ट्रॉन्ग",
+   "aliases": [
+    "bira plus",
+    "bira 91 plus",
+    "bira super strong",
+    "plus super strong",
+    "bira strong lager"
+   ],
+   "category": "alcohol",
+   "diet": "vegan",
+   "form": "beverage",
+   "drink": {
+    "type": "beer",
+    "style": "strong lager",
+    "brand": "Bira 91",
+    "maker": "B9 Beverages Pvt. Ltd.",
+    "made_in": "India",
+    "abv_pct": 8,
+    "abv_source": {
+     "url": "https://bira91.com/beer_details_plus_super_strong",
+     "text": "'at a full-strength 8% ABV' (description); spec field 'ABV < 8%'"
+    },
+    "stated_nutrition": null
+   },
+   "per_100g": {
+    "kcal": null,
+    "protein_g": null,
+    "carbs_g": null,
+    "fat_g": null,
+    "fiber_g": null,
+    "alcohol_g": 6.31,
+    "sugars_g": null
+   },
+   "units": [
+    {
+     "unit": "bottle_650",
+     "label": "1 bottle (650 ml)",
+     "grams": 650,
+     "basis": "brand site"
+    },
+    {
+     "unit": "can_500",
+     "label": "1 can (500 ml)",
+     "grams": 500,
+     "basis": "brand site"
+    }
+   ],
+   "default_unit": "bottle_650",
+   "source": {
+    "id": "USDA",
+    "ref": "search: Alcoholic beverage, beer, regular, all",
+    "url": "https://fdc.nal.usda.gov/",
+    "row_name": "Alcoholic beverage, beer, regular, all"
+   },
+   "confidence": "medium",
+   "notes": "Brand page states 8% in text and '<8%' in the spec box; 8% used. Packs per brand page: 500 ml cans and 650 ml bottles only. Carbs from the USDA regular-beer row (likely under-counts a strong lager).",
+   "image_prompt": "Amber-gold strong lager in a glass beside a 650 ml bottle, no labels"
+  },
+  {
+   "id": "godfather-super-8",
+   "name": "Godfather Super 8",
+   "name_hi": "गॉडफ़ादर सुपर 8",
+   "aliases": [
+    "godfather",
+    "godfather super 8",
+    "godfather strong",
+    "super 8 beer",
+    "godfather beer",
+    "gf super 8"
+   ],
+   "category": "alcohol",
+   "diet": "vegan",
+   "form": "beverage",
+   "drink": {
+    "type": "beer",
+    "style": "strong lager",
+    "brand": "Godfather",
+    "maker": "DeVANS Modern Breweries Ltd.",
+    "made_in": "India",
+    "abv_pct": 8,
+    "abv_source": {
+     "url": "https://godfatherbeer.com/our-beer/",
+     "text": "GodfatheR sUPER 8 … ABV 8% | IBU 60 | OG 1.104 (also 'Super 8 - At 8% ABV' on https://devans.co.in/)"
+    },
+    "stated_nutrition": null
+   },
+   "per_100g": {
+    "kcal": null,
+    "protein_g": null,
+    "carbs_g": null,
+    "fat_g": null,
+    "fiber_g": null,
+    "alcohol_g": 6.31,
+    "sugars_g": null
+   },
+   "units": [
+    {
+     "unit": "bottle_650",
+     "label": "1 bottle (650 ml)",
+     "grams": 650,
+     "basis": "standard Indian pour"
+    },
+    {
+     "unit": "can_500",
+     "label": "1 can (500 ml)",
+     "grams": 500,
+     "basis": "standard Indian pour"
+    }
+   ],
+   "default_unit": "bottle_650",
+   "source": {
+    "id": "USDA",
+    "ref": "search: Alcoholic beverage, beer, regular, all",
+    "url": "https://fdc.nal.usda.gov/",
+    "row_name": "Alcoholic beverage, beer, regular, all"
+   },
+   "confidence": "medium",
+   "notes": "ABV from the brand and parent-company sites. Pack sizes are NOT stated on either site (only a can image), so 650 ml bottle / 500 ml can are the common Indian beer packs, not a confirmed listing — verify against a label or excise list. Ingredients per brand site: water, wheat malt, hop, yeast, enzyme. Carbs from the USDA regular-beer row (likely under-counts; OG 1.104 suggests a high-gravity brew).",
+   "image_prompt": "Strong lager in a tall can and glass, no logos"
+  },
+  {
+   "id": "godfather-legendary",
+   "name": "Godfather Legendary",
+   "name_hi": "गॉडफ़ादर लेजेंडरी",
+   "aliases": [
+    "godfather legendary",
+    "godfather strong lager",
+    "gf legendary",
+    "legendary beer"
+   ],
+   "category": "alcohol",
+   "diet": "vegan",
+   "form": "beverage",
+   "drink": {
+    "type": "beer",
+    "style": "strong lager",
+    "brand": "Godfather",
+    "maker": "DeVANS Modern Breweries Ltd.",
+    "made_in": "India",
+    "abv_pct": 7.2,
+    "abv_source": {
+     "url": "https://godfatherbeer.com/our-beer/",
+     "text": "GodfatheR lEGENDARY … ABV 7.2% | IBU 60 | OG 1.104 (also 'Legendary - With 7.2% ABV' on https://devans.co.in/)"
+    },
+    "stated_nutrition": null
+   },
+   "per_100g": {
+    "kcal": null,
+    "protein_g": null,
+    "carbs_g": null,
+    "fat_g": null,
+    "fiber_g": null,
+    "alcohol_g": 5.68,
+    "sugars_g": null
+   },
+   "units": [
+    {
+     "unit": "bottle_650",
+     "label": "1 bottle (650 ml)",
+     "grams": 650,
+     "basis": "standard Indian pour"
+    },
+    {
+     "unit": "can_500",
+     "label": "1 can (500 ml)",
+     "grams": 500,
+     "basis": "standard Indian pour"
+    }
+   ],
+   "default_unit": "bottle_650",
+   "source": {
+    "id": "USDA",
+    "ref": "search: Alcoholic beverage, beer, regular, all",
+    "url": "https://fdc.nal.usda.gov/",
+    "row_name": "Alcoholic beverage, beer, regular, all"
+   },
+   "confidence": "medium",
+   "notes": "Pack sizes not stated on the brand sites (see Super 8 note). Carbs from the USDA regular-beer row.",
+   "image_prompt": "Golden strong lager in a mug beside a brown bottle, no labels"
+  },
+  {
+   "id": "godfather-luxury-lager",
+   "name": "Godfather Luxury Lager",
+   "name_hi": "गॉडफ़ादर लग्ज़री लेगर",
+   "aliases": [
+    "godfather lager",
+    "godfather luxury",
+    "godfather mild",
+    "gf lager"
+   ],
+   "category": "alcohol",
+   "diet": "vegan",
+   "form": "beverage",
+   "drink": {
+    "type": "beer",
+    "style": "lager",
+    "brand": "Godfather",
+    "maker": "DeVANS Modern Breweries Ltd.",
+    "made_in": "India",
+    "abv_pct": 5,
+    "abv_source": {
+     "url": "https://devans.co.in/",
+     "text": "Luxury Lager- With 5% ABV"
+    },
+    "stated_nutrition": null
+   },
+   "per_100g": {
+    "kcal": null,
+    "protein_g": null,
+    "carbs_g": null,
+    "fat_g": null,
+    "fiber_g": null,
+    "alcohol_g": 3.95,
+    "sugars_g": null
+   },
+   "units": [
+    {
+     "unit": "bottle_650",
+     "label": "1 bottle (650 ml)",
+     "grams": 650,
+     "basis": "standard Indian pour"
+    },
+    {
+     "unit": "can_500",
+     "label": "1 can (500 ml)",
+     "grams": 500,
+     "basis": "standard Indian pour"
+    }
+   ],
+   "default_unit": "bottle_650",
+   "source": {
+    "id": "USDA",
+    "ref": "search: Alcoholic beverage, beer, regular, all",
+    "url": "https://fdc.nal.usda.gov/",
+    "row_name": "Alcoholic beverage, beer, regular, all"
+   },
+   "confidence": "medium",
+   "notes": "ABV from the parent-company site. Pack sizes not confirmed. Diet assumed vegan from the Godfather range ingredient list (water, malt, hop, yeast, enzyme); this variant's own ingredients aren't listed.",
+   "image_prompt": "Pale golden lager in a glass, no logos"
+  },
+  {
+   "id": "beer-regular-lager-generic",
+   "name": "Beer, regular lager (~5%)",
+   "name_hi": "बीयर (रेगुलर लेगर)",
+   "aliases": [
+    "normal beer",
+    "mild beer",
+    "regular beer",
+    "lager",
+    "chilled beer",
+    "light lager 5"
+   ],
+   "category": "alcohol",
+   "diet": "vegan",
+   "form": "beverage",
+   "drink": {
+    "type": "beer",
+    "style": "lager",
+    "brand": "generic",
+    "maker": "various",
+    "made_in": "India",
+    "abv_pct": 5,
+    "abv_source": {
+     "url": "https://devans.co.in/",
+     "text": "Typical mild-lager strength, from sourced examples in this batch: Godfather Luxury Lager 'With 5% ABV'; Bira 91 Blonde 'ABV 4.5%' (https://bira91.com/beer-details-blonde)"
+    },
+    "stated_nutrition": null
+   },
+   "per_100g": {
+    "kcal": null,
+    "protein_g": null,
+    "carbs_g": null,
+    "fat_g": null,
+    "fiber_g": null,
+    "alcohol_g": 3.95,
+    "sugars_g": null
+   },
+   "units": [
+    {
+     "unit": "bottle_650",
+     "label": "1 bottle (650 ml)",
+     "grams": 650,
+     "basis": "brand site"
+    },
+    {
+     "unit": "bottle_330",
+     "label": "1 bottle (330 ml)",
+     "grams": 330,
+     "basis": "brand site"
+    },
+    {
+     "unit": "can_500",
+     "label": "1 can (500 ml)",
+     "grams": 500,
+     "basis": "brand site"
+    }
+   ],
+   "default_unit": "bottle_650",
+   "source": {
+    "id": "USDA",
+    "ref": "search: Alcoholic beverage, beer, regular, all",
+    "url": "https://fdc.nal.usda.gov/",
+    "row_name": "Alcoholic beverage, beer, regular, all"
+   },
+   "confidence": "medium",
+   "notes": "For users who don't know the brand. Pack sizes are the ones Indian brand pages list (e.g. Bira 91: 500 ml can, 330/650 ml bottles). Indian mild beers range roughly 4.2-5%.",
+   "image_prompt": "Chilled 650 ml brown beer bottle with a glass of golden lager, no labels"
+  },
+  {
+   "id": "beer-strong-generic",
+   "name": "Strong beer (~8%)",
+   "name_hi": "स्ट्रॉन्ग बीयर",
+   "aliases": [
+    "strong beer",
+    "super strong beer",
+    "strong lager"
+   ],
+   "category": "alcohol",
+   "diet": "vegan",
+   "form": "beverage",
+   "drink": {
+    "type": "beer",
+    "style": "strong lager",
+    "brand": "generic",
+    "maker": "various",
+    "made_in": "India",
+    "abv_pct": 8,
+    "abv_source": {
+     "url": "https://godfatherbeer.com/our-beer/",
+     "text": "Typical Indian strong-beer strength from sourced examples: Godfather Super 8 'ABV 8%'; Bira 91 Plus 'full-strength 8% ABV' (https://bira91.com/beer_details_plus_super_strong); Godfather Legendary 7.2%"
+    },
+    "stated_nutrition": null
+   },
+   "per_100g": {
+    "kcal": null,
+    "protein_g": null,
+    "carbs_g": null,
+    "fat_g": null,
+    "fiber_g": null,
+    "alcohol_g": 6.31,
+    "sugars_g": null
+   },
+   "units": [
+    {
+     "unit": "bottle_650",
+     "label": "1 bottle (650 ml)",
+     "grams": 650,
+     "basis": "brand site"
+    },
+    {
+     "unit": "can_500",
+     "label": "1 can (500 ml)",
+     "grams": 500,
+     "basis": "brand site"
+    },
+    {
+     "unit": "bottle_330",
+     "label": "1 bottle (330 ml)",
+     "grams": 330,
+     "basis": "brand site"
+    }
+   ],
+   "default_unit": "bottle_650",
+   "source": {
+    "id": "USDA",
+    "ref": "search: Alcoholic beverage, beer, regular, all",
+    "url": "https://fdc.nal.usda.gov/",
+    "row_name": "Alcoholic beverage, beer, regular, all"
+   },
+   "confidence": "medium",
+   "notes": "8% is the top of the Indian strong range; many strong beers sit at 7-8%. USDA has no strong-lager row, so carbs from the regular-beer row probably under-count.",
+   "image_prompt": "Tall 500 ml can and a mug of deep-golden strong beer, no labels"
+  },
+  {
+   "id": "beer-light-generic",
+   "name": "Light beer",
+   "name_hi": "लाइट बीयर",
+   "aliases": [
+    "light beer",
+    "lite beer",
+    "low calorie beer",
+    "low carb beer"
+   ],
+   "category": "alcohol",
+   "diet": "vegan",
+   "form": "beverage",
+   "drink": {
+    "type": "beer",
+    "style": "light lager",
+    "brand": "generic",
+    "maker": "various",
+    "made_in": "imported",
+    "abv_pct": null,
+    "abv_source": {
+     "url": "https://fdc.nal.usda.gov/",
+     "text": "No Indian light-beer ABV sourced; take alcohol from the USDA row's own alcohol value when you fetch it"
+    },
+    "stated_nutrition": null
+   },
+   "per_100g": {
+    "kcal": null,
+    "protein_g": null,
+    "carbs_g": null,
+    "fat_g": null,
+    "fiber_g": null,
+    "alcohol_g": null,
+    "sugars_g": null
+   },
+   "units": [
+    {
+     "unit": "bottle_330",
+     "label": "1 bottle (330 ml)",
+     "grams": 330,
+     "basis": "standard Indian pour"
+    },
+    {
+     "unit": "can_330",
+     "label": "1 can (330 ml)",
+     "grams": 330,
+     "basis": "standard Indian pour"
+    }
+   ],
+   "default_unit": "bottle_330",
+   "source": {
+    "id": "USDA",
+    "ref": "search: Alcoholic beverage, beer, light",
+    "url": "https://fdc.nal.usda.gov/",
+    "row_name": "Alcoholic beverage, beer, light"
+   },
+   "confidence": "low",
+   "notes": "Generic only; USDA's light-beer row is US-market based. ABV and alcohol_g left null for the pipeline to fill from the USDA row.",
+   "image_prompt": "Pale straw-coloured light beer in a slim glass"
+  },
+  {
+   "id": "beer-draught-craft-generic",
+   "name": "Draught beer (craft, per glass)",
+   "name_hi": "ड्राफ़्ट बीयर",
+   "aliases": [
+    "draught beer",
+    "draft beer",
+    "tap beer",
+    "craft beer",
+    "beer on tap"
+   ],
+   "category": "alcohol",
+   "diet": "vegan",
+   "form": "beverage",
+   "drink": {
+    "type": "beer",
+    "style": "craft lager / wheat on tap",
+    "brand": "generic",
+    "maker": "various",
+    "made_in": "India",
+    "abv_pct": 4.7,
+    "abv_source": {
+     "url": "https://bira91.com/beer-details-white",
+     "text": "Example: Bira 91 White, sold on draft, 'ABV 4.7%'; craft taps commonly range ~4.5-5.5%"
+    },
+    "stated_nutrition": null
+   },
+   "per_100g": {
+    "kcal": null,
+    "protein_g": null,
+    "carbs_g": null,
+    "fat_g": null,
+    "fiber_g": null,
+    "alcohol_g": 3.71,
+    "sugars_g": null
+   },
+   "units": [
+    {
+     "unit": "pint",
+     "label": "1 glass / pint (330 ml)",
+     "grams": 330,
+     "basis": "standard Indian pour"
+    }
+   ],
+   "default_unit": "pint",
+   "source": {
+    "id": "USDA",
+    "ref": "search: Alcoholic beverage, beer, regular, all",
+    "url": "https://fdc.nal.usda.gov/",
+    "row_name": "Alcoholic beverage, beer, regular, all"
+   },
+   "confidence": "low",
+   "notes": "Microbrewery pour sizes vary (300-500 ml); no pitcher added because no sourced volume. Stouts, IPAs and strong craft beers run higher in both alcohol and carbs.",
+   "image_prompt": "Glass of freshly poured draught beer on a pub counter"
+  }
+ ],
+ "not_found": [
+  {
+   "dish": "Kingfisher Premium",
+   "reason": "No ABV on any United Breweries / Kingfisher page I could open; the only exact figures found were on liquor-delivery sites and blogs (not allowed). A Rajasthan excise rate list shows the pack sizes (650/330 ml bottles, 500 ml can) but no strength.",
+   "searched": [
+    "web search: United Breweries / Kingfisher official pages",
+    "Rajasthan excise approved rate list (iems.rajasthan.gov.in — table loads by script, empty to my fetcher)",
+    "retail sites (excluded)"
+   ]
+  },
+  {
+   "dish": "Kingfisher Strong",
+   "reason": "Same: no official or excise ABV found; retail listings quote 8% but are excluded. Indian labels often say only 'less than 8% v/v'.",
+   "searched": [
+    "web search",
+    "Rajasthan excise list"
+   ]
+  },
+  {
+   "dish": "Kingfisher Ultra",
+   "reason": "No official ABV source found (retail/aggregator only).",
+   "searched": [
+    "web search"
+   ]
+  },
+  {
+   "dish": "Kingfisher Ultra Max",
+   "reason": "No official ABV source found; retail sites disagree (7.5% vs 7-8%).",
+   "searched": [
+    "web search"
+   ]
+  },
+  {
+   "dish": "Budweiser (India)",
+   "reason": "No AB InBev India page with ABV opened; US nutrition exists but the India ABV is unconfirmed.",
+   "searched": [
+    "web search"
+   ]
+  },
+  {
+   "dish": "Budweiser Magnum",
+   "reason": "No official ABV found (retail sites quote 6.5%, excluded).",
+   "searched": [
+    "web search"
+   ]
+  },
+  {
+   "dish": "Heineken / Heineken Silver (India)",
+   "reason": "No official Heineken nutrition or India ABV page opened; search returned only aggregators (CalorieKing, Carb Manager, etc., excluded).",
+   "searched": [
+    "web search for Heineken official nutrition"
+   ]
+  },
+  {
+   "dish": "Carlsberg Smooth / Carlsberg Elephant",
+   "reason": "No Carlsberg India page with ABV opened in this pass.",
+   "searched": [
+    "web search"
+   ]
+  },
+  {
+   "dish": "Tuborg Green / Tuborg Strong",
+   "reason": "No official Tuborg India ABV page opened in this pass.",
+   "searched": [
+    "web search"
+   ]
+  },
+  {
+   "dish": "Simba (Wit, Strong, Lager)",
+   "reason": "Only article/retail mentions found (e.g. 'Simba Strong 8%'), no brand page opened.",
+   "searched": [
+    "web search"
+   ]
+  },
+  {
+   "dish": "Hoegaarden, Corona, Stella Artois, Beck's",
+   "reason": "Global brand nutrition pages exist but were not reachable in this pass (search surfaced only aggregators); India-market ABV not confirmed.",
+   "searched": [
+    "web search"
+   ]
+  },
+  {
+   "dish": "Haywards 5000, Knock Out, Kotsberg",
+   "reason": "No official or excise ABV source found; strong-beer labels in India often print only 'less than 8% v/v'.",
+   "searched": [
+    "web search"
+   ]
+  },
+  {
+   "dish": "Non-alcoholic beers (Budweiser 0.0, Heineken 0.0, Kingfisher Zero)",
+   "reason": "No official India label or nutrition page opened; aggregator values excluded.",
+   "searched": [
+    "web search"
+   ]
+  }
+ ],
+ "alias_suggestions": {}
+}

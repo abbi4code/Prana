@@ -6,7 +6,7 @@ const HUE: Record<Category, string> = {
   breakfast: "#f6c343", roti_bread: "#d9a15b", rice: "#e9dcc6", dal: "#f2b134", sabzi: "#7cc36e",
   paneer: "#f08a4b", egg: "#ffd166", non_veg: "#ff7a59", snack: "#ff9f45", sweet: "#ff7aa2",
   dairy: "#cfe3ff", fruit: "#ffb347", beverage: "#c08457", condiment: "#9ccc65", nuts: "#c9974c", soup: "#ff8a3d",
-  supplement: "#d6ad80", cereal: "#b98a5a",
+  supplement: "#d6ad80", cereal: "#b98a5a", alcohol: "#e3a02f",
 };
 
 export const categoryHue = (cat: Category) => HUE[cat];
@@ -206,6 +206,22 @@ const ART: Record<Category, React.ReactNode> = {
       <rect x="15.5" y="22" width="17" height="3" rx="1.5" fill="#e8c9a3" />
       <g stroke="#9fb0bd" strokeWidth="1" strokeLinecap="round"><path d="M29,18 h3" /><path d="M29,26 h3" /><path d="M29,34 h3" /></g>
       <path d="M17.5,16 L17.5,37" stroke="#fff" strokeWidth="1.6" strokeLinecap="round" opacity="0.7" />
+    </>
+  ),
+  // D53: a frothy beer mug stands for all alcohol (beer, wine, spirits) until per-drink art exists
+  alcohol: (
+    <>
+      <ellipse cx="22" cy="42" rx="12" ry="1.9" fill="#000" opacity="0.2" />
+      <path d="M31,19 h4.5 a4.5,4.5 0 0 1 4.5,4.5 v6 a4.5,4.5 0 0 1 -4.5,4.5 h-4.5" fill="none" stroke="#d9e4ea" strokeWidth="3" strokeLinecap="round" opacity="0.85" />
+      <rect x="11" y="14" width="21" height="27" rx="3.5" fill="#d9e4ea" opacity="0.55" />
+      <rect x="12.5" y="17" width="18" height="22.5" rx="2.5" fill="#e3a02f" />
+      <path d="M15.5,20 L15.5,37" stroke="#f7d27a" strokeWidth="1.8" strokeLinecap="round" opacity="0.8" />
+      <g fill="#fff3d1" opacity="0.9"><circle cx="21" cy="30" r="0.9" /><circle cx="25" cy="25" r="0.7" /><circle cx="27" cy="33" r="0.8" /><circle cx="23" cy="36" r="0.6" /></g>
+      <g fill="#fffaf0">
+        <circle cx="14" cy="15.5" r="3.6" /><circle cx="19.5" cy="13" r="4.4" /><circle cx="25.5" cy="13.5" r="4.2" /><circle cx="30" cy="16" r="3.4" />
+        <rect x="11" y="15" width="21" height="4" rx="2" />
+      </g>
+      <path d="M13,20.5 c1,2 2,2.5 3,0.5" stroke="#fffaf0" strokeWidth="2" strokeLinecap="round" fill="none" />
     </>
   ),
   nuts: (

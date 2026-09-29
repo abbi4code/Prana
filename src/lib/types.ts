@@ -1,6 +1,6 @@
 export type Category =
   | "breakfast" | "roti_bread" | "rice" | "dal" | "sabzi" | "paneer" | "egg" | "non_veg"
-  | "snack" | "sweet" | "dairy" | "fruit" | "beverage" | "condiment" | "nuts" | "soup" | "supplement" | "cereal";
+  | "snack" | "sweet" | "dairy" | "fruit" | "beverage" | "condiment" | "nuts" | "soup" | "supplement" | "cereal" | "alcohol";
 
 export type UnitKind =
   | "g" | "katori" | "bowl" | "plate" | "piece" | "glass" | "cup" | "tbsp" | "tsp" | "handful" | "pack" | "scoop";
@@ -21,6 +21,8 @@ export type Food = {
   c: number | null;
   f: number | null;
   fib: number | null;
+  /** grams of ethanol per 100 g (drinks: per 100 ml), 7 kcal each (D53); absent for everything that isn't alcoholic */
+  alc?: number | null;
   units: FoodUnit[];
   du: string;
   /** "user" = created by the owner (custom food) */

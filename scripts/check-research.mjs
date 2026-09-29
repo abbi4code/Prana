@@ -48,8 +48,45 @@ const FDC_FILE = "data/research/fdc-cache.json";
 const fdcDisk = existsSync(FDC_FILE) ? JSON.parse(readFileSync(FDC_FILE, "utf8")) : { foods: {}, search: {} };
 const saveFdc = () => writeFileSync(FDC_FILE, JSON.stringify(fdcDisk, null, 1) + "\n");
 const fdcCache = new Map(Object.entries(fdcDisk.foods).map(([k, v]) => [Number(k), v]));
+
+// USDA's own CSV downloads (FNDDS survey foods, SR Legacy), read locally when given: no key, no rate limit.
+//   FDC_DIRS="/path/FoodData_Central_survey_food_csv_2024-10-31:/path/FoodData_Central_sr_legacy_food_csv_2018-04"
+//   (fdc.nal.usda.gov/download-datasets). The API stays the fallback.
+const normDesc = (x) => x.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+const local = { byId: new Map(), byDesc: new Map() };
+for (const dir of (process.env.FDC_DIRS ?? "").split(":").filter(Boolean)) {
+  const read = (f) => { const [h, ...rows] = parseCsv(readFileSync(`${dir}/${f}`, "utf8")); return rows.filter((r) => r.length > 1).map((r) => Object.fromEntries(h.map((k, i) => [k, r[i]]))); };
+  const nbr = new Map(read("nutrient.csv").map((n) => [n.id, String(n.nutrient_nbr).split(".")[0]]));
+  const kind = /survey/i.test(dir) ? "Survey (FNDDS)" : /sr_legacy/i.test(dir) ? "SR Legacy" : "FDC download";
+  for (const f of read("food.csv")) {
+    local.byId.set(Number(f.fdc_id), { name: f.description, dataType: kind, kcal: null, p: null, c: null, f: null, fib: null, alc: null, portions: [] });
+    local.byDesc.set(normDesc(f.description), Number(f.fdc_id));
+  }
+  // food_nutrient.csv is large (tens of MB): read it line by line and keep only the five nutrients used here
+  const key = { 208: "kcal", 203: "p", 205: "c", 204: "f", 291: "fib", 221: "alc" };
+  const wanted = new Map([...nbr].filter(([, n]) => key[n]).map(([id, n]) => [id, key[n]]));
+  const lines = readFileSync(`${dir}/food_nutrient.csv`, "utf8").split("\n");
+  const cols = lines[0].replace(/"/g, "").split(",");
+  const iFdc = cols.indexOf("fdc_id"), iNut = cols.indexOf("nutrient_id"), iAmt = cols.indexOf("amount");
+  for (let i = 1; i < lines.length; i++) {
+    const c = lines[i].split('","');
+    if (c.length < 4) continue;
+    const nid = c[iNut].replace(/"/g, "");
+    const k = wanted.get(nid) ?? key[nid]; // SR Legacy files use nutrient ids (1008); FNDDS files use the short numbers (208)
+    if (!k) continue;
+    const v = local.byId.get(Number(c[iFdc].replace(/"/g, "")));
+    if (v) v[k] = Number(c[iAmt].replace(/"/g, ""));
+  }
+  for (const r of existsSync(`${dir}/food_portion.csv`) ? read("food_portion.csv") : []) {
+    const v = local.byId.get(Number(r.fdc_id));
+    if (v) v.portions.push(`${r.portion_description || r.modifier || `${r.amount} unit`} = ${r.gram_weight} g`);
+  }
+}
+if (local.byId.size) console.log(`USDA: ${local.byId.size} foods read from local downloads`);
+
 async function usda(fdcId) {
   if (fdcCache.has(fdcId)) return fdcCache.get(fdcId);
+  if (local.byId.has(fdcId)) return local.byId.get(fdcId);
   const res = await fetch(`https://api.nal.usda.gov/fdc/v1/food/${fdcId}?api_key=${FDC_KEY}`);
   if (!res.ok) throw new Error(`FDC ${fdcId}: HTTP ${res.status}`);
   const d = await res.json();
@@ -60,7 +97,7 @@ async function usda(fdcId) {
     }
     return null;
   };
-  const v = { name: d.description, dataType: d.dataType, kcal: by("208", "958", "957"), p: by("203"), c: by("205"), f: by("204"), fib: by("291"),
+  const v = { name: d.description, dataType: d.dataType, kcal: by("208", "958", "957"), p: by("203"), c: by("205"), f: by("204"), fib: by("291"), alc: by("221"),
     portions: (d.foodPortions ?? []).map((p) => `${p.portionDescription || `${p.amount ?? ""} ${p.measureUnit?.name ?? ""} ${p.modifier ?? ""}`.trim()} = ${p.gramWeight} g`) };
   fdcCache.set(fdcId, v);
   fdcDisk.foods[fdcId] = { ...v, fetched: new Date().toISOString().slice(0, 10) };
@@ -72,6 +109,13 @@ async function usda(fdcId) {
 const searchCache = new Map(Object.entries(fdcDisk.search));
 async function fdcSearch(desc) {
   if (searchCache.has(desc)) return searchCache.get(desc);
+  if (local.byDesc.has(normDesc(desc))) return local.byDesc.get(normDesc(desc));
+  if (local.byId.size) {
+    const words = normDesc(desc).split(" ").filter((w) => w.length > 3);
+    const close = [...local.byId.entries()].map(([id, v]) => ({ id, name: v.name, n: words.filter((w) => normDesc(v.name).includes(w)).length }))
+      .sort((a, b) => b.n - a.n).slice(0, 3);
+    throw new Error(`USDA "${desc}" not found exactly in the downloads; closest: ${close.map((c) => `"${c.name}" (${c.id})`).join(", ")}`);
+  }
   const res = await fetch(`https://api.nal.usda.gov/fdc/v1/foods/search?api_key=${FDC_KEY}`, {
     method: "POST", headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ query: desc, dataType: ["Survey (FNDDS)", "SR Legacy", "Foundation"], pageSize: 25 }),
@@ -157,7 +201,7 @@ async function sourced(src) {
 const REPLACES = { "bhatura-fried": "bhatura", "aloo-samosa-fried": "samosa", "khasta-kachori-fried": "kachori" };
 
 // ── rules ──
-const CATEGORIES = new Set(["breakfast", "roti_bread", "rice", "dal", "sabzi", "paneer", "egg", "non_veg", "snack", "sweet", "dairy", "fruit", "beverage", "condiment", "nuts", "soup", "supplement", "cereal"]);
+const CATEGORIES = new Set(["breakfast", "roti_bread", "rice", "dal", "sabzi", "paneer", "egg", "non_veg", "snack", "sweet", "dairy", "fruit", "beverage", "condiment", "nuts", "soup", "supplement", "cereal", "alcohol"]);
 const DIETS = new Set(["vegan", "veg", "egg", "non_veg"]);
 const FORMS = new Set(["cooked", "raw", "beverage", "packaged"]);
 const FORBIDDEN = /healthifyme|fatsecret|myfitnesspal|nutritionix|calorieking|cronometer|edamam|wikipedia|nutritionvalue|eatthismuch|carbmanager|fitbit/i;
@@ -192,7 +236,7 @@ for (const file of files) {
       const heir = REPLACES[food.id];
       for (const a of food.aliases ?? []) {
         const owner = nameOwner.get(a.toLowerCase().trim());
-        if (owner && owner !== heir) warnings.push(`alias "${a}" already names ${owner} (dropped)`);
+        if (owner && owner !== heir && owner !== food.id) warnings.push(`alias "${a}" already names ${owner} (dropped)`);
       }
 
       // numbers from the source
@@ -200,7 +244,43 @@ for (const file of files) {
       if (food.frying && food.recipe && !food.recipe.frying) food.recipe.frying = food.frying; // accepted next to recipe too
       if (/^DEEP-FRIED/i.test(food.notes ?? "") && food.source.id === "INDB")
         throw new Error("INDB deep-fried row counts the whole pan of oil: send it as DERIVED with recipe.frying (D52)");
-      if (food.source.id === "DERIVED" && food.recipe?.frying) {
+      if (food.category === "alcohol") {
+        // D53: alcohol has its own 7 kcal/g. The brand's ABV sets the alcohol (× 0.789 g/ml, ethanol at 20 °C); carbs,
+        // protein and fat come from the brand's stated nutrition (MFR_LABEL) or the USDA row for the style.
+        const d = food.drink ?? {};
+        let base;
+        if (food.source.id === "MFR_LABEL") {
+          const sn = d.stated_nutrition;
+          if (!sn?.url) throw new Error("MFR_LABEL drink without drink.stated_nutrition (brand nutrition + url)");
+          const ml = /100\s*ml/i.test(String(sn.per)) ? 100 : Number(String(sn.per).match(/[\d.]+/)?.[0]);
+          if (!(ml > 0)) throw new Error(`stated_nutrition.per "${sn.per}" isn't a volume`);
+          const k = 100 / ml, sc = (v) => (v == null ? null : v * k);
+          base = { p: sc(sn.protein_g), c: sc(sn.carbs_g), f: sc(sn.fat_g), fib: null, alc: null };
+          warnings.push(`brand nutrition unverified: check ${sn.url}`);
+        } else if (food.source.id === "USDA") {
+          base = await sourced(food.source);
+          if (food.source.row_name && base.name && !sameName(base.name, food.source.row_name)) problems.push(`source row is "${base.name}", not "${food.source.row_name}"`);
+        } else throw new Error("cocktails / DERIVED drinks aren't supported yet (batch A7)");
+        let alc;
+        if (d.abv_pct != null) {
+          if (!(d.abv_pct > 0 && d.abv_pct < 80)) throw new Error(`abv ${d.abv_pct} out of range`);
+          if (!d.abv_source?.url) throw new Error("ABV without abv_source.url");
+          alc = d.abv_pct * 0.789;
+          if (food.per_100g?.alcohol_g != null && Math.abs(food.per_100g.alcohol_g - alc) > 0.05) warnings.push(`alcohol_g ${food.per_100g.alcohol_g} replaced by ABV × 0.789 = ${r2(alc)}`);
+        } else if (base.alc != null) {
+          alc = base.alc;
+          warnings.push(`no brand ABV: alcohol from the USDA row (${base.alc} g / 100 g)`);
+        } else throw new Error("no ABV and the source has no alcohol value");
+        truth = { name: base.name, p: base.p, c: base.c, f: base.f ?? 0, fib: base.fib, alc };
+        truth.kcal = 7 * alc + 4 * ((truth.p ?? 0) + (truth.c ?? 0)) + 9 * (truth.f ?? 0);
+        const sn = d.stated_nutrition;
+        if (sn?.kcal != null) {
+          const ml = /100\s*ml/i.test(String(sn.per)) ? 100 : Number(String(sn.per).match(/[\d.]+/)?.[0]);
+          const stated = ml > 0 ? (sn.kcal * 100) / ml : null;
+          if (stated != null && Math.abs(stated - truth.kcal) > Math.max(5, truth.kcal * 0.1)) warnings.push(`brand says ${r2(stated)} kcal / 100 ml, computed ${r2(truth.kcal)}`);
+        }
+        if (d.abv_source?.text && /<\s*\d|less than/i.test(d.abv_source.text)) warnings.push(`ABV is a ceiling ("${d.abv_source.text.slice(0, 40)}…"): alcohol may read a little high`);
+      } else if (food.source.id === "DERIVED" && food.recipe?.frying) {
         // D52: fried product = its dough/filling + the fat it actually holds, from a measured study of that kind of food
         const rec = food.recipe, fr = rec.frying;
         if (!rec.ingredients?.length) throw new Error("fried DERIVED without ingredients");
@@ -251,7 +331,7 @@ for (const file of files) {
       for (const k of ["kcal", "p", "c", "f"]) {
         if (claimed[k] != null && !near(claimed[k], truth[k], food.source.id === "DERIVED" ? 0.05 : 0.02)) warnings.push(`${k}: research ${claimed[k]}, source ${r2(truth[k])} (source used)`);
       }
-      const macroKcal = 4 * (truth.p ?? 0) + 4 * (truth.c ?? 0) + 9 * (truth.f ?? 0);
+      const macroKcal = 4 * (truth.p ?? 0) + 4 * (truth.c ?? 0) + 9 * (truth.f ?? 0) + 7 * (truth.alc ?? 0);
       const macroOk = truth.p != null && Math.abs(macroKcal - truth.kcal) <= truth.kcal * 0.15;
       if (!macroOk) warnings.push(`macro check fails (${Math.round(macroKcal)} vs ${Math.round(truth.kcal)} kcal): macros set to null`);
       if (truth.f != null && truth.f > FRIED_FAT_MAX && !["condiment", "nuts"].includes(food.category) && !/oil|ghee|butter|nut|seed/i.test(food.name))
@@ -270,13 +350,14 @@ for (const file of files) {
           id: old ? heir : food.id, ...(old ? { replaces: heir } : {}),
           name: food.name.replace(/\s*\(absorbed-oil model\)/i, ""), name_hi: food.name_hi, category: food.category, diet: food.diet, form: food.form,
           aliases: [...new Set([...(old ? old.aliases : []), ...(food.aliases ?? []).map((a) => a.toLowerCase().trim())
-            .filter((a) => !nameOwner.has(a) || nameOwner.get(a) === heir)])],
-          per_100g: { kcal: r2(truth.kcal), protein_g: macroOk ? r2(truth.p) : null, carbs_g: macroOk ? r2(truth.c) : null, fat_g: macroOk ? r2(truth.f) : null, fiber_g: r2(truth.fib) },
+            .filter((a) => !nameOwner.has(a) || nameOwner.get(a) === heir || nameOwner.get(a) === food.id)])],
+          per_100g: { kcal: r2(truth.kcal), protein_g: macroOk ? r2(truth.p) : null, carbs_g: macroOk ? r2(truth.c) : null, fat_g: macroOk ? r2(truth.f) : null, fiber_g: r2(truth.fib), ...(truth.alc != null ? { alcohol_g: r2(truth.alc) } : {}) },
           // a replacement keeps the old row's units (old logs point at them; their weights are INDB servings)
           ...(old ? { units: catalog.find((x) => x.id === heir).units, default_unit: catalog.find((x) => x.id === heir).default_unit }
                   : { units: food.units, default_unit: food.default_unit }),
           source: { id: food.source.id, ref: food.source.ref, url: food.source.url, ...(food.source.image_url ? { image_url: food.source.image_url } : {}) },
           ...(food.recipe ? { recipe: food.recipe } : {}),
+          ...(food.drink ? { drink: food.drink } : {}),
           confidence: macroOk ? food.confidence : "low",
           notes: food.notes ?? "",
           image_prompt: food.image_prompt ?? food.name,

@@ -26,6 +26,7 @@ const KIND = {
   bowl: "bowl", small_bowl: "bowl", soup_bowl: "bowl", curry_bowl: "bowl",
   plate: "plate", portion: "plate",
   glass: "glass", tall_glass: "glass", can: "glass", shaker: "glass",
+  // D53 pours and packs (peg, quarter, pint, bottle_650, can_500…) stay countable pieces: "2 pegs", "1 bottle"
   scoop: "scoop",
   cup: "cup", tea_cup: "cup", cutting: "cup",
   tbsp: "tbsp", tablespoon: "tbsp",
@@ -102,6 +103,7 @@ for (const f of all) {
     c: round(p.carbs_g),
     f: round(p.fat_g),
     fib: round(p.fiber_g),
+    ...(p.alcohol_g != null ? { alc: round(p.alcohol_g, 2) } : {}), // D53: ethanol g / 100 ml, 7 kcal each
     units,
     du: defaultUnit,
     conf: f.confidence,

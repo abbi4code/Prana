@@ -1,0 +1,87 @@
+You are researching alcoholic drinks sold in India, brand by brand, for "Prana", a calorie tracker for Indian users. People log their weekend beer, peg of whisky or glass of wine, so we need each product's alcohol strength, the pack and pour sizes Indians actually use, and its calories. Your output is JSON that gets merged into the app's database after automatic checks. Accuracy and traceability matter more than quantity: every number must come from a source you actually opened, never from memory or estimation.
+
+## Why alcohol needs its own rules
+- Alcohol has energy of its own: **7 kcal per gram** of ethanol (FAO / EU Regulation 1169/2011, Annex XIV), on top of 4 kcal/g for carbs and protein and 9 for fat. A whisky has almost no carbs, yet 42.8 % ABV gives it ~236 kcal per 100 ml.
+- Alcohol grams per 100 ml = ABV % × 0.789 (density of ethanol, g/ml at 20 °C). Example: 5 % beer → 3.95 g alcohol / 100 ml → 27.6 kcal from alcohol.
+- **We compute the kcal ourselves**: kcal = 7 × alcohol_g + 4 × (carbs_g + protein_g) + 9 × fat_g. You still report the kcal the brand states (if it states one) so we can compare.
+- Indian labels print ABV but usually no nutrition panel. So: **ABV must be brand-specific and sourced; carbs come from the brand's own nutrition info if it exists, otherwise from USDA's generic value for that style** (and you say so).
+
+## How your output is checked
+We re-read every number from the source you give (USDA by fdcId or exact description, official pages by URL, label images by URL). If your numbers don't match the source, the product is rejected. Exact references first, numbers copied exactly as the source gives them.
+
+## Allowed sources
+1. **ABV (alcohol % v/v):** the product label (image hosted by the brand or its parent company), the brand's official website / product page, the parent company's official site (United Breweries, AB InBev India, Carlsberg India, Diageo India / United Spirits, Pernod Ricard India, Radico Khaitan, Allied Blenders & Distillers, Tilaknagar, John Distilleries, Amrut, Sula, Grover Zampa, Bira 91…), or an Indian **state excise department** brand / price / label-registration list (government source; give the PDF or page URL and the row). Strength is sometimes stated in proof ("75 UP" etc.): convert and show your working (e.g. 75° proof UK = 42.8 % v/v).
+2. **Nutrition (per 100 ml or per serving):** the brand's official nutrition page / label / PDF (many global brands publish one: Heineken, Budweiser, Corona, Stella Artois, Carlsberg, Hoegaarden, Bacardi, Smirnoff…). Use the India market page if it exists; otherwise the global one, and say which market.
+3. **USDA FoodData Central** style values when the brand publishes no nutrition: rows such as "Alcoholic beverage, beer, regular, all", "Alcoholic beverage, beer, light", "Alcoholic beverage, wine, table, red", "Alcoholic beverage, wine, table, white", "Alcoholic beverage, distilled, all (gin, rum, vodka, whiskey) 80 proof" (and 86 / 90 / 94 / 100 proof), liqueurs. If you can't open FDC, give "ref": "search: <exact FDC description>" and we fetch it. USDA is only for carbs / sugars / protein of the STYLE; the ABV must still be the brand's own.
+4. **DERIVED:** cocktails and mixed drinks built from products in this research or the existing catalog, with the recipe in ml.
+
+**Never allowed** (product rejected): HealthifyMe, FatSecret, MyFitnessPal, Nutritionix, CalorieKing, Cronometer, Edamam, Carb Manager, Untappd, Vivino or Wine-Searcher numbers, liquor shop / delivery app listings, "how many calories in…" blogs, news articles, Wikipedia numbers, AI-generated sites. If a product's ABV is only on those, put it in not_found.
+
+## Rules
+- **One product per brand variant and strength** ("Kingfisher Premium" and "Kingfisher Strong" are separate). Same product in different pack sizes = ONE entry with several units.
+- **Also one GENERIC entry per style** for people who don't know the brand ("Beer, regular lager (~5 %)", "Strong beer (~8 %)", "Whisky (Indian, 42.8 %)", "Red wine (dry)"): USDA values + a typical ABV you source; confidence "medium".
+- Values per **100 ml**, in "per_100g" (for drinks we treat 100 ml ≈ 100 g like the app's other drinks; unit "grams" = millilitres). Unknown = null, never 0.
+- **Units** (these ids, grams = ml): peg_small (30 ml), peg (60 ml), shot (30 ml), quarter (180 ml), half (375 ml), full (750 ml), glass (wine, 150 ml unless the brand says otherwise), pint (330 ml), can_330, can_500, bottle_330, bottle_500, bottle_650, bottle (RTDs: the pack's ml), pitcher (only with a sourced volume). Only pack sizes shown as **sold in India** (brand site, label or excise list); "basis": "label" | "brand site" | "excise list" | "standard Indian pour".
+- **default_unit:** beer → bottle_650 (or the most common Indian pack); whisky / rum / vodka / gin / brandy → peg; wine → glass; RTD → bottle.
+- **Aliases:** how Indians say and search it: short names ("kf", "kf strong", "bud", "rc", "mc", "om", "bp", "blenders"), Hinglish, common misspellings ("jonny walker", "bacardy"). No generic words ("beer", "whisky", "daru", "drink"). Lowercase, 3–10.
+- **name:** brand + variant as sold ("Royal Stag Whisky", "Old Monk XXX Rum", "Sula Sauvignon Blanc"). **name_hi** in Devanagari. **id:** lowercase kebab-case ASCII ("royal-stag-whisky").
+- Country liquor, toddy, feni, mahua: only with a government / official ABV source; neutral names.
+- **Check before you write:** open every source first. If a page won't open, put the product in not_found; never fill from memory.
+
+## Category
+"alcohol" for every alcoholic product (new category); "beverage" for non-alcoholic mixers.
+
+## JSON schema: one object per product
+{
+  "id": "kingfisher-strong",
+  "name": "Kingfisher Strong",
+  "name_hi": "किंगफ़िशर स्ट्रॉन्ग",
+  "aliases": ["kf strong", "kingfisher strong beer", "strong kingfisher"],
+  "category": "alcohol",
+  "diet": "vegan | veg",                       // veg if it contains honey / milk / cream, or declares isinglass / gelatin finings
+  "form": "beverage",
+  "drink": {
+    "type": "beer | wine | whisky | rum | vodka | gin | brandy | tequila | liqueur | cider | rtd | country_liquor | other_spirit | cocktail | mixer",
+    "style": "<lager, strong lager, wheat, IPA, stout; blended Indian whisky, blended Scotch, single malt, bourbon; dark rum, white rum; red dry, white dry, rosé, sparkling, dessert, port…>",
+    "brand": "<brand>", "maker": "<company>", "made_in": "<India | imported>",
+    "abv_pct": <number>,
+    "abv_source": { "url": "<page / PDF>", "image_url": "<label image, if that's where it is>", "text": "<exact words, e.g. 'Alc. 8% v/v', or '75° UP' + your conversion>" },
+    "stated_nutrition": { "per": "100 ml | <serving ml>", "kcal": <number|null>, "carbs_g": <number|null>, "sugars_g": <number|null>, "protein_g": <number|null>, "fat_g": <number|null>, "url": "<brand nutrition page / label>" }   // null if the brand publishes none
+  },
+  "per_100g": { "kcal": null, "protein_g": <number|null>, "carbs_g": <number|null>, "fat_g": <number|null>, "fiber_g": null, "alcohol_g": <ABV × 0.789>, "sugars_g": <number|null> },   // per 100 ml; kcal null, we compute it
+  "units": [ { "unit": "bottle_650", "label": "1 bottle (650 ml)", "grams": 650, "basis": "label" } ],
+  "default_unit": "bottle_650",
+  "source": {
+    "id": "MFR_LABEL | USDA | DERIVED",         // MFR_LABEL when carbs etc. come from the brand; USDA when from the style row
+    "ref": "<brand page title | 'fdcId 123456' | 'search: <exact FDC description>' | recipe name>",
+    "url": "<page / API URL you read>",
+    "row_name": "<USDA description, if USDA>"
+  },
+  "recipe": {                                  // cocktails / mixed drinks only
+    "ingredients": [ { "name": "<ingredient>", "ml": <number>, "ref": "<id of a product in this research or an existing catalog food>" } ],
+    "method": "<one line>"
+  },
+  "confidence": "high | medium | low",         // high = label ABV + brand's own nutrition; medium = label ABV + USDA style values; low = ABV from a proof conversion with doubt, or a cocktail
+  "notes": "<which market's nutrition page, proxies used, what varies>",
+  "image_prompt": "<the bottle / glass as served in India, no logos>"
+}
+
+## Output format, per batch
+Output ONLY one JSON object in one code block, no text before or after:
+{ "batch": "A<number>", "theme": "<theme>", "generated_on": "<YYYY-MM-DD>", "foods": [ ... ], "not_found": [ { "dish": "<product>", "reason": "<why>", "searched": ["<where>"] } ], "alias_suggestions": {} }
+Aim for 25–35 products per reply. If a batch has more, stop at a clean point; I'll reply "continue" (same batch, part 2).
+
+## Batches (one per reply; wait for "next")
+Must-haves listed; add other brands commonly sold in India that you can source properly.
+A1. **Beer:** Kingfisher Premium, Kingfisher Strong, Kingfisher Ultra, Kingfisher Ultra Max, Budweiser, Budweiser Magnum, Heineken (+ Silver if sold), Carlsberg (Smooth / Elephant), Tuborg Green, Tuborg Strong, Bira 91 (White, Blonde, Boom), Simba, Hoegaarden, Corona, Stella Artois, Beck's, Haywards 5000, Knock Out, Godfather, Kotsberg, non-alcoholic beers sold in India (Budweiser 0.0…); generic: regular lager, strong beer, light beer, draught / craft.
+A2. **Whisky:** McDowell's No.1, Royal Stag, Officer's Choice (+ Blue), Imperial Blue, Blenders Pride, Signature, 8PM, Royal Challenge, Antiquity Blue, Black Dog, Teacher's, 100 Pipers, Ballantine's, Johnnie Walker Red / Black, Chivas Regal 12, Jameson, Jack Daniel's Old No.7, Glenfiddich 12, Glenlivet 12, Amrut (Fusion / Single Malt), Paul John (Brilliance / Bold), Indri, Rampur; generic: Indian whisky 42.8 %, Scotch 40 %.
+A3. **Rum, vodka, gin, brandy, tequila, others:** Old Monk (XXX + other variants if sourced), McDowell's No.1 Celebration, Bacardi (Carta Blanca, Black), Captain Morgan, Hercules XXX; Magic Moments, Smirnoff, Absolut, Romanov, Grey Goose; Blue Riband, Greater Than, Hapusa, Bombay Sapphire, Gordon's, Tanqueray; Mansion House, Honey Bee, Morpheus; tequila (generic + one brand); feni; country liquor (only with a state excise ABV source); generic: rum, vodka, gin, brandy at common Indian strengths.
+A4. **Wine:** Sula (Sauvignon Blanc, Chenin Blanc, Shiraz, Cabernet Shiraz, Rasa, Brut / Seco), Fratelli, Grover Zampa, York, Big Banyan, Jacob's Creek, port / sweet wines sold in India; generic: red dry, white dry, rosé, sparkling, dessert / port.
+A5. **RTD, cider, liqueurs:** Bacardi Breezer (Indian flavours), hard ciders / seltzers sold in India, Baileys, Kahlúa, Jägermeister, triple sec (generic).
+A6. **Mixers (category "beverage"):** soda water, tonic water (Schweppes India / generic), ginger ale, Sprite / 7UP (India labels), Thums Up / Coca-Cola / Pepsi (India labels, per 100 ml), Red Bull India, packaged orange juice (label), lime cordial.
+A7. **Cocktails and mixed drinks (DERIVED from the above):** whisky + soda, whisky + water, whisky + cola, rum + cola, Old Monk + Thums Up, vodka + Sprite, vodka + orange juice, gin + tonic, Long Island Iced Tea, mojito, Cuba libre, screwdriver, margarita, piña colada. Standard Indian pour: 60 ml spirit unless the recipe says otherwise.
+
+## EXISTING DRINKS (don't redo)
+Cola (Soft Drink) (USDA fdcId 174852); Lemonade (INDB ASC008); Jeera Pani (INDB ASC010); Aam Panna (INDB ASC005); Coconut Water (IFCT K002); Sugarcane Juice (IFCT I002); Black Coffee, Coffee with Milk, Espresso, Cold Coffee with Ice Cream (INDB); Chai (DERIVED); Sweet / Salted Lassi (INDB); Banana Milkshake (INDB); Kashmiri Kehwa (INDB).
+
+Start with batch A1 now.

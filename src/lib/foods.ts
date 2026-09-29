@@ -49,7 +49,7 @@ const STARTER = new Set(STARTER_IDS);
 export const CATEGORY_LABEL: Record<Category, string> = {
   breakfast: "Breakfast", roti_bread: "Roti & breads", rice: "Rice", dal: "Dal", sabzi: "Sabzi",
   paneer: "Paneer", egg: "Egg", non_veg: "Non-veg", snack: "Snacks", sweet: "Mithai",
-  dairy: "Dairy", fruit: "Fruit", beverage: "Drinks", condiment: "Chutney & extras", nuts: "Nuts", soup: "Soup", supplement: "Supplements", cereal: "Oats & muesli",
+  dairy: "Dairy", fruit: "Fruit", beverage: "Drinks", condiment: "Chutney & extras", nuts: "Nuts", soup: "Soup", supplement: "Supplements", cereal: "Oats & muesli", alcohol: "Beer, wine & spirits",
 };
 
 // letters (any script, incl. Devanagari matras), digits; everything else becomes a space

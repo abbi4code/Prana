@@ -1,0 +1,7 @@
+Batch A1 checked: all 12 accepted (every ABV traced to the brand pages you cited). Before batch A2, one more pass on the beers you couldn't source, because they're the ones most Indians drink (Kingfisher Premium / Strong / Ultra / Ultra Max, Budweiser + Magnum, Heineken, Carlsberg, Tuborg Green / Strong, Simba, Hoegaarden, Corona, Stella Artois, Beck's, Haywards 5000, Knock Out, 0.0 beers). Routes that DO count:
+- Parent-company official documents, any market, when the product is the same: e.g. Heineken USA's product information sheet https://www.heinekenusa.com/sites/theheineken-usa/files/theheineken-usa/brew-better-world/heineken-usa-product-info-website-2023.pdf (ABV + kcal + carbs per 355 ml), AB InBev / Budweiser, Carlsberg Group, Corona / Stella official nutrition pages. Say which market; if the India product's ABV differs, use the India ABV and the other market's carbs.
+- Label images hosted by the brand, the parent company, or its investor / annual-report / brand-book PDFs.
+- State excise department lists (brand registration, MRP / rate lists) that show strength.
+- If an Indian strong beer's label only says "less than 8% v/v", use 8 and say it's a ceiling (as you did for Bira Boom).
+Still not allowed: Untappd, BeerAdvocate, RateBeer, shop / delivery listings, blogs.
+Output as batch "A1b" (only these beers), same format. Then I'll say "next" for A2.

@@ -85,7 +85,7 @@ export function FoodDetail({ food, initial, confirmLabel, onConfirm, onBack, onD
           className="group relative mx-auto mt-2 h-44 w-64 cursor-ns-resize touch-none select-none"
           title="Drag up or down to change the amount"
         >
-          <PortionVisual kind={unit.kind} qty={qty} grams={n.grams} hue={hue} />
+          <PortionVisual kind={food.cat === "alcohol" && unit.kind === "piece" ? "glass" : unit.kind} qty={qty} grams={n.grams} hue={hue} />
           <span className="pointer-events-none absolute -right-6 top-1/2 flex -translate-y-1/2 flex-col items-center text-faint opacity-60 transition-opacity group-hover:opacity-100">
             <ChevronsUpDown size={18} />
           </span>
@@ -97,8 +97,14 @@ export function FoodDetail({ food, initial, confirmLabel, onConfirm, onBack, onD
             <RollingNumber value={n.kcal} />
           </div>
           <p className="mt-1 text-sm text-muted">
-            kcal · {n.grams} g
+            kcal · {n.grams} {food.cat === "alcohol" ? "ml" : "g"}
           </p>
+          {/* D53: alcohol's own 7 kcal/g, so protein + carbs + fat below don't have to add up to the total */}
+          {food.alc ? (
+            <p className="mt-1 text-xs font-semibold text-turmeric">
+              incl. {Math.round((food.alc * n.grams * 7) / 100)} kcal from alcohol ({Math.round((food.alc * n.grams) / 100)} g)
+            </p>
+          ) : null}
         </div>
 
         <div className="mt-5 grid grid-cols-3 gap-2">
@@ -111,7 +117,7 @@ export function FoodDetail({ food, initial, confirmLabel, onConfirm, onBack, onD
         <div className="no-scrollbar -mx-5 flex gap-2 overflow-x-auto px-5">
           {food.units.map((u) => (
             <Chip key={u.id} active={u.id === unitId} onClick={() => pickUnit(u.id)}>
-              {u.kind === "g" ? "Grams" : cap(u.label.replace(/^1 /, ""))}
+              {u.kind === "g" ? (food.cat === "alcohol" ? "ml" : "Grams") : cap(u.label.replace(/^1 /, ""))}
             </Chip>
           ))}
         </div>
@@ -131,14 +137,14 @@ export function FoodDetail({ food, initial, confirmLabel, onConfirm, onBack, onD
             ) : (
               <span className="font-display text-4xl font-semibold">{fmtQty(qty)}</span>
             )}
-            <p className="text-xs text-muted">{unit.kind === "g" ? "grams" : unit.label.replace(/^1 /, "")}</p>
+            <p className="text-xs text-muted">{unit.kind === "g" ? (food.cat === "alcohol" ? "ml" : "grams") : unit.label.replace(/^1 /, "")}</p>
           </div>
           <StepButton onClick={() => step(1)} aria-label="More"><Plus size={20} /></StepButton>
         </div>
         <div className="mt-3 flex justify-center gap-2">
           {opts.picks.map((p) => (
             <Chip key={p} active={qty === p} onClick={() => setQty(p)} small>
-              {unit.kind === "g" ? `${p} g` : fmtQty(p)}
+              {unit.kind === "g" ? `${p} ${food.cat === "alcohol" ? "ml" : "g"}` : fmtQty(p)}
             </Chip>
           ))}
         </div>

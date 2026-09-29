@@ -2340,13 +2340,83 @@
    ],
    "default_unit": "plate",
    "source": {
-    "id": "USDA",
-    "ref": "search: Dumpling, no meat",
-    "url": "https://fdc.nal.usda.gov/"
+    "id": "DERIVED",
+    "ref": "Veg momos: maida wrapper, cabbage-carrot-onion filling, steamed",
+    "url": "https://www.npmjs.com/package/@ifct2017/compositions"
    },
-   "confidence": "medium",
-   "notes": "USDA FNDDS vegetable dumpling as proxy for Indian veg momos (maida wrapper, cabbage-carrot-onion filling). Momo weight assumed. If the exact FNDDS name differs, the closest steamed vegetable dumpling row is intended. Checker: USDA description corrected to the exact FNDDS name.",
-   "image_prompt": "Six white steamed veg momos with red chutney"
+   "confidence": "low",
+   "notes": "Recipe quantities assumed from a standard veg momo recipe. Corrected in Claude Code: USDA 'Dumpling, no meat' (2708344) is a plain flour-milk dough dumpling, not a filled momo, and USDA has no vegetable-filled dumpling (its 'no meat' potsticker is built from the pork one), so this is built from a standard momo recipe with IFCT ingredients.",
+   "image_prompt": "Six white steamed veg momos with red chutney",
+   "recipe": {
+    "ingredients": [
+     {
+      "name": "Refined flour (maida), wrapper",
+      "grams": 100,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "A018",
+       "row_name": "Wheat flour, refined"
+      }
+     },
+     {
+      "name": "Cabbage, green",
+      "grams": 100,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "C015",
+       "row_name": "Cabbage, green"
+      }
+     },
+     {
+      "name": "Carrot",
+      "grams": 50,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "F002",
+       "row_name": "Carrot, orange"
+      }
+     },
+     {
+      "name": "Onion",
+      "grams": 40,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "G017",
+       "row_name": "Onion, big"
+      }
+     },
+     {
+      "name": "Ginger",
+      "grams": 5,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "G014",
+       "row_name": "Ginger, fresh"
+      }
+     },
+     {
+      "name": "Garlic",
+      "grams": 3,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "G012",
+       "row_name": "Garlic, small clove"
+      }
+     },
+     {
+      "name": "Oil (filling)",
+      "grams": 5,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "T012",
+       "row_name": "Sunflower oil"
+      }
+     }
+    ],
+    "cooked_weight_g": 353,
+    "cooked_weight_basis": "assumed: ingredients (303 g) + 50 g water in the dough; steaming taken as no net weight change (~14 momos of 25 g)",
+    "method": "maida dough rolled thin, filled with sautéed chopped cabbage, carrot, onion, ginger and garlic, pleated and steamed"
+   }
   },
   {
    "id": "chicken-momos-steamed",
@@ -2380,12 +2450,11 @@
    "default_unit": "plate",
    "source": {
     "id": "USDA",
-    "ref": "search: Dumpling, steamed, filled with meat, poultry, or seafood",
-    "url": "https://fdc.nal.usda.gov/",
-    "row_name": "Dumpling, steamed, filled with meat, poultry, or seafood"
+    "ref": "search: Wonton, dumpling or pot sticker, steamed",
+    "url": "https://fdc.nal.usda.gov/"
    },
-   "confidence": "medium",
-   "notes": "USDA FNDDS steamed meat/poultry dumpling as proxy for chicken momos (the FNDDS recipe is pork-and-vegetable based, so fat may be higher than a chicken momo). Momo weight assumed.",
+   "confidence": "low",
+   "notes": "USDA FNDDS steamed potsticker (fdcId 2708708), made from a pork-and-vegetable potsticker: a stand-in for chicken momos; chicken filling is usually leaner.",
    "image_prompt": "Six steamed chicken momos with spicy red chutney"
   },
   {
@@ -2419,13 +2488,92 @@
    ],
    "default_unit": "plate",
    "source": {
-    "id": "USDA",
-    "ref": "search: Wonton, dumpling or pot sticker, fried, no meat",
-    "url": "https://fdc.nal.usda.gov/"
+    "id": "DERIVED",
+    "ref": "Veg momos, deep-fried (absorbed-oil model)",
+    "url": "https://www.npmjs.com/package/@ifct2017/compositions"
    },
    "confidence": "low",
-   "notes": "USDA FNDDS fried vegetable dumpling as a measured-value proxy (not the frying model). If this exact name doesn't exist, the closest fried vegetable dumpling / vegetable egg roll row is intended. Momo weight assumed. Checker: USDA description corrected to the exact FNDDS name.",
-   "image_prompt": "Golden deep-fried veg momos with mayonnaise and red chutney"
+   "notes": "Fried (absorbed-oil model). Street, so the 32nd-cycle value; proxy = poori (wheat dough). Moisture 40 % assumed (vegetable filling). Corrected in Claude Code: USDA 'Dumpling, no meat' (2708344) is a plain flour-milk dough dumpling, not a filled momo, and USDA has no vegetable-filled dumpling (its 'no meat' potsticker is built from the pork one), so this is built from a standard momo recipe with IFCT ingredients.",
+   "image_prompt": "Golden deep-fried veg momos with mayonnaise and red chutney",
+   "recipe": {
+    "ingredients": [
+     {
+      "name": "Refined flour (maida), wrapper",
+      "grams": 100,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "A018",
+       "row_name": "Wheat flour, refined"
+      }
+     },
+     {
+      "name": "Cabbage, green",
+      "grams": 100,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "C015",
+       "row_name": "Cabbage, green"
+      }
+     },
+     {
+      "name": "Carrot",
+      "grams": 50,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "F002",
+       "row_name": "Carrot, orange"
+      }
+     },
+     {
+      "name": "Onion",
+      "grams": 40,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "G017",
+       "row_name": "Onion, big"
+      }
+     },
+     {
+      "name": "Ginger",
+      "grams": 5,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "G014",
+       "row_name": "Ginger, fresh"
+      }
+     },
+     {
+      "name": "Garlic",
+      "grams": 3,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "G012",
+       "row_name": "Garlic, small clove"
+      }
+     },
+     {
+      "name": "Oil (filling)",
+      "grams": 5,
+      "source": {
+       "id": "IFCT2017",
+       "ref": "T012",
+       "row_name": "Sunflower oil"
+      }
+     }
+    ],
+    "frying": {
+     "fat_ref": "JPS2024:poori:180:32",
+     "fat_pct": null,
+     "fat_basis": "dry",
+     "fat_source": {
+      "url": "https://doi.org/10.1007/s13197-024-05989-z",
+      "table": "poori, 180 °C, 32nd cycle (street oil; wheat-dough proxy)"
+     },
+     "moisture_pct": 40,
+     "moisture_source": "assumed"
+    },
+    "method": "steamed veg momos deep-fried until golden"
+   }
   },
   {
    "id": "chicken-momos-fried",
@@ -2458,12 +2606,11 @@
    "default_unit": "plate",
    "source": {
     "id": "USDA",
-    "ref": "search: Dumpling, fried, filled with meat, poultry, or seafood",
-    "url": "https://fdc.nal.usda.gov/",
-    "row_name": "Dumpling, fried, filled with meat, poultry, or seafood"
+    "ref": "search: Wonton, dumpling or pot sticker, fried",
+    "url": "https://fdc.nal.usda.gov/"
    },
-   "confidence": "medium",
-   "notes": "USDA FNDDS fried meat/poultry dumpling as a measured-value proxy for fried chicken momos. Momo weight assumed.",
+   "confidence": "low",
+   "notes": "USDA FNDDS fried potsticker (fdcId 2708705), pork-and-vegetable potsticker fried in oil: a stand-in for fried chicken momos.",
    "image_prompt": "Crispy fried chicken momos on a plate with red chutney"
   },
   {

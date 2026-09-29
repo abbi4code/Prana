@@ -1,5 +1,5 @@
 {
-  "generated_on": "2026-09-28",
+  "generated_on": "2026-09-29",
   "about": "Foods from data/research/, verified by scripts/check-research.mjs: numbers re-read from the source.",
   "foods": [
     {
@@ -11,6 +11,7 @@
       "form": "cooked",
       "aliases": [
         "paneer roll",
+        "paneer kathi roll",
         "paneer kaathi roll",
         "paneer frankie",
         "paneer wrap",
@@ -139,7 +140,8 @@
         "schezwan sauce",
         "szechuan chutney",
         "shezwan chutney",
-        "sezwan sauce"
+        "sezwan sauce",
+        "schezwan chutney"
       ],
       "per_100g": {
         "kcal": 205.19,
@@ -269,6 +271,7 @@
       "form": "cooked",
       "aliases": [
         "chana chaat",
+        "kala chana chaat",
         "black chana chaat",
         "chane ki chaat",
         "boiled chana chaat",
@@ -464,7 +467,13 @@
       "category": "snack",
       "diet": "vegan",
       "form": "cooked",
-      "aliases": [],
+      "aliases": [
+        "golgappa puri",
+        "pani puri puri",
+        "puchka shell",
+        "phuchka puri",
+        "suji puri"
+      ],
       "per_100g": {
         "kcal": 476.97,
         "protein_g": 9.04,
@@ -531,7 +540,12 @@
       "category": "snack",
       "diet": "vegan",
       "form": "cooked",
-      "aliases": [],
+      "aliases": [
+        "papdi",
+        "papri",
+        "chaat papdi",
+        "papdi chaat base"
+      ],
       "per_100g": {
         "kcal": 517.64,
         "protein_g": 8.26,
@@ -607,7 +621,13 @@
       "category": "snack",
       "diet": "vegan",
       "form": "cooked",
-      "aliases": [],
+      "aliases": [
+        "sev",
+        "nylon sev",
+        "bhujia sev",
+        "omapodi",
+        "karapusa"
+      ],
       "per_100g": {
         "kcal": 454.62,
         "protein_g": 18.87,
@@ -680,7 +700,14 @@
       "category": "snack",
       "diet": "vegan",
       "form": "cooked",
-      "aliases": [],
+      "aliases": [
+        "batata vada",
+        "batata wada",
+        "aloo bonda",
+        "potato bonda",
+        "alu bonda",
+        "vada pav vada"
+      ],
       "per_100g": {
         "kcal": 240.74,
         "protein_g": 6.33,
@@ -883,6 +910,87 @@
       "confidence": "low",
       "notes": "Fried (absorbed-oil model). Restaurant/street, so the 32nd-cycle value; proxy food = Poori at 180 °C. Dough from INDB recipe ASC143 (maida 80 g, curd 20 g, sugar 1/4 tsp taken as 1 g). Meant to replace the INDB Bhatura row (ASC143), which counts 480 ml of frying oil.",
       "image_prompt": "Large puffed golden bhatura on a steel plate",
+      "research": "batch-1b.json"
+    },
+    {
+      "id": "bread-pakora",
+      "name": "Bread Pakora",
+      "name_hi": "ब्रेड पकोड़ा",
+      "category": "snack",
+      "diet": "veg",
+      "form": "cooked",
+      "aliases": [
+        "bread pakora",
+        "bread pakoda",
+        "bread pakore",
+        "bread bhajiya",
+        "bread bajji"
+      ],
+      "per_100g": {
+        "kcal": 317.21,
+        "protein_g": 10.06,
+        "carbs_g": 33.15,
+        "fat_g": 16.04,
+        "fiber_g": 5.75
+      },
+      "units": [
+        {
+          "unit": "piece",
+          "label": "1 bread pakora (1 slice)",
+          "grams": 75,
+          "basis": "estimated standard household measure"
+        }
+      ],
+      "default_unit": "piece",
+      "source": {
+        "id": "DERIVED",
+        "ref": "Bread pakora: white bread in besan batter, deep-fried",
+        "url": "https://github.com/lindsayjaacks/Indian-Nutrient-Databank-INDB-/blob/main/INDB.xlsx"
+      },
+      "recipe": {
+        "ingredients": [
+          {
+            "name": "White bread",
+            "grams": 60,
+            "source": {
+              "id": "USDA",
+              "ref": "search: Bread, white, commercially prepared (includes soft bread crumbs)"
+            }
+          },
+          {
+            "name": "Besan (proxy: Bengal gram dal, ground)",
+            "grams": 50,
+            "source": {
+              "id": "IFCT2017",
+              "ref": "B001",
+              "row_name": "Bengal gram, dal"
+            }
+          },
+          {
+            "name": "Groundnut oil (in batter)",
+            "grams": 2.25,
+            "source": {
+              "id": "IFCT2017",
+              "ref": "T005",
+              "row_name": "Groundnut oil"
+            }
+          }
+        ],
+        "method": "bread slices dipped in spiced besan batter and deep-fried",
+        "frying": {
+          "fat_pct": 24.68,
+          "fat_basis": "dry",
+          "fat_source": {
+            "url": "https://doi.org/10.1007/s13197-024-05989-z",
+            "table": "Jain, Passi & Selvamurthy 2024: bread pakora, 180 °C, cycle 32"
+          },
+          "moisture_pct": 35,
+          "moisture_source": "assumed"
+        }
+      },
+      "confidence": "low",
+      "notes": "Fried (absorbed-oil model). Street, so the 32nd-cycle value; measured food = Bread Pakora itself (no proxy needed). Quantities from INDB recipe ASC358 (2 slices = 60 g bread, 50 g besan, 0.5 tsp oil). Piece weight assumed. Replaces the rejected INDB row.",
+      "image_prompt": "Golden triangular bread pakoras with green chutney",
       "research": "batch-1b.json"
     },
     {
@@ -1106,7 +1214,12 @@
       "category": "snack",
       "diet": "vegan",
       "form": "cooked",
-      "aliases": [],
+      "aliases": [
+        "crispy corn",
+        "fried corn",
+        "besan corn",
+        "corn pakoda"
+      ],
       "per_100g": {
         "kcal": 377.59,
         "protein_g": 14.28,
@@ -1173,7 +1286,15 @@
       "category": "snack",
       "diet": "vegan",
       "form": "cooked",
-      "aliases": [],
+      "aliases": [
+        "golgappa",
+        "gol gappe",
+        "puchka",
+        "phuchka",
+        "gupchup",
+        "pani batashe",
+        "pani ke batashe"
+      ],
       "per_100g": {
         "kcal": 91.48,
         "protein_g": 1.97,
@@ -1274,7 +1395,12 @@
       "category": "snack",
       "diet": "vegan",
       "form": "cooked",
-      "aliases": [],
+      "aliases": [
+        "sev puri",
+        "sev poori",
+        "sevpuri",
+        "mumbai sev puri"
+      ],
       "per_100g": {
         "kcal": 194.19,
         "protein_g": 4.69,
@@ -1387,7 +1513,12 @@
       "category": "snack",
       "diet": "veg",
       "form": "cooked",
-      "aliases": [],
+      "aliases": [
+        "dahi puri",
+        "dahi batata puri",
+        "dahi poori",
+        "dahi golgappa"
+      ],
       "per_100g": {
         "kcal": 156.3,
         "protein_g": 4.91,
@@ -1499,7 +1630,13 @@
       "category": "snack",
       "diet": "veg",
       "form": "cooked",
-      "aliases": [],
+      "aliases": [
+        "papdi chaat",
+        "papri chaat",
+        "papri chat",
+        "dahi papdi chaat",
+        "delhi chaat"
+      ],
       "per_100g": {
         "kcal": 176.8,
         "protein_g": 5.01,
@@ -1611,7 +1748,14 @@
       "category": "snack",
       "diet": "vegan",
       "form": "cooked",
-      "aliases": [],
+      "aliases": [
+        "aloo tikki",
+        "alu tikki",
+        "potato tikki",
+        "aloo patties",
+        "pattice",
+        "tikki"
+      ],
       "per_100g": {
         "kcal": 153.19,
         "protein_g": 2.07,
@@ -1697,7 +1841,12 @@
       "category": "snack",
       "diet": "veg",
       "form": "cooked",
-      "aliases": [],
+      "aliases": [
+        "tikki chaat",
+        "aloo tikki chaat",
+        "tikki chole",
+        "chole tikki"
+      ],
       "per_100g": {
         "kcal": 146.58,
         "protein_g": 3.86,
@@ -1800,7 +1949,13 @@
       "category": "snack",
       "diet": "vegan",
       "form": "cooked",
-      "aliases": [],
+      "aliases": [
+        "ragda pattice",
+        "ragda patties",
+        "ragda patis",
+        "ragda pattis",
+        "ragda"
+      ],
       "per_100g": {
         "kcal": 151.81,
         "protein_g": 5.19,
@@ -1913,7 +2068,12 @@
       "category": "snack",
       "diet": "veg",
       "form": "cooked",
-      "aliases": [],
+      "aliases": [
+        "samosa chaat",
+        "samosa chat",
+        "samosa chole",
+        "chole samosa"
+      ],
       "per_100g": {
         "kcal": 192.37,
         "protein_g": 5.25,
@@ -2007,7 +2167,12 @@
       "category": "snack",
       "diet": "veg",
       "form": "cooked",
-      "aliases": [],
+      "aliases": [
+        "kachori chaat",
+        "kachori chat",
+        "khasta kachori chaat",
+        "dahi kachori"
+      ],
       "per_100g": {
         "kcal": 205.38,
         "protein_g": 4.82,
@@ -2110,7 +2275,12 @@
       "category": "snack",
       "diet": "veg",
       "form": "cooked",
-      "aliases": [],
+      "aliases": [
+        "raj kachori",
+        "raj kachauri",
+        "raaj kachori",
+        "big kachori chaat"
+      ],
       "per_100g": {
         "kcal": 144.62,
         "protein_g": 4.64,
@@ -2240,7 +2410,14 @@
       "category": "snack",
       "diet": "vegan",
       "form": "cooked",
-      "aliases": [],
+      "aliases": [
+        "jhalmuri",
+        "jhal muri",
+        "jhaal muri",
+        "muri masala",
+        "masala muri",
+        "kolkata jhalmuri"
+      ],
       "per_100g": {
         "kcal": 256.6,
         "protein_g": 5.86,
@@ -2362,7 +2539,14 @@
       "category": "snack",
       "diet": "vegan",
       "form": "cooked",
-      "aliases": [],
+      "aliases": [
+        "bhel",
+        "bhelpuri",
+        "bhel poori",
+        "mumbai bhel",
+        "sukhi bhel",
+        "geeli bhel"
+      ],
       "per_100g": {
         "kcal": 220.13,
         "protein_g": 5.49,
@@ -2499,7 +2683,12 @@
       "category": "snack",
       "diet": "vegan",
       "form": "cooked",
-      "aliases": [],
+      "aliases": [
+        "corn chaat",
+        "crispy corn chaat",
+        "makai chaat",
+        "bhutte ki chaat"
+      ],
       "per_100g": {
         "kcal": 337.07,
         "protein_g": 12.71,
@@ -2585,7 +2774,12 @@
       "category": "snack",
       "diet": "vegan",
       "form": "cooked",
-      "aliases": [],
+      "aliases": [
+        "khakhra chaat",
+        "khakra chaat",
+        "khakhra chat",
+        "gujarati khakhra chaat"
+      ],
       "per_100g": {
         "kcal": 141.15,
         "protein_g": 3.94,
@@ -2692,13 +2886,686 @@
       "research": "batch-1b.json"
     },
     {
+      "id": "pav",
+      "name": "Pav (Bread Roll)",
+      "name_hi": "पाव",
+      "category": "roti_bread",
+      "diet": "veg",
+      "form": "cooked",
+      "aliases": [
+        "pav",
+        "pao",
+        "ladi pav",
+        "bun pav",
+        "dinner roll",
+        "pav bun"
+      ],
+      "per_100g": {
+        "kcal": 310,
+        "protein_g": 10.86,
+        "carbs_g": 52.04,
+        "fat_g": 6.47,
+        "fiber_g": 2
+      },
+      "units": [
+        {
+          "unit": "pav",
+          "label": "1 pav",
+          "grams": 40,
+          "basis": "estimated standard household measure"
+        }
+      ],
+      "default_unit": "pav",
+      "source": {
+        "id": "USDA",
+        "ref": "fdcId 172793",
+        "url": "https://fdc.nal.usda.gov/food-details/172793/nutrients"
+      },
+      "confidence": "medium",
+      "notes": "USDA proxy: soft white dinner roll, the closest match to Mumbai ladi pav. Pav weight assumed (ladi pav ~35-45 g). Values fetched by your pipeline.",
+      "image_prompt": "A row of soft golden ladi pav joined together",
+      "research": "batch-1b.json"
+    },
+    {
+      "id": "veg-momos-steamed",
+      "name": "Veg Momos (Steamed)",
+      "name_hi": "वेज मोमोज़",
+      "category": "snack",
+      "diet": "vegan",
+      "form": "cooked",
+      "aliases": [
+        "veg momos",
+        "veg momo",
+        "steamed momos",
+        "momo",
+        "veg dumplings",
+        "dim sum veg"
+      ],
+      "per_100g": {
+        "kcal": 130.48,
+        "protein_g": 3.71,
+        "carbs_g": 24.14,
+        "fat_g": 1.77,
+        "fiber_g": 2.56
+      },
+      "units": [
+        {
+          "unit": "momo",
+          "label": "1 momo",
+          "grams": 25,
+          "basis": "estimated standard household measure"
+        },
+        {
+          "unit": "plate",
+          "label": "1 plate (6 momos)",
+          "grams": 150,
+          "basis": "estimated standard household measure"
+        }
+      ],
+      "default_unit": "plate",
+      "source": {
+        "id": "DERIVED",
+        "ref": "Veg momos: maida wrapper, cabbage-carrot-onion filling, steamed",
+        "url": "https://www.npmjs.com/package/@ifct2017/compositions"
+      },
+      "recipe": {
+        "ingredients": [
+          {
+            "name": "Refined flour (maida), wrapper",
+            "grams": 100,
+            "source": {
+              "id": "IFCT2017",
+              "ref": "A018",
+              "row_name": "Wheat flour, refined"
+            }
+          },
+          {
+            "name": "Cabbage, green",
+            "grams": 100,
+            "source": {
+              "id": "IFCT2017",
+              "ref": "C015",
+              "row_name": "Cabbage, green"
+            }
+          },
+          {
+            "name": "Carrot",
+            "grams": 50,
+            "source": {
+              "id": "IFCT2017",
+              "ref": "F002",
+              "row_name": "Carrot, orange"
+            }
+          },
+          {
+            "name": "Onion",
+            "grams": 40,
+            "source": {
+              "id": "IFCT2017",
+              "ref": "G017",
+              "row_name": "Onion, big"
+            }
+          },
+          {
+            "name": "Ginger",
+            "grams": 5,
+            "source": {
+              "id": "IFCT2017",
+              "ref": "G014",
+              "row_name": "Ginger, fresh"
+            }
+          },
+          {
+            "name": "Garlic",
+            "grams": 3,
+            "source": {
+              "id": "IFCT2017",
+              "ref": "G012",
+              "row_name": "Garlic, small clove"
+            }
+          },
+          {
+            "name": "Oil (filling)",
+            "grams": 5,
+            "source": {
+              "id": "IFCT2017",
+              "ref": "T012",
+              "row_name": "Sunflower oil"
+            }
+          }
+        ],
+        "cooked_weight_g": 353,
+        "cooked_weight_basis": "assumed: ingredients (303 g) + 50 g water in the dough; steaming taken as no net weight change (~14 momos of 25 g)",
+        "method": "maida dough rolled thin, filled with sautéed chopped cabbage, carrot, onion, ginger and garlic, pleated and steamed"
+      },
+      "confidence": "low",
+      "notes": "Recipe quantities assumed from a standard veg momo recipe. Corrected in Claude Code: USDA 'Dumpling, no meat' (2708344) is a plain flour-milk dough dumpling, not a filled momo, and USDA has no vegetable-filled dumpling (its 'no meat' potsticker is built from the pork one), so this is built from a standard momo recipe with IFCT ingredients.",
+      "image_prompt": "Six white steamed veg momos with red chutney",
+      "research": "batch-1b.json"
+    },
+    {
+      "id": "chicken-momos-steamed",
+      "name": "Chicken Momos (Steamed)",
+      "name_hi": "चिकन मोमोज़",
+      "category": "snack",
+      "diet": "non_veg",
+      "form": "cooked",
+      "aliases": [
+        "chicken momos",
+        "chicken momo",
+        "steamed chicken momos",
+        "chicken dumplings"
+      ],
+      "per_100g": {
+        "kcal": 113,
+        "protein_g": 6.9,
+        "carbs_g": 11.07,
+        "fat_g": 4.6,
+        "fiber_g": 1.2,
+        "alcohol_g": 0
+      },
+      "units": [
+        {
+          "unit": "momo",
+          "label": "1 momo",
+          "grams": 25,
+          "basis": "estimated standard household measure"
+        },
+        {
+          "unit": "plate",
+          "label": "1 plate (6 momos)",
+          "grams": 150,
+          "basis": "estimated standard household measure"
+        }
+      ],
+      "default_unit": "plate",
+      "source": {
+        "id": "USDA",
+        "ref": "fdcId 2708708",
+        "url": "https://fdc.nal.usda.gov/food-details/2708708/nutrients"
+      },
+      "confidence": "low",
+      "notes": "USDA FNDDS steamed potsticker (fdcId 2708708), made from a pork-and-vegetable potsticker: a stand-in for chicken momos; chicken filling is usually leaner.",
+      "image_prompt": "Six steamed chicken momos with spicy red chutney",
+      "research": "batch-1b.json"
+    },
+    {
+      "id": "veg-momos-fried",
+      "name": "Veg Momos (Fried)",
+      "name_hi": "फ्राइड वेज मोमोज़",
+      "category": "snack",
+      "diet": "vegan",
+      "form": "cooked",
+      "aliases": [
+        "fried momos",
+        "fried veg momos",
+        "fried momo",
+        "veg fried momos",
+        "crispy momos"
+      ],
+      "per_100g": {
+        "kcal": 300.26,
+        "protein_g": 5.49,
+        "carbs_g": 35.67,
+        "fat_g": 15.07,
+        "fiber_g": 3.78
+      },
+      "units": [
+        {
+          "unit": "momo",
+          "label": "1 momo",
+          "grams": 25,
+          "basis": "estimated standard household measure"
+        },
+        {
+          "unit": "plate",
+          "label": "1 plate (6 momos)",
+          "grams": 150,
+          "basis": "estimated standard household measure"
+        }
+      ],
+      "default_unit": "plate",
+      "source": {
+        "id": "DERIVED",
+        "ref": "Veg momos, deep-fried (absorbed-oil model)",
+        "url": "https://www.npmjs.com/package/@ifct2017/compositions"
+      },
+      "recipe": {
+        "ingredients": [
+          {
+            "name": "Refined flour (maida), wrapper",
+            "grams": 100,
+            "source": {
+              "id": "IFCT2017",
+              "ref": "A018",
+              "row_name": "Wheat flour, refined"
+            }
+          },
+          {
+            "name": "Cabbage, green",
+            "grams": 100,
+            "source": {
+              "id": "IFCT2017",
+              "ref": "C015",
+              "row_name": "Cabbage, green"
+            }
+          },
+          {
+            "name": "Carrot",
+            "grams": 50,
+            "source": {
+              "id": "IFCT2017",
+              "ref": "F002",
+              "row_name": "Carrot, orange"
+            }
+          },
+          {
+            "name": "Onion",
+            "grams": 40,
+            "source": {
+              "id": "IFCT2017",
+              "ref": "G017",
+              "row_name": "Onion, big"
+            }
+          },
+          {
+            "name": "Ginger",
+            "grams": 5,
+            "source": {
+              "id": "IFCT2017",
+              "ref": "G014",
+              "row_name": "Ginger, fresh"
+            }
+          },
+          {
+            "name": "Garlic",
+            "grams": 3,
+            "source": {
+              "id": "IFCT2017",
+              "ref": "G012",
+              "row_name": "Garlic, small clove"
+            }
+          },
+          {
+            "name": "Oil (filling)",
+            "grams": 5,
+            "source": {
+              "id": "IFCT2017",
+              "ref": "T012",
+              "row_name": "Sunflower oil"
+            }
+          }
+        ],
+        "frying": {
+          "fat_ref": "JPS2024:poori:180:32",
+          "fat_pct": 25.12,
+          "fat_basis": "dry",
+          "fat_source": {
+            "url": "https://doi.org/10.1007/s13197-024-05989-z",
+            "table": "Jain, Passi & Selvamurthy 2024: poori, 180 °C, cycle 32"
+          },
+          "moisture_pct": 40,
+          "moisture_source": "assumed"
+        },
+        "method": "steamed veg momos deep-fried until golden"
+      },
+      "confidence": "low",
+      "notes": "Fried (absorbed-oil model). Street, so the 32nd-cycle value; proxy = poori (wheat dough). Moisture 40 % assumed (vegetable filling). Corrected in Claude Code: USDA 'Dumpling, no meat' (2708344) is a plain flour-milk dough dumpling, not a filled momo, and USDA has no vegetable-filled dumpling (its 'no meat' potsticker is built from the pork one), so this is built from a standard momo recipe with IFCT ingredients.",
+      "image_prompt": "Golden deep-fried veg momos with mayonnaise and red chutney",
+      "research": "batch-1b.json"
+    },
+    {
+      "id": "chicken-momos-fried",
+      "name": "Chicken Momos (Fried)",
+      "name_hi": "फ्राइड चिकन मोमोज़",
+      "category": "snack",
+      "diet": "non_veg",
+      "form": "cooked",
+      "aliases": [
+        "fried chicken momos",
+        "chicken fried momos",
+        "crispy chicken momos"
+      ],
+      "per_100g": {
+        "kcal": 192,
+        "protein_g": 8.76,
+        "carbs_g": 14.05,
+        "fat_g": 11.13,
+        "fiber_g": 1.5,
+        "alcohol_g": 0
+      },
+      "units": [
+        {
+          "unit": "momo",
+          "label": "1 momo",
+          "grams": 25,
+          "basis": "estimated standard household measure"
+        },
+        {
+          "unit": "plate",
+          "label": "1 plate (6 momos)",
+          "grams": 150,
+          "basis": "estimated standard household measure"
+        }
+      ],
+      "default_unit": "plate",
+      "source": {
+        "id": "USDA",
+        "ref": "fdcId 2708705",
+        "url": "https://fdc.nal.usda.gov/food-details/2708705/nutrients"
+      },
+      "confidence": "low",
+      "notes": "USDA FNDDS fried potsticker (fdcId 2708705), pork-and-vegetable potsticker fried in oil: a stand-in for fried chicken momos.",
+      "image_prompt": "Crispy fried chicken momos on a plate with red chutney",
+      "research": "batch-1b.json"
+    },
+    {
+      "id": "vada-pav",
+      "name": "Vada Pav",
+      "name_hi": "वड़ा पाव",
+      "category": "snack",
+      "diet": "veg",
+      "form": "cooked",
+      "aliases": [
+        "vada pav",
+        "wada pav",
+        "vadapav",
+        "batata vada pav",
+        "bombay burger"
+      ],
+      "per_100g": {
+        "kcal": 249.24,
+        "protein_g": 7.47,
+        "carbs_g": 35.86,
+        "fat_g": 8.4,
+        "fiber_g": 3.71
+      },
+      "units": [
+        {
+          "unit": "piece",
+          "label": "1 vada pav",
+          "grams": 105,
+          "basis": "recipe"
+        }
+      ],
+      "default_unit": "piece",
+      "source": {
+        "id": "DERIVED",
+        "ref": "Vada pav",
+        "url": "https://github.com/lindsayjaacks/Indian-Nutrient-Databank-INDB-/blob/main/INDB.xlsx"
+      },
+      "recipe": {
+        "ingredients": [
+          {
+            "name": "Pav x1",
+            "grams": 40,
+            "source": {
+              "id": "FOOD",
+              "ref": "pav",
+              "row_name": "Pav (Bread Roll)"
+            }
+          },
+          {
+            "name": "Batata vada",
+            "grams": 50,
+            "source": {
+              "id": "FOOD",
+              "ref": "batata-vada",
+              "row_name": "Batata Vada / Aloo Bonda"
+            }
+          },
+          {
+            "name": "Mint coriander chutney",
+            "grams": 10,
+            "source": {
+              "id": "INDB",
+              "ref": "ASC387",
+              "row_name": "Mint and coriander chutney (Pudinay aur dhaniye ki chutney)"
+            }
+          },
+          {
+            "name": "Saunth / imli chutney",
+            "grams": 5,
+            "source": {
+              "id": "INDB",
+              "ref": "ASC281",
+              "row_name": "Saunth/Sonth chutney with tamarind/imli"
+            }
+          }
+        ],
+        "cooked_weight_g": 105,
+        "cooked_weight_basis": "sum of parts",
+        "method": "batata vada in a pav with green and sweet chutney"
+      },
+      "confidence": "low",
+      "notes": "Dry red garlic chutney (standard in Mumbai) not included: no allowed source found. Composition assumed. per_100g left for the pipeline (USDA pav, frying-model vada).",
+      "image_prompt": "Mumbai vada pav with green chutney and a fried green chilli",
+      "research": "batch-1b.json"
+    },
+    {
+      "id": "dabeli",
+      "name": "Dabeli",
+      "name_hi": "दाबेली",
+      "category": "snack",
+      "diet": "veg",
+      "form": "cooked",
+      "aliases": [
+        "dabeli",
+        "kutchi dabeli",
+        "kacchi dabeli",
+        "double roti dabeli"
+      ],
+      "per_100g": {
+        "kcal": 204.68,
+        "protein_g": 6.32,
+        "carbs_g": 27.02,
+        "fat_g": 7.8,
+        "fiber_g": 2.96
+      },
+      "units": [
+        {
+          "unit": "piece",
+          "label": "1 dabeli",
+          "grams": 131,
+          "basis": "recipe"
+        }
+      ],
+      "default_unit": "piece",
+      "source": {
+        "id": "DERIVED",
+        "ref": "Kutchi dabeli",
+        "url": "https://github.com/lindsayjaacks/Indian-Nutrient-Databank-INDB-/blob/main/INDB.xlsx"
+      },
+      "recipe": {
+        "ingredients": [
+          {
+            "name": "Pav x1",
+            "grams": 40,
+            "source": {
+              "id": "FOOD",
+              "ref": "pav",
+              "row_name": "Pav (Bread Roll)"
+            }
+          },
+          {
+            "name": "Potato (boiled)",
+            "grams": 50,
+            "source": {
+              "id": "IFCT2017",
+              "ref": "F006",
+              "row_name": "Potato, brown skin, big"
+            }
+          },
+          {
+            "name": "Dates chutney",
+            "grams": 10,
+            "source": {
+              "id": "INDB",
+              "ref": "OSR085",
+              "row_name": "Dates chutney (Khajoor ki chutney)"
+            }
+          },
+          {
+            "name": "Groundnut (masala peanuts; raw row as proxy)",
+            "grams": 8,
+            "source": {
+              "id": "IFCT2017",
+              "ref": "H012",
+              "row_name": "Ground nut"
+            }
+          },
+          {
+            "name": "Pomegranate seeds",
+            "grams": 5,
+            "source": {
+              "id": "IFCT2017",
+              "ref": "E055",
+              "row_name": "Pomegranate, maroon seeds"
+            }
+          },
+          {
+            "name": "Onion",
+            "grams": 10,
+            "source": {
+              "id": "IFCT2017",
+              "ref": "G017",
+              "row_name": "Onion, big"
+            }
+          },
+          {
+            "name": "Groundnut oil (toasting)",
+            "grams": 3,
+            "source": {
+              "id": "IFCT2017",
+              "ref": "T005",
+              "row_name": "Groundnut oil"
+            }
+          },
+          {
+            "name": "Sev",
+            "grams": 5,
+            "source": {
+              "id": "FOOD",
+              "ref": "nylon-sev",
+              "row_name": "Sev (Besan Sev)"
+            }
+          }
+        ],
+        "cooked_weight_g": 131,
+        "cooked_weight_basis": "sum of parts",
+        "method": "pav stuffed with sweet-spicy potato filling, peanuts, pomegranate, onion and sev, toasted"
+      },
+      "confidence": "low",
+      "notes": "Dabeli masala spices ignored (small). Often toasted with butter instead of oil (assumed oil here). Composition assumed. per_100g left for the pipeline.",
+      "image_prompt": "Kutchi dabeli with pomegranate, peanuts and sev peeking out",
+      "research": "batch-1b.json"
+    },
+    {
+      "id": "misal-pav",
+      "name": "Misal Pav",
+      "name_hi": "मिसल पाव",
+      "category": "breakfast",
+      "diet": "veg",
+      "form": "cooked",
+      "aliases": [
+        "misal pav",
+        "misal",
+        "misal paav",
+        "puneri misal",
+        "kolhapuri misal"
+      ],
+      "per_100g": {
+        "kcal": 148.59,
+        "protein_g": 5.47,
+        "carbs_g": 20.05,
+        "fat_g": 5.1,
+        "fiber_g": 2.78
+      },
+      "units": [
+        {
+          "unit": "plate",
+          "label": "1 plate (misal + 2 pav)",
+          "grams": 323,
+          "basis": "recipe"
+        }
+      ],
+      "default_unit": "plate",
+      "source": {
+        "id": "DERIVED",
+        "ref": "Misal pav plate",
+        "url": "https://github.com/lindsayjaacks/Indian-Nutrient-Databank-INDB-/blob/main/INDB.xlsx"
+      },
+      "recipe": {
+        "ingredients": [
+          {
+            "name": "Whole moth dal (usal base)",
+            "grams": 200,
+            "source": {
+              "id": "INDB",
+              "ref": "ASC158",
+              "row_name": "Whole moth (Moth ki dal)"
+            }
+          },
+          {
+            "name": "Farsan (sev as proxy)",
+            "grams": 25,
+            "source": {
+              "id": "FOOD",
+              "ref": "nylon-sev",
+              "row_name": "Sev (Besan Sev)"
+            }
+          },
+          {
+            "name": "Onion",
+            "grams": 15,
+            "source": {
+              "id": "IFCT2017",
+              "ref": "G017",
+              "row_name": "Onion, big"
+            }
+          },
+          {
+            "name": "Lemon juice",
+            "grams": 3,
+            "source": {
+              "id": "IFCT2017",
+              "ref": "E033",
+              "row_name": "Lemon, juice"
+            }
+          },
+          {
+            "name": "Pav x2",
+            "grams": 80,
+            "source": {
+              "id": "FOOD",
+              "ref": "pav",
+              "row_name": "Pav (Bread Roll)"
+            }
+          }
+        ],
+        "cooked_weight_g": 323,
+        "cooked_weight_basis": "sum of parts",
+        "method": "spicy moth-bean usal topped with farsan and onion, served with 2 pav"
+      },
+      "confidence": "low",
+      "notes": "Usal uses INDB Whole moth dal (ASC158), which is milder and much less oily than a restaurant misal with its red oil 'tarri', so this under-counts. Farsan uses sev as proxy. per_100g left for the pipeline.",
+      "image_prompt": "Misal pav with red spicy gravy, farsan, onion, lemon and two pav",
+      "research": "batch-1b.json"
+    },
+    {
       "id": "chicken-kathi-roll",
       "name": "Chicken Kathi Roll",
       "name_hi": "चिकन काठी रोल",
       "category": "snack",
       "diet": "non_veg",
       "form": "cooked",
-      "aliases": [],
+      "aliases": [
+        "chicken roll",
+        "chicken kathi roll",
+        "chicken frankie",
+        "chicken tikka roll",
+        "chicken wrap"
+      ],
       "per_100g": {
         "kcal": 181.99,
         "protein_g": 9.32,
@@ -2784,7 +3651,14 @@
       "category": "snack",
       "diet": "vegan",
       "form": "cooked",
-      "aliases": [],
+      "aliases": [
+        "veg frankie",
+        "aloo frankie",
+        "veg roll",
+        "aloo roll",
+        "potato wrap",
+        "frankie"
+      ],
       "per_100g": {
         "kcal": 170.15,
         "protein_g": 2.99,
@@ -2870,7 +3744,13 @@
       "category": "snack",
       "diet": "egg",
       "form": "cooked",
-      "aliases": [],
+      "aliases": [
+        "egg chowmein",
+        "egg noodles",
+        "egg hakka noodles",
+        "anda chowmein",
+        "egg chowmin"
+      ],
       "per_100g": {
         "kcal": 136.52,
         "protein_g": 4.94,
@@ -2929,7 +3809,13 @@
       "category": "snack",
       "diet": "veg",
       "form": "cooked",
-      "aliases": [],
+      "aliases": [
+        "chole kulche",
+        "chhole kulche",
+        "matar kulcha",
+        "kulcha chole",
+        "chole kulcha"
+      ],
       "per_100g": {
         "kcal": 203.42,
         "protein_g": 6.54,
@@ -3006,7 +3892,13 @@
       "category": "snack",
       "diet": "veg",
       "form": "cooked",
-      "aliases": [],
+      "aliases": [
+        "chole bhature",
+        "chhole bhature",
+        "chole bhatura",
+        "chana bhatura",
+        "bhature chole"
+      ],
       "per_100g": {
         "kcal": 253.44,
         "protein_g": 6.15,
@@ -3066,6 +3958,754 @@
       "notes": "Portion assumed. Pickle and green chilli not included. per_100g left for the pipeline (frying-model bhatura).",
       "image_prompt": "Chole bhature with two puffed bhature, chole, onion and pickle",
       "research": "batch-1b.json"
+    },
+    {
+      "id": "bira-91-white",
+      "name": "Bira 91 White",
+      "name_hi": "बीरा 91 व्हाइट",
+      "category": "alcohol",
+      "diet": "vegan",
+      "form": "beverage",
+      "aliases": [
+        "bira white",
+        "bira",
+        "bira 91",
+        "bira wheat beer",
+        "beera white",
+        "bira91 white"
+      ],
+      "per_100g": {
+        "kcal": 42,
+        "protein_g": 0.46,
+        "carbs_g": 3.55,
+        "fat_g": 0,
+        "fiber_g": 0,
+        "alcohol_g": 3.71
+      },
+      "units": [
+        {
+          "unit": "bottle_650",
+          "label": "1 bottle (650 ml)",
+          "grams": 650,
+          "basis": "brand site"
+        },
+        {
+          "unit": "bottle_330",
+          "label": "1 bottle (330 ml)",
+          "grams": 330,
+          "basis": "brand site"
+        },
+        {
+          "unit": "can_500",
+          "label": "1 can (500 ml)",
+          "grams": 500,
+          "basis": "brand site"
+        }
+      ],
+      "default_unit": "bottle_650",
+      "source": {
+        "id": "USDA",
+        "ref": "search: Alcoholic beverage, beer, regular, all",
+        "url": "https://fdc.nal.usda.gov/"
+      },
+      "drink": {
+        "type": "beer",
+        "style": "wheat (Belgian-style witbier)",
+        "brand": "Bira 91",
+        "maker": "B9 Beverages Pvt. Ltd.",
+        "made_in": "India",
+        "abv_pct": 4.7,
+        "abv_source": {
+          "url": "https://bira91.com/beer-details-white",
+          "text": "ABV 4.7%"
+        },
+        "stated_nutrition": null
+      },
+      "confidence": "medium",
+      "notes": "ABV and pack sizes (draft, 500 ml can, 330 and 650 ml bottles) from the Bira 91 India product page. Bira publishes no nutrition, so protein/carbs/sugars come from the USDA regular-beer style row (to be fetched); a cloudy wheat beer may carry slightly more carbs. Ingredients listed: wheat, barley malt, oats, hops, orange peel, coriander.",
+      "image_prompt": "Cloudy pale-gold wheat beer in a tall glass with a thick white head and an orange slice",
+      "research": "batch-A1.json"
+    },
+    {
+      "id": "bira-91-blonde",
+      "name": "Bira 91 Blonde",
+      "name_hi": "बीरा 91 ब्लॉन्ड",
+      "category": "alcohol",
+      "diet": "vegan",
+      "form": "beverage",
+      "aliases": [
+        "bira blonde",
+        "bira lager",
+        "bira 91 blonde",
+        "bira summer lager",
+        "beera blonde"
+      ],
+      "per_100g": {
+        "kcal": 40.89,
+        "protein_g": 0.46,
+        "carbs_g": 3.55,
+        "fat_g": 0,
+        "fiber_g": 0,
+        "alcohol_g": 3.55
+      },
+      "units": [
+        {
+          "unit": "bottle_650",
+          "label": "1 bottle (650 ml)",
+          "grams": 650,
+          "basis": "brand site"
+        },
+        {
+          "unit": "bottle_330",
+          "label": "1 bottle (330 ml)",
+          "grams": 330,
+          "basis": "brand site"
+        },
+        {
+          "unit": "can_500",
+          "label": "1 can (500 ml)",
+          "grams": 500,
+          "basis": "brand site"
+        }
+      ],
+      "default_unit": "bottle_650",
+      "source": {
+        "id": "USDA",
+        "ref": "search: Alcoholic beverage, beer, regular, all",
+        "url": "https://fdc.nal.usda.gov/"
+      },
+      "drink": {
+        "type": "beer",
+        "style": "lager",
+        "brand": "Bira 91",
+        "maker": "B9 Beverages Pvt. Ltd.",
+        "made_in": "India",
+        "abv_pct": 4.5,
+        "abv_source": {
+          "url": "https://bira91.com/beer-details-blonde",
+          "text": "ABV 4.5%"
+        },
+        "stated_nutrition": null
+      },
+      "confidence": "medium",
+      "notes": "ABV and packs from the Bira 91 India page ('Blonde Summer Lager'). Older sources quote 4.9% for Blonde; the current brand page says 4.5%. Carbs etc. from the USDA regular-beer style row.",
+      "image_prompt": "Clear golden lager in a pint glass with a white head",
+      "research": "batch-A1.json"
+    },
+    {
+      "id": "bira-91-boom-classic",
+      "name": "Bira 91 Boom Classic",
+      "name_hi": "बीरा 91 बूम क्लासिक",
+      "category": "alcohol",
+      "diet": "vegan",
+      "form": "beverage",
+      "aliases": [
+        "boom classic",
+        "bira boom",
+        "boom beer",
+        "boom pilsner",
+        "bira boom classic"
+      ],
+      "per_100g": {
+        "kcal": 39.24,
+        "protein_g": 0.46,
+        "carbs_g": 3.55,
+        "fat_g": 0,
+        "fiber_g": 0,
+        "alcohol_g": 3.31
+      },
+      "units": [
+        {
+          "unit": "bottle_650",
+          "label": "1 bottle (650 ml)",
+          "grams": 650,
+          "basis": "brand site"
+        },
+        {
+          "unit": "bottle_330",
+          "label": "1 bottle (330 ml)",
+          "grams": 330,
+          "basis": "brand site"
+        },
+        {
+          "unit": "can_500",
+          "label": "1 can (500 ml)",
+          "grams": 500,
+          "basis": "brand site"
+        }
+      ],
+      "default_unit": "bottle_650",
+      "source": {
+        "id": "USDA",
+        "ref": "search: Alcoholic beverage, beer, regular, all",
+        "url": "https://fdc.nal.usda.gov/"
+      },
+      "drink": {
+        "type": "beer",
+        "style": "pilsner",
+        "brand": "Bira 91 Boom",
+        "maker": "B9 Beverages Pvt. Ltd.",
+        "made_in": "India",
+        "abv_pct": 4.2,
+        "abv_source": {
+          "url": "https://bira91.com/beer-details-boom",
+          "text": "ABV 4.2% (spec field); the same page's description says 'this 4.5% abv beer'"
+        },
+        "stated_nutrition": null
+      },
+      "confidence": "low",
+      "notes": "The brand page contradicts itself: ABV field 4.2%, description 4.5%. The spec field is used; check a physical label. Carbs etc. from the USDA regular-beer style row.",
+      "image_prompt": "Sparkling clear pilsner in a tall glass",
+      "research": "batch-A1.json"
+    },
+    {
+      "id": "bira-91-boom-super-strong",
+      "name": "Bira 91 Boom Super Strong",
+      "name_hi": "बीरा 91 बूम सुपर स्ट्रॉन्ग",
+      "category": "alcohol",
+      "diet": "vegan",
+      "form": "beverage",
+      "aliases": [
+        "boom strong",
+        "boom super strong",
+        "bira strong",
+        "bira boom strong",
+        "boom beer strong"
+      ],
+      "per_100g": {
+        "kcal": 60.22,
+        "protein_g": 0.46,
+        "carbs_g": 3.55,
+        "fat_g": 0,
+        "fiber_g": 0,
+        "alcohol_g": 6.31
+      },
+      "units": [
+        {
+          "unit": "bottle_650",
+          "label": "1 bottle (650 ml)",
+          "grams": 650,
+          "basis": "brand site"
+        },
+        {
+          "unit": "bottle_330",
+          "label": "1 bottle (330 ml)",
+          "grams": 330,
+          "basis": "brand site"
+        },
+        {
+          "unit": "can_500",
+          "label": "1 can (500 ml)",
+          "grams": 500,
+          "basis": "brand site"
+        }
+      ],
+      "default_unit": "bottle_650",
+      "source": {
+        "id": "USDA",
+        "ref": "search: Alcoholic beverage, beer, regular, all",
+        "url": "https://fdc.nal.usda.gov/"
+      },
+      "drink": {
+        "type": "beer",
+        "style": "strong lager (Munich-style malty)",
+        "brand": "Bira 91 Boom",
+        "maker": "B9 Beverages Pvt. Ltd.",
+        "made_in": "India",
+        "abv_pct": 8,
+        "abv_source": {
+          "url": "https://bira91.com/beer-details-boom-strong",
+          "text": "ABV <8% — 8 used as the stated ceiling"
+        },
+        "stated_nutrition": null
+      },
+      "confidence": "low",
+      "notes": "Brand page gives only '<8%' (the Indian strong-beer ceiling); 8 is an upper bound, so alcohol may be slightly over-counted. USDA has no strong-lager row; the regular-beer row likely under-counts residual carbs of a malty strong lager.",
+      "image_prompt": "Deep golden strong lager in a mug",
+      "research": "batch-A1.json"
+    },
+    {
+      "id": "bira-91-plus-super-strong",
+      "name": "Bira 91 Plus Super Strong",
+      "name_hi": "बीरा 91 प्लस सुपर स्ट्रॉन्ग",
+      "category": "alcohol",
+      "diet": "vegan",
+      "form": "beverage",
+      "aliases": [
+        "bira plus",
+        "bira 91 plus",
+        "bira super strong",
+        "plus super strong",
+        "bira strong lager"
+      ],
+      "per_100g": {
+        "kcal": 60.22,
+        "protein_g": 0.46,
+        "carbs_g": 3.55,
+        "fat_g": 0,
+        "fiber_g": 0,
+        "alcohol_g": 6.31
+      },
+      "units": [
+        {
+          "unit": "bottle_650",
+          "label": "1 bottle (650 ml)",
+          "grams": 650,
+          "basis": "brand site"
+        },
+        {
+          "unit": "can_500",
+          "label": "1 can (500 ml)",
+          "grams": 500,
+          "basis": "brand site"
+        }
+      ],
+      "default_unit": "bottle_650",
+      "source": {
+        "id": "USDA",
+        "ref": "search: Alcoholic beverage, beer, regular, all",
+        "url": "https://fdc.nal.usda.gov/"
+      },
+      "drink": {
+        "type": "beer",
+        "style": "strong lager",
+        "brand": "Bira 91",
+        "maker": "B9 Beverages Pvt. Ltd.",
+        "made_in": "India",
+        "abv_pct": 8,
+        "abv_source": {
+          "url": "https://bira91.com/beer_details_plus_super_strong",
+          "text": "'at a full-strength 8% ABV' (description); spec field 'ABV < 8%'"
+        },
+        "stated_nutrition": null
+      },
+      "confidence": "medium",
+      "notes": "Brand page states 8% in text and '<8%' in the spec box; 8% used. Packs per brand page: 500 ml cans and 650 ml bottles only. Carbs from the USDA regular-beer row (likely under-counts a strong lager).",
+      "image_prompt": "Amber-gold strong lager in a glass beside a 650 ml bottle, no labels",
+      "research": "batch-A1.json"
+    },
+    {
+      "id": "godfather-super-8",
+      "name": "Godfather Super 8",
+      "name_hi": "गॉडफ़ादर सुपर 8",
+      "category": "alcohol",
+      "diet": "vegan",
+      "form": "beverage",
+      "aliases": [
+        "godfather",
+        "godfather super 8",
+        "godfather strong",
+        "super 8 beer",
+        "godfather beer",
+        "gf super 8"
+      ],
+      "per_100g": {
+        "kcal": 60.22,
+        "protein_g": 0.46,
+        "carbs_g": 3.55,
+        "fat_g": 0,
+        "fiber_g": 0,
+        "alcohol_g": 6.31
+      },
+      "units": [
+        {
+          "unit": "bottle_650",
+          "label": "1 bottle (650 ml)",
+          "grams": 650,
+          "basis": "standard Indian pour"
+        },
+        {
+          "unit": "can_500",
+          "label": "1 can (500 ml)",
+          "grams": 500,
+          "basis": "standard Indian pour"
+        }
+      ],
+      "default_unit": "bottle_650",
+      "source": {
+        "id": "USDA",
+        "ref": "search: Alcoholic beverage, beer, regular, all",
+        "url": "https://fdc.nal.usda.gov/"
+      },
+      "drink": {
+        "type": "beer",
+        "style": "strong lager",
+        "brand": "Godfather",
+        "maker": "DeVANS Modern Breweries Ltd.",
+        "made_in": "India",
+        "abv_pct": 8,
+        "abv_source": {
+          "url": "https://godfatherbeer.com/our-beer/",
+          "text": "GodfatheR sUPER 8 … ABV 8% | IBU 60 | OG 1.104 (also 'Super 8 - At 8% ABV' on https://devans.co.in/)"
+        },
+        "stated_nutrition": null
+      },
+      "confidence": "medium",
+      "notes": "ABV from the brand and parent-company sites. Pack sizes are NOT stated on either site (only a can image), so 650 ml bottle / 500 ml can are the common Indian beer packs, not a confirmed listing — verify against a label or excise list. Ingredients per brand site: water, wheat malt, hop, yeast, enzyme. Carbs from the USDA regular-beer row (likely under-counts; OG 1.104 suggests a high-gravity brew).",
+      "image_prompt": "Strong lager in a tall can and glass, no logos",
+      "research": "batch-A1.json"
+    },
+    {
+      "id": "godfather-legendary",
+      "name": "Godfather Legendary",
+      "name_hi": "गॉडफ़ादर लेजेंडरी",
+      "category": "alcohol",
+      "diet": "vegan",
+      "form": "beverage",
+      "aliases": [
+        "godfather legendary",
+        "godfather strong lager",
+        "gf legendary",
+        "legendary beer"
+      ],
+      "per_100g": {
+        "kcal": 55.81,
+        "protein_g": 0.46,
+        "carbs_g": 3.55,
+        "fat_g": 0,
+        "fiber_g": 0,
+        "alcohol_g": 5.68
+      },
+      "units": [
+        {
+          "unit": "bottle_650",
+          "label": "1 bottle (650 ml)",
+          "grams": 650,
+          "basis": "standard Indian pour"
+        },
+        {
+          "unit": "can_500",
+          "label": "1 can (500 ml)",
+          "grams": 500,
+          "basis": "standard Indian pour"
+        }
+      ],
+      "default_unit": "bottle_650",
+      "source": {
+        "id": "USDA",
+        "ref": "search: Alcoholic beverage, beer, regular, all",
+        "url": "https://fdc.nal.usda.gov/"
+      },
+      "drink": {
+        "type": "beer",
+        "style": "strong lager",
+        "brand": "Godfather",
+        "maker": "DeVANS Modern Breweries Ltd.",
+        "made_in": "India",
+        "abv_pct": 7.2,
+        "abv_source": {
+          "url": "https://godfatherbeer.com/our-beer/",
+          "text": "GodfatheR lEGENDARY … ABV 7.2% | IBU 60 | OG 1.104 (also 'Legendary - With 7.2% ABV' on https://devans.co.in/)"
+        },
+        "stated_nutrition": null
+      },
+      "confidence": "medium",
+      "notes": "Pack sizes not stated on the brand sites (see Super 8 note). Carbs from the USDA regular-beer row.",
+      "image_prompt": "Golden strong lager in a mug beside a brown bottle, no labels",
+      "research": "batch-A1.json"
+    },
+    {
+      "id": "godfather-luxury-lager",
+      "name": "Godfather Luxury Lager",
+      "name_hi": "गॉडफ़ादर लग्ज़री लेगर",
+      "category": "alcohol",
+      "diet": "vegan",
+      "form": "beverage",
+      "aliases": [
+        "godfather lager",
+        "godfather luxury",
+        "godfather mild",
+        "gf lager"
+      ],
+      "per_100g": {
+        "kcal": 43.66,
+        "protein_g": 0.46,
+        "carbs_g": 3.55,
+        "fat_g": 0,
+        "fiber_g": 0,
+        "alcohol_g": 3.95
+      },
+      "units": [
+        {
+          "unit": "bottle_650",
+          "label": "1 bottle (650 ml)",
+          "grams": 650,
+          "basis": "standard Indian pour"
+        },
+        {
+          "unit": "can_500",
+          "label": "1 can (500 ml)",
+          "grams": 500,
+          "basis": "standard Indian pour"
+        }
+      ],
+      "default_unit": "bottle_650",
+      "source": {
+        "id": "USDA",
+        "ref": "search: Alcoholic beverage, beer, regular, all",
+        "url": "https://fdc.nal.usda.gov/"
+      },
+      "drink": {
+        "type": "beer",
+        "style": "lager",
+        "brand": "Godfather",
+        "maker": "DeVANS Modern Breweries Ltd.",
+        "made_in": "India",
+        "abv_pct": 5,
+        "abv_source": {
+          "url": "https://devans.co.in/",
+          "text": "Luxury Lager- With 5% ABV"
+        },
+        "stated_nutrition": null
+      },
+      "confidence": "medium",
+      "notes": "ABV from the parent-company site. Pack sizes not confirmed. Diet assumed vegan from the Godfather range ingredient list (water, malt, hop, yeast, enzyme); this variant's own ingredients aren't listed.",
+      "image_prompt": "Pale golden lager in a glass, no logos",
+      "research": "batch-A1.json"
+    },
+    {
+      "id": "beer-regular-lager-generic",
+      "name": "Beer, regular lager (~5%)",
+      "name_hi": "बीयर (रेगुलर लेगर)",
+      "category": "alcohol",
+      "diet": "vegan",
+      "form": "beverage",
+      "aliases": [
+        "normal beer",
+        "mild beer",
+        "regular beer",
+        "lager",
+        "chilled beer",
+        "light lager 5"
+      ],
+      "per_100g": {
+        "kcal": 43.66,
+        "protein_g": 0.46,
+        "carbs_g": 3.55,
+        "fat_g": 0,
+        "fiber_g": 0,
+        "alcohol_g": 3.95
+      },
+      "units": [
+        {
+          "unit": "bottle_650",
+          "label": "1 bottle (650 ml)",
+          "grams": 650,
+          "basis": "brand site"
+        },
+        {
+          "unit": "bottle_330",
+          "label": "1 bottle (330 ml)",
+          "grams": 330,
+          "basis": "brand site"
+        },
+        {
+          "unit": "can_500",
+          "label": "1 can (500 ml)",
+          "grams": 500,
+          "basis": "brand site"
+        }
+      ],
+      "default_unit": "bottle_650",
+      "source": {
+        "id": "USDA",
+        "ref": "search: Alcoholic beverage, beer, regular, all",
+        "url": "https://fdc.nal.usda.gov/"
+      },
+      "drink": {
+        "type": "beer",
+        "style": "lager",
+        "brand": "generic",
+        "maker": "various",
+        "made_in": "India",
+        "abv_pct": 5,
+        "abv_source": {
+          "url": "https://devans.co.in/",
+          "text": "Typical mild-lager strength, from sourced examples in this batch: Godfather Luxury Lager 'With 5% ABV'; Bira 91 Blonde 'ABV 4.5%' (https://bira91.com/beer-details-blonde)"
+        },
+        "stated_nutrition": null
+      },
+      "confidence": "medium",
+      "notes": "For users who don't know the brand. Pack sizes are the ones Indian brand pages list (e.g. Bira 91: 500 ml can, 330/650 ml bottles). Indian mild beers range roughly 4.2-5%.",
+      "image_prompt": "Chilled 650 ml brown beer bottle with a glass of golden lager, no labels",
+      "research": "batch-A1.json"
+    },
+    {
+      "id": "beer-strong-generic",
+      "name": "Strong beer (~8%)",
+      "name_hi": "स्ट्रॉन्ग बीयर",
+      "category": "alcohol",
+      "diet": "vegan",
+      "form": "beverage",
+      "aliases": [
+        "strong beer",
+        "super strong beer",
+        "strong lager"
+      ],
+      "per_100g": {
+        "kcal": 60.22,
+        "protein_g": 0.46,
+        "carbs_g": 3.55,
+        "fat_g": 0,
+        "fiber_g": 0,
+        "alcohol_g": 6.31
+      },
+      "units": [
+        {
+          "unit": "bottle_650",
+          "label": "1 bottle (650 ml)",
+          "grams": 650,
+          "basis": "brand site"
+        },
+        {
+          "unit": "can_500",
+          "label": "1 can (500 ml)",
+          "grams": 500,
+          "basis": "brand site"
+        },
+        {
+          "unit": "bottle_330",
+          "label": "1 bottle (330 ml)",
+          "grams": 330,
+          "basis": "brand site"
+        }
+      ],
+      "default_unit": "bottle_650",
+      "source": {
+        "id": "USDA",
+        "ref": "search: Alcoholic beverage, beer, regular, all",
+        "url": "https://fdc.nal.usda.gov/"
+      },
+      "drink": {
+        "type": "beer",
+        "style": "strong lager",
+        "brand": "generic",
+        "maker": "various",
+        "made_in": "India",
+        "abv_pct": 8,
+        "abv_source": {
+          "url": "https://godfatherbeer.com/our-beer/",
+          "text": "Typical Indian strong-beer strength from sourced examples: Godfather Super 8 'ABV 8%'; Bira 91 Plus 'full-strength 8% ABV' (https://bira91.com/beer_details_plus_super_strong); Godfather Legendary 7.2%"
+        },
+        "stated_nutrition": null
+      },
+      "confidence": "medium",
+      "notes": "8% is the top of the Indian strong range; many strong beers sit at 7-8%. USDA has no strong-lager row, so carbs from the regular-beer row probably under-count.",
+      "image_prompt": "Tall 500 ml can and a mug of deep-golden strong beer, no labels",
+      "research": "batch-A1.json"
+    },
+    {
+      "id": "beer-light-generic",
+      "name": "Light beer",
+      "name_hi": "लाइट बीयर",
+      "category": "alcohol",
+      "diet": "vegan",
+      "form": "beverage",
+      "aliases": [
+        "light beer",
+        "lite beer",
+        "low calorie beer",
+        "low carb beer"
+      ],
+      "per_100g": {
+        "kcal": 29.22,
+        "protein_g": 0.24,
+        "carbs_g": 1.64,
+        "fat_g": 0,
+        "fiber_g": 0,
+        "alcohol_g": 3.1
+      },
+      "units": [
+        {
+          "unit": "bottle_330",
+          "label": "1 bottle (330 ml)",
+          "grams": 330,
+          "basis": "standard Indian pour"
+        },
+        {
+          "unit": "can_330",
+          "label": "1 can (330 ml)",
+          "grams": 330,
+          "basis": "standard Indian pour"
+        }
+      ],
+      "default_unit": "bottle_330",
+      "source": {
+        "id": "USDA",
+        "ref": "search: Alcoholic beverage, beer, light",
+        "url": "https://fdc.nal.usda.gov/"
+      },
+      "drink": {
+        "type": "beer",
+        "style": "light lager",
+        "brand": "generic",
+        "maker": "various",
+        "made_in": "imported",
+        "abv_pct": null,
+        "abv_source": {
+          "url": "https://fdc.nal.usda.gov/",
+          "text": "No Indian light-beer ABV sourced; take alcohol from the USDA row's own alcohol value when you fetch it"
+        },
+        "stated_nutrition": null
+      },
+      "confidence": "low",
+      "notes": "Generic only; USDA's light-beer row is US-market based. ABV and alcohol_g left null for the pipeline to fill from the USDA row.",
+      "image_prompt": "Pale straw-coloured light beer in a slim glass",
+      "research": "batch-A1.json"
+    },
+    {
+      "id": "beer-draught-craft-generic",
+      "name": "Draught beer (craft, per glass)",
+      "name_hi": "ड्राफ़्ट बीयर",
+      "category": "alcohol",
+      "diet": "vegan",
+      "form": "beverage",
+      "aliases": [
+        "draught beer",
+        "draft beer",
+        "tap beer",
+        "craft beer",
+        "beer on tap"
+      ],
+      "per_100g": {
+        "kcal": 42,
+        "protein_g": 0.46,
+        "carbs_g": 3.55,
+        "fat_g": 0,
+        "fiber_g": 0,
+        "alcohol_g": 3.71
+      },
+      "units": [
+        {
+          "unit": "pint",
+          "label": "1 glass / pint (330 ml)",
+          "grams": 330,
+          "basis": "standard Indian pour"
+        }
+      ],
+      "default_unit": "pint",
+      "source": {
+        "id": "USDA",
+        "ref": "search: Alcoholic beverage, beer, regular, all",
+        "url": "https://fdc.nal.usda.gov/"
+      },
+      "drink": {
+        "type": "beer",
+        "style": "craft lager / wheat on tap",
+        "brand": "generic",
+        "maker": "various",
+        "made_in": "India",
+        "abv_pct": 4.7,
+        "abv_source": {
+          "url": "https://bira91.com/beer-details-white",
+          "text": "Example: Bira 91 White, sold on draft, 'ABV 4.7%'; craft taps commonly range ~4.5-5.5%"
+        },
+        "stated_nutrition": null
+      },
+      "confidence": "low",
+      "notes": "Microbrewery pour sizes vary (300-500 ml); no pitcher added because no sourced volume. Stouts, IPAs and strong craft beers run higher in both alcohol and carbs.",
+      "image_prompt": "Glass of freshly poured draught beer on a pub counter",
+      "research": "batch-A1.json"
     },
     {
       "id": "chicken-biryani",

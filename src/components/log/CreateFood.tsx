@@ -14,6 +14,7 @@ const KINDS: { cat: Category; label: string }[] = [
   { cat: "cereal", label: "Oats/muesli" },
   { cat: "sweet", label: "Sweet" },
   { cat: "beverage", label: "Drink" },
+  { cat: "alcohol", label: "Alcohol" },
   { cat: "dairy", label: "Dairy" },
   { cat: "fruit", label: "Fruit" },
   { cat: "supplement", label: "Supplement" },
