@@ -1,0 +1,92 @@
+You are researching the health impact of smoking, other tobacco and alcohol for "Prana", a calorie and fitness tracker for Indian users. We are adding an opt-in, private "Habits" section: people log cigarettes / bidis / other tobacco each day (alcohol is already logged as drinks), and the app shows a ROUGH, sourced estimate of what that does to their body, and what improves when they cut down or quit. The numbers are computed on the phone from the formulas and tables you find. They don't need to be precise for one person, but every number must come from a source you actually opened, never from memory, and must be shown with its range. Your output is JSON that we check by re-opening every source.
+
+## What we know about each user (the possible inputs)
+- Profile: sex, age, height (cm), weight (kg), activity level. Waist (cm) and other tape measurements if they logged them. Daily calorie intake, workouts (minutes, sets), weekly exercise minutes.
+- Tobacco (new, logged per day): cigarettes, bidis, hookah sessions, vape sessions, smokeless tobacco (gutka, khaini, zarda, paan with tobacco) portions. We can also ask once: age they started, years smoked, previous quit attempts, date of the last cigarette.
+- Alcohol (already logged): grams of ethanol per day and per week, number of drinks per occasion (binge days), alcohol-free days.
+- We do NOT have lab values (cholesterol, blood sugar), spirometry or genetics. We could ask for blood pressure (home monitor) and resting heart rate if a model really needs them: say so.
+
+## What we want: models, not opinions
+For each thing we could show, find a MODEL: inputs → formula or lookup table → output, with the published coefficients and uncertainty. Examples of the kind of output we want to show (only if a source supports it):
+- "About X years of life expectancy lost at your current level (range A–B)", "each cigarette ≈ N minutes".
+- "Your risk of a heart attack is about X times a non-smoker's"; "10-year heart attack / stroke risk ≈ X %"; "heart age ≈ N".
+- Pack-years and what they mean (screening thresholds).
+- "Since your last cigarette: …" recovery milestones, and how excess risk falls with years since quitting.
+- Alcohol: risk vs grams per week, blood pressure change per drink, liver, cancer, sleep, calories.
+If a source only gives a relative risk, say so: we will present it as "about X times", never as a personal probability.
+
+## The most important output: % more risk per disease as the daily amount goes up
+The screen we want most is a per-disease list that moves with the user's own daily numbers, so they see the effect on their body and are nudged to cut down:
+- "Heart attack risk: about +X % vs a non-smoker at your 8 cigarettes a day (range A–B %). At 4 a day it would be about +Y %."
+- "Each extra cigarette a day ≈ +Z % risk of <disease>" (only if the source gives a per-cigarette or per-band slope).
+- "Cutting from 10 to 5 a day lowers your <disease> risk by about W %" and "quitting for N years brings it down to about V %" (H3).
+- The same for alcohol per extra 10 g a day (about one small drink) and for bidi / smokeless tobacco where data exists.
+For EVERY disease below, give the dose-response in computable form: relative risk (or hazard / odds ratio, say which) at each dose band (never smoked = 1.0; e.g. 1–4, 5–9, 10–14, 15–19, 20–24, 25+ cigarettes a day, or per pack-year), or a per-unit slope / curve equation with its confidence interval. We convert RR to "% more" ourselves (RR 1.6 = +60 %); give the RR as printed. Also give the risk for former smokers by years since quitting where it exists.
+Diseases and conditions (skip any with no dose-response evidence, and list it in not_found):
+- Heart and vessels: heart attack / coronary heart disease, stroke (ischaemic and haemorrhagic), peripheral artery disease, aortic aneurysm, high blood pressure, atrial fibrillation (alcohol).
+- Lungs: lung cancer, COPD, asthma worsening, tuberculosis (important in India: smoking and TB infection, disease and death), pneumonia.
+- Cancers: mouth, throat, oesophagus, stomach, pancreas, bladder, kidney, liver, colorectal, cervix; breast (alcohol).
+- Metabolic and other: type 2 diabetes, fatty liver and cirrhosis (alcohol), erectile dysfunction, fertility, cataract and macular degeneration, gum disease and tooth loss, bone fractures / osteoporosis, skin ageing, depression / anxiety, dementia, all-cause death.
+Put these in the batch where the product belongs (cigarettes in H1, bidi / smokeless in H2, quitting in H3, alcohol in H4), one model per disease (id like "smoking-dose-chd", "alcohol-dose-breast-cancer").
+
+## Allowed sources
+Peer-reviewed papers (PubMed / PMC / journal site: Lancet, BMJ, NEJM, JAMA, Circulation, Addiction, Tobacco Control, IJE…), prefer meta-analyses, pooled cohorts and large prospective cohorts; WHO (incl. IARC monographs, WHO CVD risk charts, WHO AUDIT manual, WHO fact sheets); US Surgeon General reports (2004, 2010, 2014, 2020 cessation); CDC; NHS; NICE; GBD / IHME papers; Indian government and ICMR sources (GATS-2 India, MoHFW, NCDIR, national quitline); Indian cohort studies (Million Death Study, Mumbai cohort, Kerala / Trivandrum cohort, CURES, etc.).
+**Never allowed:** quit-smoking or drinking apps and their marketing numbers (Smoke Free, QuitNow, Kwit…), health blogs, news articles (go to the study they cite), Wikipedia numbers, calculators on commercial sites, AI-generated sites, tobacco / alcohol industry-funded work. If a number is only found there, put it in not_found.
+
+## Rules
+- **Open every source first.** Copy numbers exactly as printed, with their confidence interval, and say where they are (table / figure / page / abstract). If only the abstract is readable (paywall), use the abstract and write "abstract only".
+- **One model = one source**, or a combination the source itself makes. Don't stitch coefficients from different papers into a new formula yourself; if you think a combination is needed, describe it in "caveats" and we'll decide.
+- **Say who was studied:** country, men / women, age range, years, how exposure was measured. Flag clearly whether it was validated in South Asians / Indians. Prefer Indian or South Asian data when it exists; give the Western model too if it's better established.
+- **Say the valid range:** e.g. only ages 40–74, only up to 40 cigarettes a day. We will not extrapolate outside it.
+- **Dose-response is what we need most:** risk at 1–4, 5–9, 10–19, 20+ cigarettes a day (or per pack-year), per 10 g alcohol a day, etc., not just "smokers vs non-smokers". If a paper gives a curve, give its equation or the table of points.
+- **Bidi, hookah, vape and smokeless tobacco are different products:** find their own numbers; if only "equivalent to N cigarettes" claims exist, give the source and how it was measured. If evidence is weak or missing (e.g. long-term vaping), say so plainly; "not enough evidence" is a valid answer.
+- **Separate relative and absolute risk,** and current vs former smokers.
+- **Never invent a "lung health %", "body score" or similar.** If no validated composite exists for our inputs, say so.
+- Units: grams of ethanol (not "drinks") for alcohol; if a source uses drinks, give its drink size in grams.
+- For each model, add one plain line of app copy (user_copy) in simple English: "about", the range, no shame, no diagnosis, no "you will die" language.
+
+## JSON schema: one object per model
+{
+  "id": "smoking-life-expectancy-per-cigarette",
+  "topic": "smoking | bidi | hookah | vape | smokeless | quitting | alcohol | combined | body",
+  "name": "<short name>",
+  "estimates": "<what the output means, one sentence>",
+  "inputs": [ { "name": "cigs_per_day", "unit": "cigarettes/day", "how_we_get_it": "daily log, 30-day average" } ],
+  "kind": "formula | table | curve | threshold | timeline | score",
+  "formula": "<computable expression using the input names, e.g. 'minutes_lost = cigs * 11'>",   // null for tables
+  "coefficients": { "<name>": { "value": <number>, "ci_low": <number|null>, "ci_high": <number|null>, "unit": "<unit>" } },
+  "table": [ { "<input or band>": "<value>", "<output>": <number>, "ci_low": <number|null>, "ci_high": <number|null> } ],   // for lookups / dose bands / timelines
+  "output_unit": "<unit>",
+  "valid_for": { "age": "<range>", "sex": "men | women | both", "population": "<country, years>", "exposure_range": "<e.g. 1–40 cigs/day>", "south_asian_validated": "yes | no | partly: <evidence>" },
+  "uncertainty": "<how wrong it can be for one person; CI; known biases>",
+  "source": {
+    "citation": "<authors, title, journal, year>",
+    "doi": "<doi>", "pmid": "<pmid|null>", "url": "<page you read>",
+    "where": "<table 2 / figure 3 / abstract / page 14>",
+    "quote": "<the exact sentence or row the number comes from>",
+    "access": "full text | abstract only"
+  },
+  "supporting_sources": [ { "citation": "", "url": "", "agrees": "yes | partly | no", "note": "" } ],
+  "confidence": "high | medium | low",   // high = large meta-analysis / pooled cohort with dose-response; medium = one good cohort or older data; low = small, indirect, or Western-only for an India-specific product
+  "caveats": "<what it can't tell, confounders, when not to show it>",
+  "user_copy": "<one line for the app, with 'about' and the range>"
+}
+
+## Output format, per batch
+Output ONLY one JSON object in one code block, no text before or after:
+{ "batch": "H<number>", "theme": "<theme>", "generated_on": "<YYYY-MM-DD>", "models": [ ... ], "not_found": [ { "wanted": "<what>", "reason": "<why>", "searched": ["<where>"] } ], "recommend": "<which 3–5 models from this batch you'd show first, and why>" }
+Aim for 10–20 models per reply. If a batch has more, stop at a clean point; I'll reply "continue" (same batch, part 2).
+
+## Batches (one per reply; wait for "next")
+The "leads" are starting points from memory; they may be wrong in details. Verify each one, correct it, and find better sources if they exist.
+
+H1. **Cigarettes, dose → harm.** Life expectancy lost (per cigarette, per year of smoking, by age started); all-cause mortality, coronary heart disease, stroke, lung cancer, COPD by cigarettes/day and by pack-years (incl. 1–4 a day: "light smoking" isn't safe); lung function decline (FEV1) per pack-year; resting heart rate / blood pressure effect; pack-years definition and screening thresholds (USPSTF 2021 lung cancer screening). Indian data on smoking deaths.
+   Leads: Shaw et al., BMJ 2000 ("time for a smoke? one cigarette reduces your life by 11 minutes") and any newer update of that estimate (UCL / Jackson et al., around 2024–25); Doll et al., BMJ 2004 (50-year British doctors study); Jha et al., NEJM 2008 (nationally representative smoking and death study in India); Hackshaw et al., BMJ 2018 (one cigarette a day, CHD and stroke); Bjartveit & Tverdal, Tob Control 2005 (1–4 cigarettes a day); Inoue-Choi et al., JAMA Intern Med 2017 (low-intensity smoking); US Surgeon General 2014 (disease-by-disease chapters); Carter et al., NEJM 2015 (smoking and mortality beyond established causes); Bates et al., Arch Intern Med 2007 (smoking and tuberculosis meta-analysis); Pan et al., Lancet Diabetes Endocrinol 2015 (smoking and type 2 diabetes, dose-response).
+H2. **Bidi, hookah, vape, smokeless tobacco.** Their own dose-response or relative risks; nicotine / tar / CO per unit vs a cigarette (measured, with method); oral and other cancers for gutka / khaini / zarda / paan; heart disease for smokeless tobacco; the state of evidence for vaping (short-term measurable effects only if that's all there is).
+   Leads: Jha et al., NEJM 2008 (bidi vs cigarette in India); Gupta / Pednekar Mumbai cohort papers (bidi, smokeless); IARC Monographs vol. 89 (smokeless tobacco) and vol. 100E; WHO advisory note on waterpipe smoking (2005, 2015 update); INTERHEART smokeless tobacco analysis (Teo et al., Lancet 2006); GATS-2 India (2016–17) for how people use these products; National Academies 2018 report on e-cigarettes.
+H3. **Quitting and cutting down.** Recovery timeline since the last cigarette (what improves when: CO, heart rate, circulation, lung function, cough, heart disease risk, stroke, cancers), each milestone with its own source; how excess risk falls with years since quitting (curves or tables); life expectancy regained by age at quitting; whether cutting down (without quitting) reduces risk and by how much; what a relapse does to the numbers (do benefits reset?).
+   Leads: WHO "Tobacco: health benefits of smoking cessation" (and the sources it cites); US Surgeon General 2020 report on smoking cessation; Doll et al., BMJ 2004 (quitting at 30 / 40 / 50 / 60); Jha et al., NEJM 2013 (21st-century hazards of smoking and benefits of cessation); Duncan et al., JAMA 2019 (CVD risk by years since quitting, Framingham); Pirie et al., Lancet 2013 (Million Women Study); studies on smoking reduction (e.g. Godtfredsen, Tverdal).
+H4. **Alcohol, dose → harm.** All-cause mortality and life expectancy by grams per week; blood pressure change per drink and with cutting down; atrial fibrillation; liver (fatty liver, cirrhosis RR per g/day; how fast liver fat / enzymes improve after stopping); cancers (breast per 10 g/day, mouth / throat / oesophagus / liver / colorectal); binge drinking definitions and risks; alcohol and sleep quality; weight / calories; AUDIT-C scoring and cut-offs (WHO), and any validation in India; standard drink size used in India (if any official one) vs WHO 10 g.
+   Leads: Wood et al., Lancet 2018 (599,912 current drinkers, thresholds per week); GBD 2020 Alcohol Collaborators, Lancet 2022 (risk by age and region); WHO Europe statement, Lancet Public Health 2023 ("no safe level"); Roerecke et al., Lancet Public Health 2017 (BP reduction when cutting down); Rehm et al. meta-analyses (liver cirrhosis); Bagnardi et al., Br J Cancer 2015 (alcohol and cancer dose-response); IARC Handbook vol. 20A (alcohol reduction and cancer, 2023); WHO AUDIT manual (Babor et al., 2001).
+H5. **Combined and whole-body estimates from what we have.** Validated risk scores that need NO lab tests and use smoking + body measurements (+ BP if needed): 10-year CVD risk, "heart age", diabetes risk; which are validated in South Asians; exact coefficients or chart values. Smoking × alcohol combined effects (e.g. mouth and throat cancer). Asian BMI and waist cut-offs. How smoking changes weight when quitting (average gain, to set expectations).
+   Leads: WHO CVD Risk Chart Working Group, Lancet Glob Health 2019 (non-laboratory charts, South Asia region: age, sex, smoking, systolic BP, BMI); D'Agostino et al., Circulation 2008 (Framingham general CVD risk, BMI-based version, and "heart age"); INTERHEART modifiable risk score, non-laboratory version (McGorrian et al., Eur Heart J 2011); Indian Diabetes Risk Score (Mohan et al., JAPI 2005); WHO expert consultation, Lancet 2004 (Asian BMI cut-offs); Misra et al., JAPI 2009 (Indian consensus: obesity, waist cut-offs); Hashibe et al. (INHANCE, tobacco × alcohol and head & neck cancer); Aubin et al., BMJ 2012 (weight gain after quitting).

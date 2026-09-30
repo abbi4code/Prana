@@ -5,6 +5,7 @@ import { motion } from "motion/react";
 import { ChevronLeft, TriangleAlert } from "lucide-react";
 import { FoodIcon } from "@/components/FoodIcon";
 import { useStore } from "@/lib/store";
+import { noteMissingFood } from "@/lib/foodRequests";
 import type { Category, Food } from "@/lib/types";
 
 const KINDS: { cat: Category; label: string }[] = [
@@ -74,6 +75,7 @@ export function CreateFood({ initialName, onBack, onCreated }: { initialName: st
       note: null,
     };
     addCustomFood(food);
+    noteMissingFood(food.name, "custom"); // they had to make it themselves: a catalog gap (D54)
     onCreated(food);
   };
 

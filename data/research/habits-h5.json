@@ -1,0 +1,321 @@
+{
+    "batch": "H5",
+    "theme": "Combined risk: CVD/diabetes risk scores, Asian/Indian BMI and waist cut-offs, tobacco × alcohol interaction, weight gain after quitting",
+    "generated_on": "2026-09-30",
+    "models": [
+      {
+        "id": "interheart-modifiable-risk-score",
+        "topic": "combined",
+        "name": "INTERHEART Modifiable Risk Score (heart attack)",
+        "estimates": "Points score for heart-attack (MI) risk from age/sex, lipids, smoking, second-hand smoke, diabetes and high BP; tertile maps to risk.",
+        "inputs": [
+          { "name": "age_sex_older", "unit": "boolean (man ≥55 or woman ≥65)", "how_we_get_it": "profile" },
+          { "name": "apoB_apoA1_ratio", "unit": "ratio", "how_we_get_it": "lab report upload (optional)" },
+          { "name": "smoking_status_and_cigs_per_day", "unit": "never | former >12 mo | current + cigs or bidis/day", "how_we_get_it": "Habits log" },
+          { "name": "secondhand_smoke_1h_week", "unit": "boolean", "how_we_get_it": "one-time question" },
+          { "name": "diabetes_self_report", "unit": "boolean", "how_we_get_it": "one-time question" },
+          { "name": "high_bp_self_report", "unit": "boolean", "how_we_get_it": "one-time question" }
+        ],
+        "kind": "score",
+        "formula": "score = age(0|2) + apoB_A1(Q1 0|Q2 2|Q3 3|Q4 7) + smoking(never 0|former 2|1–5/d 2|6–10/d 4|11–15/d 6|16–20/d 7|>20/d 10) + shs(0|2) + diabetes(0|6) + high_bp(0|5)",
+        "coefficients": {
+          "apoB_A1_quartile_cutoffs": { "value": "Q1 <0.633; Q2 0.633–0.792; Q3 0.792–0.983; Q4 ≥0.984", "ci_low": null, "ci_high": null, "unit": "ratio" },
+          "odds_increase_per_point_external": { "value": 1.12, "ci_low": 1.08, "ci_high": 1.16, "unit": "OR of MI per +1 point (EpiDREAM cohort)" }
+        },
+        "table": [
+          { "score_tertile": "0–4", "mi_risk_1yr": "0.04%", "mi_risk_3_25yr": "0.12%" },
+          { "score_tertile": "5–9", "mi_risk_1yr": "0.09%", "mi_risk_3_25yr": "0.27%" },
+          { "score_tertile": "≥10", "mi_risk_1yr": "0.23%", "mi_risk_3_25yr": "0.68%", "or_vs_lowest": 5.67, "or_ci": "2.77–11.59" }
+        ],
+        "output_unit": "points (0–32) and tertile",
+        "valid_for": { "age": "adults", "sex": "both", "population": "derived in INTERHEART (52 countries, 19,470 people); externally validated in EpiDREAM (21 countries)", "exposure_range": "current smoking counted as cigarettes or beedies per day", "south_asian_validated": "yes: South Asian c-statistic 0.74 (0.70–0.77); South Asia region 0.74 (0.71–0.78)" },
+        "uncertainty": "Case-control derivation; external c-statistic 0.69 (0.64–0.74). Absolute risks in the table are from EpiDREAM (dysglycaemia-enriched cohort, 3.25-year follow-up).",
+        "source": {
+          "citation": "McGorrian C, Yusuf S, Islam S, et al. Estimating modifiable coronary heart disease risk in multiple regions of the world: the INTERHEART Modifiable Risk Score. Eur Heart J 2011;32(5):581-90",
+          "doi": "10.1093/eurheartj/ehq448",
+          "pmid": null,
+          "url": "https://www.ucd.ie/nnsc/t4media/Estimating modifiable coronary heart disease risk- The INTERHEART Risk Score..pdf",
+          "where": "Table 8 (score), Table 9 (risk by tertile), Tables 5–6 (validation by ethnicity/region)",
+          "quote": "Comparing the top tertile of the IHMRS (score ≥10) to the lowest tertile (≤4), the odds ratio for MI is 5.67 (95% CI: 2.77, 11.59)",
+          "access": "full text"
+        },
+        "supporting_sources": [],
+        "confidence": "high",
+        "caveats": "The printed score needs an ApoB:A1 lab value (up to 7 points). The paper's 'non-laboratory' version (adds waist-hip ratio, diet, activity, stress, family history instead) is in Supplementary Table S3, which I did not open — that is the version Prana actually needs; pull it before building. Do not drop the ApoB item and use the rest; that changes the calibration. Uniquely useful for India: counts bidis like cigarettes.",
+        "user_copy": "Your heart-risk score is {score} ({tertile}). Smoking is worth up to 10 points — the biggest single thing you can change."
+      },
+      {
+        "id": "who-cvd-risk-chart",
+        "topic": "combined",
+        "name": "WHO 10-year CVD risk (region-calibrated, South Asia)",
+        "estimates": "10-year risk of fatal/non-fatal heart attack or stroke, calibrated to 21 GBD regions including South Asia.",
+        "inputs": [
+          { "name": "age", "unit": "years (40–80)", "how_we_get_it": "profile" },
+          { "name": "sex", "unit": "men | women", "how_we_get_it": "profile" },
+          { "name": "current_smoker", "unit": "boolean", "how_we_get_it": "Habits log" },
+          { "name": "systolic_bp", "unit": "mm Hg", "how_we_get_it": "user entry (optional)" },
+          { "name": "diabetes", "unit": "boolean", "how_we_get_it": "one-time question" },
+          { "name": "total_cholesterol", "unit": "mmol/L", "how_we_get_it": "lab report (optional)" }
+        ],
+        "kind": "reference",
+        "formula": "Region-specific recalibrated Cox model; coefficients in the paper's appendix (not transcribed here).",
+        "coefficients": null,
+        "table": [
+          { "example": "60-year-old male smoker, no diabetes, SBP 140, cholesterol 5 mmol/L", "ten_year_risk_range_across_regions": "11% (Andean Latin America) to 30% (central Asia)" }
+        ],
+        "output_unit": "% 10-year risk",
+        "valid_for": { "age": "40–80", "sex": "both", "population": "derived in 376,177 people from 85 cohorts (ERFC); recalibrated for 21 GBD regions; externally validated in 1,096,061 people", "exposure_range": "adults without known CVD", "south_asian_validated": "partly: recalibrated to South Asia using regional incidence and risk-factor data; not derived in Indian cohorts" },
+        "uncertainty": "External validation C-index 0.685 (0.629–0.741) to 0.833 (0.783–0.882).",
+        "source": {
+          "citation": "WHO CVD Risk Chart Working Group (Kaptoge S, Pennells L, et al.). World Health Organization cardiovascular disease risk charts: revised models to estimate risk in 21 global regions. Lancet Glob Health 2019;7(10):e1332-45",
+          "doi": "10.1016/S2214-109X(19)30318-3",
+          "pmid": "31488387",
+          "url": "https://openaccess.sgul.ac.uk/id/eprint/111253",
+          "where": "Abstract (Methods, Findings)",
+          "quote": "Models included information on age, smoking status, systolic blood pressure, history of diabetes, and total cholesterol.",
+          "access": "abstract only"
+        },
+        "supporting_sources": [
+          { "citation": "WHORiskCalculator R package (CRAN) implementing the 2019 WHO models", "url": "https://archive.linux.duke.edu/cran/web/packages/WHORiskCalculator/refman/WHORiskCalculator.html", "agrees": "yes", "note": "Implements the lab model with region/country argument; useful as a reference implementation to test against. Third-party code — verify against the paper's appendix." }
+        ],
+        "confidence": "medium",
+        "caveats": "A non-laboratory WHO version using BMI instead of cholesterol and diabetes exists in the full paper/appendix; I did not verify it in this pass, and it is the version most Prana users could fill in. Needs SBP, which most users won't have — make it opt-in. Don't hand-transcribe chart colours; use the published equations.",
+        "user_copy": "Your estimated 10-year heart attack/stroke risk is {pct}%. Quitting smoking changes this number more than almost anything else."
+      },
+      {
+        "id": "indian-diabetes-risk-score",
+        "topic": "combined",
+        "name": "Indian Diabetes Risk Score (IDRS, MDRF)",
+        "estimates": "Points score for undiagnosed type 2 diabetes risk using age, waist, physical activity and family history.",
+        "inputs": [
+          { "name": "age", "unit": "years", "how_we_get_it": "profile" },
+          { "name": "waist_cm", "unit": "cm", "how_we_get_it": "user entry (tape at navel)" },
+          { "name": "sex", "unit": "men | women", "how_we_get_it": "profile" },
+          { "name": "physical_activity_level", "unit": "category", "how_we_get_it": "Prana gym/activity log or one-time question" },
+          { "name": "parents_with_diabetes", "unit": "0 | 1 | 2", "how_we_get_it": "one-time question" }
+        ],
+        "kind": "score",
+        "formula": "idrs = age(<35:0 | 35–49:20 | ≥50:30) + waist(F<80/M<90:0 | F80–89/M90–99:10 | F≥90/M≥100:20) + activity(vigorous/strenuous:0 | moderate:10 | mild:20 | none+sedentary:30) + family(none:0 | one parent:10 | both:20); high_risk = idrs >= 60",
+        "coefficients": {
+          "high_risk_cutoff": { "value": 60, "ci_low": null, "ci_high": null, "unit": "points (max 100)" }
+        },
+        "table": [
+          { "cutoff": "≥60", "sensitivity": "72.5%", "specificity": "60.1%", "ppv": "17.0%", "npv": "95.1%" }
+        ],
+        "output_unit": "points (0–100)",
+        "valid_for": { "age": "adults ≥20", "sex": "both", "population": "Chennai Urban Rural Epidemiology Study (CURES), 2,350 people screened with OGTT", "exposure_range": "people without known diabetes", "south_asian_validated": "yes (derived in India; several Indian external validations with variable sensitivity)" },
+        "uncertainty": "ROC AUC 0.698 (0.663–0.733). Screening only — a high score means 'get a blood sugar test', not a diagnosis.",
+        "source": {
+          "citation": "Mohan V, Deepa R, Deepa M, Somannavar S, Datta M. A simplified Indian Diabetes Risk Score for screening for undiagnosed diabetic subjects. J Assoc Physicians India 2005;53:759-63",
+          "doi": null,
+          "pmid": "16334618",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/16334618/",
+          "where": "Abstract (Results); points table from the developer's (MDRF) website",
+          "quote": "An IDRS value > or = 60 had the optimum sensitivity (72.5%) and specificity (60.1%) for determining undiagnosed diabetes",
+          "access": "abstract only"
+        },
+        "supporting_sources": [
+          { "citation": "Madras Diabetes Research Foundation (MDRF), Department of Diabetology web page — IDRS points table", "url": "https://mdrf.in/department/Diabetology.html", "agrees": "yes", "note": "Gives the 4-level activity scale (0/10/20/30) used above. Some later papers print a 3-level version (0/20/30) — use MDRF's own table." }
+        ],
+        "confidence": "high",
+        "caveats": "Not a smoking model, but H3 showed diabetes risk rises in new quitters (Pan 2015) — a good pairing: run IDRS at quit date and again at 6 and 12 months. Waist bands here (80/90) match the Indian obesity criteria below.",
+        "user_copy": "Your diabetes risk score is {score}/100. At 60 or more, a simple fasting blood sugar test is worth doing."
+      },
+      {
+        "id": "asian-bmi-action-points",
+        "topic": "combined",
+        "name": "BMI public-health action points for Asian populations (WHO)",
+        "estimates": "Additional BMI cut-points at which Asian populations show increased diabetes/CVD risk.",
+        "inputs": [
+          { "name": "weight_kg", "unit": "kg", "how_we_get_it": "Prana weight log" },
+          { "name": "height_cm", "unit": "cm", "how_we_get_it": "profile" }
+        ],
+        "kind": "threshold",
+        "formula": "bmi = weight_kg / (height_cm/100)^2; action_band by points 18.5, 23, 27.5, 32.5, 37.5",
+        "coefficients": {
+          "action_points": { "value": "23.0, 27.5, 32.5, 37.5", "ci_low": null, "ci_high": null, "unit": "kg/m²" }
+        },
+        "table": [
+          { "note": "observed-risk cut-off across Asian populations", "range": "22–25 kg/m²" },
+          { "note": "high-risk cut-off across Asian populations", "range": "26–31 kg/m²" }
+        ],
+        "output_unit": "BMI band",
+        "valid_for": { "age": "adults", "sex": "both", "population": "Asian populations (WHO expert consultation)", "exposure_range": "any", "south_asian_validated": "yes (Indian data were among those reviewed)" },
+        "uncertainty": "Consensus action points, not risk estimates.",
+        "source": {
+          "citation": "WHO Expert Consultation. Appropriate body-mass index for Asian populations and its implications for policy and intervention strategies. Lancet 2004;363(9403):157-63",
+          "doi": "10.1016/S0140-6736(03)15268-3",
+          "pmid": "14726171",
+          "url": "https://www.unboundmedicine.com/medline/citation/14726171/full_citation",
+          "where": "Abstract",
+          "quote": "The consultation identified further potential public health action points (23.0, 27.5, 32.5, and 37.5 kg/m2) along the continuum of BMI",
+          "access": "abstract only"
+        },
+        "supporting_sources": [],
+        "confidence": "high",
+        "caveats": "DOI shown from memory — verify. Prana probably already has BMI; the change is to use 23 (not 25) as the first 'raised risk' line for Indian users.",
+        "user_copy": "For South Asians, health risks start rising from a BMI of about 23, lower than the usual 25."
+      },
+      {
+        "id": "indian-obesity-criteria",
+        "topic": "combined",
+        "name": "Obesity and abdominal obesity cut-offs for Asian Indians (2009 consensus, 2025 revision)",
+        "estimates": "Indian BMI and waist cut-offs, and the 2025 two-stage obesity definition.",
+        "inputs": [
+          { "name": "bmi", "unit": "kg/m²", "how_we_get_it": "computed" },
+          { "name": "waist_cm", "unit": "cm", "how_we_get_it": "user entry" },
+          { "name": "sex", "unit": "men | women", "how_we_get_it": "profile" },
+          { "name": "has_obesity_related_condition_or_limitation", "unit": "boolean", "how_we_get_it": "one-time question (e.g. diabetes, knee pain, breathless on daily activity)" }
+        ],
+        "kind": "threshold",
+        "formula": "2009: overweight = 23 <= bmi < 25; obese = bmi >= 25; abdominal_obesity = waist >= 90 (men) or >= 80 (women). 2025: stage1 = bmi > 23 and not stage2; stage2 = bmi > 23 AND (excess waist or waist-to-height ratio) AND (functional limitation or obesity-related condition)",
+        "coefficients": {
+          "bmi_overweight_2009": { "value": "23–24.9", "ci_low": null, "ci_high": null, "unit": "kg/m²" },
+          "bmi_obesity_2009": { "value": "≥25", "ci_low": null, "ci_high": null, "unit": "kg/m²" },
+          "waist_men": { "value": 90, "ci_low": null, "ci_high": null, "unit": "cm (≥)" },
+          "waist_women": { "value": 80, "ci_low": null, "ci_high": null, "unit": "cm (≥)" }
+        },
+        "table": null,
+        "output_unit": "category",
+        "valid_for": { "age": "adults", "sex": "both", "population": "Asian Indians living in India (expert consensus / Delphi)", "exposure_range": "any", "south_asian_validated": "yes (India-specific)" },
+        "uncertainty": "Consensus definitions.",
+        "source": {
+          "citation": "Misra A, Vikram NK, Ghosh A, Ranjan P, Gulati S; India Obesity Commission. Revised definition of obesity in Asian Indians living in India. Diabetes Metab Syndr 2025;19(1):102989",
+          "doi": "10.1016/j.dsx.2024.102989",
+          "pmid": "39814628",
+          "url": "https://www.cmcendovellore.org/pub/2025/revised-definition-of-obesity-in-asian-indians-living-in-india.pdf",
+          "where": "Abstract (Results) and Introduction (restates the 2009 criteria)",
+          "quote": "The criteria for Stage 2 Obesity include a mandatory BMI exceeding 23 kg/m2 and at least one of the following: excess waist circumference or waist-to-height ratio.",
+          "access": "abstract only"
+        },
+        "supporting_sources": [
+          { "citation": "Misra A, Chowbey P, Makkar BM, et al. Consensus statement for diagnosis of obesity, abdominal obesity and the metabolic syndrome for Asian Indians. J Assoc Physicians India 2009;57:163-70", "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3738996", "agrees": "yes", "note": "2009 criteria (as tabulated in a Nutrients 2013 review): overweight 23.0–24.9, obesity >25, abdominal obesity men >90 cm, women >80 cm." }
+        ],
+        "confidence": "high",
+        "caveats": "The 2025 paper's own waist and waist-to-height thresholds were not visible in the text read — confirm before coding stage 2 (0.5 WHtR is common but unverified here). 2025 drops the separate 'overweight' category. Pairs with quitting: new quitters gain ~4–5 kg (see quitting-weight-gain), which can push users across 23 or 25.",
+        "user_copy": "By Indian guidelines, a waist of {cutoff} cm or more means extra belly fat, which raises diabetes and heart risk."
+      },
+      {
+        "id": "quitting-weight-gain",
+        "topic": "combined",
+        "name": "Expected weight gain after quitting smoking",
+        "estimates": "Mean weight gain in untreated quitters by months since quitting, and spread at 12 months.",
+        "inputs": [
+          { "name": "months_since_quit", "unit": "months", "how_we_get_it": "quit date" },
+          { "name": "weight_kg_at_quit", "unit": "kg", "how_we_get_it": "Prana weight log" }
+        ],
+        "kind": "table",
+        "formula": null,
+        "coefficients": null,
+        "table": [
+          { "months": 1, "mean_gain_kg": 1.12, "ci_low": 0.76, "ci_high": 1.47 },
+          { "months": 2, "mean_gain_kg": 2.26, "ci_low": 1.98, "ci_high": 2.54 },
+          { "months": 3, "mean_gain_kg": 2.85, "ci_low": 2.42, "ci_high": 3.28 },
+          { "months": 6, "mean_gain_kg": 4.23, "ci_low": 3.69, "ci_high": 4.77 },
+          { "months": 12, "mean_gain_kg": 4.67, "ci_low": 3.96, "ci_high": 5.38 },
+          { "months": 12, "distribution": "16% lost weight; 37% gained <5 kg; 34% gained 5–10 kg; 13% gained >10 kg" }
+        ],
+        "output_unit": "kg",
+        "valid_for": { "age": "adults", "sex": "both", "population": "62 trials; abstinent smokers (untreated arms and pharmacotherapy arms)", "exposure_range": "prolonged abstinence up to 12 months", "south_asian_validated": "no" },
+        "uncertainty": "95% CIs printed. Large individual variation. Gain was similar with NRT/bupropion/varenicline and in people worried about weight.",
+        "source": {
+          "citation": "Aubin HJ, Farley A, Lycett D, Lahmek P, Aveyard P. Weight gain in smokers after quitting cigarettes: meta-analysis. BMJ 2012;345:e4439",
+          "doi": "10.1136/bmj.e4439",
+          "pmid": "22782848",
+          "url": "https://www.phc.ox.ac.uk/publication/351503",
+          "where": "Abstract (Results, Conclusion)",
+          "quote": "In untreated quitters, mean weight gain was 1.12 kg (95% confidence interval 0.76 to 1.47), 2.26 kg (1.98 to 2.54), 2.85 kg (2.42 to 3.28), 4.23 kg (3.69 to 4.77), and 4.67 kg (3.96 to 5.38) at one, two, three, six, and 12 months after quitting",
+          "access": "abstract only"
+        },
+        "supporting_sources": [],
+        "confidence": "high",
+        "caveats": "This is Prana's natural bridge between Habits and the calorie tracker: most gain happens in the first 3 months, so that's when to nudge food/activity. Frame as 'expected and manageable', never as a reason not to quit (see next model).",
+        "user_copy": "Most people gain around 3 kg in the first 3 months after quitting. Your food and activity tracking can keep this in check — and it's still far healthier than smoking."
+      },
+      {
+        "id": "quitting-weight-gain-vs-heart-benefit",
+        "topic": "combined",
+        "name": "Heart benefit of quitting despite weight gain",
+        "estimates": "CVD hazard in recent and long-term quitters vs continuing smokers, before and after accounting for post-quit weight gain.",
+        "inputs": [
+          { "name": "years_since_quit", "unit": "years", "how_we_get_it": "quit date" },
+          { "name": "weight_change_kg", "unit": "kg", "how_we_get_it": "Prana weight log" }
+        ],
+        "kind": "table",
+        "formula": null,
+        "coefficients": null,
+        "table": [
+          { "group": "continuing smokers", "cvd_rate_per_100_exams": 5.9, "hr": 1.0 },
+          { "group": "recent quitters (≤4 years), median gain 2.7 kg", "cvd_rate_per_100_exams": 3.2, "hr": 0.47, "ci_low": 0.23, "ci_high": 0.94 },
+          { "group": "long-term quitters (>4 years)", "cvd_rate_per_100_exams": 3.1, "hr": 0.46, "ci_low": 0.34, "ci_high": 0.63 },
+          { "group": "never smokers", "cvd_rate_per_100_exams": 2.4 }
+        ],
+        "output_unit": "hazard ratio vs continuing smokers; 6-year CVD events per 100 person-exams",
+        "valid_for": { "age": "adults", "sex": "both", "population": "USA, Framingham Offspring Study 1984–2011, 3,251 people without CVD", "exposure_range": "adults without diabetes (results with diabetes similar but not significant)", "south_asian_validated": "no" },
+        "uncertainty": "95% CIs printed; the recent-quitter CI is wide.",
+        "source": {
+          "citation": "Clair C, Rigotti NA, Porneala B, Fox CS, D'Agostino RB, Pencina MJ, Meigs JB. Association of smoking cessation and weight change with cardiovascular disease among adults with and without diabetes. JAMA 2013;309(10):1014-21",
+          "doi": null,
+          "pmid": null,
+          "url": "https://scholars.duke.edu/publication/952663",
+          "where": "Abstract (Conclusions); HRs from abstract results",
+          "quote": "smoking cessation was associated with a lower risk of CVD events among participants without diabetes, and weight gain that occurred following smoking cessation did not modify this association.",
+          "access": "abstract only"
+        },
+        "supporting_sources": [
+          { "citation": "Full text PDF hosted by UNC epidemiology seminars", "url": "https://episeminars.web.unc.edu/wp-content/uploads/sites/7549/2014/09/joc130016_1014_1021.pdf", "agrees": "yes", "note": "First page of full text seen; confirms design and categories." }
+        ],
+        "confidence": "high",
+        "caveats": "DOI not captured in what I read — add before release. Key message to pair with quitting-weight-gain so weight never becomes a reason to relapse.",
+        "user_copy": "Even with the usual weight gain, quitters had about half the heart and stroke risk of people who kept smoking."
+      },
+      {
+        "id": "tobacco-alcohol-head-neck-interaction",
+        "topic": "combined",
+        "name": "Smoking + drinking together: head and neck cancer",
+        "estimates": "Size of the joint (interaction) effect of tobacco and alcohol on head and neck cancer, and the share of cases attributable to each.",
+        "inputs": [
+          { "name": "ever_tobacco", "unit": "boolean", "how_we_get_it": "Habits log" },
+          { "name": "ever_alcohol", "unit": "boolean", "how_we_get_it": "Habits log" }
+        ],
+        "kind": "table",
+        "formula": null,
+        "coefficients": {
+          "multiplicative_interaction_psi": { "value": 2.15, "ci_low": 1.53, "ci_high": 3.04, "unit": "ratio (>1 = more than multiplicative)" }
+        },
+        "table": [
+          { "attributable_to": "tobacco or alcohol (total)", "par_percent": 72, "ci": "61–79" },
+          { "attributable_to": "alcohol alone", "par_percent": 4 },
+          { "attributable_to": "tobacco alone", "par_percent": 33 },
+          { "attributable_to": "tobacco and alcohol combined", "par_percent": 35 }
+        ],
+        "output_unit": "interaction ratio; % of head and neck cancers",
+        "valid_for": { "age": "adults", "sex": "both", "population": "17 European and American case-control studies, 11,221 cases and 16,168 controls (INHANCE)", "exposure_range": "ever vs never use", "south_asian_validated": "no (no Indian studies; smokeless tobacco not the focus)" },
+        "uncertainty": "95% CI printed for ψ and total PAR.",
+        "source": {
+          "citation": "Hashibe M, Brennan P, Chuang SC, et al. Interaction between tobacco and alcohol use and the risk of head and neck cancer: pooled analysis in the International Head and Neck Cancer Epidemiology Consortium. Cancer Epidemiol Biomarkers Prev 2009;18(2):541-50",
+          "doi": "10.1158/1055-9965.EPI-08-0347",
+          "pmid": null,
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3051410",
+          "where": "Abstract (Results)",
+          "quote": "A greater than multiplicative joint effect between ever tobacco and alcohol use was observed for head and neck cancer risk (ψ=2.15, 95%CI=1.53–3.04).",
+          "access": "abstract only"
+        },
+        "supporting_sources": [
+          { "citation": "Teo KK et al. INTERHEART tobacco analysis. Lancet 2006 (already in H2)", "url": "https://pubmed.ncbi.nlm.nih.gov/16920470/", "agrees": "partly", "note": "Different outcome (heart attack) but same idea for India: smoking + chewing tobacco together OR 4.09 (2.98–5.61), higher than either alone." }
+        ],
+        "confidence": "medium",
+        "caveats": "ψ is an interaction ratio, not a user-facing relative risk; dose-specific joint ORs (e.g. heavy smoking + heavy drinking) are in the full text, not read. For the user, show the qualitative message only.",
+        "user_copy": "Smoking and drinking together raise mouth and throat cancer risk more than the two added up. Cutting either one helps; cutting both helps most."
+      }
+    ],
+    "not_found": [
+      { "wanted": "INTERHEART non-laboratory score points (Supplementary Table S3)", "reason": "Supplementary material not opened; only the lab-based short score (Table 8) was read.", "searched": ["UCD-hosted full text PDF"] },
+      { "wanted": "WHO 2019 non-laboratory (BMI-based) model coefficients / South Asia chart", "reason": "Only the abstract was read; coefficients are in the appendix.", "searched": ["https://openaccess.sgul.ac.uk/id/eprint/111253"] },
+      { "wanted": "2025 Indian obesity revision: exact waist and waist-to-height thresholds", "reason": "Not visible in the abstract/intro read.", "searched": ["CMC Vellore-hosted PDF (first page)"] },
+      { "wanted": "Dose-specific joint ORs for smoking × drinking (INHANCE)", "reason": "Full text not read.", "searched": ["PMC3051410 abstract"] },
+      { "wanted": "Smokeless tobacco × alcohol interaction for oral cancer in India", "reason": "Not searched in this pass.", "searched": [] },
+      { "wanted": "Weight gain after quitting in Indian/South Asian quitters", "reason": "Not found; Aubin 2012 is mostly Western trials.", "searched": [] }
+    ],
+    "recommend": "Show first: (1) quitting-weight-gain + quitting-weight-gain-vs-heart-benefit together on the quit screen — this is Prana's unique angle (calorie tracker + quitting), and it defuses the #1 relapse fear. (2) asian-bmi-action-points / indian-obesity-criteria — switch Prana's BMI and waist flags to 23 and 90/80 cm for Indian users. (3) indian-diabetes-risk-score — no lab needed, derived in India, pairs with the H3 finding that diabetes risk rises in new quitters. (4) tobacco-alcohol-head-neck-interaction as a one-line warning when a user logs both habits. Hold interheart-modifiable-risk-score and who-cvd-risk-chart until the non-lab versions (Supplement S3 / WHO appendix) are pulled — they're the best-validated combined scores for South Asians but the versions I could read need lab values."
+  }

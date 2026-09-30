@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { ChevronLeft, Dumbbell, Mic, Minus, Plus, Scale, Search, Sparkles, TriangleAlert, UtensilsCrossed, X } from "lucide-react";
 import { FoodIcon } from "@/components/FoodIcon";
@@ -9,6 +9,7 @@ import { DEFAULT_REST, cardioBurn } from "@/lib/burn";
 import { addDays, dayKey, dayLabel } from "@/lib/dates";
 import { exerciseBurn, getActivity, getExercise, matchWorkout } from "@/lib/exercises";
 import { getFood, getUnit, matchFood, searchFoods } from "@/lib/foods";
+import { noteMissingFood } from "@/lib/foodRequests";
 import { logCorrection } from "@/lib/nl/corrections";
 import { LOW_CONFIDENCE, confidenceOf, type Candidate } from "@/lib/nl/match";
 import type { ParsedItem, ParsedLog } from "@/lib/nl/schema";
@@ -96,6 +97,10 @@ export function ConfirmParse({ text, source, parsed, initialMeal, date, onBack, 
   // eslint-disable-next-line react-hooks/exhaustive-deps -- same: once per parse
   const initialW = useMemo(() => buildWorkoutRows(parsed, workouts, logDate), [parsed]);
   const [rows, setRows] = useState<Row[]>(initial);
+  // items the AI heard that match nothing in the catalog = missing foods (D54; name only, signed-in users)
+  useEffect(() => {
+    for (const r of initial) if (!r.foodId) noteMissingFood(r.said.name, "ai");
+  }, [initial]);
   const [wrows, setWrows] = useState<WorkoutRowState[]>(initialW);
   const [meal, setMeal] = useState<Meal>(parsed.meal ?? initialMeal);
 

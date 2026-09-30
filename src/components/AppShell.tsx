@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { initAuth, useAuth } from "@/lib/auth";
 import { initGym } from "@/lib/gym/actions";
+import { initSharedFoods } from "@/lib/sharedFoods";
 import { mealForNow } from "@/lib/nutrition";
 import { hydrateStore, useStore, useUI } from "@/lib/store";
 import { BottomNav } from "./BottomNav";
@@ -32,6 +33,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     hydrateStore().then(() => {
       initAuth();
       initGym();
+      initSharedFoods(); // foods approved after this build + "Same as" names (D54)
     });
     if (process.env.NODE_ENV === "production" && "serviceWorker" in navigator) {
       navigator.serviceWorker.register("/sw.js", { scope: "/", updateViaCache: "none" }).catch(() => {});

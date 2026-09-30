@@ -7,6 +7,7 @@ import { AddBar } from "@/components/today/AddBar";
 import { BurnCard } from "@/components/today/BurnCard";
 import { CalorieRing } from "@/components/today/CalorieRing";
 import { DateStrip } from "@/components/today/DateStrip";
+import { FoodNews } from "@/components/today/FoodNews";
 import { Greeting } from "@/components/today/Greeting";
 import { WrappedBanner } from "@/components/wrapped/WrappedEntry";
 import { MacroBars } from "@/components/today/MacroBars";
@@ -55,6 +56,7 @@ export default function TodayPage() {
         <Greeting streak={flame.n} />
       </div>
       <WrappedBanner />
+      <FoodNews />
       <div className="space-y-4 xl:grid xl:grid-cols-[380px_minmax(0,1fr)] xl:items-start xl:gap-8 xl:space-y-0">
         <div className="space-y-4 xl:sticky xl:top-10">
           <DateStrip date={date} onChange={setDate} logged={logged} streak={flame.n} streakLive={flame.live} />

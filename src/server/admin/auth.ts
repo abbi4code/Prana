@@ -48,7 +48,7 @@ export function adminError(where: string, err: unknown): Response {
 }
 
 /** Append to the access log. Never blocks the reply: a failed log line is reported, not fatal. */
-export async function audit(admin: Admin, action: "view_user" | "export_user" | "resolve_report", target: string | null, detail?: Record<string, unknown>) {
+export async function audit(admin: Admin, action: "view_user" | "export_user" | "resolve_report" | "food_request" | "food_candidate" | "shared_food", target: string | null, detail?: Record<string, unknown>) {
   const { error } = await supabaseAdmin()
     .from("admin_audit")
     .insert({ admin_id: admin.id, admin_email: admin.email, action, target_user: target, detail: detail ?? null });

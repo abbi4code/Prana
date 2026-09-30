@@ -44,6 +44,7 @@ Guiding rule: **logging fast beats everything.** People quit trackers because lo
 | Hinglish voice + text logging | "2 roti aur dal for dinner", "bench 3x10 60kg aur 20 min walk", "kal raat…" → one confirm card (food + workouts, today/yesterday) → log; mic in both sheets (D26, nl-logging.md) | done (voice: verify on real phones) |
 | Thali photo logging | Photo → suggested items + katori counts, confirm in one tap | planned |
 | Barcode scan | Packaged foods | planned |
+| Habits: smoking, tobacco, alcohol impact ([habits.md](habits.md)) | Daily tobacco counter + alcohol from drink logs → sourced % more risk per disease, recovery timeline, no-lab risk scores; opt-in, private | research done + verified (habits.md), design next |
 
 ## v2.5: Workouts (D27, see workouts.md)
 
@@ -60,7 +61,7 @@ Guiding rule: **logging fast beats everything.** People quit trackers because lo
 | Activity rings (D33) | Burn today · Move + Strength this week vs WHO 2020 targets (150 min, 2 days), one dial; fine print behind (i) | done |
 | Routines (D34) | Cards with photo collage, muscles, ~kcal, last done, "Up next", done-today progress; checklist sheet (tick = logged, edit sets inline, ↑ overload hint, ring + burst when done); Log all; builder with drag reorder + multi-select picker; starters Push / Pull / Legs / Full body; "Save as routine" from a session | done |
 | PRs (D36) | Auto-detected per exercise (heaviest, est. 1RM, best set, reps, hold, assistance, cardio time/speed/distance); trophy banner on log, live "New PR" chip in the logger, 🏆 on session + routine rows and week days, Personal records card (latest + best for every exercise) | done |
-| Achievements + badges (D38) | Own menu: tiered badges (bronze → diamond) for streaks, training and habits + one-offs, unlock banner, detail sheets; PR list moved here | done |
+| Achievements + badges (D38) | Tiered badges (bronze → diamond) for streaks, training and habits + one-offs (57: 12 families × 4 + 9), unlock banner, detail sheets; PR list moved here. Now the "Awards" tab inside Akhada (D46), with 16 Akhada badges (D49): 73 in total | done |
 | Rest timer + last session per set (D40) | Tick a set's number → rest countdown pill above everything (±15, skip, buzz + beep); "last 50 kg × 10 ▲ +2.5 kg" under each set | done |
 | Muscles this week (D41) | Front/back body shaded by weekly sets per muscle (fractional), bars with a 10-set mark | done |
 | Body: measurements + progress photos (D39) | Progress → Body: 6 tape spots (synced), waist ÷ height, photos only on this device with before/after slider | done |
@@ -104,7 +105,8 @@ Guiding rule: **logging fast beats everything.** People quit trackers because lo
 - **Log sheet** (+ button, or N / on desktop): meal chips, search, My thalis, recent/frequent/popular, create food → food detail (drag katori, units, meal) · thali builder · create food.
 - **Workout** `/workout`: week strip + workout flame, Burned card, Exercise/Cardio buttons, session list, workout streak, workout goals (burn goal, rest days). Sheet: library → lift / cardio detail.
 - **Progress** `/progress`: bento grid: Prana, food and workout streak cards in one row (equal heights), full-width year heatmap (Food/Workout/Both; tapping a day lists its workouts), weight (7-day avg) | calories last 14 days (equal heights, goal line always visible).
-- **Achievements** `/achievements` (D38; phone tab "Awards"): summary hero, Badges tab (12 tiered families + 9 one-offs, detail sheet per badge), Records tab (every PR, best for every exercise).
+- **Akhada** `/akhada` (D46–D49; nav tab, replaced the old "Awards" tab): Leaderboard · Challenges · Awards (`?tab=`). Awards = the achievements view: summary hero, badges (16 tiered families incl. 4 Akhada + 9 one-offs, detail sheet per badge), records (every PR, best for every exercise). `/akhada/c/[id]` challenge, `/akhada/d/[id]` duel, `/akhada/join/[token]` invite. `/achievements` redirects to Awards.
+- **Admin** `/admin`, `/admin/u/[id]` (D51): only for `ADMIN_EMAILS`, linked from Me.
 - **Me** `/me`: "Your energy" (D45: live resting burn, goal breakdown, refresh nudge), then goal calculator, daily goals, appearance, my foods, account/sync, backup.
 - **Login** `/login`, **OAuth return** `/auth/callback`.
 - **Weekly Wrapped** (D42): banner on Today (Sunday evening → Tuesday), card on Progress, full-screen stories.
@@ -120,13 +122,25 @@ Guiding rule: **logging fast beats everything.** People quit trackers because lo
 | Weekly duels (D48) | 1v1, 7 days, best 6 days of effort, day-by-day face-off, rematch | built |
 | Results + badges (D49) | Settle 3 days after the end, podium + your place, notifications, Finisher / Champion / Duel master / Shabaash badges, share cards | built |
 | Kudos + nudges (D49) | 🔥 Shabaash on a friend's active day, 👋 nudge after 3 quiet days (opt-out) | built |
-| Leagues, squads, gym boards, video proof, push notifications, moderation screen | Next phases | planned |
+| Leagues, squads, gym boards, video proof, push notifications | Next phases (the moderation queue was built in the admin panel, D51) | planned |
 
 ## Admin (D51, see admin.md)
 
 | Feature | Notes | Status |
 |---|---|---|
 | Admin panel `/admin` | Overview (growth, DAU/WAU/MAU, come-back rate, when people log), Users (search, sort, CSV), member page (charts, year heatmap, day by day, streaks, PRs, gym, body, saved items, AI corrections, JSON export), Food, Training, Akhada (moderation queue), System (AI cost/cache, place search, storage, access log) | built; needs `ADMIN_EMAILS` + migration push |
+
+## Food catalog growth (2026-09-28 →, see data.md)
+
+| Feature | Notes | Status |
+|---|---|---|
+| Research pipeline | Browser-Claude batches, `scripts/check-research.mjs` re-reads every number (INDB / IFCT / USDA downloads), writes `data/foods-research.json` | done |
+| Street food (batches 1, 1b) | Pani puri, sev / dahi puri, papdi / tikki / samosa / kachori chaat, raj kachori, bhel, jhalmuri, aloo tikki, ragda pattice, momos, pav, vada pav, dabeli, misal pav, bread pakora, rolls, egg chowmein, chole kulche, chole bhature | done |
+| Chicken biryani | INDB mutton-biryani recipe with IFCT chicken, cooked weight from USDA water contents | done |
+| Fried foods, absorbed-oil model (D52) | Samosa, bhatura, kachori replaced in place; other INDB fried rows still to rebuild | in progress |
+| Alcohol (D53) | `alcohol` category, ABV-based kcal, ml + pour units, "incl. N kcal from alcohol"; 12 beers (A1). Big brands (A1b), whisky, spirits, wine, RTD, mixers, cocktails pending research | in progress |
+| Food batches 2–12 | Rice, meat, curries, breads, South Indian, sweets, snacks / fast food, drinks, regional, basics, brands | planned (prompt ready) |
+| Missing-food requests + research agent (D54) | "Request it" when search finds nothing; misses from search / AI logging / custom foods counted; alias triage; a scheduled agent finds real source refs, the checker re-reads every number, the owner merges a PR; people who asked are told. Approved foods live in a Supabase table, reviewed in admin. See [food-requests.md](food-requests.md) | phases 1–4 built (requests + signals + admin queue; shared foods + review + live aliases; Research button: AI finds the source, server reads + checks the numbers; label images beside the numbers with ✓ / ≠ and the owner's tick; "your food is in Prana now" cards with Log it / swap your own) | done |
 
 ## Explicitly not building (for now)
 

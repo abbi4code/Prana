@@ -1,0 +1,760 @@
+{
+    "batch": "H1",
+    "theme": "Cigarettes, dose → harm (part 1 of 2)",
+    "generated_on": "2026-09-30",
+    "models": [
+      {
+        "id": "smoking-life-expectancy-per-cigarette",
+        "topic": "smoking",
+        "name": "Minutes of life expectancy lost per cigarette",
+        "estimates": "Average loss of life expectancy attributable to each cigarette smoked, for people who keep smoking.",
+        "inputs": [
+          { "name": "cigs_logged", "unit": "cigarettes", "how_we_get_it": "sum of daily log over the period shown (day / week / month)" },
+          { "name": "sex", "unit": "men | women | unknown", "how_we_get_it": "profile" }
+        ],
+        "kind": "formula",
+        "formula": "minutes_lost = cigs_logged * (sex == 'men' ? 17 : sex == 'women' ? 22 : 20)",
+        "coefficients": {
+          "min_per_cig_men": { "value": 17, "ci_low": null, "ci_high": null, "unit": "minutes/cigarette" },
+          "min_per_cig_women": { "value": 22, "ci_low": null, "ci_high": null, "unit": "minutes/cigarette" },
+          "min_per_cig_both": { "value": 20, "ci_low": null, "ci_high": null, "unit": "minutes/cigarette" }
+        },
+        "table": null,
+        "output_unit": "minutes of life expectancy",
+        "valid_for": { "age": "adult smokers (lifetime average, not age-specific)", "sex": "both (separate men/women values)", "population": "Britain; mortality from British Doctors Study (men, to 2001) and Million Women Study (to 2011); consumption from 1996 UK survey", "exposure_range": "assumes constant daily consumption over a smoking lifetime (15.8/day men, 13.6/day women in the calculation)", "south_asian_validated": "no" },
+        "uncertainty": "No confidence interval: this is an arithmetic scaling (11 min x 10/6.5 years lost, adjusted for cigarettes/day), not a fitted model. The authors say it is a population average across ages; per-person harm varies with puffing, inhalation, product and susceptibility, and may be somewhat high if toxicant per cigarette has fallen.",
+        "source": {
+          "citation": "Jackson SE, Jarvis MJ, West R. The price of a cigarette: 20 minutes of life? Addiction 2025;120(5):810-812",
+          "doi": "10.1111/add.16757",
+          "pmid": null,
+          "url": "https://discovery.ucl.ac.uk/id/eprint/10203237/1/Jackson_Jackson%20et%20al.%20The%20price%20of%20a%20cigarette.pdf",
+          "where": "Article text, paragraph 3 (author accepted manuscript, p.2)",
+          "quote": "this would lead to an increase in the estimated loss of life expectancy per cigarette to 20 minutes overall: 17 minutes for men (11*10/6.5) and 22 minutes for women ((11*11/6.5)*(15.8/13.6); see supplementary file for a more detailed explanation of the calculation).",
+          "access": "full text"
+        },
+        "supporting_sources": [
+          { "citation": "Shaw M, Mitchell R, Dorling D. Time for a smoke? One cigarette reduces your life by 11 minutes. BMJ 2000;320:53", "url": "https://discovery.ucl.ac.uk/id/eprint/10203237/1/Jackson_Jackson%20et%20al.%20The%20price%20of%20a%20cigarette.pdf", "agrees": "partly", "note": "Original 11-minute estimate, based on 6.5 years lost. NOT opened directly; value as described by Jackson 2025. Superseded by the 17/22 figures." },
+          { "citation": "Doll R, Peto R, Boreham J, Sutherland I. Mortality in relation to smoking: 50 years' observations on male British doctors. BMJ 2004;328:1519", "url": "https://courses.ucsf.edu/mod/resource/view.php?id=54732", "agrees": "yes", "note": "Source of the ~10 years lost used in the 17-minute figure: 'Men born in 1900-1930 who smoked only cigarettes and continued smoking died on average about 10 years younger than lifelong non-smokers.'" }
+        ],
+        "confidence": "medium",
+        "caveats": "Editorial-level calculation, UK data only. Harm is not linear per cigarette (see smoking-dose-chd), so do not present it as exact per-cigarette physics. Competing interests declared: RW is an unpaid advisor to the company making the Smoke Free app and paid advisor to an anti-smoking campaign agency; work commissioned by UK DHSC. It is peer-reviewed, not app marketing, but you may want to note this. Mirror use for quitting (minutes avoided per cigarette not smoked) belongs in H3.",
+        "user_copy": "On average, each cigarette is linked to about 17–22 minutes of life expectancy lost. This is a population average, not a prediction for you."
+      },
+      {
+        "id": "smoking-life-years-lost-india",
+        "topic": "smoking",
+        "name": "Years of life lost, Indian smokers",
+        "estimates": "Difference in median age at death between Indian smokers and similar non-smokers, and chance of dying between 30 and 70.",
+        "inputs": [
+          { "name": "sex", "unit": "men | women", "how_we_get_it": "profile" },
+          { "name": "is_current_smoker", "unit": "boolean", "how_we_get_it": "any cigarette/bidi logged in last 30 days" }
+        ],
+        "kind": "table",
+        "formula": null,
+        "coefficients": null,
+        "table": [
+          { "group": "men, any smoking (mostly bidi)", "years_lost_median": 6, "ci_low": 5, "ci_high": 7 },
+          { "group": "women, any smoking", "years_lost_median": 8, "ci_low": 5, "ci_high": 11 },
+          { "group": "men, cigarettes only", "years_lost_median": 10, "ci_low": null, "ci_high": null },
+          { "group": "men smokers: % dying between 30 and 70", "percent": 61, "nonsmoker_percent": 41, "ci_low": null, "ci_high": null },
+          { "group": "women smokers: % dying between 30 and 70", "percent": 62, "nonsmoker_percent": 38, "ci_low": null, "ci_high": null }
+        ],
+        "output_unit": "years (median survival difference); % probability of death age 30–69",
+        "valid_for": { "age": "30–69 (main analysis)", "sex": "both", "population": "India, nationally representative, deaths 2001–2003 (Million Death Study / RGI-CGHR)", "exposure_range": "any smoking of bidis or cigarettes in the past 5 years; dose not used here", "south_asian_validated": "yes" },
+        "uncertainty": "99% CIs as printed. Case-control design with proxy (household) reporting of smoking and verbal-autopsy causes of death; controls unmatched. The 10-year cigarette figure is stated in the Discussion without a CI.",
+        "source": {
+          "citation": "Jha P, Jacob B, Gajalakshmi V, et al. A nationally representative case-control study of smoking and death in India. N Engl J Med 2008;358:1137-47",
+          "doi": "10.1056/NEJMsa0707719",
+          "pmid": null,
+          "url": "https://extranet.who.int/fctcapps/sites/default/files/2023-04/India_Annex1_Case-control-study-of-smoking-and-death_2008.pdf",
+          "where": "Results, 'Absolute risk' (p.1141) and Figure 3; cigarette 10-year figure in Discussion (p.1144)",
+          "quote": "The median ages at death suggested that male smokers will die an average of approximately 6 years (99% CI, 5 to 7) earlier than their nonsmoking counterparts.",
+          "access": "full text"
+        },
+        "supporting_sources": [
+          { "citation": "Doll R et al. BMJ 2004;328:1519 (British doctors, 50 years)", "url": "https://courses.ucsf.edu/mod/resource/view.php?id=54732", "agrees": "yes", "note": "UK continuing cigarette smokers died about 10 years younger; matches the Indian cigarette-only estimate." }
+        ],
+        "confidence": "medium",
+        "caveats": "Group averages, not personal life expectancy. Women's estimate rests on few smokers (about 5% of women smoked). Cigarette 10-year gap: quote is 'the hazard of cigarette smoking (risk ratio, 2.2) was even higher ... suggesting about a 10-year gap in median survival'. Do not show before the user has confirmed they smoke regularly.",
+        "user_copy": "In Indian data, people who smoke die on average about 6–8 years earlier than people who don't (range 5–11 years); for cigarette smokers it was about 10 years."
+      },
+      {
+        "id": "smoking-dose-allcause-india",
+        "topic": "smoking",
+        "name": "All-cause death risk by cigarettes/day (India)",
+        "estimates": "Risk ratio of death from any medical cause at ages 30–69 for Indian men smoking only cigarettes, by daily amount, vs non-smokers.",
+        "inputs": [
+          { "name": "cigs_per_day", "unit": "cigarettes/day", "how_we_get_it": "daily log, 30-day average" },
+          { "name": "sex", "unit": "men | women", "how_we_get_it": "profile" }
+        ],
+        "kind": "table",
+        "formula": null,
+        "coefficients": null,
+        "table": [
+          { "band": "non-smoker", "risk_ratio": 1.0, "ci_low": null, "ci_high": null },
+          { "band": "men, cigarettes only, 1–7/day (mean 4)", "risk_ratio": 1.8, "ci_low": null, "ci_high": null },
+          { "band": "men, cigarettes only, 8+/day", "risk_ratio": 2.9, "ci_low": null, "ci_high": null },
+          { "band": "men, any smoking (any amount)", "risk_ratio": 1.7, "ci_low": 1.6, "ci_high": 1.8 },
+          { "band": "women, any smoking (any amount)", "risk_ratio": 2.0, "ci_low": 1.8, "ci_high": 2.3 }
+        ],
+        "output_unit": "risk ratio (vs non-smokers; case-control, adjusted for age, education, alcohol); CIs are 99%",
+        "valid_for": { "age": "30–69", "sex": "men for the dose bands; both for any-smoking rows", "population": "India, deaths 2001–2003", "exposure_range": "1–7 and 8+ cigarettes/day; no finer bands in main text", "south_asian_validated": "yes" },
+        "uncertainty": "CIs for the dose bands are in Supplementary Table 3, which I did not open; shown as null. P<0.001 for trend. Differential reporting of amount between dead and living could distort dose-response (authors' limitation).",
+        "source": {
+          "citation": "Jha P, Jacob B, Gajalakshmi V, et al. N Engl J Med 2008;358:1137-47",
+          "doi": "10.1056/NEJMsa0707719",
+          "pmid": null,
+          "url": "https://extranet.who.int/fctcapps/sites/default/files/2023-04/India_Annex1_Case-control-study-of-smoking-and-death_2008.pdf",
+          "where": "Results, 'Relative risk in subgroups' (p.1141); any-smoking rows from Table 2",
+          "quote": "among those who smoked only cigarettes (risk ratio for one to seven cigarettes per day, 1.8; risk ratio for eight or more, 2.9; P<0.001 for both trends)",
+          "access": "full text"
+        },
+        "supporting_sources": [
+          { "citation": "Bjartveit K, Tverdal A. Health consequences of smoking 1-4 cigarettes per day. Tob Control 2005;14:315-320", "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC1748107/", "agrees": "yes", "note": "Norway, 1–4/day, all-cause death RR 1.57 (1.33–1.85) men, 1.47 (1.19–1.82) women." }
+        ],
+        "confidence": "medium",
+        "caveats": "Bidi-only bands from the same sentence (1–7/day RR 1.3; 8+ RR 2.2) are reserved for H2. Only two bands, so no per-cigarette slope. Smoking defined as smoking within previous 5 years.",
+        "user_copy": "In Indian data, 1–7 cigarettes a day was linked to about 1.8 times the risk of dying before 70, and 8 or more to about 2.9 times."
+      },
+      {
+        "id": "smoking-dose-allcause-uk-doctors",
+        "topic": "smoking",
+        "name": "All-cause death risk by cigarettes/day, age 60+ (UK men)",
+        "estimates": "Relative death rate at age 60+ for continuing cigarette smokers by daily amount, vs lifelong non-smokers.",
+        "inputs": [
+          { "name": "cigs_per_day", "unit": "cigarettes/day", "how_we_get_it": "daily log, 30-day average" },
+          { "name": "age", "unit": "years", "how_we_get_it": "profile" }
+        ],
+        "kind": "table",
+        "formula": null,
+        "coefficients": null,
+        "table": [
+          { "band": "lifelong non-smoker", "relative_risk": 1.0, "ci_low": null, "ci_high": null },
+          { "band": "former cigarette smoker", "relative_risk": 1.31, "ci_low": null, "ci_high": null },
+          { "band": "current, 1–14/day", "relative_risk": 1.79, "ci_low": null, "ci_high": null },
+          { "band": "current, 15–24/day", "relative_risk": 2.17, "ci_low": null, "ci_high": null },
+          { "band": "current, 25+/day", "relative_risk": 2.61, "ci_low": null, "ci_high": null },
+          { "band": "current, all amounts", "relative_risk": 2.19, "ci_low": null, "ci_high": null }
+        ],
+        "output_unit": "relative risk (indirectly standardised death-rate ratio)",
+        "valid_for": { "age": "60 and over", "sex": "men", "population": "UK male doctors born 1900–1930, followed 1951–2001", "exposure_range": "1–14, 15–24, 25+ cigarettes/day when last asked", "south_asian_validated": "no" },
+        "uncertainty": "No CIs printed in Table 3 (chi-square for trend 576). Death counts per cell given in brackets (403, 641, 577) indicate reasonable precision.",
+        "source": {
+          "citation": "Doll R, Peto R, Boreham J, Sutherland I. Mortality in relation to smoking: 50 years' observations on male British doctors. BMJ 2004;328:1519",
+          "doi": "10.1136/bmj.38142.554479.AE",
+          "pmid": "15213107",
+          "url": "https://courses.ucsf.edu/mod/resource/view.php?id=54732",
+          "where": "Table 3, row '20th' century of birth (page 4 of 9)",
+          "quote": "20th 12 770 1.00 (1656) 1.31 (3198) 2.19 (1621) 1.79 (403) 2.17 (641) 2.61 (577)",
+          "access": "full text"
+        },
+        "supporting_sources": [],
+        "confidence": "medium",
+        "caveats": "Men only, highly educated, historical cigarettes. Use smoking-dose-allcause-india as the primary Indian estimate and this as the Western reference.",
+        "user_copy": "Among older long-term smokers, the yearly risk of death was about 1.8 times a non-smoker's at under 15 a day and about 2.6 times at 25 or more."
+      },
+      {
+        "id": "smoking-light-allcause",
+        "topic": "smoking",
+        "name": "Light smoking (<1 and 1–10/day) and death risk",
+        "estimates": "Hazard of death from any cause for people who consistently smoked fewer than 1 or 1–10 cigarettes/day over their lifetime, vs never smokers.",
+        "inputs": [
+          { "name": "cigs_per_day", "unit": "cigarettes/day", "how_we_get_it": "daily log, 90-day average (to capture non-daily smoking)" }
+        ],
+        "kind": "table",
+        "formula": null,
+        "coefficients": null,
+        "table": [
+          { "band": "never smoker", "hazard_ratio": 1.0, "ci_low": null, "ci_high": null },
+          { "band": "<1/day, lifelong", "hazard_ratio": 1.64, "ci_low": 1.07, "ci_high": 2.51 },
+          { "band": "1–10/day, lifelong", "hazard_ratio": 1.87, "ci_low": 1.64, "ci_high": 2.13 },
+          { "band": "former <1/day, quit at 50+", "hazard_ratio": 1.44, "ci_low": 1.12, "ci_high": 1.85 },
+          { "band": "former 1–10/day, quit at 50+", "hazard_ratio": 1.42, "ci_low": 1.27, "ci_high": 1.59 }
+        ],
+        "output_unit": "hazard ratio",
+        "valid_for": { "age": "59–82 at baseline", "sex": "both", "population": "USA, NIH-AARP Diet and Health Study, baseline 2004–2005, follow-up to 2011", "exposure_range": "<1 and 1–10 cigarettes/day, consistent across lifetime", "south_asian_validated": "no" },
+        "uncertainty": "Only 159 people in the <1/day group (wide CI 1.07–2.51). Self-reported lifetime history. Adjusted for sex, race/ethnicity, education, physical activity, alcohol.",
+        "source": {
+          "citation": "Inoue-Choi M, Liao LM, Reyes-Guzman C, et al. Association of long-term, low-intensity smoking with all-cause and cause-specific mortality in the NIH-AARP Diet and Health Study. JAMA Intern Med 2017;177(1):87-95",
+          "doi": "10.1001/jamainternmed.2016.7511",
+          "pmid": "27918784",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5555224",
+          "where": "Abstract, Results",
+          "quote": "Relative to never smokers, consistent smokers of fewer than 1 CPD (HR, 1.64; 95% CI, 1.07–2.51) and 1 to 10 CPD (HR, 1.87; 95% CI, 1.64–2.13) had a higher all-cause mortality risk.",
+          "access": "abstract only"
+        },
+        "supporting_sources": [
+          { "citation": "Bjartveit K, Tverdal A. Tob Control 2005;14:315-320", "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC1748107/", "agrees": "yes", "note": "1–4/day all-cause death RR 1.57 (1.33–1.85) men, 1.47 (1.19–1.82) women; Norway, age 35–49 at entry, 1970s–2002. Abstract only." }
+        ],
+        "confidence": "medium",
+        "caveats": "Abstract text was read via the PMC abstract (search index); the full article was not fetched. Former-smoker quit-age rows at <50 are in the full text only. Best used to support the 'light smoking isn't safe' message rather than as a precise number.",
+        "user_copy": "Even smoking under 1 cigarette a day over years was linked to about 1.6 times the risk of death (range 1.1–2.5); 1–10 a day, about 1.9 times."
+      },
+      {
+        "id": "smoking-dose-chd",
+        "topic": "smoking",
+        "name": "Heart attack / coronary heart disease risk by cigarettes/day",
+        "estimates": "Relative risk of coronary heart disease at 1, 5 and 20 cigarettes/day vs never smokers, by sex.",
+        "inputs": [
+          { "name": "cigs_per_day", "unit": "cigarettes/day", "how_we_get_it": "daily log, 30-day average" },
+          { "name": "sex", "unit": "men | women", "how_we_get_it": "profile" }
+        ],
+        "kind": "table",
+        "formula": null,
+        "coefficients": null,
+        "table": [
+          { "sex": "both", "cigs_per_day": 0, "relative_risk": 1.0, "ci_low": null, "ci_high": null },
+          { "sex": "men", "cigs_per_day": 1, "relative_risk": 1.48, "ci_low": 1.30, "ci_high": 1.69, "rr_multi_adjusted": 1.74 },
+          { "sex": "men", "cigs_per_day": 5, "relative_risk": 1.58, "ci_low": 1.39, "ci_high": 1.80 },
+          { "sex": "men", "cigs_per_day": 20, "relative_risk": 2.04, "ci_low": 1.86, "ci_high": 2.24, "rr_multi_adjusted": 2.27 },
+          { "sex": "women", "cigs_per_day": 1, "relative_risk": 1.57, "ci_low": null, "ci_high": null, "rr_multi_adjusted": 2.19 },
+          { "sex": "women", "cigs_per_day": 5, "relative_risk": 1.76, "ci_low": null, "ci_high": null },
+          { "sex": "women", "cigs_per_day": 20, "relative_risk": 2.84, "ci_low": null, "ci_high": null, "rr_multi_adjusted": 3.95 }
+        ],
+        "output_unit": "relative risk (pooled HR/RR, random-effects)",
+        "valid_for": { "age": "adults; sub-analyses at 45, 55, 65", "sex": "both", "population": "141 prospective cohorts (55 reports), mostly Europe/N America/East Asia, Medline 1946–May 2015", "exposure_range": "modelled 1–20 cigarettes/day; above 20 not modelled", "south_asian_validated": "no" },
+        "uncertainty": "Men's CIs printed; women's CIs are in Table 1 (not rendered in the page I read), shown as null. Across studies the 1-a-day excess was 46% (IQR 24–56%) of the 20-a-day excess in men. Multi-adjusted estimates are higher. Second-hand smoke in the reference group may bias RRs down.",
+        "source": {
+          "citation": "Hackshaw A, Morris JK, Boniface S, Tang JL, Milenković D. Low cigarette consumption and risk of coronary heart disease and stroke: meta-analysis of 141 cohort studies in 55 study reports. BMJ 2018;360:j5855",
+          "doi": "10.1136/bmj.j5855",
+          "pmid": null,
+          "url": "https://www-bmj-com.bibliotheek.ehb.be/content/360/bmj.j5855.long",
+          "where": "Results, 'Coronary heart disease'; Abstract; multi-adjusted values from 'Confounding' section",
+          "quote": "The pooled relative risk from 26 study reports was 1.48 (95% confidence interval 1.30 to 1.69) for men who smoked, on average, one cigarette per day and 1.58 (1.39 to 1.80) for those who smoked five cigarettes per day; the relative risk for smoking 20 cigarettes per day was 2.04 (1.86 to 2.24)",
+          "access": "full text"
+        },
+        "supporting_sources": [
+          { "citation": "Bjartveit K, Tverdal A. Tob Control 2005;14:315-320", "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC1748107/", "agrees": "yes", "note": "1–4/day IHD death RR 2.74 (2.07–3.61) men, 2.94 (1.75–4.95) women. Abstract only." },
+          { "citation": "Banks E et al. BMC Med 2019;17:128", "url": "https://bmcmedicine.biomedcentral.com/track/pdf/10.1186/s12916-019-1351-4", "agrees": "yes", "note": "Acute MI: current 2.45 (2.22–2.70); 25+/day 3.34 (2.85–3.92). Useful for >20/day, but a different source." },
+          { "citation": "Jha P et al. NEJM 2008;358:1137-47", "url": "https://extranet.who.int/fctcapps/sites/default/files/2023-04/India_Annex1_Case-control-study-of-smoking-and-death_2008.pdf", "agrees": "yes", "note": "India, death from heart disease, any smoking: men 1.6 (1.5–1.8), women 1.7 (1.3–2.1), 99% CI. No dose bands." }
+        ],
+        "confidence": "high",
+        "caveats": "The curve is steep at low doses then flattens, so cutting down helps the heart much less than people expect. The same paper reports cohorts where heavy smokers who halved their smoking had CVD RR 1.06, 1.02 and 0.92 vs continuing heavy smokers, while quitters had 0.67, 0.46 and 0.43. Between points, log-linear interpolation (ln RR linear in cigs) matches the authors' modelling approach but is our step, not a published coefficient; please confirm. Do not extrapolate above 20/day with this table.",
+        "user_copy": "Heart attack risk: about +{pct}% vs a non-smoker at {n} a day (range {lo}–{hi}%). Even 1 a day carries about half the extra risk of 20 a day."
+      },
+      {
+        "id": "smoking-dose-stroke",
+        "topic": "smoking",
+        "name": "Stroke risk by cigarettes/day",
+        "estimates": "Relative risk of stroke at 1, 5 and 20 cigarettes/day vs never smokers, by sex.",
+        "inputs": [
+          { "name": "cigs_per_day", "unit": "cigarettes/day", "how_we_get_it": "daily log, 30-day average" },
+          { "name": "sex", "unit": "men | women", "how_we_get_it": "profile" }
+        ],
+        "kind": "table",
+        "formula": null,
+        "coefficients": null,
+        "table": [
+          { "sex": "both", "cigs_per_day": 0, "relative_risk": 1.0, "ci_low": null, "ci_high": null },
+          { "sex": "men", "cigs_per_day": 1, "relative_risk": 1.25, "ci_low": 1.13, "ci_high": 1.38, "rr_multi_adjusted": 1.30 },
+          { "sex": "men", "cigs_per_day": 5, "relative_risk": 1.30, "ci_low": null, "ci_high": null },
+          { "sex": "men", "cigs_per_day": 20, "relative_risk": 1.64, "ci_low": 1.48, "ci_high": 1.82, "rr_multi_adjusted": 1.56 },
+          { "sex": "women", "cigs_per_day": 1, "relative_risk": 1.31, "ci_low": 1.13, "ci_high": 1.52, "rr_multi_adjusted": 1.46 },
+          { "sex": "women", "cigs_per_day": 5, "relative_risk": 1.44, "ci_low": null, "ci_high": null },
+          { "sex": "women", "cigs_per_day": 20, "relative_risk": 2.16, "ci_low": 1.69, "ci_high": 2.75, "rr_multi_adjusted": 2.42 }
+        ],
+        "output_unit": "relative risk (pooled)",
+        "valid_for": { "age": "adults", "sex": "both", "population": "same cohorts as smoking-dose-chd; stroke subtypes not separated", "exposure_range": "modelled 1–20 cigarettes/day", "south_asian_validated": "no" },
+        "uncertainty": "5-a-day CIs not printed in text. Within-study excess at 1/day was 41% (IQR −7 to 62%) of 20/day excess in men.",
+        "source": {
+          "citation": "Hackshaw A et al. BMJ 2018;360:j5855",
+          "doi": "10.1136/bmj.j5855",
+          "pmid": null,
+          "url": "https://www-bmj-com.bibliotheek.ehb.be/content/360/bmj.j5855.long",
+          "where": "Results, 'Stroke'; Abstract",
+          "quote": "Among men who smoked one cigarette per day, the relative risk was 1.25 (1.13 to 1.38); for women, it was 1.31 (1.13 to 1.52). The corresponding estimates for smoking 20 cigarettes per day were 1.64 (1.48 to 1.82) and 2.16 (1.69 to 2.75).",
+          "access": "full text"
+        },
+        "supporting_sources": [
+          { "citation": "Banks E et al. BMC Med 2019;17:128", "url": "https://bmcmedicine.biomedcentral.com/track/pdf/10.1186/s12916-019-1351-4", "agrees": "yes", "note": "Cerebrovascular disease: current 2.16 (1.93–2.42); 25+/day 3.22 (2.66–3.89)." },
+          { "citation": "Jha P et al. NEJM 2008", "url": "https://extranet.who.int/fctcapps/sites/default/files/2023-04/India_Annex1_Case-control-study-of-smoking-and-death_2008.pdf", "agrees": "yes", "note": "India, stroke death, any smoking: men 1.6 (1.4–1.8), women 1.6 (1.2–2.1), 99% CI." }
+        ],
+        "confidence": "high",
+        "caveats": "Same flat-curve caveat as CHD. For ischaemic vs haemorrhagic split use smoking-stroke-subtypes.",
+        "user_copy": "Stroke risk: about +{pct}% vs a non-smoker at {n} a day (range {lo}–{hi}%)."
+      },
+      {
+        "id": "smoking-stroke-subtypes",
+        "topic": "smoking",
+        "name": "Ischaemic vs haemorrhagic stroke (current smokers)",
+        "estimates": "Relative risk of ischaemic stroke and intracerebral haemorrhage in current vs never smokers.",
+        "inputs": [
+          { "name": "is_current_smoker", "unit": "boolean", "how_we_get_it": "any cigarette logged in last 30 days" }
+        ],
+        "kind": "table",
+        "formula": null,
+        "coefficients": null,
+        "table": [
+          { "outcome": "ischaemic stroke (I63)", "relative_risk": 2.01, "ci_low": 1.69, "ci_high": 2.40 },
+          { "outcome": "intracerebral haemorrhage (I61)", "relative_risk": 1.84, "ci_low": 1.33, "ci_high": 2.54 }
+        ],
+        "output_unit": "relative risk (HR, fatal + non-fatal hospitalisation)",
+        "valid_for": { "age": "45+", "sex": "both", "population": "Australia, 45 and Up Study, baseline 2006–2009, follow-up to 2015, CVD- and cancer-free at baseline", "exposure_range": "current vs never only (no dose bands for subtypes in text)", "south_asian_validated": "no" },
+        "uncertainty": "95% CIs printed. Adjusted for age, sex, region, alcohol, income, education.",
+        "source": {
+          "citation": "Banks E, Joshy G, Korda RJ, et al. Tobacco smoking and risk of 36 cardiovascular disease subtypes: fatal and non-fatal outcomes in a large prospective Australian study. BMC Med 2019;17:128",
+          "doi": "10.1186/s12916-019-1351-4",
+          "pmid": "31266500",
+          "url": "https://bmcmedicine.biomedcentral.com/track/pdf/10.1186/s12916-019-1351-4",
+          "where": "Discussion, p.15",
+          "quote": "Our findings of RRs in current versus never smokers for ischaemic stroke (I63) of 2.01 (1.69–2.40) and of intracerebral haemorrhage (I61) of 1.84 (1.33–2.54)",
+          "access": "full text"
+        },
+        "supporting_sources": [
+          { "citation": "Price AJ et al. Neurology 2018;90:e298 (meta-analysis cited by Banks)", "url": "https://bmcmedicine.biomedcentral.com/track/pdf/10.1186/s12916-019-1351-4", "agrees": "yes", "note": "Cited values 2.17 (2.06–2.28) ischaemic and 1.77 (1.60–1.95) ICH; not opened directly." }
+        ],
+        "confidence": "medium",
+        "caveats": "No dose-response for subtypes; show as 'about 2 times' for current smokers only.",
+        "user_copy": "People who smoke have about 2 times the risk of the common (clot) type of stroke (range 1.7–2.4) and about 1.8 times the bleeding type (range 1.3–2.5)."
+      },
+      {
+        "id": "smoking-dose-pad",
+        "topic": "smoking",
+        "name": "Peripheral artery disease risk",
+        "estimates": "Relative risk of peripheral arterial disease (hospitalisation or death) in current smokers vs never smokers, overall and at 25+/day.",
+        "inputs": [
+          { "name": "cigs_per_day", "unit": "cigarettes/day", "how_we_get_it": "daily log, 30-day average" }
+        ],
+        "kind": "table",
+        "formula": null,
+        "coefficients": null,
+        "table": [
+          { "band": "never", "relative_risk": 1.0, "ci_low": null, "ci_high": null },
+          { "band": "current, any amount", "relative_risk": 5.06, "ci_low": 4.47, "ci_high": 5.74 },
+          { "band": "current, 25+/day", "relative_risk": 7.26, "ci_low": 5.95, "ci_high": 8.88 },
+          { "band": "current, 1–14/day", "relative_risk": null, "ci_low": null, "ci_high": null },
+          { "band": "current, 15–24/day", "relative_risk": null, "ci_low": null, "ci_high": null }
+        ],
+        "output_unit": "relative risk (HR)",
+        "valid_for": { "age": "45+", "sex": "both", "population": "Australia, 2006–2015", "exposure_range": "1–14, 15–24, 25+ (middle bands only in Figure 3, not extractable)", "south_asian_validated": "no" },
+        "uncertainty": "95% CIs printed. Excess PAD risk persisted after quitting (Fig 5).",
+        "source": {
+          "citation": "Banks E et al. BMC Med 2019;17:128",
+          "doi": "10.1186/s12916-019-1351-4",
+          "pmid": "31266500",
+          "url": "https://bmcmedicine.biomedcentral.com/track/pdf/10.1186/s12916-019-1351-4",
+          "where": "Abstract; Results p.10",
+          "quote": "and a roughly sevenfold risk of peripheral arterial disease (7.26, 5.95–8.88)",
+          "access": "full text"
+        },
+        "supporting_sources": [],
+        "confidence": "medium",
+        "caveats": "Middle dose bands need values read from Figure 3; please pull from the figure or supplementary file. Includes abdominal aortic aneurysm and atherosclerosis subcategories.",
+        "user_copy": "Risk of narrowed leg arteries is about 5 times a non-smoker's (range 4.5–5.7), and about 7 times at 25+ a day."
+      },
+      {
+        "id": "smoking-dose-heart-failure",
+        "topic": "smoking",
+        "name": "Heart failure risk",
+        "estimates": "Relative risk of heart failure (hospitalisation or death), current and 25+/day vs never smokers.",
+        "inputs": [
+          { "name": "cigs_per_day", "unit": "cigarettes/day", "how_we_get_it": "daily log, 30-day average" }
+        ],
+        "kind": "table",
+        "formula": null,
+        "coefficients": null,
+        "table": [
+          { "band": "never", "relative_risk": 1.0, "ci_low": null, "ci_high": null },
+          { "band": "current, any amount", "relative_risk": 2.23, "ci_low": 1.96, "ci_high": 2.53 },
+          { "band": "current, 25+/day", "relative_risk": 3.91, "ci_low": 3.17, "ci_high": 4.83 }
+        ],
+        "output_unit": "relative risk (HR)",
+        "valid_for": { "age": "45+", "sex": "both", "population": "Australia, 2006–2015", "exposure_range": "current; 25+/day", "south_asian_validated": "no" },
+        "uncertainty": "95% CIs printed. Heart failure hospitalisation is not complete incidence (authors' note).",
+        "source": {
+          "citation": "Banks E et al. BMC Med 2019;17:128",
+          "doi": "10.1186/s12916-019-1351-4",
+          "pmid": "31266500",
+          "url": "https://bmcmedicine.biomedcentral.com/track/pdf/10.1186/s12916-019-1351-4",
+          "where": "Abstract; Results p.10",
+          "quote": "at least a tripling in the rate of AMI (3.34, 2.85–3.92), cerebrovascular disease (3.22, 2.66–3.89) or heart failure (3.91, 3.17–4.83)",
+          "access": "full text"
+        },
+        "supporting_sources": [],
+        "confidence": "medium",
+        "caveats": "Only two points; do not draw a curve.",
+        "user_copy": "Heart failure risk is about 2.2 times a non-smoker's (range 2.0–2.5)."
+      },
+      {
+        "id": "smoking-af",
+        "topic": "smoking",
+        "name": "Atrial fibrillation (current smokers)",
+        "estimates": "Relative risk of atrial fibrillation/flutter in current vs never smokers.",
+        "inputs": [
+          { "name": "is_current_smoker", "unit": "boolean", "how_we_get_it": "any cigarette logged in last 30 days" }
+        ],
+        "kind": "table",
+        "formula": null,
+        "coefficients": null,
+        "table": [
+          { "band": "current vs never", "relative_risk": 1.31, "ci_low": 1.20, "ci_high": 1.44 }
+        ],
+        "output_unit": "relative risk (HR)",
+        "valid_for": { "age": "45+", "sex": "both", "population": "Australia, 2006–2015", "exposure_range": "current vs never", "south_asian_validated": "no" },
+        "uncertainty": "95% CI printed. Authors say 30–40% increases are broadly consistent with other studies.",
+        "source": {
+          "citation": "Banks E et al. BMC Med 2019;17:128",
+          "doi": "10.1186/s12916-019-1351-4",
+          "pmid": "31266500",
+          "url": "https://bmcmedicine.biomedcentral.com/track/pdf/10.1186/s12916-019-1351-4",
+          "where": "Abstract, Results",
+          "quote": "1.31 (1.20–1.44) for atrial fibrillation/flutter",
+          "access": "full text"
+        },
+        "supporting_sources": [],
+        "confidence": "medium",
+        "caveats": "No dose-response. Alcohol AF model belongs in H4.",
+        "user_copy": "Irregular heartbeat (AF) risk is about 1.3 times a non-smoker's (range 1.2–1.4)."
+      },
+      {
+        "id": "smoking-dose-cvd-death",
+        "topic": "smoking",
+        "name": "Death from cardiovascular disease by cigarettes/day",
+        "estimates": "Relative risk of dying from major CVD by smoking intensity vs never smokers.",
+        "inputs": [
+          { "name": "cigs_per_day", "unit": "cigarettes/day", "how_we_get_it": "daily log, 30-day average" }
+        ],
+        "kind": "table",
+        "formula": null,
+        "coefficients": null,
+        "table": [
+          { "band": "never", "relative_risk": 1.0, "ci_low": null, "ci_high": null },
+          { "band": "4–6/day", "relative_risk": 1.92, "ci_low": 1.11, "ci_high": 3.32 },
+          { "band": "25+/day", "relative_risk": 4.90, "ci_low": 3.79, "ci_high": 6.34 },
+          { "band": "current, any amount", "relative_risk": 2.75, "ci_low": 2.37, "ci_high": 3.19 },
+          { "band": "current, age 45–74", "relative_risk": 3.47, "ci_low": 2.76, "ci_high": 4.37 },
+          { "band": "current, age 75+", "relative_risk": 2.12, "ci_low": 1.70, "ci_high": 2.63 }
+        ],
+        "output_unit": "relative risk (HR, CVD mortality)",
+        "valid_for": { "age": "45+", "sex": "both", "population": "Australia, 2006–2015", "exposure_range": "4–6 and 25+ cigarettes/day printed; 1–3, 7–9, 10–14, 15–24 in Figure 4 only", "south_asian_validated": "no" },
+        "uncertainty": "95% CIs printed; 4–6/day CI is wide.",
+        "source": {
+          "citation": "Banks E et al. BMC Med 2019;17:128",
+          "doi": "10.1186/s12916-019-1351-4",
+          "pmid": "31266500",
+          "url": "https://bmcmedicine.biomedcentral.com/track/pdf/10.1186/s12916-019-1351-4",
+          "where": "Abstract; Results p.8 (age split)",
+          "quote": "with HRs for total CVD mortality in current versus never smokers of 1.92 (1.11–3.32) and 4.90 (3.79–6.34) for 4–6 and ≥ 25 cigarettes/day, respectively.",
+          "access": "full text"
+        },
+        "supporting_sources": [],
+        "confidence": "medium",
+        "caveats": "Relative risks are higher at younger ages but absolute risks are higher at older ages (authors). Fill remaining bands from Figure 4 before using as a curve.",
+        "user_copy": "Risk of dying from heart and blood-vessel disease is about 2 times a non-smoker's even at 4–6 a day (range 1.1–3.3)."
+      },
+      {
+        "id": "smoking-dose-lung-cancer",
+        "topic": "smoking",
+        "name": "Lung cancer death rate by cigarettes/day",
+        "estimates": "Age-standardised lung cancer death rates by daily cigarettes, and the ratio to lifelong non-smokers.",
+        "inputs": [
+          { "name": "cigs_per_day", "unit": "cigarettes/day", "how_we_get_it": "daily log, 30-day average" }
+        ],
+        "kind": "table",
+        "formula": null,
+        "coefficients": null,
+        "table": [
+          { "band": "lifelong non-smoker", "rate_per_1000_per_year": 0.17, "rate_ratio_computed": 1.0, "ci_low": null, "ci_high": null },
+          { "band": "former cigarette smoker", "rate_per_1000_per_year": 0.68, "rate_ratio_computed": 4.0, "ci_low": null, "ci_high": null },
+          { "band": "current, 1–14/day", "rate_per_1000_per_year": 1.31, "rate_ratio_computed": 7.7, "ci_low": null, "ci_high": null },
+          { "band": "current, 15–24/day", "rate_per_1000_per_year": 2.33, "rate_ratio_computed": 13.7, "ci_low": null, "ci_high": null },
+          { "band": "current, 25+/day", "rate_per_1000_per_year": 4.17, "rate_ratio_computed": 24.5, "ci_low": null, "ci_high": null }
+        ],
+        "output_unit": "deaths per 1000 men per year (printed); rate ratio (computed by me as rate / 0.17)",
+        "valid_for": { "age": "adult men, age-standardised", "sex": "men", "population": "UK male doctors, 1951–2001", "exposure_range": "1–14, 15–24, 25+ cigarettes/day", "south_asian_validated": "no" },
+        "uncertainty": "No CIs printed in Table 1 (1052 lung cancer deaths in total; chi-square for trend 452). rate_ratio_computed is a simple division I did from the printed rates, not a printed RR.",
+        "source": {
+          "citation": "Doll R, Peto R, Boreham J, Sutherland I. BMJ 2004;328:1519",
+          "doi": "10.1136/bmj.38142.554479.AE",
+          "pmid": "15213107",
+          "url": "https://courses.ucsf.edu/mod/resource/view.php?id=54732",
+          "where": "Table 1, row 'Cancer of lung' (page 3 of 9)",
+          "quote": "Cancer of lung 1052 0.17 0.68 2.49 1.31 2.33 4.17 0.71 1.30 394 452",
+          "access": "full text"
+        },
+        "supporting_sources": [
+          { "citation": "Inoue-Choi M et al. JAMA Intern Med 2017;177:87-95", "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5555224", "agrees": "yes", "note": "Lung cancer death HR 9.12 (2.92–28.47) for <1/day and 11.61 (8.25–16.35) for 1–10/day (abstract)." },
+          { "citation": "Bjartveit K, Tverdal A. Tob Control 2005", "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC1748107/", "agrees": "yes", "note": "1–4/day lung cancer death RR 2.79 (0.94–8.28) men, 5.03 (1.81–13.98) women." },
+          { "citation": "Hackshaw A et al. BMJ 2018", "url": "https://www-bmj-com.bibliotheek.ehb.be/content/360/bmj.j5855.long", "agrees": "yes", "note": "States lung cancer risk is roughly linear with cigarettes/day (unlike CVD), which is why cutting down helps lung cancer more than heart risk." }
+        ],
+        "confidence": "medium",
+        "caveats": "Men only; Indian smokers have much lower lung cancer rates overall (Jha 2008: smoking-associated TB deaths were more than 10 times lung cancer deaths), so show as 'times higher', never as absolute Indian risk. Pack-year based curves not found in opened sources this pass.",
+        "user_copy": "Lung cancer death rates were about 8 times a non-smoker's at under 15 a day and about 24 times at 25 or more."
+      },
+      {
+        "id": "smoking-dose-copd",
+        "topic": "smoking",
+        "name": "COPD death rate by cigarettes/day",
+        "estimates": "Age-standardised COPD death rates by daily cigarettes, and the ratio to lifelong non-smokers.",
+        "inputs": [
+          { "name": "cigs_per_day", "unit": "cigarettes/day", "how_we_get_it": "daily log, 30-day average" }
+        ],
+        "kind": "table",
+        "formula": null,
+        "coefficients": null,
+        "table": [
+          { "band": "lifelong non-smoker", "rate_per_1000_per_year": 0.11, "rate_ratio_computed": 1.0, "ci_low": null, "ci_high": null },
+          { "band": "former cigarette smoker", "rate_per_1000_per_year": 0.64, "rate_ratio_computed": 5.8, "ci_low": null, "ci_high": null },
+          { "band": "current, 1–14/day", "rate_per_1000_per_year": 1.04, "rate_ratio_computed": 9.5, "ci_low": null, "ci_high": null },
+          { "band": "current, 15–24/day", "rate_per_1000_per_year": 1.41, "rate_ratio_computed": 12.8, "ci_low": null, "ci_high": null },
+          { "band": "current, 25+/day", "rate_per_1000_per_year": 2.61, "rate_ratio_computed": 23.7, "ci_low": null, "ci_high": null }
+        ],
+        "output_unit": "deaths per 1000 men per year (printed); rate ratio (computed)",
+        "valid_for": { "age": "adult men, age-standardised", "sex": "men", "population": "UK male doctors, 1951–2001", "exposure_range": "1–14, 15–24, 25+ cigarettes/day", "south_asian_validated": "no" },
+        "uncertainty": "No CIs; 640 COPD deaths in total. Ratios computed by me from printed rates.",
+        "source": {
+          "citation": "Doll R et al. BMJ 2004;328:1519",
+          "doi": "10.1136/bmj.38142.554479.AE",
+          "pmid": "15213107",
+          "url": "https://courses.ucsf.edu/mod/resource/view.php?id=54732",
+          "where": "Table 1, row 'Chronic obstructive pulmonary disease'",
+          "quote": "Chronic obstructive pulmonary disease 640 0.11 0.64 1.56 1.04 1.41 2.61 0.45 0.64 212 258",
+          "access": "full text"
+        },
+        "supporting_sources": [
+          { "citation": "Jha P et al. NEJM 2008", "url": "https://extranet.who.int/fctcapps/sites/default/files/2023-04/India_Annex1_Case-control-study-of-smoking-and-death_2008.pdf", "agrees": "yes", "note": "India, death from respiratory disease (chiefly COPD, asthma, pneumonia), any smoking: men 2.1 (1.9–2.3), women 3.1 (2.5–3.8), 99% CI." }
+        ],
+        "confidence": "medium",
+        "caveats": "Mortality, not incidence. The Forey 2011 COPD meta-analysis was excluded (see not_found). In India, biomass smoke also causes COPD, so never present smoking as the only cause.",
+        "user_copy": "COPD (long-term lung damage) death rates were about 10 times a non-smoker's at under 15 a day and over 20 times at 25 or more."
+      },
+      {
+        "id": "smoking-dose-mouth-throat-oesophagus-cancer",
+        "topic": "smoking",
+        "name": "Mouth, throat, larynx and oesophagus cancer death rate by cigarettes/day",
+        "estimates": "Age-standardised death rates for cancers of mouth, pharynx, larynx and oesophagus combined, by daily cigarettes.",
+        "inputs": [
+          { "name": "cigs_per_day", "unit": "cigarettes/day", "how_we_get_it": "daily log, 30-day average" }
+        ],
+        "kind": "table",
+        "formula": null,
+        "coefficients": null,
+        "table": [
+          { "band": "lifelong non-smoker", "rate_per_1000_per_year": 0.09, "rate_ratio_computed": 1.0, "ci_low": null, "ci_high": null },
+          { "band": "former cigarette smoker", "rate_per_1000_per_year": 0.26, "rate_ratio_computed": 2.9, "ci_low": null, "ci_high": null },
+          { "band": "current, 1–14/day", "rate_per_1000_per_year": 0.36, "rate_ratio_computed": 4.0, "ci_low": null, "ci_high": null },
+          { "band": "current, 15–24/day", "rate_per_1000_per_year": 0.47, "rate_ratio_computed": 5.2, "ci_low": null, "ci_high": null },
+          { "band": "current, 25+/day", "rate_per_1000_per_year": 1.06, "rate_ratio_computed": 11.8, "ci_low": null, "ci_high": null }
+        ],
+        "output_unit": "deaths per 1000 men per year (printed); rate ratio (computed)",
+        "valid_for": { "age": "adult men", "sex": "men", "population": "UK male doctors, 1951–2001", "exposure_range": "1–14, 15–24, 25+ cigarettes/day", "south_asian_validated": "no" },
+        "uncertainty": "Only 340 deaths across four cancer sites; no CIs; ratios computed by me.",
+        "source": {
+          "citation": "Doll R et al. BMJ 2004;328:1519",
+          "doi": "10.1136/bmj.38142.554479.AE",
+          "pmid": "15213107",
+          "url": "https://courses.ucsf.edu/mod/resource/view.php?id=54732",
+          "where": "Table 1, row 'Cancers of mouth, pharynx, larynx, oesophagus'",
+          "quote": "340 0.09 0.26 0.60 0.36 0.47 1.06 0.30 0.47 68 83",
+          "access": "full text"
+        },
+        "supporting_sources": [],
+        "confidence": "low",
+        "caveats": "The authors note this relation is increased by confounding with alcohol. In India, chewing tobacco dominates these cancers, so H2 (smokeless) and H5 (tobacco x alcohol) are the right places for the main model. Sites are combined.",
+        "user_copy": "Death rates from mouth and throat cancers were about 4–12 times a non-smoker's, rising with the number smoked."
+      },
+      {
+        "id": "smoking-tb-india",
+        "topic": "smoking",
+        "name": "Tuberculosis death risk (India)",
+        "estimates": "Risk ratio of dying from tuberculosis at ages 30–69 for Indian smokers vs non-smokers.",
+        "inputs": [
+          { "name": "is_current_smoker", "unit": "boolean", "how_we_get_it": "any cigarette/bidi logged in last 30 days" },
+          { "name": "sex", "unit": "men | women", "how_we_get_it": "profile" }
+        ],
+        "kind": "table",
+        "formula": null,
+        "coefficients": null,
+        "table": [
+          { "group": "non-smoker", "risk_ratio": 1.0, "ci_low": null, "ci_high": null },
+          { "group": "men, smoker", "risk_ratio": 2.3, "ci_low": 2.1, "ci_high": 2.6 },
+          { "group": "women, smoker", "risk_ratio": 3.0, "ci_low": 2.4, "ci_high": 3.9 }
+        ],
+        "output_unit": "risk ratio; 99% CI",
+        "valid_for": { "age": "30–69", "sex": "both", "population": "India, 2001–2003", "exposure_range": "any smoking in past 5 years (bidi or cigarette); no dose bands in main text", "south_asian_validated": "yes" },
+        "uncertainty": "99% CIs printed. TB deaths identified by verbal autopsy.",
+        "source": {
+          "citation": "Jha P et al. N Engl J Med 2008;358:1137-47",
+          "doi": "10.1056/NEJMsa0707719",
+          "pmid": null,
+          "url": "https://extranet.who.int/fctcapps/sites/default/files/2023-04/India_Annex1_Case-control-study-of-smoking-and-death_2008.pdf",
+          "where": "Abstract; Table 2",
+          "quote": "Excess deaths among smokers, as compared with nonsmokers, were chiefly from tuberculosis among both women (risk ratio, 3.0; 99% CI, 2.4 to 3.9) and men (risk ratio, 2.3; 99% CI, 2.1 to 2.6)",
+          "access": "full text"
+        },
+        "supporting_sources": [
+          { "citation": "Bates MN, Khalakdina A, Pai M, et al. Risk of tuberculosis from exposure to tobacco smoke: a systematic review and meta-analysis. Arch Intern Med 2007;167:335-42", "url": "https://nmji.in/nmji/archives/Volume-22/Issue-3/PDF-volume-22-issue-3/Volume-22-issue-3-Select-Sumry.pdf", "agrees": "yes", "note": "TB infection RR 1.73 (1.46–2.04); TB disease 2.33 (1.97–2.75) to 2.66 (2.15–3.28). Original not opened; numbers as reproduced in Natl Med J India 2009;22(3) summary. A 2022 review table (PMC9488690) lists TB disease as 2.29 (1.93–2.71) for the same paper, so verify against the original." }
+        ],
+        "confidence": "high",
+        "caveats": "In the same study, smoking-associated TB deaths among men were 1174 of 3119 TB deaths. Useful and locally relevant, but phrase gently: TB is treatable and not the user's fault.",
+        "user_copy": "In India, people who smoke have about 2.3–3 times the risk of dying from TB (range 2.1–3.9)."
+      },
+      {
+        "id": "smoking-cause-specific-death-india",
+        "topic": "smoking",
+        "name": "Cause-specific death risk, Indian smokers",
+        "estimates": "Risk ratios for death by underlying cause at ages 30–69, smokers vs non-smokers, India.",
+        "inputs": [
+          { "name": "is_current_smoker", "unit": "boolean", "how_we_get_it": "any cigarette/bidi logged in last 30 days" },
+          { "name": "sex", "unit": "men | women", "how_we_get_it": "profile" }
+        ],
+        "kind": "table",
+        "formula": null,
+        "coefficients": null,
+        "table": [
+          { "cause": "respiratory disease", "sex": "men", "risk_ratio": 2.1, "ci_low": 1.9, "ci_high": 2.3 },
+          { "cause": "respiratory disease", "sex": "women", "risk_ratio": 3.1, "ci_low": 2.5, "ci_high": 3.8 },
+          { "cause": "stroke", "sex": "men", "risk_ratio": 1.6, "ci_low": 1.4, "ci_high": 1.8 },
+          { "cause": "stroke", "sex": "women", "risk_ratio": 1.6, "ci_low": 1.2, "ci_high": 2.1 },
+          { "cause": "heart disease", "sex": "men", "risk_ratio": 1.6, "ci_low": 1.5, "ci_high": 1.8 },
+          { "cause": "heart disease", "sex": "women", "risk_ratio": 1.7, "ci_low": 1.3, "ci_high": 2.1 },
+          { "cause": "neoplastic disease (all cancers)", "sex": "men", "risk_ratio": 2.1, "ci_low": 1.9, "ci_high": 2.4 },
+          { "cause": "neoplastic disease (all cancers)", "sex": "women", "risk_ratio": 2.1, "ci_low": 1.6, "ci_high": 2.6 },
+          { "cause": "peptic ulcer", "sex": "men", "risk_ratio": 1.9, "ci_low": 1.4, "ci_high": 2.5 },
+          { "cause": "peptic ulcer", "sex": "women", "risk_ratio": 2.8, "ci_low": 1.6, "ci_high": 4.8 },
+          { "cause": "any medical cause", "sex": "men", "risk_ratio": 1.7, "ci_low": 1.6, "ci_high": 1.8 },
+          { "cause": "any medical cause", "sex": "women", "risk_ratio": 2.0, "ci_low": 1.8, "ci_high": 2.3 }
+        ],
+        "output_unit": "risk ratio; 99% CI",
+        "valid_for": { "age": "30–69", "sex": "both", "population": "India, 2001–2003", "exposure_range": "any smoking in past 5 years", "south_asian_validated": "yes" },
+        "uncertainty": "99% CIs printed. Verbal-autopsy cause assignment; 'heart disease' includes all vascular disease except stroke.",
+        "source": {
+          "citation": "Jha P et al. N Engl J Med 2008;358:1137-47",
+          "doi": "10.1056/NEJMsa0707719",
+          "pmid": null,
+          "url": "https://extranet.who.int/fctcapps/sites/default/files/2023-04/India_Annex1_Case-control-study-of-smoking-and-death_2008.pdf",
+          "where": "Table 2 (p.1142)",
+          "quote": "Respiratory disease 3,487 60 2.1 (1.9–2.3) 1078 (31)",
+          "access": "full text"
+        },
+        "supporting_sources": [],
+        "confidence": "medium",
+        "caveats": "Liver disease row (men 1.6, women 1.5) is omitted on purpose: the authors say it is probably largely due to alcohol. Current vs non-smoker only; no dose.",
+        "user_copy": "In Indian data, smoking was linked to about 1.6–3 times the risk of dying from lung, heart, stroke and cancer causes."
+      },
+      {
+        "id": "smoking-dose-diabetes",
+        "topic": "smoking",
+        "name": "Type 2 diabetes risk by smoking level",
+        "estimates": "Relative risk of incident type 2 diabetes for light, moderate and heavy current smokers and by years since quitting, vs never smokers.",
+        "inputs": [
+          { "name": "cigs_per_day", "unit": "cigarettes/day", "how_we_get_it": "daily log, 30-day average" },
+          { "name": "years_since_quit", "unit": "years", "how_we_get_it": "one-time question / date of last cigarette" }
+        ],
+        "kind": "table",
+        "formula": null,
+        "coefficients": null,
+        "table": [
+          { "band": "never", "relative_risk": 1.0, "ci_low": null, "ci_high": null },
+          { "band": "current, light", "relative_risk": 1.21, "ci_low": 1.10, "ci_high": 1.33 },
+          { "band": "current, moderate", "relative_risk": 1.34, "ci_low": 1.27, "ci_high": 1.41 },
+          { "band": "current, heavy", "relative_risk": 1.57, "ci_low": 1.47, "ci_high": 1.66 },
+          { "band": "quit <5 years", "relative_risk": 1.54, "ci_low": 1.36, "ci_high": 1.74 },
+          { "band": "quit 5–9 years", "relative_risk": 1.18, "ci_low": 1.07, "ci_high": 1.29 },
+          { "band": "quit 10+ years", "relative_risk": 1.11, "ci_low": 1.02, "ci_high": 1.20 }
+        ],
+        "output_unit": "relative risk (pooled)",
+        "valid_for": { "age": "adults", "sex": "both", "population": "88 prospective studies, ~5.9 million participants, searched to 2015", "exposure_range": "light / moderate / heavy (cut-offs defined in full text, not in abstract)", "south_asian_validated": "no" },
+        "uncertainty": "95% CIs printed in abstract.",
+        "source": {
+          "citation": "Pan A, Wang Y, Talaei M, Hu FB, Wu T. Relation of active, passive, and quitting smoking with incident type 2 diabetes: a systematic review and meta-analysis. Lancet Diabetes Endocrinol 2015;3(12):958-67",
+          "doi": "10.1016/S2213-8587(15)00316-2",
+          "pmid": "26388413",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/26388413/",
+          "where": "Abstract, Findings",
+          "quote": "compared with never smokers, the RRs were 1·21 (1·10-1·33) for light smokers, 1·34 (1·27-1·41) for moderate smokers, and 1·57 (1·47-1·66) for heavy smokers.",
+          "access": "abstract only"
+        },
+        "supporting_sources": [],
+        "confidence": "medium",
+        "caveats": "Do not map bands to cigarettes/day until the cut-offs are confirmed from the full text; I did not see them. The temporary rise in the first 5 years after quitting (1.54) is linked to weight gain; in H3 pair it with the message that long-term benefit wins.",
+        "user_copy": "Smoking is linked to about 1.2–1.6 times the risk of type 2 diabetes, higher the more you smoke."
+      },
+      {
+        "id": "smoking-pack-years-screening",
+        "topic": "smoking",
+        "name": "Pack-years and lung cancer screening threshold",
+        "estimates": "Cumulative cigarette exposure in pack-years and whether the user meets the USPSTF 2021 lung cancer screening criteria.",
+        "inputs": [
+          { "name": "avg_cigs_per_day", "unit": "cigarettes/day", "how_we_get_it": "one-time question for past average, plus log" },
+          { "name": "years_smoked", "unit": "years", "how_we_get_it": "one-time question" },
+          { "name": "age", "unit": "years", "how_we_get_it": "profile" },
+          { "name": "years_since_quit", "unit": "years", "how_we_get_it": "date of last cigarette; 0 if current" }
+        ],
+        "kind": "threshold",
+        "formula": "pack_years = (avg_cigs_per_day / 20) * years_smoked; eligible = age >= 50 && age <= 80 && pack_years >= 20 && years_since_quit <= 15",
+        "coefficients": {
+          "cigs_per_pack": { "value": 20, "ci_low": null, "ci_high": null, "unit": "cigarettes" },
+          "pack_year_threshold": { "value": 20, "ci_low": null, "ci_high": null, "unit": "pack-years" },
+          "age_min": { "value": 50, "ci_low": null, "ci_high": null, "unit": "years" },
+          "age_max": { "value": 80, "ci_low": null, "ci_high": null, "unit": "years" },
+          "max_years_since_quit": { "value": 15, "ci_low": null, "ci_high": null, "unit": "years" }
+        },
+        "table": null,
+        "output_unit": "pack-years; boolean",
+        "valid_for": { "age": "50–80 for the screening flag", "sex": "both", "population": "USA guideline (USPSTF, March 2021)", "exposure_range": "cigarettes only", "south_asian_validated": "no" },
+        "uncertainty": "Guideline threshold, not a risk estimate.",
+        "source": {
+          "citation": "US Preventive Services Task Force. Screening for lung cancer: US Preventive Services Task Force recommendation statement. JAMA 2021;325(10):962-970; and USPSTF Clinician Summary, March 2021",
+          "doi": "10.1001/jama.2021.1117",
+          "pmid": null,
+          "url": "https://uspreventiveservicestaskforce.org/home/getfilebytoken/gpMtFCtW7cvssqc6wRuogm",
+          "where": "Clinician Summary p.1, 'How to implement this recommendation'",
+          "quote": "One pack-year is the equivalent of smoking an average of 20 cigarettes—1 pack—per day for a year.",
+          "access": "full text"
+        },
+        "supporting_sources": [
+          { "citation": "USPSTF recommendation statement, JAMA 2021 (abstract)", "url": "https://jamanetwork-com.libproxy.ajou.ac.kr/journals/jama/fullarticle/2777244", "agrees": "yes", "note": "'annual screening for lung cancer with LDCT in adults aged 50 to 80 years who have a 20 pack-year smoking history and currently smoke or have quit within the past 15 years' (abstract via search snippet; page itself did not render)." }
+        ],
+        "confidence": "high",
+        "caveats": "Do NOT compute pack-years from bidis; pack-years are defined for cigarettes (a bidi has about a quarter of the tobacco, per Jha 2008, but no official conversion). This is a US guideline; I did not find an Indian screening guideline in this pass. Show as 'talk to a doctor about screening', never as a diagnosis.",
+        "user_copy": "Your smoking history is about {pack_years} pack-years. In the US, people aged 50–80 with 20+ pack-years are offered yearly lung scans. Worth a chat with a doctor."
+      },
+      {
+        "id": "india-smoking-deaths-population",
+        "topic": "smoking",
+        "name": "Smoking deaths in India (population context)",
+        "estimates": "Estimated number and share of adult deaths in India caused by smoking.",
+        "inputs": [],
+        "kind": "table",
+        "formula": null,
+        "coefficients": null,
+        "table": [
+          { "metric": "adult deaths caused by smoking, India, 2010 (projection)", "value": 930000, "ci_low": null, "ci_high": null },
+          { "metric": "share of deaths at age 30–69, men", "value_percent": 20, "ci_low": 19, "ci_high": 22 },
+          { "metric": "share of deaths at age 30–69, women", "value_percent": 5, "ci_low": 4, "ci_high": 6 },
+          { "metric": "annual smoking deaths during the 2010s", "value": 1000000, "ci_low": null, "ci_high": null }
+        ],
+        "output_unit": "deaths; %; 99% CI",
+        "valid_for": { "age": "20+ (totals); 30–69 (shares)", "sex": "both", "population": "India", "exposure_range": "n/a", "south_asian_validated": "yes" },
+        "uncertainty": "Projection assuming associations are mainly causal and cause distribution stays similar.",
+        "source": {
+          "citation": "Jha P et al. N Engl J Med 2008;358:1137-47",
+          "doi": "10.1056/NEJMsa0707719",
+          "pmid": null,
+          "url": "https://extranet.who.int/fctcapps/sites/default/files/2023-04/India_Annex1_Case-control-study-of-smoking-and-death_2008.pdf",
+          "where": "Abstract; 'Estimated national mortality in 2010' and Table 3",
+          "quote": "In 2010, smoking will cause about 930,000 adult deaths in India; of the dead, about 70% (90,000 women and 580,000 men) will be between the ages of 30 and 69 years.",
+          "access": "full text"
+        },
+        "supporting_sources": [],
+        "confidence": "medium",
+        "caveats": "Population context only; not personal. Data are from 2001–2003; newer Million Death Study updates may exist and were not searched in this pass.",
+        "user_copy": "Smoking causes about 1 in 5 deaths of Indian men aged 30–69."
+      }
+    ],
+    "not_found": [
+      { "wanted": "COPD dose-response meta-analysis (Forey, Thornton, Lee 2011, BMC Pulm Med 11:36)", "reason": "Opened and read, but excluded under your rules: authors are from P N Lee Statistics and Computing Ltd, a consultancy with a history of tobacco-industry-funded work. I did not see this paper's funding statement in the pages I read. Please check it before any use; COPD model above uses Doll 2004 instead.", "searched": ["https://bmcpulmmed.biomedcentral.com/track/pdf/10.1186/1471-2466-11-36"] },
+      { "wanted": "FEV1 decline per pack-year", "reason": "Not found in the sources opened this pass; the companion FEV1 review by the same P N Lee group would be excluded for the same reason.", "searched": ["web search (COPD dose-response)"] },
+      { "wanted": "Resting heart rate / blood pressure effect of habitual smoking", "reason": "No dose model found. Doll 2004 Table 2 found little or no relation between smoking and blood pressure (systolic 136.9 mmHg current vs 135.6 never, age-standardised), so a BP-per-cigarette model is not supported by what I opened.", "searched": ["Doll et al. BMJ 2004 Table 2"] },
+      { "wanted": "Abdominal aortic aneurysm RR and essential hypertension RR", "reason": "Banks 2019 reports these only in Figure 2 (text says '> 6-fold' for AAA); numbers not extractable from the PDF text.", "searched": ["Banks et al. BMC Med 2019"] },
+      { "wanted": "Light / moderate / heavy cut-offs for Pan 2015 diabetes bands", "reason": "Not in the abstract; full text not opened.", "searched": ["PubMed 26388413"] },
+      { "wanted": "Life expectancy lost by age started smoking", "reason": "No numeric model found in opened sources; Jackson 2025 only notes age of initiation may matter.", "searched": ["Jackson 2025", "Doll 2004"] },
+      { "wanted": "Carter et al. NEJM 2015; US Surgeon General 2014 disease chapters", "reason": "Not opened in this pass (part 2).", "searched": [] },
+      { "wanted": "Cancers of stomach, pancreas, bladder, kidney, liver, colorectal, cervix by dose", "reason": "Not searched in this pass (part 2: IARC 100E, US SG 2014, dose-response meta-analyses).", "searched": [] },
+      { "wanted": "Asthma worsening, pneumonia", "reason": "Not searched in this pass (Jha 2008 respiratory category includes pneumonia but is not separated).", "searched": [] },
+      { "wanted": "Erectile dysfunction, fertility, cataract, macular degeneration, gum disease / tooth loss, fractures, skin ageing, depression / anxiety, dementia", "reason": "Not searched in this pass (part 2).", "searched": [] },
+      { "wanted": "CI for Jha 2008 dose bands (1–7, 8+ cigarettes/day)", "reason": "In Supplementary Table 3, which was not opened.", "searched": ["NEJM 2008 main text (WHO-hosted PDF)"] }
+    ],
+    "recommend": "Show first: (1) smoking-dose-chd and (2) smoking-dose-stroke — they are the per-disease, dose-moving screen you want, from a 141-cohort meta-analysis with CIs, and they carry the key honest message that cutting down helps the heart far less than quitting. (3) smoking-dose-allcause-india plus smoking-life-years-lost-india — Indian, nationally representative, and the 1–7/day row makes 'light smoking isn't safe' concrete. (4) smoking-tb-india — highly relevant to Indian users and rarely known. (5) smoking-life-expectancy-per-cigarette — easy daily-log feedback ('today ≈ N minutes'), labelled as a population average. Lung cancer and COPD tables (Doll) are a good second row because they show the roughly linear cancer curve next to the flat heart curve. Part 2 of H1 should cover the not_found items (other cancers, non-fatal conditions, FEV1, Carter 2015, US SG 2014)."
+  }

@@ -15,9 +15,10 @@ import { useStore, useUI } from "@/lib/store";
 import { useIsDesktop } from "@/lib/useMediaQuery";
 import type { Food, Meal, SavedMeal } from "@/lib/types";
 import { Sheet } from "@/components/Sheet";
-import { MicButton, NlConfirm, SignInHint, UnderstandRow, isSentence, useNlLog } from "./NlLog";
+import { MicButton, NlConfirm, SignInHint, UnderstandRow, isSentence, looksLikeFoodName, useNlLog } from "./NlLog";
 import { CreateFood } from "./CreateFood";
 import { FoodDetail } from "./FoodDetail";
+import { MissingFood, useSearchMiss } from "./MissingFood";
 
 export function LogSheet() {
   const sheet = useUI((s) => s.sheet);
@@ -26,14 +27,14 @@ export function LogSheet() {
   // phone: bottom sheet; desktop: centred modal
   return (
     <Sheet open={!!sheet} onClose={close}>
-      {sheet?.mode === "add" && <AddFlow key="add" meal={sheet.meal} />}
+      {sheet?.mode === "add" && <AddFlow key="add" meal={sheet.meal} foodId={sheet.foodId} />}
       {sheet?.mode === "edit" && <EditFlow key={sheet.entryId} entryId={sheet.entryId} />}
       {sheet?.mode === "thali" && <ThaliFlow key={sheet.thaliId ?? "new"} slot={sheet.slot} thaliId={sheet.thaliId} prefill={sheet.prefill} />}
     </Sheet>
   );
 }
 
-function AddFlow({ meal: initialMeal }: { meal: Meal }) {
+function AddFlow({ meal: initialMeal, foodId }: { meal: Meal; foodId?: string }) {
   const date = useUI((s) => s.date) ?? dayKey();
   const close = useUI((s) => s.close);
   const addEntry = useStore((s) => s.addEntry);
@@ -42,7 +43,7 @@ function AddFlow({ meal: initialMeal }: { meal: Meal }) {
 
   const [meal, setMeal] = useState(initialMeal);
   const [query, setQuery] = useState("");
-  const [selected, setSelected] = useState<Food | null>(null);
+  const [selected, setSelected] = useState<Food | null>(() => (foodId ? getFood(foodId) ?? null : null));
   const [creating, setCreating] = useState<string | null>(null);
   const [building, setBuilding] = useState<{ thaliId?: string } | null>(null);
   const [added, setAdded] = useState<{ name: string; kcal: number }[]>([]);
@@ -82,6 +83,10 @@ function AddFlow({ meal: initialMeal }: { meal: Meal }) {
   // natural-language logging (nl-logging.md): sentence → confirm card; voice fills the same box
   const { signedIn, busy: nlBusy, draft, setDraft, understand, speech } = useNlLog(setQuery);
   const lastFor = (id: string) => recent.find((r) => r.food.id === id)?.last;
+  // a search the sheet closes on with nothing found = a missing food (D54)
+  // a sentence goes to the AI; a dish name with spaces ("kulfi falooda") can still be missing (D54)
+  const foodName = !sentenceLike || looksLikeFoodName(query);
+  useSearchMiss(query, results.length > 0, signedIn && !foodName);
 
   if (draft)
     return (
@@ -234,14 +239,15 @@ function AddFlow({ meal: initialMeal }: { meal: Meal }) {
               <SignInHint />
             ))}
             {results.length > 0 && <FoodList foods={results} onPick={setSelected} />}
-            {/* a sentence isn't a food name: skip "no match / create it" when the AI row is offered */}
-            {!(signedIn && sentenceLike) && (
-              <>
-                {!results.length && (
-                  <p className="px-2 pb-2 pt-8 text-center text-sm text-muted">No match for “{query}”. Try another name, or add it yourself:</p>
-                )}
-                <CreateRow label={`Create “${query.trim()}”`} onClick={() => setCreating(query.trim())} />
-              </>
+            {/* a sentence isn't a food name: skip "no match / create it" when the AI row is offered, unless it reads like one dish */}
+            {(!(signedIn && sentenceLike) || foodName) && (
+              <MissingFood
+                query={trimmed}
+                empty={!results.length}
+                emptyText={signedIn ? <>No match for “{trimmed}”. Ask us to add it, or add it yourself:</> : <>No match for “{trimmed}”. Try another name, or add it yourself:</>}
+                createLabel={`Create “${trimmed}”`}
+                onCreate={() => setCreating(trimmed)}
+              />
             )}
           </>
         ) : (

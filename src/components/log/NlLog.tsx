@@ -24,6 +24,18 @@ export const isSentence = (q: string) => {
   return t.length >= 3 && (/\s/.test(t) || /\d/.test(t));
 };
 
+// words that join several items or say when/which meal: "roti aur dal", "kal dinner mein" are logs, not one dish
+const LOG_WORDS = /(^|\s)(aur|and|with|n|plus|for|mein|me|main|kal|aaj|today|yesterday|breakfast|lunch|dinner|nashta|khana|khaya|khayi|piya|pi|ate|had)(\s|$)|[,+&]/i;
+
+/**
+ * A multi-word query that is probably one dish name ("kulfi falooda", "gajar ka halwa"), not a sentence to log:
+ * at most 4 words, no numbers, no joining / time words. Such a query still gets "Request it" + "Create" (D54).
+ */
+export const looksLikeFoodName = (q: string) => {
+  const t = q.trim();
+  return t.length >= 3 && !/\d/.test(t) && t.split(/\s+/).length <= 4 && !LOG_WORDS.test(t);
+};
+
 export function useNlLog(setQuery: (q: string) => void) {
   const signedIn = useAuth((s) => s.status === "signedIn");
   const showToast = useUI((s) => s.showToast);

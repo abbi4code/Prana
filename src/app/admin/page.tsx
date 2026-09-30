@@ -3,10 +3,11 @@
 import { Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion } from "motion/react";
-import { Activity, Dumbbell, LayoutDashboard, RefreshCw, Server, Swords, UsersRound, UtensilsCrossed } from "lucide-react";
+import { Activity, Dumbbell, LayoutDashboard, PackageSearch, RefreshCw, Server, Swords, UsersRound, UtensilsCrossed } from "lucide-react";
 import { AdminGate } from "@/components/admin/AdminGate";
 import { FoodTab } from "@/components/admin/FoodTab";
 import { Overview } from "@/components/admin/Overview";
+import { RequestsTab } from "@/components/admin/RequestsTab";
 import { SocialTab } from "@/components/admin/SocialTab";
 import { SystemTab } from "@/components/admin/SystemTab";
 import { TrainingTab } from "@/components/admin/TrainingTab";
@@ -14,11 +15,12 @@ import { UsersTab } from "@/components/admin/UsersTab";
 import { Segmented } from "@/components/admin/ui";
 import { invalidateAdmin } from "@/lib/admin/api";
 
-type Tab = "overview" | "users" | "food" | "training" | "akhada" | "system";
+type Tab = "overview" | "users" | "food" | "requests" | "training" | "akhada" | "system";
 const TABS: { id: Tab; label: string; icon: typeof Activity }[] = [
   { id: "overview", label: "Overview", icon: LayoutDashboard },
   { id: "users", label: "Users", icon: UsersRound },
   { id: "food", label: "Food", icon: UtensilsCrossed },
+  { id: "requests", label: "Requests", icon: PackageSearch },
   { id: "training", label: "Training", icon: Dumbbell },
   { id: "akhada", label: "Akhada", icon: Swords },
   { id: "system", label: "System", icon: Server },
@@ -101,6 +103,7 @@ function Admin() {
         {tab === "overview" && <Overview days={days} />}
         {tab === "users" && <UsersTab />}
         {tab === "food" && <FoodTab days={days} />}
+        {tab === "requests" && <RequestsTab days={days} />}
         {tab === "training" && <TrainingTab days={days} />}
         {tab === "akhada" && <SocialTab days={days} />}
         {tab === "system" && <SystemTab days={days} />}

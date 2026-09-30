@@ -1,0 +1,400 @@
+{
+    "batch": "H2",
+    "theme": "Bidi, hookah, vape and smokeless tobacco (gutka, khaini, zarda, mishri, paan with tobacco)",
+    "generated_on": "2026-09-30",
+    "models": [
+      {
+        "id": "bidi-dose-allcause-india",
+        "topic": "bidi",
+        "name": "Death risk by bidis per day (India, national)",
+        "estimates": "Risk ratio of death from any medical cause at ages 30–69 for Indian men who smoke only bidis, by daily amount, vs non-smokers.",
+        "inputs": [
+          { "name": "bidis_per_day", "unit": "bidis/day", "how_we_get_it": "daily log, 30-day average" }
+        ],
+        "kind": "table",
+        "formula": null,
+        "coefficients": null,
+        "table": [
+          { "band": "non-smoker", "risk_ratio": 1.0, "ci_low": null, "ci_high": null },
+          { "band": "men, bidis only, 1–7/day (mean 4)", "risk_ratio": 1.3, "ci_low": null, "ci_high": null },
+          { "band": "men, bidis only, 8+/day", "risk_ratio": 2.2, "ci_low": null, "ci_high": null }
+        ],
+        "output_unit": "risk ratio (case-control; adjusted for age, education, alcohol)",
+        "valid_for": { "age": "30–69", "sex": "men", "population": "India, nationally representative, deaths 2001–2003", "exposure_range": "1–7 and 8+ bidis/day", "south_asian_validated": "yes" },
+        "uncertainty": "CIs for these bands are in the Supplementary Appendix (Table 3), not opened; shown as null. P<0.001 for trend.",
+        "source": {
+          "citation": "Jha P, Jacob B, Gajalakshmi V, et al. A nationally representative case-control study of smoking and death in India. N Engl J Med 2008;358:1137-47",
+          "doi": "10.1056/NEJMsa0707719",
+          "pmid": null,
+          "url": "https://extranet.who.int/fctcapps/sites/default/files/2023-04/India_Annex1_Case-control-study-of-smoking-and-death_2008.pdf",
+          "where": "Results, 'Relative risk in subgroups' (p.1141)",
+          "quote": "there was a dose–response relationship between smoking and mortality among men who smoked only bidis (risk ratio for one to seven bidis per day, 1.3; risk ratio for eight or more, 2.2)",
+          "access": "full text"
+        },
+        "supporting_sources": [
+          { "citation": "Gupta PC, Mehta HC. Cohort study of all-cause mortality among tobacco users in Mumbai, India. Bull World Health Organ 2000;78(7):877-83", "url": "https://scielosp.org/pdf/bwho/2000.v78n7/877-883/en", "agrees": "yes", "note": "Prospective Mumbai cohort, men 35+: bidi smokers age-adjusted RR 1.78; 1–5 bidis/day RR 1.62; 6+/day RR 1.86 (Table 4; no CIs printed). Cigarettes in the same cohort: 1.39 overall, 1.31 and 1.49. Authors: 'bidi smoking as no less hazardous than cigarette smoking'." }
+        ],
+        "confidence": "medium",
+        "caveats": "Jha 2008 found bidis lower-risk than cigarettes at the same count; the Mumbai cohort found bidis at least as harmful. Both agree even 1–7 bidis a day raises death risk. Show the range honestly ('about 1.3–1.8 times at a few a day'). Most 'any smoking' Indian results in H1 (TB, respiratory, heart) are dominated by bidi smokers, so they apply here too.",
+        "user_copy": "In Indian data, smoking even a few bidis a day was linked to about 1.3–1.6 times the risk of dying early; 8 or more a day, about 1.9–2.2 times."
+      },
+      {
+        "id": "bidi-tobacco-content",
+        "topic": "bidi",
+        "name": "How much tobacco is in a bidi vs a cigarette",
+        "estimates": "Tobacco weight per bidi vs per cigarette, and what that does and does not mean for harm.",
+        "inputs": [
+          { "name": "bidis_per_day", "unit": "bidis/day", "how_we_get_it": "daily log" }
+        ],
+        "kind": "threshold",
+        "formula": null,
+        "coefficients": {
+          "tobacco_per_bidi": { "value": 0.2, "ci_low": 0.15, "ci_high": 0.25, "unit": "g tobacco per bidi (range printed as 0.15–0.25 g)" },
+          "tobacco_per_cigarette": { "value": 1.0, "ci_low": null, "ci_high": null, "unit": "g tobacco per cigarette" }
+        },
+        "table": null,
+        "output_unit": "grams of tobacco",
+        "valid_for": { "age": "n/a", "sex": "both", "population": "Mumbai, India (description of local bidis, 1990s)", "exposure_range": "n/a", "south_asian_validated": "yes" },
+        "uncertainty": "Descriptive, not a measured toxicant study. The paper states bidis give comparable or higher tar and nicotine despite less tobacco, citing a 1989 Indian review, not its own measurements.",
+        "source": {
+          "citation": "Gupta PC, Mehta HC. Cohort study of all-cause mortality among tobacco users in Mumbai, India. Bull World Health Organ 2000;78(7):877-83",
+          "doi": null,
+          "pmid": null,
+          "url": "https://scielosp.org/pdf/bwho/2000.v78n7/877-883/en",
+          "where": "Discussion, p.881 (and Methods description of bidis, p.879)",
+          "quote": "Although a bidi contains a much smaller amount of tobacco (0.2 g) than a cigarette (1 g), it produces a comparable or higher amount of tar and nicotine (4).",
+          "access": "full text"
+        },
+        "supporting_sources": [
+          { "citation": "Jha P et al. N Engl J Med 2008;358:1137-47", "url": "https://extranet.who.int/fctcapps/sites/default/files/2023-04/India_Annex1_Case-control-study-of-smoking-and-death_2008.pdf", "agrees": "yes", "note": "'bidis, which are smaller than cigarettes and typically contain only about a quarter as much tobacco, wrapped in the leaf of another plant.'" }
+        ],
+        "confidence": "low",
+        "caveats": "Do NOT convert bidis to 'cigarette equivalents' by tobacco weight (e.g. 4 bidis = 1 cigarette); the harm data above do not support that. Use bidi-specific risk tables instead. Pack-years must not be computed from bidis.",
+        "user_copy": "A bidi has less tobacco than a cigarette, but it is not a 'lighter' smoke: in Indian studies, even a few bidis a day raised health risks."
+      },
+      {
+        "id": "tobacco-type-heart-attack-interheart",
+        "topic": "combined",
+        "name": "Heart attack risk: bidi, chewing tobacco, both, and per extra cigarette",
+        "estimates": "Odds of a first non-fatal heart attack for different tobacco types vs never users, plus the per-cigarette increase.",
+        "inputs": [
+          { "name": "uses_bidi_only", "unit": "boolean", "how_we_get_it": "log" },
+          { "name": "uses_chewing_only", "unit": "boolean", "how_we_get_it": "log (gutka/khaini/zarda/paan with tobacco)" },
+          { "name": "smokes_and_chews", "unit": "boolean", "how_we_get_it": "log" },
+          { "name": "cigs_per_day", "unit": "cigarettes/day", "how_we_get_it": "daily log, 30-day average" }
+        ],
+        "kind": "table",
+        "formula": null,
+        "coefficients": {
+          "per_extra_cigarette_increase": { "value": 5.6, "ci_low": null, "ci_high": null, "unit": "% increase in odds per additional cigarette/day" }
+        },
+        "table": [
+          { "group": "never tobacco", "odds_ratio": 1.0, "ci_low": null, "ci_high": null },
+          { "group": "current smoker (any)", "odds_ratio": 2.95, "ci_low": 2.77, "ci_high": 3.14 },
+          { "group": "bidi smoking only", "odds_ratio": 2.89, "ci_low": 2.11, "ci_high": 3.96 },
+          { "group": "chewing tobacco only", "odds_ratio": 2.23, "ci_low": 1.41, "ci_high": 3.52 },
+          { "group": "smokes and chews", "odds_ratio": 4.09, "ci_low": 2.98, "ci_high": 5.61 },
+          { "group": "former smoker, quit within 3 years", "odds_ratio": 1.87, "ci_low": 1.55, "ci_high": 2.24 },
+          { "group": "former smoker, quit 20+ years", "odds_ratio": 1.22, "ci_low": 1.09, "ci_high": 1.37 }
+        ],
+        "output_unit": "odds ratio (non-fatal acute MI)",
+        "valid_for": { "age": "adults (INTERHEART cases and controls)", "sex": "both", "population": "52 countries incl. South Asia; 12,461 cases, 14,637 controls; 1999–2003", "exposure_range": "type-specific rows are current vs never; per-cigarette slope across typical amounts", "south_asian_validated": "partly: includes South Asian sites; bidi row is by definition South Asian" },
+        "uncertainty": "95% CIs printed. Case-control; adjusted for lifestyle confounders. The 5.6% per cigarette is printed without CI in the abstract.",
+        "source": {
+          "citation": "Teo KK, Ounpuu S, Hawken S, et al. Tobacco use and risk of myocardial infarction in 52 countries in the INTERHEART study: a case-control study. Lancet 2006;368(9536):647-58",
+          "doi": "10.1016/S0140-6736(06)69249-0",
+          "pmid": "16920470",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/16920470/",
+          "where": "Abstract, Findings",
+          "quote": "Chewing tobacco alone was associated with OR 2.23 (1.41-3.52), and smokers who also chewed tobacco had the highest increase in risk (4.09, 2.98-5.61).",
+          "access": "abstract only"
+        },
+        "supporting_sources": [
+          { "citation": "Jha P et al. N Engl J Med 2008 (India)", "url": "https://extranet.who.int/fctcapps/sites/default/files/2023-04/India_Annex1_Case-control-study-of-smoking-and-death_2008.pdf", "agrees": "yes", "note": "Death from heart disease in Indian smokers (mostly bidi): men 1.6 (1.5–1.8), women 1.7 (1.3–2.1), 99% CI." }
+        ],
+        "confidence": "high",
+        "caveats": "The per-cigarette slope (+5.6% per extra cigarette) also belongs in H1 as a per-cigarette heart-attack option; if used, compute OR = 1.056^cigs as our own algebra and cap at typical amounts, and note it conflicts in shape with Hackshaw's steep-then-flat curve. Chewing-only row is the best available heart number for smokeless users.",
+        "user_copy": "Chewing tobacco was linked to about 2.2 times the heart attack risk (range 1.4–3.5); smoking and chewing together, about 4 times."
+      },
+      {
+        "id": "smokeless-oral-cancer-south-asia",
+        "topic": "smokeless",
+        "name": "Mouth cancer from chewing tobacco (South Asia)",
+        "estimates": "Odds / relative risk of oral cavity cancer in users of chewing (smokeless) tobacco of any type vs non-users, and for betel quid without tobacco.",
+        "inputs": [
+          { "name": "smokeless_portions_per_day", "unit": "portions/day", "how_we_get_it": "daily log (gutka, khaini, zarda, mishri, paan with tobacco)" }
+        ],
+        "kind": "table",
+        "formula": null,
+        "coefficients": null,
+        "table": [
+          { "group": "non-user", "estimate": 1.0, "ci_low": null, "ci_high": null },
+          { "group": "smokeless tobacco (any form), case-control studies", "odds_ratio": 7.46, "ci_low": 5.86, "ci_high": 9.50 },
+          { "group": "smokeless tobacco (any form), cohort studies", "relative_risk": 5.48, "ci_low": 2.57, "ci_high": 11.71 },
+          { "group": "betel quid WITHOUT tobacco, case-control", "odds_ratio": 2.82, "ci_low": 2.35, "ci_high": 3.40 }
+        ],
+        "output_unit": "odds ratio / relative risk",
+        "valid_for": { "age": "adults", "sex": "both", "population": "South Asia and the Pacific (mostly India; also Pakistan, Taiwan, Papua New Guinea); studies to June 2013", "exposure_range": "user vs non-user; no pooled dose curve", "south_asian_validated": "yes" },
+        "uncertainty": "95% CIs printed. High heterogeneity (I² 75% case-control, 80% cohort). Cohort CI printed as 2.56–11.71 in abstract and 2.57–11.71 in results.",
+        "source": {
+          "citation": "Gupta B, Johnson NW. Systematic review and meta-analysis of association of smokeless tobacco and of betel quid without tobacco with incidence of oral cancer in South Asia and the Pacific. PLoS One 2014;9(11):e113385",
+          "doi": "10.1371/journal.pone.0113385",
+          "pmid": "25411778",
+          "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4239077/",
+          "where": "Abstract; Results sections for case-control and cohort studies",
+          "quote": "Under the random effects model, the overall estimate for males and females combined together was ORRE = 7.46 (95% CI = 5.86–9.50, P<0.001)",
+          "access": "full text"
+        },
+        "supporting_sources": [
+          { "citation": "Guha N, Warnakulasuriya S, Vlaanderen J, Straif K. Betel quid chewing and the risk of oral and oropharyngeal cancers: a meta-analysis with implications for cancer control. Int J Cancer 2014;135(6):1433-43", "url": "https://pubmed.ncbi.nlm.nih.gov/24302487/", "agrees": "yes", "note": "Indian subcontinent: betel quid WITH tobacco mRR 7.74 (5.38–11.13; 31 studies); WITHOUT tobacco 2.56 (2.00–3.28; 15 studies). IARC authors. Abstract only; exposure-response spline models are in the full text." }
+        ],
+        "confidence": "high",
+        "caveats": "The authors say studies powered for dose-response are still needed; the Discussion reports a linear increase with quids/day in individual studies but no pooled slope. Do not show a per-portion number yet. Areca nut itself (supari, pan masala without tobacco) carries risk too, so 'tobacco-free pan masala' is not safe.",
+        "user_copy": "Chewing tobacco is linked to about 5–7 times the risk of mouth cancer (range about 2.6–11). Even paan or supari without tobacco raises it about 2.8 times."
+      },
+      {
+        "id": "paan-with-tobacco-oral-cancer-india",
+        "topic": "smokeless",
+        "name": "Paan / betel quid with vs without tobacco (Indian subcontinent)",
+        "estimates": "Meta-relative risk of oral and oropharyngeal cancer for betel quid with tobacco and without tobacco, Indian subcontinent.",
+        "inputs": [
+          { "name": "paan_with_tobacco", "unit": "boolean or portions/day", "how_we_get_it": "daily log" },
+          { "name": "paan_without_tobacco", "unit": "boolean or portions/day", "how_we_get_it": "daily log" }
+        ],
+        "kind": "table",
+        "formula": null,
+        "coefficients": null,
+        "table": [
+          { "group": "non-chewer", "relative_risk": 1.0, "ci_low": null, "ci_high": null },
+          { "group": "betel quid WITH tobacco (Indian subcontinent)", "relative_risk": 7.74, "ci_low": 5.38, "ci_high": 11.13 },
+          { "group": "betel quid WITHOUT tobacco (Indian subcontinent)", "relative_risk": 2.56, "ci_low": 2.00, "ci_high": 3.28 }
+        ],
+        "output_unit": "meta-relative risk",
+        "valid_for": { "age": "adults", "sex": "both", "population": "Indian subcontinent studies (31 with tobacco, 15 without)", "exposure_range": "user vs non-user in abstract; spline dose-response by quids/day and years in full text", "south_asian_validated": "yes" },
+        "uncertainty": "95% CIs printed.",
+        "source": {
+          "citation": "Guha N, Warnakulasuriya S, Vlaanderen J, Straif K. Betel quid chewing and the risk of oral and oropharyngeal cancers: a meta-analysis with implications for cancer control. Int J Cancer 2014;135(6):1433-43",
+          "doi": "10.1002/ijc.28643",
+          "pmid": "24302487",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/24302487/",
+          "where": "Abstract",
+          "quote": "The meta-relative risk (mRR) for oral/oropharyngeal cancer in the Indian subcontinent was 2.56 (95%CI, 2.00-3.28; 15 studies) for BQ-T and 7.74 (95%CI, 5.38-11.13; 31 studies) for BQ+T",
+          "access": "abstract only"
+        },
+        "supporting_sources": [],
+        "confidence": "high",
+        "caveats": "This is the best candidate for a per-quid dose curve in H2: the paper's exposure-response splines by daily amount and years (full text, not opened) should be pulled next. Overlaps with smokeless-oral-cancer-south-asia; show one or the other, not both stacked.",
+        "user_copy": "Paan with tobacco is linked to about 7–8 times the mouth-cancer risk (range 5–11); without tobacco, about 2.5 times."
+      },
+      {
+        "id": "smokeless-dose-allcause-mumbai",
+        "topic": "smokeless",
+        "name": "Death risk from smokeless tobacco by type and times per day (Mumbai)",
+        "estimates": "Age-adjusted relative risk of death from any cause for smokeless tobacco users vs non-users, by product and daily frequency.",
+        "inputs": [
+          { "name": "smokeless_times_per_day", "unit": "times/day", "how_we_get_it": "daily log" },
+          { "name": "product", "unit": "mishri | betel quid | other", "how_we_get_it": "log" },
+          { "name": "sex", "unit": "men | women", "how_we_get_it": "profile" }
+        ],
+        "kind": "table",
+        "formula": null,
+        "coefficients": null,
+        "table": [
+          { "group": "women, no tobacco", "relative_risk": 1.00, "ci_low": null, "ci_high": null },
+          { "group": "women, any smokeless", "relative_risk": 1.35, "ci_low": null, "ci_high": null },
+          { "group": "women, mishri 1–5 times/day", "relative_risk": 1.24, "ci_low": null, "ci_high": null },
+          { "group": "women, mishri 6+ times/day", "relative_risk": 1.49, "ci_low": null, "ci_high": null },
+          { "group": "women, betel quid 1–5/day", "relative_risk": 1.10, "ci_low": null, "ci_high": null },
+          { "group": "women, betel quid 6+/day", "relative_risk": 1.49, "ci_low": null, "ci_high": null },
+          { "group": "men, no tobacco", "relative_risk": 1.00, "ci_low": null, "ci_high": null },
+          { "group": "men, any smokeless (non-smokers only)", "relative_risk": 1.22, "ci_low": null, "ci_high": null },
+          { "group": "men, mishri 1–2 times/day", "relative_risk": 1.08, "ci_low": null, "ci_high": null },
+          { "group": "men, mishri 3–4 times/day", "relative_risk": 1.13, "ci_low": null, "ci_high": null },
+          { "group": "men, betel quid 1–5/day", "relative_risk": 1.05, "ci_low": null, "ci_high": null },
+          { "group": "men, betel quid 6+/day", "relative_risk": 1.16, "ci_low": null, "ci_high": null }
+        ],
+        "output_unit": "age-adjusted relative risk (ratio of age-adjusted death rates)",
+        "valid_for": { "age": "35+", "sex": "both", "population": "Mumbai (main city), baseline 1991–1994, follow-up to 1999; 52,568 people; 4,358 deaths", "exposure_range": "1–5 vs 6+ times/day (men mishri: 1–2 vs 3–4)", "south_asian_validated": "yes" },
+        "uncertainty": "No CIs printed; relative risks are ratios of age-adjusted rates only (not adjusted for alcohol, education etc.). Some cells small (e.g. women mishri 6+ = 2,786 person-years).",
+        "source": {
+          "citation": "Gupta PC, Mehta HC. Cohort study of all-cause mortality among tobacco users in Mumbai, India. Bull World Health Organ 2000;78(7):877-83",
+          "doi": null,
+          "pmid": null,
+          "url": "https://scielosp.org/pdf/bwho/2000.v78n7/877-883/en",
+          "where": "Tables 3, 5 and 6 (pp.879–881)",
+          "quote": "Smokeless tobacco use was very high among men and women, the age-adjusted relative risk for men (1096 deaths) being 1.22 and for women (1575 deaths) 1.35.",
+          "access": "full text"
+        },
+        "supporting_sources": [
+          { "citation": "Gupta PC, Pednekar MS, Parkin DM, Sankaranarayanan R. Tobacco associated mortality in Mumbai (Bombay) India. Results of the Bombay Cohort Study. Int J Epidemiol 2005;34:1395-1402", "url": "https://katalog.lib.cas.cz/KNAV/EdsRecord/edb,19393375", "agrees": "partly", "note": "Larger follow-up (99,570 people, 7,531 deaths) of the same cohort; its relative risks were not visible in the abstract fragment I read. Use this as the preferred update once opened." }
+        ],
+        "confidence": "medium",
+        "caveats": "Modest, age-adjusted-only estimates; authors call the smokeless findings 'slightly more difficult to interpret'. Mishri (roasted tobacco powder rubbed on gums, often used as tooth powder) is common in Maharashtra; gutka/khaini were not separately analysed. Pair with cancer and heart models rather than showing alone.",
+        "user_copy": "In a Mumbai study, people who used chewing or gum-rubbing tobacco several times a day had about 1.2–1.5 times the risk of dying early."
+      },
+      {
+        "id": "hookah-toxicants-per-session",
+        "topic": "hookah",
+        "name": "One hookah session vs one cigarette: smoke, nicotine, tar, CO",
+        "estimates": "Inhaled smoke volume, nicotine, tar and carbon monoxide per hookah session and per cigarette (pooled lab and café measurements).",
+        "inputs": [
+          { "name": "hookah_sessions", "unit": "sessions", "how_we_get_it": "daily log" }
+        ],
+        "kind": "formula",
+        "formula": "nicotine_mg = hookah_sessions * 4.1; tar_mg = hookah_sessions * 619; co_mg = hookah_sessions * 192; smoke_litres = hookah_sessions * 74.1",
+        "coefficients": {
+          "smoke_L_per_session": { "value": 74.1, "ci_low": 38.2, "ci_high": 110.0, "unit": "L" },
+          "nicotine_mg_per_session": { "value": 4.1, "ci_low": 2.7, "ci_high": 5.4, "unit": "mg" },
+          "tar_mg_per_session": { "value": 619.0, "ci_low": 244.0, "ci_high": 994.0, "unit": "mg" },
+          "co_mg_per_session": { "value": 192.0, "ci_low": 77.5, "ci_high": 307.0, "unit": "mg" },
+          "smoke_L_per_cigarette": { "value": 0.6, "ci_low": 0.5, "ci_high": 0.7, "unit": "L" },
+          "nicotine_mg_per_cigarette": { "value": 1.8, "ci_low": 1.3, "ci_high": 2.3, "unit": "mg" },
+          "tar_mg_per_cigarette": { "value": 24.5, "ci_low": 15.5, "ci_high": 33.6, "unit": "mg" },
+          "co_mg_per_cigarette": { "value": 17.7, "ci_low": 15.6, "ci_high": 19.9, "unit": "mg" }
+        },
+        "table": null,
+        "output_unit": "mg or litres inhaled",
+        "valid_for": { "age": "n/a (exposure measurement)", "sex": "both", "population": "17 laboratory / café studies (mostly Lebanon, USA, Germany); published before April 2013", "exposure_range": "a full session (typically ~45 minutes, 10–20 g moist tobacco per bowl)", "south_asian_validated": "no" },
+        "uncertainty": "95% CIs printed; very high heterogeneity (all p<0.001). Most tar/nicotine values from machine protocols; authors found human and machine studies similar.",
+        "source": {
+          "citation": "Primack BA, Carroll MV, Weiss PM, et al. Systematic review and meta-analysis of inhaled toxicants from waterpipe and cigarette smoking. Public Health Rep 2016;131(1):76-85",
+          "doi": "10.1177/003335491613100114",
+          "pmid": "26843673",
+          "url": "https://scholarworks.aub.edu.lb/server/api/core/bitstreams/b70072cc-100a-4b2f-b081-927fc45e8ecf/content",
+          "where": "Table 3 (p.83)",
+          "quote": "Smoke (L) 74.1 (38.2, 110.0) 0.6 (0.5, 0.7) Nicotine (mg) 4.1 (2.7, 5.4) 1.8 (1.3, 2.3) Tar (mg) 619.0 (244.0, 994.0) 24.5 (15.5, 33.6) Carbon monoxide (mg) 192.0 (77.5, 307.0) 17.7 (15.6, 19.9)",
+          "access": "full text"
+        },
+        "supporting_sources": [],
+        "confidence": "medium",
+        "caveats": "Ratios from the same table: about 25x tar, ~11x CO, ~2.3x nicotine and ~120x smoke per session vs one cigarette (our division of the printed means). The authors warn this is exposure, not disease risk, and that per-session vs per-cigarette is an imperfect comparison. Do NOT turn sessions into 'cigarette-equivalents' for disease risk. Indian 'herbal' / nicotine-free hookah still produces CO and tar from charcoal (charcoal is the main CO source per the authors).",
+        "user_copy": "One hookah session is about as much nicotine as 2 cigarettes, but roughly 25 times the tar and 10 times the carbon monoxide of one cigarette."
+      },
+      {
+        "id": "hookah-disease-associations",
+        "topic": "hookah",
+        "name": "Hookah and disease (pooled associations)",
+        "estimates": "Odds ratios for diseases significantly associated with waterpipe smoking vs non-use.",
+        "inputs": [
+          { "name": "uses_hookah", "unit": "boolean", "how_we_get_it": "any hookah logged in last 30 days" }
+        ],
+        "kind": "table",
+        "formula": null,
+        "coefficients": null,
+        "table": [
+          { "outcome": "COPD", "odds_ratio": 3.18, "ci_low": 1.25, "ci_high": 8.08 },
+          { "outcome": "bronchitis", "odds_ratio": 2.37, "ci_low": 1.49, "ci_high": 3.77 },
+          { "outcome": "oral cancer", "odds_ratio": 4.17, "ci_low": 2.53, "ci_high": 6.89 },
+          { "outcome": "lung cancer", "odds_ratio": 2.12, "ci_low": 1.32, "ci_high": 3.42 },
+          { "outcome": "cardiovascular disease", "odds_ratio": 1.67, "ci_low": 1.25, "ci_high": 2.24 },
+          { "outcome": "low birthweight (mother uses)", "odds_ratio": 2.39, "ci_low": 1.32, "ci_high": 4.32 },
+          { "outcome": "all-cause mortality (not significant)", "odds_ratio": 1.15, "ci_low": 0.93, "ci_high": 1.43 }
+        ],
+        "output_unit": "odds ratio",
+        "valid_for": { "age": "adults", "sex": "both", "population": "50 studies (cohort, case-control, cross-sectional), searched to May 2015; mostly Middle East and South/East Asia", "exposure_range": "user vs non-user; no dose-response", "south_asian_validated": "partly: some included studies from South Asia; not separated in abstract" },
+        "uncertainty": "95% CIs printed; many are wide. Mix of designs, including cross-sectional.",
+        "source": {
+          "citation": "Waziry R, Jawad M, Ballout RA, Al Akel M, Akl EA. The effects of waterpipe tobacco smoking on health outcomes: an updated systematic review and meta-analysis. Int J Epidemiol 2017;46(1):32-43",
+          "doi": "10.1093/ije/dyw021",
+          "pmid": null,
+          "url": "https://scholarworks.aub.edu.lb/items/84a86f85-1413-4d96-84b0-dcb2e0e9a2d6",
+          "where": "Abstract, Results",
+          "quote": "oral cancer OR=4.17, 95% CI=2.53, 6.89; lung cancer OR=2.12, 95% CI=1.32, 3.42",
+          "access": "abstract only"
+        },
+        "supporting_sources": [
+          { "citation": "Teo KK et al. INTERHEART, Lancet 2006", "url": "https://experts.mcmaster.ca/scholarly-works/910712", "agrees": "yes", "note": "Conclusion: all forms of tobacco, including different types of smoking, harm the heart (sheesha specifically mentioned in secondary coverage, not in the abstract read)." }
+        ],
+        "confidence": "medium",
+        "caveats": "Not significant (so do not show as harm numbers): oesophageal cancer, gastric cancer, bladder cancer, prostate cancer, mortality. Evidence is 'user vs non-user' only, so no per-session dose.",
+        "user_copy": "Regular hookah use is linked to about 2 times the lung cancer risk (range 1.3–3.4) and about 4 times the mouth cancer risk (range 2.5–6.9)."
+      },
+      {
+        "id": "vape-evidence-status",
+        "topic": "vape",
+        "name": "E-cigarettes: what is and isn't known",
+        "estimates": "Evidence levels for health effects of e-cigarettes, for honest 'not enough evidence' messaging.",
+        "inputs": [
+          { "name": "vape_sessions", "unit": "sessions/day", "how_we_get_it": "daily log" }
+        ],
+        "kind": "table",
+        "formula": null,
+        "coefficients": null,
+        "table": [
+          { "finding": "Heart rate increases shortly after nicotine intake from e-cigarettes", "evidence_level": "substantial" },
+          { "finding": "Diastolic blood pressure increases after nicotine intake", "evidence_level": "moderate" },
+          { "finding": "Symptoms of dependence", "evidence_level": "substantial" },
+          { "finding": "Acute endothelial (blood-vessel lining) dysfunction from aerosol", "evidence_level": "substantial" },
+          { "finding": "Long-term cardiovascular disease (CHD, stroke, PAD)", "evidence_level": "no available evidence" },
+          { "finding": "Long-term cancer risk in humans", "evidence_level": "no available evidence (limited animal evidence)" },
+          { "finding": "Complete switching from cigarettes reduces exposure to many toxicants and carcinogens", "evidence_level": "conclusive" },
+          { "finding": "Youth who vape are more likely to start smoking cigarettes", "evidence_level": "substantial" }
+        ],
+        "output_unit": "evidence grade (NASEM scale)",
+        "valid_for": { "age": "adults and youth", "sex": "both", "population": "evidence reviewed to 2017 (mostly US/UK)", "exposure_range": "n/a", "south_asian_validated": "no" },
+        "uncertainty": "Qualitative evidence grades; no numeric risk available for long-term disease.",
+        "source": {
+          "citation": "National Academies of Sciences, Engineering, and Medicine. Public Health Consequences of E-Cigarettes. Washington, DC: National Academies Press; 2018",
+          "doi": "10.17226/24952",
+          "pmid": null,
+          "url": "https://www.nationalacademies.org/read/24952/chapter/3",
+          "where": "Summary Annex, 'Report Conclusions by Level of Evidence' (Conclusions 9-1, 9-2, 9-3, 8-1, 7-1, 18-1)",
+          "quote": "Conclusion 9-2. There is substantial evidence that heart rate increases shortly after nicotine intake from e-cigarettes.",
+          "access": "full text"
+        },
+        "supporting_sources": [
+          { "citation": "The Prohibition of Electronic Cigarettes (Production, Manufacture, Import, Export, Transport, Sale, Distribution, Storage and Advertisement) Act, 2019 (No. 42 of 2019), Government of India", "url": "https://violation-reporting.ntcp.mohfw.gov.in/assets/images/PECA_2019.pdf", "agrees": "yes", "note": "Legal context: production, import, sale, distribution, storage and advertisement of e-cigarettes (including heat-not-burn and e-hookahs, per PRS summary) are prohibited in India since 18 September 2019." }
+        ],
+        "confidence": "medium",
+        "caveats": "'Not enough evidence' is the honest answer for long-term vaping harm; the report is from 2018 and newer evidence was not searched in this pass. In India vaping products are illegal to sell or store (not a health model, but relevant: the app should log vaping without judgement and avoid anything that looks like promotion or sourcing advice). Do not compute 'minutes of life' or disease risk for vaping.",
+        "user_copy": "Vaping raises your heart rate right after use and is addictive. Long-term effects on heart disease and cancer are not known yet."
+      },
+      {
+        "id": "india-tobacco-use-patterns",
+        "topic": "combined",
+        "name": "How Indians use tobacco (GATS-2, 2016–17)",
+        "estimates": "National prevalence of smoking, bidi, cigarette and smokeless tobacco use among adults 15+ (for defaults and context, not personal risk).",
+        "inputs": [],
+        "kind": "table",
+        "formula": null,
+        "coefficients": null,
+        "table": [
+          { "metric": "any tobacco, all adults", "percent": 28.6, "men": 42.4, "women": 14.2 },
+          { "metric": "current smokers, all adults", "percent": 10.7, "men": 19.0, "women": 2.0 },
+          { "metric": "current bidi smokers", "percent": 7.7, "men": 14.0, "women": 1.2 },
+          { "metric": "current cigarette smokers", "percent": 4.0, "men": 7.3, "women": 0.6 },
+          { "metric": "current smokeless tobacco users", "percent": 21.4, "men": 29.6, "women": 12.8 },
+          { "metric": "e-cigarette users (GATS-2, per PRS brief)", "percent": 0.02, "men": null, "women": null }
+        ],
+        "output_unit": "% of adults 15+",
+        "valid_for": { "age": "15+", "sex": "both", "population": "India, nationally representative household survey, 74,037 people, Aug 2016–Feb 2017", "exposure_range": "n/a", "south_asian_validated": "yes" },
+        "uncertainty": "Survey estimates; CIs are in the full GATS-2 report (not opened).",
+        "source": {
+          "citation": "Ministry of Health & Family Welfare, Government of India. Global Adult Tobacco Survey (GATS-2) India 2016-17, Fact Sheet",
+          "doi": null,
+          "pmid": null,
+          "url": "https://mohfw.gov.in/sites/default/files/GATS-2 FactSheet.pdf",
+          "where": "Fact sheet, tobacco use table",
+          "quote": "Current bidi smokers 14.0 1.2 4.7 9.3 7.7 9.2",
+          "access": "full text"
+        },
+        "supporting_sources": [
+          { "citation": "PRS Legislative Research. Legislative Brief: Prohibition of Electronic Cigarettes Ordinance, 2019", "url": "https://prsindia.org/billtrack/prs-products/prs-legislative-brief-3352", "agrees": "yes", "note": "Source of the 0.02% e-cigarette-user figure (citing GATS 2016-17)." }
+        ],
+        "confidence": "high",
+        "caveats": "Context only (e.g. to order product options in the logger: smokeless and bidi before cigarettes). Not a personal risk. GATS-2 is from 2016–17; a newer GATS was not searched.",
+        "user_copy": "About 1 in 5 Indian adults uses chewing tobacco and about 1 in 10 smokes. You're not alone, and many are trying to quit."
+      }
+    ],
+    "not_found": [
+      { "wanted": "Measured nicotine / tar / CO per bidi vs per cigarette", "reason": "Only a descriptive statement (bidi 0.2 g tobacco, 'comparable or higher' tar and nicotine) citing a 1989 Indian review; no laboratory meta-analysis opened this pass.", "searched": ["Gupta & Mehta 2000", "Jha 2008"] },
+      { "wanted": "Per-quid / per-portion dose curve for gutka, khaini, zarda", "reason": "Gupta & Johnson 2014 say pooled dose-response data are lacking; Guha 2014 has spline curves for betel quid in the full text (not opened).", "searched": ["PMC4239077", "PubMed 24302487"] },
+      { "wanted": "IARC Monographs vol. 89 / 100E (smokeless tobacco) classification text", "reason": "Not opened in this pass; both meta-analyses above rely on IARC material.", "searched": [] },
+      { "wanted": "Smokeless tobacco and oesophagus / pancreas cancer, stroke", "reason": "Not searched in this pass; Mumbai cohort site-specific incidence paper (Pednekar 2011, Cancer Causes Control, PMC3756904) is the next source to open.", "searched": [] },
+      { "wanted": "Bombay Cohort 2005 (IJE) updated relative risks by tobacco type", "reason": "Only the abstract header was visible; numbers not seen.", "searched": ["https://katalog.lib.cas.cz/KNAV/EdsRecord/edb,19393375"] },
+      { "wanted": "Hookah dose-response (per session / week) for disease", "reason": "Pooled evidence is user vs non-user only.", "searched": ["Waziry 2017 abstract"] },
+      { "wanted": "Long-term disease risk from vaping", "reason": "NASEM 2018: no available evidence; newer (2019–2026) cohort evidence not searched in this pass.", "searched": ["NASEM 2018 Summary Annex"] },
+      { "wanted": "'Equivalent to N cigarettes' claims for bidi / hookah", "reason": "Deliberately not modelled: tobacco-weight or single-toxicant equivalences are not validated against disease outcomes.", "searched": [] }
+    ],
+    "recommend": "Show first: (1) smokeless-oral-cancer-south-asia (or paan-with-tobacco-oral-cancer-india) — India-specific, full text, huge relative risk, and chewing is India's most common tobacco habit per GATS-2. (2) tobacco-type-heart-attack-interheart — gives chewers and bidi smokers a heart number, and the 'smoke + chew = ~4x' row is a strong nudge for dual users. (3) bidi-dose-allcause-india with the Mumbai cohort alongside — directly answers 'bidi is lighter, right?'. (4) hookah-toxicants-per-session — clear, measured per-session numbers for young urban users. (5) vape-evidence-status — honest 'not known yet' copy plus Indian legal context. Also flag for H1: INTERHEART's +5.6% heart-attack odds per extra cigarette is a per-cigarette slope you may want next to Hackshaw."
+  }

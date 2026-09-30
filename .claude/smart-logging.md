@@ -4,7 +4,7 @@ Not built. Both wait for the owner's decisions below (they touch hard rules: sou
 
 ## Decisions needed (Proposed)
 1. **Open Food Facts as a source for packaged foods?** It's volunteer-typed label data (ODbL), with the nutrition-panel photo per product; no accuracy guarantee. Proposal: allowed **only after the user confirms it against the pack/photo** ("Matches my pack?"), stored in a separate table with `source = off` + product URL, never logged silently.
-2. **Reading numbers from a label photo** (vision model copies the FSSAI nutrition panel) bends "the LLM never produces nutrition numbers". Proposal: allowed as *transcription*, never estimation: photo shown beside every field, the user confirms each number, 4P + 4C + 9F check, `source = label_photo`. Or keep manual entry only.
+2. **Reading numbers from a label photo** (vision model copies the FSSAI nutrition panel) bends "the LLM never produces nutrition numbers". Proposal: allowed as *transcription*, never estimation: photo shown beside every field, the user confirms each number, 4P + 4C + 9F check, `source = label_photo`. Or keep manual entry only. *Related (2026-09-30, D54 Q12):* the owner allowed label **transcription** for the research agent, with the owner checking each value beside the image; the user-photo case here is still undecided.
 3. **Thali photos go to OpenAI (US)**: one-time notice, never stored, EXIF stripped, `store: false` (+ apply for Zero Data Retention).
 
 ## Barcode

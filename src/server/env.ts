@@ -16,6 +16,12 @@ const Env = z.object({
   GEOAPIFY_API_KEY: z.string().min(10).optional(),
   PLACES_PER_MINUTE: z.coerce.number().int().positive().default(30),
   PLACES_PER_DAY: z.coerce.number().int().positive().default(300),
+  // food research agent (D54 phase 3): USDA FoodData Central key (api.data.gov, free; DEMO_KEY otherwise), model, daily cap
+  USDA_API_KEY: z.string().min(20).optional(),
+  RESEARCH_MODEL: z.string().default("gpt-6-astra"),
+  RESEARCH_PER_DAY: z.coerce.number().int().positive().default(40),
+  // label images read by a vision model (D54 phase 4): luna read 20/20 clean + a blurred, misaligned label twice; astra slipped once (food-requests.md)
+  LABEL_MODEL: z.string().default("gpt-6-luna"),
   // admin panel (/admin, D51): comma-separated Google account emails. Empty = nobody is an admin
   ADMIN_EMAILS: z.string().default(""),
 });

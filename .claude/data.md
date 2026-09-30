@@ -8,7 +8,10 @@ Exercise and calorie-burn data (free-exercise-db, Compendium 2024, ACSM, lifting
 |---|---|
 | `data/foods.json` | Research dataset v2 (227 foods). Source of truth; edit this, not the generated file |
 | `data/foods-extra.json` | 52 foods added later (INDB codes, USDA fdcIds, derived chai). Built by `node scripts/import-extra.mjs <INDB.xlsx>` (D22) |
-| `src/data/foods.generated.json` | App catalog built by `npm run foods` from both files (276 foods after exclusions) |
+| `data/foods-research.json` | Foods from browser-Claude research that passed `scripts/check-research.mjs` (numbers re-read from the sources; D52 fried rows with `replaces` take over an old id). Written by the checker with `--write`, never by hand |
+| `data/research/` | `PROMPT.txt` (food), `PROMPT-ALCOHOL.txt`, `FOLLOWUP-*.txt`, the raw replies `batch-*.json`, `fdc-cache.json` (USDA answers kept for provenance) |
+| Supabase `shared_foods` | Foods approved in the admin panel after the build (D54 phase 2, [food-requests.md](food-requests.md)); same source rules, same checker rules (server gate `src/server/foods/schema.ts`); downloaded by every device, no deploy |
+| `src/data/foods.generated.json` | App catalog built by `npm run foods` from the three files above (329 foods on 2026-09-30) |
 
 Older files (`foods.json` v1, `foods (1).json`) were deleted on 2026-09-24.
 
@@ -48,7 +51,7 @@ All were produced by browser Claude from the research prompt. Schema: `meta` + `
 
 | Issue | Foods | Proposed handling |
 |---|---|---|
-| Deep-fried items use full frying oil, so they're over-counted ~1.5–2.5× | samosa (346/pc), kachori (392), poori (221), **bhatura (635)**, medu vada (335), dahi vada (401), pakora, gulab jamun, fried fish (527), besan-kadhi-pakodi (605/katori) | ✓ Shown with "~" + "high estimate" note (D16). Real fix still open (Q4) |
+| Deep-fried items use full frying oil, so they're over-counted ~1.5–2.5× | samosa (346/pc), kachori (392), poori (221), **bhatura (635)**, medu vada (335), dahi vada (401), pakora, gulab jamun, fried fish (527), besan-kadhi-pakodi (605/katori) | ✓ Shown with "~" + "high estimate" note (D16). Real fix: D52 absorbed-oil model; samosa, kachori, bhatura rebuilt, the rest listed in future.md |
 | Mislabeled "deep-fried" | `pav-bhaji` (96.5 kcal/100g), `onion-uttapam` (462/100g, not deep-fried; value suspicious) | ✓ pav-bhaji not badged; onion-uttapam excluded |
 | Suspicious values | `plain-dosa` 381/100g (high), `paneer-tikka` 94/100g (paneer alone is ~258), `hot-tea` 24 kcal/cup (too low for home chai) | ✓ dosa + paneer-tikka excluded. Chai still open (Q6) |
 | Stale caveat | `meta.caveats` still says packaged foods aren't included, but Maggi is | ✓ `meta` isn't shipped to the app |
@@ -56,11 +59,12 @@ All were produced by browser Claude from the research prompt. Schema: `meta` + `
 
 **Added 2026-09-24 (foods-extra):** jeera rice, matar pulao, bhindi… (see file). Chicken & mutton pulao were rejected (macros 30% off kcal). Recipe-yield servings (e.g. 668 g "plate") replaced with standard portions.
 
-**Still missing (use Create food for packaged ones):**
+**Still missing (checked against the catalog 2026-09-30; use Create food for packaged ones):**
 - **Basics:** toned milk (label only; aggregator values not allowed), papad
-- **Dishes:** chicken biryani, missi roti, plain lauki/palak/mixed-veg sabzi, paneer bhurji, chicken tikka (none in INDB)
-- **Street food & sweets:** aloo tikki, vada pav, pani puri, momos, jalebi, barfi
+- **Dishes:** missi roti, plain lauki / palak / mixed-veg sabzi, paneer bhurji, chicken tikka (none in INDB)
+- **Sweets:** jalebi
 - **Packaged:** Parle-G and other brands → Create food
+- Added since the v2 review: chicken biryani, aloo tikki, vada pav, pani puri, momos (research batches below); barfi exists as plain / besan burfi.
 
 Most of the basics are single-ingredient IFCT items or printed on packet labels, so they're easy to fill (see future.md).
 
@@ -69,11 +73,15 @@ Most of the basics are single-ingredient IFCT items or printed on packet labels,
 The catalog had 276 foods; the owner wants the thousands of everyday dishes it lacks (chicken biryani, pani puri, ice cream, fries, chaat, air-fried chicken…). Same idea as greetings.md:
 1. Paste **`data/research/PROMPT.txt`** into browser Claude; one batch per reply ("next" / "continue"). Refresh its EXISTING FOODS list before a new round (generated from the data files).
 2. Save each reply as `data/research/batch-N.json` (parts: `batch-N-2.json`).
-3. `node --env-file-if-exists=.env scripts/check-research.mjs /path/to/INDB.xlsx` → report; add `--write` to write `data/foods-research.json` (read by `build-foods.mjs`) and merge `alias_suggestions` into `data/aliases.json`. Then `npm run foods` and `npm run eval:parse`.
+3. `FDC_DIRS="<fndds dir>:<sr legacy dir>" node --env-file-if-exists=.env scripts/check-research.mjs /path/to/INDB.xlsx` → report; add `--write` to write `data/foods-research.json` (read by `build-foods.mjs`) and merge `alias_suggestions` into `data/aliases.json`. Then `npm run foods` and `npm run eval:parse`.
+
+**Source files on this machine:** none since 2026-09-30. `INDB.xlsx` and the FNDDS / SR Legacy CSV folders lived in a temporary session folder (`/private/tmp/…`) that has since been wiped. For the laptop checker, download them again (INDB: `github.com/lindsayjaacks/Indian-Nutrient-Databank-INDB-/raw/main/INDB.xlsx`; USDA: fdc.nal.usda.gov/download-datasets, the FNDDS survey and SR Legacy CSV zips) into a permanent folder outside the repo, e.g. `~/files/datasets/`. The server research agent doesn't need them (it downloads INDB and uses the USDA API). `USDA_API_KEY` is in `.env`.
 
 **Conventions the checker understands:** `fat_ref: "JPS2024:<food>:<temp>:<cycle>"` for the D52 anchor study (browser Claude can't open it; the table is in the checker), ingredient `source.id: "FOOD"` = another research food (listed earlier) or a catalog food by id (combos: pani puri from golgappa shells), `frying` inside or next to `recipe`, file names `batch-<anything>.json`. **Replies over ~50,000 characters don't fit in the chat: save them straight into the file.**
 
-**What the checker does:** never keeps a number from the research file. INDB rows re-read from INDB.xlsx by code (row name must match), IFCT from the @ifct2017/compositions CSV (jsDelivr) by code (kJ ÷ 4.184; pure fats 9 kcal/g fat), USDA from the FDC API by fdcId or `search: <exact description>` (POST search, exact match, else lists the closest names), DERIVED recomputed from its ingredients and cooked weight, fried foods through the D52 model; macro check (±15 % → macros null), unit > 1,200 kcal refused, ids / source rows already in the catalog refused, aliases another food already owns dropped, forbidden sources refused. MFR_LABEL values can't be fetched: kept as given, flagged for a check against the label image. `USDA_API_KEY` (free, api.data.gov) in `.env`: DEMO_KEY allows ~10 requests an hour.
+**Where the rules live (2026-09-30):** `src/lib/research/check.ts` (one food) + `shape.ts` (research row → app food), shared by this script, `scripts/build-foods.mjs` and the server research agent (D54 phase 3, [food-requests.md](food-requests.md)); a refactor must leave the report and `data/foods-research.json` identical on all batches. On the server the same rules read INDB from its GitHub, IFCT from jsDelivr and USDA through the API (`USDA_API_KEY`: 1,000+ an hour; DEMO_KEY: 30 an hour, 50 a day per IP).
+
+**What the checker does:** never keeps a number from the research file. INDB rows re-read from INDB.xlsx by code (row name must match), IFCT from the @ifct2017/compositions CSV (jsDelivr) by code (kJ ÷ 4.184; pure fats 9 kcal/g fat), USDA from the FDC API by fdcId or `search: <exact description>` (POST search, exact match, else lists the closest names), DERIVED recomputed from its ingredients and cooked weight, fried foods through the D52 model; macro check (±15 % → macros null), unit > 1,200 kcal refused, ids / source rows already in the catalog refused, aliases another food already owns dropped, forbidden sources refused. MFR_LABEL values can't be fetched: kept as given, flagged for a check against the label image. `USDA_API_KEY` (free, fdc.nal.usda.gov/api-key-signup) is in `.env` (2026-09-30; the key's own limit shows 3,600 an hour); DEMO_KEY allows 30 an hour, 50 a day per IP.
 
 **Batch 1 (street food, 2026-09-28):** 12 foods sent; every INDB value matched the spreadsheet and every recipe recomputed. 7 accepted (paneer kathi roll, egg roll, kala chana chaat, masala sweet corn, khajoor / poondu / schezwan chutney), 5 deep-fried INDB rows refused (bhel 510, bread pakora 711, aloo bonda 633 kcal/100 g…) → D52. 19 dishes not found, mostly because browser Claude can't reach USDA (now: `search:` refs) or they're fried (now: D52). 12 alias sets merged (e.g. chole → "pindi chole", pav bhaji → "pao bhaji"). "Chickpea Curry" renamed "Chole (Chickpea Curry)" (old logs keep their snapshot name).
 

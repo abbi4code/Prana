@@ -9,6 +9,27 @@ import type { Category, Food, FoodUnit } from "./types";
 export const FOODS = data as Food[];
 const BY_ID = new Map(FOODS.map((f) => [f.id, f]));
 
+// foods approved after the app was built + names the admin marked "Same as" (D54, lib/sharedFoods.ts)
+let SHARED: Food[] = [];
+let SHARED_INDEX: Indexed[] = [];
+const SHARED_BY_ID = new Map<string, Food>();
+let EXTRA_NAMES = new Map<string, string[]>();
+const withExtra = (f: Food): Food => {
+  const extra = EXTRA_NAMES.get(f.id);
+  return extra ? { ...f, aliases: [...f.aliases, ...extra.filter((a) => !f.aliases.includes(a))] } : f;
+};
+/** Shared foods + extra names (food id → names). The built-in catalog wins an id clash. */
+export function setSharedFoods(list: Food[], names: Map<string, string[]>) {
+  EXTRA_NAMES = names;
+  SHARED = list.filter((f) => !BY_ID.has(f.id));
+  SHARED_BY_ID.clear();
+  for (const f of SHARED) SHARED_BY_ID.set(f.id, f);
+  SHARED_INDEX = SHARED.map((f) => indexFood(withExtra(f)));
+  INDEX = FOODS.map((f) => indexFood(withExtra(f)));
+  matcher = null;
+}
+export const getSharedFoods = () => SHARED;
+
 // user-created foods, kept in sync by the store (lib/store.ts)
 let CUSTOM: Food[] = [];
 let CUSTOM_INDEX: Indexed[] = [];
@@ -29,7 +50,7 @@ let matcher: Matcher<Food> | null = null;
  * Veg wins remaining ties by a hair (still ambiguous, so "Did you mean?" is shown).
  */
 export function matchFood(name: string, limit = 3, history?: ReadonlySet<string>): Candidate<Food>[] {
-  matcher ??= buildMatcher([...CUSTOM, ...FOODS], {
+  matcher ??= buildMatcher([...CUSTOM, ...SHARED.map(withExtra), ...FOODS.map(withExtra)], {
     prefer: prefer as Record<string, string>,
     boost: matchBoost,
   });
@@ -40,7 +61,7 @@ export function matchFood(name: string, limit = 3, history?: ReadonlySet<string>
 }
 export const getCustomFoods = () => CUSTOM;
 
-export const getFood = (id: string) => BY_ID.get(id) ?? CUSTOM_BY_ID.get(id);
+export const getFood = (id: string) => BY_ID.get(id) ?? CUSTOM_BY_ID.get(id) ?? SHARED_BY_ID.get(id);
 export const getUnit = (food: Food, unitId: string): FoodUnit =>
   food.units.find((u) => u.id === unitId) ?? food.units[0];
 
@@ -61,7 +82,7 @@ function indexFood(food: Food): Indexed {
   const alt = [...food.aliases.map(norm), food.hi ?? "", norm(food.id)].filter(Boolean);
   return { food, name, alt, compact: [name, ...alt].join(" ").replace(/ /g, ""), cat: norm(CATEGORY_LABEL[food.cat]) };
 }
-const INDEX: Indexed[] = FOODS.map(indexFood);
+let INDEX: Indexed[] = FOODS.map((f) => indexFood(f));
 
 function scoreToken(it: Indexed, t: string): number {
   if (it.name.startsWith(t)) return 100;
@@ -79,7 +100,7 @@ export function searchFoods(query: string, limit = 40): Food[] {
   const tokens = q.split(" ");
   const joined = q.replace(/ /g, "");
   const scored: { food: Food; s: number }[] = [];
-  for (const it of [...CUSTOM_INDEX, ...INDEX]) {
+  for (const it of [...CUSTOM_INDEX, ...SHARED_INDEX, ...INDEX]) {
     let s = 0;
     for (const t of tokens) {
       const ts = scoreToken(it, t);

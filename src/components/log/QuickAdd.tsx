@@ -26,7 +26,8 @@ import { useIsDesktop } from "@/lib/useMediaQuery";
 import { usePerson } from "@/lib/useWorkouts";
 import { CreateFood } from "./CreateFood";
 import { FoodDetail } from "./FoodDetail";
-import { MicButton, NlConfirm, SignInHint, UnderstandRow, isSentence, useNlLog } from "./NlLog";
+import { MissingFood, useSearchMiss } from "./MissingFood";
+import { MicButton, NlConfirm, SignInHint, UnderstandRow, isSentence, looksLikeFoodName, useNlLog } from "./NlLog";
 
 // the sheet registers its mic here so the Today bar can start listening inside the same tap
 // (iPhone browsers only allow the microphone from a user gesture)
@@ -131,6 +132,9 @@ function QuickFlow({ query, setQuery, nl, onClose }: { query: string; setQuery: 
     return (matchWorkout(q, 1)[0]?.score ?? 0) > (matchFood(q, 1)[0]?.score ?? 0);
   }, [q, foods.length, works.length]);
   const sentenceLike = isSentence(query);
+  // closing on a search that matched no food and no exercise = a missing food (D54)
+  const foodName = !sentenceLike || looksLikeFoodName(query);
+  useSearchMiss(q, foods.length + works.length > 0, nl.signedIn && !foodName);
 
   const portionOf = (f: Food) => lastFood.get(f.id) ?? { unitId: f.du, qty: 1 };
 
@@ -357,20 +361,15 @@ function QuickFlow({ query, setQuery, nl, onClose }: { query: string; setQuery: 
               <SignInHint what="food and workouts" />
             ))}
             {workoutFirst ? <>{workSection}{foodSection}</> : <>{foodSection}{workSection}</>}
-            {/* "create it" only when the words could be a food: not for a sentence, not when only exercises matched */}
-            {!(nl.signedIn && sentenceLike) && (foods.length > 0 || !works.length) && (
-              <>
-                {!foods.length && !works.length && (
-                  <p className="px-2 pb-2 pt-8 text-center text-sm text-muted">No food or exercise called “{q}”. Try another name, or add the food yourself:</p>
-                )}
-                <button
-                  onClick={() => setCreating(q)}
-                  className="mt-2 flex w-full items-center gap-3 rounded-2xl border border-dashed border-line-strong px-3 py-3 text-left text-sm font-semibold text-muted transition-colors hover:border-turmeric/50 hover:text-text"
-                >
-                  <span className="grid size-9 place-items-center rounded-xl bg-surface-2 text-turmeric"><Plus size={18} /></span>
-                  <span className="truncate">Create “{q}” as a food</span>
-                </button>
-              </>
+            {/* "create it" only when the words could be a food: not for a sentence (unless it reads like one dish), not when only exercises matched */}
+            {(!(nl.signedIn && sentenceLike) || foodName) && (foods.length > 0 || !works.length) && (
+              <MissingFood
+                query={q}
+                empty={!foods.length && !works.length}
+                emptyText={nl.signedIn ? <>No food or exercise called “{q}”. Ask us to add the food, or add it yourself:</> : <>No food or exercise called “{q}”. Try another name, or add the food yourself:</>}
+                createLabel={`Create “${q}” as a food`}
+                onCreate={() => setCreating(q)}
+              />
             )}
           </>
         ) : (

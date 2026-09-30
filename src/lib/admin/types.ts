@@ -117,3 +117,38 @@ export type AdminUserBundle = {
   reports: { id: number; reason: string; note: string | null; created_at: string; resolved_at: string | null }[];
   activity: { day: string; sets: number; minutes: number; visited: boolean; verified: boolean; active: boolean; effort: number; flagged: number }[];
 };
+
+// ── missing-food requests (D54, admin_food_requests) ──
+export type FoodRequestStatus = "new" | "alias" | "researching" | "found" | "not_found" | "junk";
+export type FoodRequestFilter = "open" | "done" | "junk" | "all";
+/** people = distinct users; asked / searched / ai / custom = distinct users per signal; times = every signal, repeats included */
+export type FoodRequestRow = {
+  id: number; name: string; status: FoodRequestStatus; reason: string | null; foodId: string | null;
+  firstSeen: string; lastSeen: string; people: number; asked: number; searched: number; ai: number; custom: number; times: number;
+};
+export type FoodRequests = { counts: { open: number; done: number; junk: number; people: number }; rows: FoodRequestRow[] };
+
+// ── shared foods review (D54 phase 2, admin_food_review) ──
+export type CandidateSource = { id?: string; ref?: string; url?: string; image_url?: string; row_name?: string };
+export type FoodCandidate = {
+  id: number; foodId: string; data: import("../types").Food; source: CandidateSource; warnings: string[]; model: string | null;
+  status: "pending" | "approved" | "rejected"; reason: string | null; createdAt: string; decidedAt: string | null; decidedBy: string | null;
+  /** a shared food with this id is live now */
+  live: boolean;
+  request: { id: number; name: string; people: number } | null;
+  /** what would stop Approve (server check: FoodSchema, built-in catalog ids, label mismatches); [] = can go live */
+  problems: string[];
+  /** D54 phase 4: the label image + what the vision model read (label foods only) */
+  label: StoredLabel | null;
+  labelNotes: string[];
+  labelChecks: LabelCheck[] | null;
+};
+export type LabelPanel = { energy_kcal: number | null; energy_kj: number | null; protein_g: number | null; carbs_g: number | null; fat_g: number | null; fibre_g: number | null; [k: string]: number | null };
+export type StoredLabel = {
+  image: string; error: string | null; model: string; read_at: string; read_by: string;
+  reading: { is_nutrition_label: boolean; product: string | null; columns: string[]; per_100_basis: string | null; per_100: LabelPanel | null; serving: { size: number | null; unit: string | null; text: string | null }; per_serve: LabelPanel | null; notes: string } | null;
+  per100: { kcal: number | null; p: number | null; c: number | null; f: number | null; fib: number | null; basis: string } | null;
+};
+export type LabelCheck = { field: "kcal" | "p" | "c" | "f" | "fib"; label: number | null; food: number | null; same: boolean | null };
+export type SharedFoodRow = { id: string; data: import("../types").Food; approvedBy: string | null; approvedAt: string; retracted: boolean; requestName: string | null };
+export type FoodReview = { candidates: FoodCandidate[]; shared: SharedFoodRow[] };

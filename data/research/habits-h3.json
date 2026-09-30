@@ -1,0 +1,385 @@
+{
+    "batch": "H3",
+    "theme": "Quitting and cutting down: recovery timeline, risk by years since quitting, life regained, reduction and relapse",
+    "generated_on": "2026-09-30",
+    "models": [
+      {
+        "id": "quitting-recovery-timeline",
+        "topic": "quitting",
+        "name": "Since your last cigarette: recovery milestones",
+        "estimates": "What improves, and roughly when, after stopping smoking.",
+        "inputs": [
+          { "name": "last_cigarette_datetime", "unit": "timestamp", "how_we_get_it": "one-time question / quit button in app" }
+        ],
+        "kind": "timeline",
+        "formula": null,
+        "coefficients": null,
+        "table": [
+          { "time_since_quit": "20 minutes", "milestone": "heart rate and blood pressure drop" },
+          { "time_since_quit": "12 hours", "milestone": "carbon monoxide level in blood drops to normal" },
+          { "time_since_quit": "2–12 weeks", "milestone": "circulation improves and lung function increases" },
+          { "time_since_quit": "1–9 months", "milestone": "coughing and shortness of breath decrease" },
+          { "time_since_quit": "1 year", "milestone": "coronary heart disease risk about half that of a smoker" },
+          { "time_since_quit": "5–15 years", "milestone": "stroke risk reduced to that of a non-smoker" },
+          { "time_since_quit": "10 years", "milestone": "lung cancer risk about half that of a smoker; risk of mouth, throat, oesophagus, bladder, cervix and pancreas cancer decreases" },
+          { "time_since_quit": "15 years", "milestone": "coronary heart disease risk that of a non-smoker" }
+        ],
+        "output_unit": "qualitative milestones",
+        "valid_for": { "age": "adults", "sex": "both", "population": "WHO summary of the literature (mainly US Surgeon General reports)", "exposure_range": "former cigarette smokers", "south_asian_validated": "no" },
+        "uncertainty": "No CIs; population-average statements. Some milestones are optimistic compared with newer cohort data (see quitting-cvd-by-years-heavy-smokers and quitting-lung-cancer-by-years): heavy smokers' excess risk can last longer.",
+        "source": {
+          "citation": "World Health Organization. Tobacco: health benefits of smoking cessation (Questions and answers), 25 February 2020",
+          "doi": null,
+          "pmid": null,
+          "url": "https://www.who.int/news-room/q-a-detail/health-benefits-of-smoking-cessation",
+          "where": "'Beneficial health changes that take place' list",
+          "quote": "12 hours, the carbon monoxide level in your blood drops to normal.",
+          "access": "full text"
+        },
+        "supporting_sources": [
+          { "citation": "WHO Europe news release, 29 Sep 2020 (Tobacco Knowledge Summary on coronary heart disease)", "url": "https://www.who.int/europe/news/item/29-09-2020-tobacco-use-and-exposure-to-second-hand-smoke-linked-to-more-than-20-of-deaths-from-coronary-heart-disease", "agrees": "yes", "note": "Repeats the 20-minute, 12-hour, 2–12-week, 1-year and 15-year heart milestones." }
+        ],
+        "confidence": "medium",
+        "caveats": "You asked for each milestone with its own primary source: the WHO page lists references (e.g. Mahmud & Feely, Hypertension 2003 for the 20-minute item; US Surgeon General reports) but I did not open them individually in this pass. Treat as an authoritative summary, not per-milestone primary evidence. The same WHO list is widely copied by quit apps; use the WHO page as your citation, not the apps.",
+        "user_copy": "{elapsed} since your last cigarette: {milestone}. Keep going — the biggest gains come over months and years."
+      },
+      {
+        "id": "quitting-minutes-regained",
+        "topic": "quitting",
+        "name": "Life expectancy not lost, per cigarette not smoked",
+        "estimates": "Minutes of life expectancy avoided losing since quitting (or from cigarettes cut), based on the per-cigarette loss estimate.",
+        "inputs": [
+          { "name": "cigs_not_smoked", "unit": "cigarettes", "how_we_get_it": "(pre-quit daily average from log) × days since quit, or reduction vs baseline" },
+          { "name": "sex", "unit": "men | women | unknown", "how_we_get_it": "profile" }
+        ],
+        "kind": "formula",
+        "formula": "minutes_saved = cigs_not_smoked * (sex == 'men' ? 17 : sex == 'women' ? 22 : 20)",
+        "coefficients": {
+          "min_per_cig_men": { "value": 17, "ci_low": null, "ci_high": null, "unit": "minutes/cigarette" },
+          "min_per_cig_women": { "value": 22, "ci_low": null, "ci_high": null, "unit": "minutes/cigarette" },
+          "min_per_cig_both": { "value": 20, "ci_low": null, "ci_high": null, "unit": "minutes/cigarette" }
+        },
+        "table": [
+          { "check": "10/day smoker quits on 1 Jan", "paper_says": "a full day of life by 8 January, a week by 20 February, a month by 5 August, 50 days by end of year" }
+        ],
+        "output_unit": "minutes / days of life expectancy",
+        "valid_for": { "age": "adults", "sex": "both", "population": "Britain (see H1 smoking-life-expectancy-per-cigarette)", "exposure_range": "population average; assumes the cigarettes would otherwise have been smoked for life", "south_asian_validated": "no" },
+        "uncertainty": "No CI; arithmetic estimate. The paper's own worked example matches the formula (10 × 20 × 365 ≈ 50.7 days).",
+        "source": {
+          "citation": "Jackson SE, Jarvis MJ, West R. The price of a cigarette: 20 minutes of life? Addiction 2025;120(5):810-812",
+          "doi": "10.1111/add.16757",
+          "pmid": null,
+          "url": "https://discovery.ucl.ac.uk/id/eprint/10203237/1/Jackson_Jackson%20et%20al.%20The%20price%20of%20a%20cigarette.pdf",
+          "where": "Article, paragraph 5 (p.2)",
+          "quote": "a person smoking 10 cigarettes per day who quits smoking on the 1st of January 2025 could prevent loss of a full day of life by the 8th of January, a week of life by the 20th of February, and a month by the 5th of August. By the end of the year, they could have avoided losing 50 days of life.",
+          "access": "full text"
+        },
+        "supporting_sources": [],
+        "confidence": "medium",
+        "caveats": "Using it for cutting down (not quitting) is weaker: the paper itself warns reduced smokers may inhale more deeply per cigarette, and heart risk barely falls with cutting down (see cutting-down-cvd). For bidis or chewing tobacco there is no per-unit figure — do not apply.",
+        "user_copy": "By not smoking {n} cigarettes, you've avoided losing about {days} days of life expectancy (population average)."
+      },
+      {
+        "id": "quitting-life-years-by-age",
+        "topic": "quitting",
+        "name": "Years of life regained by age at quitting",
+        "estimates": "Average life expectancy gained by stopping at a given age, compared with continuing to smoke.",
+        "inputs": [
+          { "name": "age_at_quit", "unit": "years", "how_we_get_it": "profile age on quit date" }
+        ],
+        "kind": "table",
+        "formula": null,
+        "coefficients": null,
+        "table": [
+          { "age_at_quit": "about 30", "years_gained": 10, "ci_low": null, "ci_high": null },
+          { "age_at_quit": "about 40", "years_gained": 9, "ci_low": null, "ci_high": null },
+          { "age_at_quit": "about 50", "years_gained": 6, "ci_low": null, "ci_high": null },
+          { "age_at_quit": "about 60", "years_gained": 3, "ci_low": null, "ci_high": null }
+        ],
+        "output_unit": "years of life expectancy vs continuing smokers",
+        "valid_for": { "age": "quit at 25–64", "sex": "men", "population": "UK male doctors born 1900–1930, followed 1951–2001", "exposure_range": "former cigarette smokers who had smoked about as much as continuing smokers", "south_asian_validated": "no" },
+        "uncertainty": "No CIs; read from survival curves (Figure 4). Some reverse causation (people quitting because ill) makes later-age estimates conservative.",
+        "source": {
+          "citation": "Doll R, Peto R, Boreham J, Sutherland I. Mortality in relation to smoking: 50 years' observations on male British doctors. BMJ 2004;328:1519",
+          "doi": "10.1136/bmj.38142.554479.AE",
+          "pmid": "15213107",
+          "url": "https://courses.ucsf.edu/mod/resource/view.php?id=54732",
+          "where": "Abstract; Discussion; Figure 4",
+          "quote": "Cessation at age 60, 50, 40, or 30 years gained, respectively, about 3, 6, 9, or 10 years of life expectancy.",
+          "access": "full text"
+        },
+        "supporting_sources": [
+          { "citation": "Jha P, Ramasundarahettige C, Landsman V, et al. 21st-century hazards of smoking and benefits of cessation in the United States. N Engl J Med 2013;368:341-50", "url": "https://www.dcp-3.org/node/1230", "agrees": "yes", "note": "US, both sexes: quitting at 25–34, 35–44, 45–54 gained about 10, 9 and 6 years; cessation before 40 reduces the excess death risk of continued smoking by about 90%. (A 55–64 → 4 years figure appears in secondary reports; not verified in the abstract read.)" },
+          { "citation": "WHO. Tobacco: health benefits of smoking cessation (2020)", "url": "https://www.who.int/news-room/q-a-detail/health-benefits-of-smoking-cessation", "agrees": "yes", "note": "Repeats 10 / 9 / 6 / 3 years at about 30 / 40 / 50 / 60." }
+        ],
+        "confidence": "high",
+        "caveats": "Show as 'quitting at any age helps', with the age row closest to the user. No Indian estimate found; the direction is expected to hold.",
+        "user_copy": "People who quit around age {age} gained on average about {years} years of life compared with those who kept smoking."
+      },
+      {
+        "id": "quitting-excess-risk-avoided-by-age",
+        "topic": "quitting",
+        "name": "How much of the extra death risk is avoided, by age at quitting (women)",
+        "estimates": "Relative risk of death (and of lung cancer death) for ex-smokers vs never smokers by age at stopping, and the share of smokers' excess risk avoided.",
+        "inputs": [
+          { "name": "age_at_quit", "unit": "years", "how_we_get_it": "profile age on quit date" }
+        ],
+        "kind": "table",
+        "formula": null,
+        "coefficients": null,
+        "table": [
+          { "group": "never smoker", "rr_all_cause": 1.0, "rr_lung_cancer": 1.0 },
+          { "group": "stopped before 25 (mean 22)", "rr_all_cause": 1.01, "ci_low": 0.92, "ci_high": 1.11, "rr_lung_cancer": 1.56, "lc_ci_low": 1.03, "lc_ci_high": 2.37 },
+          { "group": "stopped 25–34 (mean 29)", "rr_all_cause": 1.05, "ci_low": 1.00, "ci_high": 1.11, "rr_lung_cancer": 1.84, "lc_ci_low": 1.45, "lc_ci_high": 2.34, "share_of_excess_avoided": "about 97%" },
+          { "group": "stopped 35–44 (mean 39)", "rr_all_cause": 1.20, "ci_low": 1.14, "ci_high": 1.26, "rr_lung_cancer": 3.34, "lc_ci_low": 2.76, "lc_ci_high": 4.03, "share_of_excess_avoided": "about 90%" },
+          { "group": "stopped 45–54 (mean 49)", "rr_all_cause": 1.56, "ci_low": 1.49, "ci_high": 1.64, "rr_lung_cancer": 5.91, "lc_ci_low": 5.01, "lc_ci_high": 6.97, "share_of_excess_avoided": "at least two-thirds" },
+          { "group": "still smoking at 3-year resurvey", "rr_all_cause": 3.0, "ci_low": 2.9, "ci_high": 3.1, "rr_lung_cancer": 24.0, "lc_ci_low": 21.3, "lc_ci_high": 27.1 }
+        ],
+        "output_unit": "relative risk vs never smokers",
+        "valid_for": { "age": "outcomes at 50–80 (mainly 55–74)", "sex": "women", "population": "UK Million Women Study, recruited 1996–2001, followed to 2011", "exposure_range": "stopped before age 55", "south_asian_validated": "no" },
+        "uncertainty": "95% CIs printed. The <25 group is small (24 lung cancer deaths) and the authors call it not statistically trustworthy.",
+        "source": {
+          "citation": "Pirie K, Peto R, Reeves GK, Green J, Beral V; Million Women Study Collaborators. The 21st century hazards of smoking and benefits of stopping: a prospective study of one million women in the UK. Lancet 2013;381(9861):133-141",
+          "doi": "10.1016/S0140-6736(12)61720-6",
+          "pmid": "23107252",
+          "url": "https://old.ncdalliance.org/sites/default/files/Women%20Million%20Study%20UK%20%20Oxford%20%20Lancet%2012%2011.pdf",
+          "where": "Summary (Findings, Interpretation); Results; Figure 4",
+          "quote": "Stopping before age 40 years (and preferably well before age 40 years) avoids more than 90% of the excess mortality caused by continuing smoking; stopping before age 30 years avoids more than 97% of it.",
+          "access": "full text"
+        },
+        "supporting_sources": [
+          { "citation": "Banks E et al. BMC Med 2019;17:128 (Australia)", "url": "https://bmcmedicine.biomedcentral.com/track/pdf/10.1186/s12916-019-1351-4", "agrees": "yes", "note": "CVD risks in those who quit before 35 did not differ significantly from never smokers; quitting by 35–44 avoided about 90% of excess CVD risk." }
+        ],
+        "confidence": "high",
+        "caveats": "The paper stresses it is not 'safe to smoke until 40 then stop': those who did still had 1.2 times the death rate decades later. Use for motivation ('the earlier the better'), not as permission.",
+        "user_copy": "Quitting before 40 avoids about 90% of smoking's extra death risk; before 30, about 97%. It's never too late — even quitting around 50 avoids about two-thirds."
+      },
+      {
+        "id": "quitting-cvd-by-years-heavy-smokers",
+        "topic": "quitting",
+        "name": "Heart and stroke risk by years since quitting (heavy smokers)",
+        "estimates": "Incident cardiovascular disease (MI, stroke, heart failure, CVD death) rate and hazard in former heavy smokers by years since quitting, vs current and never smokers.",
+        "inputs": [
+          { "name": "years_since_quit", "unit": "years", "how_we_get_it": "date of last cigarette" },
+          { "name": "pack_years", "unit": "pack-years", "how_we_get_it": "one-time history; model applies at >= 20" }
+        ],
+        "kind": "table",
+        "formula": null,
+        "coefficients": null,
+        "table": [
+          { "group": "current smoker", "cvd_rate_per_1000_py": 11.56, "ci_low": 10.30, "ci_high": 12.98 },
+          { "group": "quit within 5 years", "cvd_rate_per_1000_py": 6.94, "ci_low": 5.61, "ci_high": 8.59, "hr_vs_current": 0.61, "hr_ci_low": 0.49, "hr_ci_high": 0.76 },
+          { "group": "quit 10 to <15 years", "cvd_rate_per_1000_py": 6.31, "ci_low": 4.93, "ci_high": 8.09, "hr_vs_never": 1.25, "hr_ci_low": 0.98, "hr_ci_high": 1.60 },
+          { "group": "never smoker", "cvd_rate_per_1000_py": 5.09, "ci_low": 4.52, "ci_high": 5.74 }
+        ],
+        "output_unit": "incidence per 1000 person-years; hazard ratio",
+        "valid_for": { "age": "adults (mean 42 at baseline)", "sex": "both", "population": "USA, Framingham Heart Study original + offspring cohorts, 1954–2015; mostly white", "exposure_range": "heavy ever smokers (≥20 pack-years)", "south_asian_validated": "no" },
+        "uncertainty": "95% CIs printed. Time course differed by cohort (5–10 years original, ≥25 years offspring).",
+        "source": {
+          "citation": "Duncan MS, Freiberg MS, Greevy RA Jr, Kundu S, Vasan RS, Tindle HA. Association of smoking cessation with subsequent risk of cardiovascular disease. JAMA 2019;322(7):642-650",
+          "doi": "10.1001/jama.2019.10298",
+          "pmid": null,
+          "url": "https://scholars.uthscsa.edu/en/publications/association-of-smoking-cessation-with-subsequent-risk-of-cardiova/",
+          "where": "Abstract, Results",
+          "quote": "quitting within 5 years was associated with significantly lower rates of incident CVD (incidence rates per 1000 person-years: current smoking, 11.56 [95% CI, 10.30-12.98]; quitting within 5 years, 6.94 [95% CI, 5.61-8.59]",
+          "access": "abstract only"
+        },
+        "supporting_sources": [
+          { "citation": "Teo KK et al. INTERHEART, Lancet 2006", "url": "https://pubmed.ncbi.nlm.nih.gov/16920470/", "agrees": "yes", "note": "Heart attack OR for former smokers 1.87 (1.55–2.24) within 3 years of quitting and 1.22 (1.09–1.37) 20+ years after (vs 2.95 current)." }
+        ],
+        "confidence": "high",
+        "caveats": "Volume/page numbers (322(7):642-650) are from my memory and not visible in the page read — verify. Applies to ≥20 pack-years; lighter smokers likely recover faster but that is not in this model.",
+        "user_copy": "Within 5 years of quitting, heart and stroke risk drops by about 40% (range 24–51%) compared with continuing to smoke."
+      },
+      {
+        "id": "quitting-lung-cancer-by-years",
+        "topic": "quitting",
+        "name": "Lung cancer risk by years since quitting (heavy smokers)",
+        "estimates": "Hazard of lung cancer in former heavy smokers vs never smokers, by years since quitting.",
+        "inputs": [
+          { "name": "years_since_quit", "unit": "years", "how_we_get_it": "date of last cigarette" },
+          { "name": "pack_years", "unit": "pack-years", "how_we_get_it": "one-time history; model applies at >= 21" }
+        ],
+        "kind": "table",
+        "formula": null,
+        "coefficients": null,
+        "table": [
+          { "years_since_quit": "<5", "hr_vs_never": 12.12, "ci_low": 6.94, "ci_high": 21.17 },
+          { "years_since_quit": "5–9", "hr_vs_never": 11.77, "ci_low": 6.78, "ci_high": 20.45 },
+          { "years_since_quit": "10–14", "hr_vs_never": 7.81, "ci_low": 3.98, "ci_high": 15.33 },
+          { "years_since_quit": "15–24", "hr_vs_never": 5.88, "ci_low": 3.19, "ci_high": 10.83 },
+          { "years_since_quit": "≥25", "hr_vs_never": 3.85, "ci_low": 1.80, "ci_high": 8.26 }
+        ],
+        "output_unit": "hazard ratio vs never smokers",
+        "valid_for": { "age": "adults", "sex": "both", "population": "USA, Framingham Heart Study, median follow-up 28.7 years", "exposure_range": "heavy former smokers (≥21 pack-years per paper's definition; not visible in the abstract snippet — verify)", "south_asian_validated": "no" },
+        "uncertainty": "95% CIs printed and wide (284 lung cancers total).",
+        "source": {
+          "citation": "Tindle HA, Stevenson Duncan M, Greevy RA, et al. Lifetime smoking history and risk of lung cancer: results from the Framingham Heart Study. J Natl Cancer Inst 2018",
+          "doi": null,
+          "pmid": "29788259",
+          "url": "https://edrn.cancer.gov/data-and-resources/publications/29788259-251-lifetime-smoking-history-and-risk-of-lung-cancer-results-from-the-framingham-heart-study",
+          "where": "Abstract, Results",
+          "quote": "Heavy former (vs current) smokers had 39.1% lower lung cancer risk within five YSQ.",
+          "access": "abstract only"
+        },
+        "supporting_sources": [
+          { "citation": "Cancer risk following smoking cessation in Korea (JAMA Netw Open, PMC10848071)", "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10848071", "agrees": "partly", "note": "Asian cohort of >2 million: all-cancer risk slightly higher for ~10 years after quitting (likely sick-quitters), then fell to ~50% of continuing smokers after 15+ years; lung cancer fell ~3 years earlier; quitting before 50 gave lung cancer HR 0.43 (0.35–0.53). Key-points level only." },
+          { "citation": "Pirie K et al. Lancet 2013", "url": "https://old.ncdalliance.org/sites/default/files/Women%20Million%20Study%20UK%20%20Oxford%20%20Lancet%2012%2011.pdf", "agrees": "yes", "note": "Lung cancer RR vs never by age stopped: 1.84 (25–34), 3.34 (35–44), 5.91 (45–54) vs 24.0 continuing." }
+        ],
+        "confidence": "medium",
+        "caveats": "Honest message: lung cancer risk falls a lot compared with continuing, but stays above never-smokers for decades — which is why lung screening eligibility lasts 15 years after quitting (H1 pack-years model). Frame vs 'if you had kept smoking', not vs never-smokers, to avoid discouraging quitters.",
+        "user_copy": "Within 5 years of quitting, lung cancer risk is about 40% lower than if you'd kept smoking, and it keeps falling for decades."
+      },
+      {
+        "id": "cutting-down-lung-cancer",
+        "topic": "quitting",
+        "name": "Cutting down by half: lung cancer",
+        "estimates": "Lung cancer hazard for heavy smokers (≥15/day) who cut down by at least 50%, vs those who kept smoking heavily, alongside quitters and never smokers.",
+        "inputs": [
+          { "name": "baseline_cigs_per_day", "unit": "cigarettes/day", "how_we_get_it": "first 30 days of log or one-time question" },
+          { "name": "current_cigs_per_day", "unit": "cigarettes/day", "how_we_get_it": "last 30 days of log" }
+        ],
+        "kind": "table",
+        "formula": null,
+        "coefficients": null,
+        "table": [
+          { "group": "persistent heavy smoker (≥15/day)", "hr": 1.0, "ci_low": null, "ci_high": null },
+          { "group": "reducer (heavy smoker cut ≥50%)", "hr": 0.73, "ci_low": 0.54, "ci_high": 0.98 },
+          { "group": "persistent light smoker (1–14/day)", "hr": 0.44, "ci_low": 0.35, "ci_high": 0.56 },
+          { "group": "quitter during study", "hr": 0.50, "ci_low": 0.36, "ci_high": 0.69 },
+          { "group": "stable ex-smoker", "hr": 0.17, "ci_low": 0.13, "ci_high": 0.23 },
+          { "group": "never smoker", "hr": 0.09, "ci_low": 0.06, "ci_high": 0.13 }
+        ],
+        "output_unit": "hazard ratio vs persistent heavy smokers",
+        "valid_for": { "age": "23–93 at entry", "sex": "both", "population": "Denmark, three Copenhagen cohorts, 19,714 people, up to 31 years' follow-up", "exposure_range": "heavy smokers ≥15/day reducing by ≥50%", "south_asian_validated": "no" },
+        "uncertainty": "95% CIs printed; reducers' CI close to 1 (0.54–0.98).",
+        "source": {
+          "citation": "Godtfredsen NS, Prescott E, Osler M. Effect of smoking reduction on lung cancer risk. JAMA 2005;294(12):1505-1510",
+          "doi": "10.1001/jama.294.12.1505",
+          "pmid": null,
+          "url": "https://read.qxmd.com/doi/10.1001/jama.294.12.1505",
+          "where": "Abstract, Results",
+          "quote": "the adjusted hazard ratio (HR) for lung cancer in reducers was 0.73 (95% confidence interval [CI], 0.54-0.98) compared with persistent heavy smokers.",
+          "access": "abstract only"
+        },
+        "supporting_sources": [
+          { "citation": "Yoo JE et al. Cancer 2022;128:2126-37 (Korea)", "url": "https://medbox.org/document/effect-of-smoking-reduction-cessation-and-resumption-on-cancer-risk-a-nationwide-cohort-study", "agrees": "yes", "note": "Reducers ≥50%: lung cancer aHR 0.83 (0.77–0.88) vs sustainers; quitters 0.79 (0.76–0.83). See also cutting-down-and-relapse-cancer." }
+        ],
+        "confidence": "medium",
+        "caveats": "Show next to cutting-down-cvd: cutting down helps lung cancer somewhat, but quitting helps far more and the heart barely benefits from cutting down.",
+        "user_copy": "Cutting down by half lowered lung cancer risk by about a quarter (range 2–46%). Quitting halves it and keeps lowering it."
+      },
+      {
+        "id": "cutting-down-cvd",
+        "topic": "quitting",
+        "name": "Cutting down vs quitting: heart and stroke",
+        "estimates": "Relative risk of heart disease / CVD in heavy smokers who cut down substantially vs continuing heavy smokers, compared with quitters, in three cohorts.",
+        "inputs": [
+          { "name": "baseline_cigs_per_day", "unit": "cigarettes/day", "how_we_get_it": "log" },
+          { "name": "current_cigs_per_day", "unit": "cigarettes/day", "how_we_get_it": "log" }
+        ],
+        "kind": "table",
+        "formula": null,
+        "coefficients": null,
+        "table": [
+          { "cohort": "Denmark (19,423 adults; heavy ≥15/day, cut ≥50%)", "outcome": "coronary heart disease, 14 years", "rr_reducers": 1.06, "rr_quitters": 0.67 },
+          { "cohort": "Norway (51,210 adults; heavy ≥15/day, cut ≥50%)", "outcome": "cardiovascular disease, 21 years", "rr_reducers": 1.02, "rr_quitters": 0.46 },
+          { "cohort": "South Korea (475,734 adults; ≥20/day cut to <10/day)", "outcome": "stroke / CHD, 9 years", "rr_reducers": "0.85 / 0.92", "rr_quitters": "0.70 / 0.43" }
+        ],
+        "output_unit": "relative risk vs continuing heavy smokers (CIs not reported in the text read)",
+        "valid_for": { "age": "adults", "sex": "both", "population": "Denmark, Norway, South Korea cohorts as summarised", "exposure_range": "heavy smokers reducing by about half or more", "south_asian_validated": "no" },
+        "uncertainty": "Values are as summarised in the meta-analysis discussion, without CIs; the original cohort papers were not opened.",
+        "source": {
+          "citation": "Hackshaw A, Morris JK, Boniface S, Tang JL, Milenković D. Low cigarette consumption and risk of coronary heart disease and stroke: meta-analysis of 141 cohort studies in 55 study reports. BMJ 2018;360:j5855",
+          "doi": "10.1136/bmj.j5855",
+          "pmid": null,
+          "url": "https://www-bmj-com.bibliotheek.ehb.be/content/360/bmj.j5855.long",
+          "where": "Results, 'Heterogeneity and bias' paragraph",
+          "quote": "The adjusted relative risk for cardiovascular disease after 21 years' follow-up was 1.02 (compared with continuing heavy smokers), unlike the benefit seen in quitters (relative risk 0.46)",
+          "access": "full text"
+        },
+        "supporting_sources": [],
+        "confidence": "medium",
+        "caveats": "This is the key honest message for the 'cut down' screen: cutting down barely lowers heart/stroke risk (consistent with the steep-then-flat dose curve in H1 smoking-dose-chd). If you want to show numbers from the original Danish/Norwegian/Korean papers with CIs, those need to be opened separately.",
+        "user_copy": "Cutting down helps your lungs a bit, but your heart mostly benefits only when you stop completely."
+      },
+      {
+        "id": "cutting-down-and-relapse-cancer",
+        "topic": "quitting",
+        "name": "Cutting down, quitting and going back to smoking: cancer risk (Korea)",
+        "estimates": "Cancer hazards for reducers and quitters vs sustained smokers, and for people who resumed smoking vs those who stayed quit.",
+        "inputs": [
+          { "name": "cigs_per_day_history", "unit": "cigarettes/day over time", "how_we_get_it": "log (compare 2+ periods)" },
+          { "name": "relapsed_after_quit", "unit": "boolean", "how_we_get_it": "log shows cigarettes after a quit date" }
+        ],
+        "kind": "table",
+        "formula": null,
+        "coefficients": null,
+        "table": [
+          { "group": "reducer ≥50% vs sustainer", "all_cancer_ahr": 0.96, "ci_low": 0.93, "ci_high": 0.99, "lung_cancer_ahr": 0.83, "lc_ci_low": 0.77, "lc_ci_high": 0.88 },
+          { "group": "quitter vs sustainer", "all_cancer_ahr": 0.94, "ci_low": 0.92, "ci_high": 0.96, "lung_cancer_ahr": 0.79, "lc_ci_low": 0.76, "lc_ci_high": 0.83 },
+          { "group": "reducer who then quit vs sustainer", "all_cancer_ahr": 0.90, "ci_low": 0.80, "ci_high": 1.00, "lung_cancer_ahr": 0.66, "lc_ci_low": 0.52, "lc_ci_high": 0.84 },
+          { "group": "resumed smoking (even at lower level) vs stayed quit", "smoking_related_cancer_ahr": 1.19, "ci_low": 1.06, "ci_high": 1.33, "lung_cancer_ahr": 1.48, "lc_ci_low": 1.21, "lc_ci_high": 1.80 }
+        ],
+        "output_unit": "adjusted hazard ratio",
+        "valid_for": { "age": "adults in national health screening", "sex": "both", "population": "South Korea, 893,582 smokers screened 2009 and 2011 (682,996 also 2013), followed to 2018", "exposure_range": "changes over 2–4 years", "south_asian_validated": "partly: Asian (East Asian) population" },
+        "uncertainty": "95% CIs printed. Short follow-up (≤9 years) for cancer, so long-term differences may be larger.",
+        "source": {
+          "citation": "Yoo JE, Han K, Shin DW, et al. Effect of smoking reduction, cessation, and resumption on cancer risk: a nationwide cohort study. Cancer 2022;128(11):2126-2137",
+          "doi": null,
+          "pmid": null,
+          "url": "https://medbox.org/document/effect-of-smoking-reduction-cessation-and-resumption-on-cancer-risk-a-nationwide-cohort-study",
+          "where": "Abstract, Results",
+          "quote": "Smoking resumption after quitting, even at a lower level, increased the risk of smoking-related cancers (aHR, 1.19; 95% CI, 1.06-1.33) and lung cancer (aHR, 1.48; 95% CI, 1.21-1.80) in comparison with sustained quitting.",
+          "access": "abstract only"
+        },
+        "supporting_sources": [],
+        "confidence": "medium",
+        "caveats": "Answers 'does relapse reset benefits?' only partly: relapse raised cancer risk vs staying quit, but the study doesn't say risk returns fully to pre-quit level. One abstract CI looks mistyped (smoking-related cancers for reducer-then-quit printed as 0.81 (0.81–0.92)); not used here. Relapse copy must be kind: a slip is not failure, re-quitting restores benefit.",
+        "user_copy": "Slipped back? It happens. Going back to smoking raised lung cancer risk by about 1.5 times compared with staying quit — quitting again gets you back on track."
+      },
+      {
+        "id": "quitting-diabetes-risk-by-years",
+        "topic": "quitting",
+        "name": "Type 2 diabetes risk after quitting (temporary rise, then fall)",
+        "estimates": "Relative risk of type 2 diabetes in former smokers by years since quitting, vs never smokers.",
+        "inputs": [
+          { "name": "years_since_quit", "unit": "years", "how_we_get_it": "date of last cigarette" }
+        ],
+        "kind": "table",
+        "formula": null,
+        "coefficients": null,
+        "table": [
+          { "years_since_quit": "<5 (new quitters)", "relative_risk": 1.54, "ci_low": 1.36, "ci_high": 1.74 },
+          { "years_since_quit": "5–9", "relative_risk": 1.18, "ci_low": 1.07, "ci_high": 1.29 },
+          { "years_since_quit": "≥10", "relative_risk": 1.11, "ci_low": 1.02, "ci_high": 1.20 },
+          { "years_since_quit": "current smoker (for reference)", "relative_risk": 1.37, "ci_low": 1.33, "ci_high": 1.42 }
+        ],
+        "output_unit": "relative risk vs never smokers",
+        "valid_for": { "age": "adults", "sex": "both", "population": "cessation analysis: 10 prospective studies, 1,086,608 participants", "exposure_range": "former smokers", "south_asian_validated": "no" },
+        "uncertainty": "95% CIs printed. Current-smoker row from the same meta-analysis (88 studies).",
+        "source": {
+          "citation": "Pan A, Wang Y, Talaei M, Hu FB, Wu T. Relation of active, passive, and quitting smoking with incident type 2 diabetes: a systematic review and meta-analysis. Lancet Diabetes Endocrinol 2015;3(12):958-67",
+          "doi": "10.1016/S2213-8587(15)00316-2",
+          "pmid": "26388413",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/26388413/",
+          "where": "Abstract, Findings",
+          "quote": "the pooled RR from ten studies with 1 086 608 participants was 1·54 (95% CI 1·36-1·74) for new quitters (<5 years), 1·18 (1·07-1·29) for middle-term quitters (5-9 years), and 1·11 (1·02-1·20) for long-term quitters (≥10 years).",
+          "access": "abstract only"
+        },
+        "supporting_sources": [],
+        "confidence": "medium",
+        "caveats": "Important for a calorie app: the early rise is linked to weight gain after quitting. Pair with Prana's food/activity features ('watch weight in the first years after quitting') rather than scaring people off quitting. Weight-gain numbers are planned for H5.",
+        "user_copy": "Diabetes risk can rise a little in the first few years after quitting (often from weight gain), then falls. Keeping an eye on food and activity now helps."
+      }
+    ],
+    "not_found": [
+      { "wanted": "Primary source for each WHO recovery milestone (20 min, 12 h, 2–12 wk, 1–9 mo)", "reason": "WHO page cites them (e.g. Mahmud & Feely 2003; US Surgeon General reports) but I did not open each one in this pass.", "searched": ["https://www.who.int/news-room/q-a-detail/health-benefits-of-smoking-cessation"] },
+      { "wanted": "US Surgeon General 2020 report on smoking cessation (disease-by-disease cessation tables)", "reason": "Not opened in this pass.", "searched": [] },
+      { "wanted": "Lung function (FEV1) recovery after quitting, in numbers", "reason": "Not searched in this pass.", "searched": [] },
+      { "wanted": "Indian data on benefits of quitting", "reason": "Jha 2008 could not study cessation because quitting is uncommon in India and often follows illness; no Indian cessation cohort found this pass.", "searched": ["Jha 2008 NEJM"] },
+      { "wanted": "Recovery after quitting bidi / smokeless tobacco", "reason": "Not searched in this pass; oral-cancer risk reversal after quitting betel quid (Gupta R et al., Ann Glob Health 2022, cited in the H1-2 oral cancer paper) is the next source.", "searched": [] },
+      { "wanted": "Whether relapse 'resets' risk to pre-quit level", "reason": "Only Yoo 2022 (relapse vs sustained quitting) found; no source quantifies relapse vs never having quit.", "searched": ["Yoo 2022 abstract"] }
+    ],
+    "recommend": "Show first: (1) quitting-minutes-regained — a live, motivating counter from day 1, same source as H1, with the paper's own worked example as a test case. (2) quitting-recovery-timeline — the standard 'since your last cigarette' screen, cited to WHO (not the apps that copy it). (3) quitting-cvd-by-years-heavy-smokers and quitting-lung-cancer-by-years — honest curves: big drop within 5 years vs continuing, full recovery takes longer. (4) cutting-down-lung-cancer + cutting-down-cvd side by side — tells 'cutters' the truth kindly: good first step, but the heart needs a full quit. (5) cutting-down-and-relapse-cancer for relapse copy. Already in earlier files and reusable on the quit screen: oral/pharyngeal cancer halves within ~10 years (H1-2), pancreas 0.6 after 20 years (H1-2), gum disease quitters = never smokers (H1-2), dementia former smokers RR 1.01 (H1-2), INTERHEART former smokers 1.87 → 1.22 (H2)."
+  }

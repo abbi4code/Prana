@@ -224,7 +224,8 @@ export const useStore = create<State>()(
       addCustomFood: (food) =>
         set((s) => ({
           customFoods: [...s.customFoods.filter((f) => f.id !== food.id), food],
-          sync: { ...s.sync, dirtyFoods: add(s.sync.dirtyFoods, food.id) },
+          // also undoes a delete (same id): drop it from the delete queue, or the next push deletes it again
+          sync: { ...s.sync, dirtyFoods: add(s.sync.dirtyFoods, food.id), deletedFoods: drop(s.sync.deletedFoods, food.id) },
         })),
       removeCustomFood: (id) =>
         set((s) => ({
@@ -396,11 +397,11 @@ type UI = {
   clearFresh: (id: string) => void;
   showToast: (text: string, action?: Toast["action"]) => void;
   dismissToast: () => void;
-  sheet: null | { mode: "add"; meal: Meal } | { mode: "edit"; entryId: string } | { mode: "thali"; slot: Meal; thaliId?: string; prefill?: ThaliItem[] };
+  sheet: null | { mode: "add"; meal: Meal; /** open on this food's detail (e.g. "Log it" on a food news card) */ foodId?: string } | { mode: "edit"; entryId: string } | { mode: "thali"; slot: Meal; thaliId?: string; prefill?: ThaliItem[] };
   /** workout sheet (D27): pick an exercise/activity, or edit a logged one */
   gym: null | { mode: "pick"; tab: "strength" | "cardio" } | { mode: "edit"; workoutId: string };
   setDate: (d: string) => void;
-  openAdd: (meal: Meal) => void;
+  openAdd: (meal: Meal, foodId?: string) => void;
   openEdit: (entryId: string) => void;
   openThali: (opts: { slot: Meal; thaliId?: string; prefill?: ThaliItem[] }) => void;
   close: () => void;
@@ -438,7 +439,7 @@ export const useUI = create<UI>((set) => ({
   dismissToast: () => set({ toast: null }),
   sheet: null,
   setDate: (date) => set({ date }),
-  openAdd: (meal) => set({ sheet: { mode: "add", meal } }),
+  openAdd: (meal, foodId) => set({ sheet: { mode: "add", meal, ...(foodId ? { foodId } : {}) } }),
   openEdit: (entryId) => set({ sheet: { mode: "edit", entryId } }),
   openThali: (opts) => set({ sheet: { mode: "thali", ...opts } }),
   close: () => set({ sheet: null }),

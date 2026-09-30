@@ -1,0 +1,418 @@
+{
+    "batch": "H4",
+    "theme": "Alcohol, dose → harm (grams of ethanol per week / day)",
+    "generated_on": "2026-09-30",
+    "models": [
+      {
+        "id": "alcohol-standard-drink-and-binge",
+        "topic": "alcohol",
+        "name": "Standard drink size and heavy-episodic (binge) drinking definition",
+        "estimates": "Grams per standard drink (WHO) and the WHO threshold for a heavy-episodic ('binge') drinking occasion.",
+        "inputs": [
+          { "name": "grams_per_occasion", "unit": "g ethanol", "how_we_get_it": "existing alcohol log, per occasion" }
+        ],
+        "kind": "threshold",
+        "formula": "is_heavy_episode = grams_per_occasion >= 60; standard_drinks = grams / 10",
+        "coefficients": {
+          "grams_per_standard_drink_WHO": { "value": 10, "ci_low": null, "ci_high": null, "unit": "g ethanol" },
+          "heavy_episode_threshold": { "value": 60, "ci_low": null, "ci_high": null, "unit": "g ethanol on one occasion" }
+        },
+        "table": null,
+        "output_unit": "boolean / standard drinks",
+        "valid_for": { "age": "15+", "sex": "both", "population": "WHO global monitoring definition", "exposure_range": "any", "south_asian_validated": "no (definitional)" },
+        "uncertainty": "Definitions, not risk estimates.",
+        "source": {
+          "citation": "World Health Organization. Global Health Observatory indicator: Alcohol, heavy episodic drinking (drinkers only) past 30 days",
+          "doi": null,
+          "pmid": null,
+          "url": "https://www.who.int/data/gho/data/indicators/indicator-details/GHO/heavy-episodic-drinking-(youth-15--19-years)-drinkers-only-past-30-days-(-)",
+          "where": "Definition and Denominator sections",
+          "quote": "A consumption of 60 grams of pure alcohol corresponds approximately to 6 standard alcoholic drinks.",
+          "access": "full text"
+        },
+        "supporting_sources": [
+          { "citation": "AUDIT scoring guidance (auditscreen.org, run by AUDIT developers)", "url": "https://auditscreen.org/about/scoring-audit/", "agrees": "partly", "note": "In the original WHO AUDIT study, 'a drink' ranged from 8 to 13 g; if a country's standard drink is outside that range the AUDIT answer options should be adjusted." }
+        ],
+        "confidence": "high",
+        "caveats": "No official Indian standard drink was found (see not_found). Log grams, not 'drinks': for Indian pours compute grams = volume_ml × ABV% / 100 × ethanol density; the density constant (~0.79 g/ml) is a physical constant I have not attached a source for — add your preferred reference. Many papers below use 12 g or 12.5 g drinks; each model states its own drink size.",
+        "user_copy": "That session was about {g} g of alcohol (≈{n} standard drinks). WHO counts 60 g or more in one sitting as heavy drinking."
+      },
+      {
+        "id": "alcohol-allcause-life-expectancy",
+        "topic": "alcohol",
+        "name": "Life expectancy lost by grams per week",
+        "estimates": "Lower life expectancy at age 40 for current drinkers at higher weekly intake, vs those drinking >0–100 g/week.",
+        "inputs": [
+          { "name": "grams_per_week", "unit": "g ethanol/week", "how_we_get_it": "alcohol log, 4–8 week average" }
+        ],
+        "kind": "table",
+        "formula": null,
+        "coefficients": null,
+        "table": [
+          { "band_g_per_week": ">0–100", "life_expectancy_lost_at_40_years": 0, "note": "reference; lowest all-cause mortality around or below 100 g/week" },
+          { "band_g_per_week": ">100–200", "life_expectancy_lost_at_40_years": 0.5, "range": "approximately 6 months" },
+          { "band_g_per_week": ">200–350", "life_expectancy_lost_at_40_years_low": 1, "life_expectancy_lost_at_40_years_high": 2 },
+          { "band_g_per_week": ">350", "life_expectancy_lost_at_40_years_low": 4, "life_expectancy_lost_at_40_years_high": 5 }
+        ],
+        "output_unit": "years of life expectancy at age 40",
+        "valid_for": { "age": "estimated at age 40", "sex": "both", "population": "599,912 current drinkers without CVD, 83 prospective studies, 19 high-income countries (ERFC, EPIC-CVD, UK Biobank)", "exposure_range": "current drinkers; non-drinkers excluded as reference", "south_asian_validated": "no" },
+        "uncertainty": "Printed as approximate ranges without CIs in the abstract. Reference group is light drinkers (not non-drinkers), which avoids 'sick quitter' bias but cannot say anything about 0 vs light drinking.",
+        "source": {
+          "citation": "Wood AM, Kaptoge S, Butterworth AS, et al. Risk thresholds for alcohol consumption: combined analysis of individual-participant data for 599 912 current drinkers in 83 prospective studies. Lancet 2018;391(10129):1513-23",
+          "doi": "10.1016/S0140-6736(18)30134-X",
+          "pmid": "29676281",
+          "url": "https://mediatum.ub.tum.de/doc/1531260/document.pdf",
+          "where": "Summary (Findings, Interpretation)",
+          "quote": "those who reported drinking >100–≤200 g per week, >200–≤350 g per week, or >350 g per week had lower life expectancy at age 40 years of approximately 6 months, 1–2 years, or 4–5 years, respectively.",
+          "access": "full text"
+        },
+        "supporting_sources": [],
+        "confidence": "high",
+        "caveats": "High-income countries only; Indian drinking is more concentrated in fewer, heavier occasions (not modelled here). Show the band the user falls in, not a precise number.",
+        "user_copy": "At about {g} g of alcohol a week, people aged 40 lost on average about {years} of life expectancy compared with those drinking under 100 g a week."
+      },
+      {
+        "id": "alcohol-dose-cvd-subtypes",
+        "topic": "alcohol",
+        "name": "Stroke, heart failure, hypertensive disease, aortic aneurysm per 100 g/week",
+        "estimates": "Hazard ratio per extra 100 g/week of alcohol for cardiovascular subtypes in current drinkers.",
+        "inputs": [
+          { "name": "grams_per_week", "unit": "g ethanol/week", "how_we_get_it": "alcohol log, 4–8 week average" }
+        ],
+        "kind": "formula",
+        "formula": "hr_vs_zero_g = coef ^ (grams_per_week / 100)",
+        "coefficients": {
+          "stroke": { "value": 1.14, "ci_low": 1.10, "ci_high": 1.17, "unit": "HR per +100 g/week" },
+          "coronary_disease_excluding_MI": { "value": 1.06, "ci_low": 1.00, "ci_high": 1.11, "unit": "HR per +100 g/week" },
+          "heart_failure": { "value": 1.09, "ci_low": 1.03, "ci_high": 1.15, "unit": "HR per +100 g/week" },
+          "fatal_hypertensive_disease": { "value": 1.24, "ci_low": 1.15, "ci_high": 1.33, "unit": "HR per +100 g/week" },
+          "fatal_aortic_aneurysm": { "value": 1.15, "ci_low": 1.03, "ci_high": 1.28, "unit": "HR per +100 g/week" },
+          "myocardial_infarction": { "value": 0.94, "ci_low": 0.91, "ci_high": 0.97, "unit": "HR per +100 g/week (log-linear, lower)" }
+        },
+        "table": null,
+        "output_unit": "hazard ratio",
+        "valid_for": { "age": "adults (mostly middle-aged)", "sex": "both", "population": "current drinkers without baseline CVD, 19 high-income countries", "exposure_range": "range of current drinkers in the cohorts (100 g/week = 12.5 UK units)", "south_asian_validated": "no" },
+        "uncertainty": "95% CIs printed. The paper describes these as roughly linear; applying per-100 g HR as a power is our algebra on the published per-unit estimate.",
+        "source": {
+          "citation": "Wood AM et al. Lancet 2018;391:1513-23",
+          "doi": "10.1016/S0140-6736(18)30134-X",
+          "pmid": "29676281",
+          "url": "https://www.research.ed.ac.uk/en/publications/risk-thresholds-for-alcohol-consumption-combined-analysis-of-indi/",
+          "where": "Abstract, Findings",
+          "quote": "Alcohol consumption was roughly linearly associated with a higher risk of stroke (HR per 100 g per week higher consumption 1·14, 95% CI, 1·10–1·17)",
+          "access": "abstract only"
+        },
+        "supporting_sources": [],
+        "confidence": "high",
+        "caveats": "Do NOT show the MI row as a 'benefit' of drinking: the authors say it is outweighed by the other outcomes, and the lowest all-cause risk was at ≤100 g/week. Show stroke, heart failure and blood-pressure deaths only.",
+        "user_copy": "Every extra 100 g of alcohol a week (about 10 standard drinks) is linked to about 14% higher stroke risk (range 10–17%)."
+      },
+      {
+        "id": "alcohol-lowest-risk-level-gbd",
+        "topic": "alcohol",
+        "name": "Lowest-risk amount of alcohol by age (GBD 2020)",
+        "estimates": "Theoretical minimum risk exposure level (TMREL) and non-drinker-equivalent level by age group.",
+        "inputs": [
+          { "name": "age", "unit": "years", "how_we_get_it": "profile" },
+          { "name": "grams_per_day", "unit": "g ethanol/day", "how_we_get_it": "alcohol log" }
+        ],
+        "kind": "table",
+        "formula": null,
+        "coefficients": null,
+        "table": [
+          { "age_group": "15–39", "tmrel_standard_drinks_per_day_min": 0, "tmrel_ci": "0–0", "tmrel_standard_drinks_per_day_max": 0.603, "tmrel_max_ci": "0.400–1.00", "nde_min": 0.002, "nde_max": 1.75 },
+          { "age_group": "40+", "tmrel_standard_drinks_per_day_min": 0.114, "tmrel_ci": "0–0.403", "tmrel_standard_drinks_per_day_max": 1.87, "tmrel_max_ci": "0.500–3.30", "nde_min": 0.193, "nde_max": 6.94 }
+        ],
+        "output_unit": "standard drinks per day (range across 21 world regions)",
+        "valid_for": { "age": "15–95+", "sex": "both", "population": "204 countries, GBD 2020", "exposure_range": "0 to high intake", "south_asian_validated": "partly: South Asia is one of the 21 regions; the region-specific value is in the full paper (not opened)" },
+        "uncertainty": "95% uncertainty intervals printed. Values are ranges across regions, not a single number.",
+        "source": {
+          "citation": "GBD 2020 Alcohol Collaborators. Population-level risks of alcohol consumption by amount, geography, age, sex, and year: a systematic analysis for the Global Burden of Disease Study 2020. Lancet 2022;400(10347):185-235",
+          "doi": "10.1016/S0140-6736(22)00847-9",
+          "pmid": null,
+          "url": "https://trepo.tuni.fi/handle/10024/207885",
+          "where": "Abstract, Findings",
+          "quote": "Among individuals aged 15–39 years in 2020, the TMREL varied between 0 (95% uncertainty interval 0–0) and 0·603 (0·400–1·00) standard drinks per day",
+          "access": "abstract only"
+        },
+        "supporting_sources": [],
+        "confidence": "medium",
+        "caveats": "GBD's standard drink size (believed to be 10 g) was not visible in the abstract — confirm before converting to grams. Key message for Prana's young users: for 15–39-year-olds the lowest-risk level is at or near zero. Also: 59% of people drinking harmful amounts in 2020 were aged 15–39 (same abstract).",
+        "user_copy": "For people under 40, the lowest-risk amount of alcohol is close to zero; any amount adds some risk."
+      },
+      {
+        "id": "alcohol-bp-cutting-down",
+        "topic": "alcohol",
+        "name": "Blood pressure drop when cutting down",
+        "estimates": "Change in systolic/diastolic blood pressure when heavy drinkers cut their intake by about half.",
+        "inputs": [
+          { "name": "baseline_drinks_per_day", "unit": "drinks/day (12 g each)", "how_we_get_it": "grams_per_day / 12 from log" },
+          { "name": "reduction_percent", "unit": "%", "how_we_get_it": "log: current vs baseline" }
+        ],
+        "kind": "table",
+        "formula": null,
+        "coefficients": null,
+        "table": [
+          { "baseline": "≤2 drinks/day (≤24 g/day)", "sbp_change_mmHg": "not significant", "dbp_change_mmHg": "not significant" },
+          { "baseline": "≥6 drinks/day (≥72 g/day), cut by ~50%", "sbp_change_mmHg": -5.50, "sbp_ci_low": -6.70, "sbp_ci_high": -4.30, "dbp_change_mmHg": -3.97, "dbp_ci_low": -4.70, "dbp_ci_high": -3.25 }
+        ],
+        "output_unit": "mm Hg",
+        "valid_for": { "age": "adults", "sex": "mostly men (2464 men, 401 women)", "population": "36 trials, 2865 participants", "exposure_range": "baseline >2 drinks/day for a benefit; 1 drink = 12 g", "south_asian_validated": "no" },
+        "uncertainty": "95% CIs printed. Intermediate bands (3–5 drinks/day) are in the full text (not opened).",
+        "source": {
+          "citation": "Roerecke M, Kaczorowski J, Tobe SW, Gmel G, Hasan OSM, Rehm J. The effect of a reduction in alcohol consumption on blood pressure: a systematic review and meta-analysis. Lancet Public Health 2017;2(2):e108-e120",
+          "doi": "10.1016/S2468-2667(17)30003-8",
+          "pmid": "29253389",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6118407",
+          "where": "Abstract, Findings",
+          "quote": "Reduction in systolic blood pressure (mean difference −5·50 mm Hg, 95% CI −6·70 to −4·30) and diastolic blood pressure (−3·97, −4·70 to −3·25) was strongest in participants who drank six or more drinks per day if they reduced their intake by about 50%.",
+          "access": "abstract only"
+        },
+        "supporting_sources": [],
+        "confidence": "high",
+        "caveats": "Home BP input is optional; this model needs only the alcohol log. Don't promise BP drops for light drinkers — the paper found none.",
+        "user_copy": "Heavy drinkers who halved their intake saw blood pressure fall by about 5.5/4 mmHg (range 4–7 top number)."
+      },
+      {
+        "id": "alcohol-dose-atrial-fibrillation",
+        "topic": "alcohol",
+        "name": "Atrial fibrillation per extra drink a day",
+        "estimates": "Relative risk of atrial fibrillation per 1 drink/day increase.",
+        "inputs": [
+          { "name": "drinks_per_day", "unit": "drinks/day", "how_we_get_it": "grams_per_day / drink size from log" },
+          { "name": "sex", "unit": "men | women", "how_we_get_it": "profile" }
+        ],
+        "kind": "formula",
+        "formula": "rr_vs_zero = 1.06 ^ drinks_per_day",
+        "coefficients": {
+          "rr_per_drink_day_overall": { "value": 1.06, "ci_low": 1.03, "ci_high": 1.08, "unit": "RR per +1 drink/day" },
+          "rr_per_drink_day_men": { "value": 1.08, "ci_low": 1.05, "ci_high": 1.11, "unit": "RR per +1 drink/day" },
+          "rr_per_drink_day_women": { "value": 1.05, "ci_low": 0.96, "ci_high": 1.14, "unit": "RR per +1 drink/day (not significant)" }
+        },
+        "table": null,
+        "output_unit": "relative risk",
+        "valid_for": { "age": "adults", "sex": "both", "population": "updated dose-response meta-analysis, >10 million participants, prospective studies to June 2022", "exposure_range": "typical drinking range of included cohorts", "south_asian_validated": "no" },
+        "uncertainty": "95% CIs printed; moderate heterogeneity (I² 64%).",
+        "source": {
+          "citation": "Jiang H, Mei X, Jiang Y, et al. Alcohol consumption and atrial fibrillation risk: an updated dose-response meta-analysis of over 10 million participants. Front Cardiovasc Med 2022;9:979982",
+          "doi": "10.3389/fcvm.2022.979982",
+          "pmid": null,
+          "url": "https://www.frontiersin.org/journals/cardiovascular-medicine/articles/10.3389/fcvm.2022.979982/full",
+          "where": "Results, 'Alcohol consumption and atrial fibrillation risk'",
+          "quote": "The overall meta-analysis showed that a 1 drink/day increase in alcohol consumption increased the risk of AF by 6% (RR: 1.06; 95% CI: 1.03–1.08)",
+          "access": "full text"
+        },
+        "supporting_sources": [
+          { "citation": "Larsson SC, Drca N, Wolk A. Alcohol consumption and risk of atrial fibrillation: a prospective study and dose-response meta-analysis. J Am Coll Cardiol 2014;64:281-9", "url": "https://www.acc.org/Latest-in-Cardiology/Journal-Scans/2014/10/31/17/28/Alcohol-Consumption-and-Risk-of-Atrial-Fibrillation", "agrees": "yes", "note": "About 8% higher AF risk per drink/day (7 studies); read via ACC journal-scan summary, original not opened." }
+        ],
+        "confidence": "medium",
+        "caveats": "Drink size (grams) used by Jiang 2022 was not visible in the section read — confirm before converting from grams (likely 10–14 g depending on source studies).",
+        "user_copy": "Each extra drink a day is linked to about 6% higher risk of an irregular heartbeat (AF) (range 3–8%)."
+      },
+      {
+        "id": "alcohol-dose-cancers",
+        "topic": "alcohol",
+        "name": "Cancer risk in heavy drinkers (>50 g/day) by site",
+        "estimates": "Relative risk of site-specific cancers for heavy drinkers vs non-/occasional drinkers.",
+        "inputs": [
+          { "name": "grams_per_day", "unit": "g ethanol/day", "how_we_get_it": "alcohol log, 4–8 week average" }
+        ],
+        "kind": "table",
+        "formula": null,
+        "coefficients": null,
+        "table": [
+          { "site": "oral cavity and pharynx", "rr_heavy": 5.13 },
+          { "site": "oesophageal squamous cell carcinoma", "rr_heavy": 4.95 },
+          { "site": "larynx", "rr_heavy": 2.65 },
+          { "site": "gallbladder", "rr_heavy": 2.64 },
+          { "site": "liver", "rr_heavy": 2.07 },
+          { "site": "breast (women)", "rr_heavy": 1.61 },
+          { "site": "colorectum", "rr_heavy": 1.44 },
+          { "site": "stomach", "rr_heavy": 1.21 },
+          { "site": "pancreas", "rr_heavy": 1.19 },
+          { "site": "lung", "rr_heavy": 1.15 }
+        ],
+        "output_unit": "relative risk vs non-drinkers/occasional drinkers (CIs not in abstract)",
+        "valid_for": { "age": "adults", "sex": "both (breast: women)", "population": "572 studies, 486,538 cancer cases, worldwide", "exposure_range": "heavy drinking = >50 g/day (light ≤12.5, moderate ≤50 g/day per paper's definitions)", "south_asian_validated": "no" },
+        "uncertainty": "CIs and light/moderate rows are in Table 2 of the full text, which I could not open (PMC blocked). A secondary summary shows oral/pharynx light 1.13 and moderate 1.83, oesophagus 1.26 / 2.23 — not used until verified.",
+        "source": {
+          "citation": "Bagnardi V, Rota M, Botteri E, et al. Alcohol consumption and site-specific cancer risk: a comprehensive dose-response meta-analysis. Br J Cancer 2015;112(3):580-93",
+          "doi": "10.1038/bjc.2014.579",
+          "pmid": "25422909",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4453639/",
+          "where": "Abstract, Results",
+          "quote": "Relative risks (RRs) for heavy drinkers compared with nondrinkers and occasional drinkers were 5.13 for oral and pharyngeal cancer, 4.95 for oesophageal squamous cell carcinoma, 1.44 for colorectal, 2.65 for laryngeal and 1.61 for breast cancer",
+          "access": "abstract only"
+        },
+        "supporting_sources": [
+          { "citation": "Bagnardi V et al. Light alcohol drinking and cancer: a meta-analysis. Ann Oncol 2013;24(2):301-8", "url": "https://research.uniupo.it/en/publications/light-alcohol-drinking-and-cancer-a-meta-analysis/", "agrees": "yes", "note": "Even light drinking (≤12.5 g/day, ≤1 drink) increases risk of oral/pharyngeal, oesophageal and female breast cancer." }
+        ],
+        "confidence": "medium",
+        "caveats": "Heavy-only rows are the safe subset until the full-text table is pulled. For India, alcohol + tobacco together multiply mouth/throat risk (H5).",
+        "user_copy": "Drinking more than about 50 g a day is linked to about 5 times the risk of mouth and throat cancer and about 2 times the risk of liver cancer."
+      },
+      {
+        "id": "alcohol-dose-breast-cancer",
+        "topic": "alcohol",
+        "name": "Breast cancer per 10 g/day (women)",
+        "estimates": "Relative increase in breast cancer risk per additional 10 g alcohol/day.",
+        "inputs": [
+          { "name": "grams_per_day", "unit": "g ethanol/day", "how_we_get_it": "alcohol log, 4–8 week average" },
+          { "name": "sex", "unit": "women", "how_we_get_it": "profile; show only to women" }
+        ],
+        "kind": "formula",
+        "formula": "rr_vs_zero = 1.071 ^ (grams_per_day / 10)",
+        "coefficients": {
+          "increase_per_10g_day": { "value": 7.1, "ci_low": 5.5, "ci_high": 8.7, "unit": "% increase in RR per +10 g/day" }
+        },
+        "table": [
+          { "intake_g_per_day": "35–44", "relative_risk": 1.32, "ci_low": 1.19, "ci_high": 1.45 },
+          { "intake_g_per_day": "≥45", "relative_risk": 1.46, "ci_low": 1.33, "ci_high": 1.61 }
+        ],
+        "output_unit": "relative risk vs non-drinkers",
+        "valid_for": { "age": "adult women", "sex": "women", "population": "53 studies, 58,515 cases and 95,067 controls (individual data)", "exposure_range": "0 to ≥45 g/day", "south_asian_validated": "no" },
+        "uncertainty": "95% CIs printed. Converting '7.1% per 10 g/day' into a power is our algebra; it reproduces the printed ≥45 g/day RR closely (1.071^5.7 ≈ 1.48 vs 1.46).",
+        "source": {
+          "citation": "Collaborative Group on Hormonal Factors in Breast Cancer (Hamajima N et al.). Alcohol, tobacco and breast cancer – collaborative reanalysis of individual data from 53 epidemiological studies. Br J Cancer 2002;87(11):1234-45",
+          "doi": "10.1038/sj.bjc.6600596",
+          "pmid": "12439712",
+          "url": "https://cris.maastrichtuniversity.nl/en/publications/alcohol-tobacco-and-breast-cancer-collaborative-reanalysis-of-ind/",
+          "where": "Abstract",
+          "quote": "The relative risk of breast cancer increased by 7.1% (95% CI 5.5-8.7%; P<0.00001) for each additional 10 g per day intake of alcohol, i.e. for each extra unit or drink of alcohol consumed on a daily basis.",
+          "access": "abstract only"
+        },
+        "supporting_sources": [
+          { "citation": "Bagnardi V et al. Br J Cancer 2015", "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4453639/", "agrees": "yes", "note": "Heavy drinkers (>50 g/day) RR 1.61 for breast cancer." }
+        ],
+        "confidence": "high",
+        "caveats": "Relative risk only; absolute breast cancer risk in Indian women differs from the Western cohorts. Show as '+x% vs not drinking'.",
+        "user_copy": "Each extra 10 g of alcohol a day (about one drink) is linked to about 7% higher breast cancer risk (range 5.5–8.7%)."
+      },
+      {
+        "id": "alcohol-dose-liver-cirrhosis",
+        "topic": "alcohol",
+        "name": "Liver cirrhosis by drinks per day and sex",
+        "estimates": "Relative risk of liver cirrhosis for heavy daily drinking vs long-term abstainers, by sex.",
+        "inputs": [
+          { "name": "drinks_per_day", "unit": "drinks/day", "how_we_get_it": "grams_per_day / drink size" },
+          { "name": "sex", "unit": "men | women", "how_we_get_it": "profile" }
+        ],
+        "kind": "table",
+        "formula": null,
+        "coefficients": null,
+        "table": [
+          { "sex": "women", "band": "1 drink/day", "relative_risk": null, "note": "increased vs long-term abstainers (value in full text)" },
+          { "sex": "men", "band": "1 drink/day", "relative_risk": null, "note": "not increased" },
+          { "sex": "women", "band": "5–6 drinks/day", "relative_risk": 12.44, "ci_low": 6.65, "ci_high": 23.27 },
+          { "sex": "women", "band": "≥7 drinks/day", "relative_risk": 24.58, "ci_low": 14.77, "ci_high": 40.90 },
+          { "sex": "men", "band": "5–6 drinks/day", "relative_risk": 3.80, "ci_low": 0.85, "ci_high": 17.02 },
+          { "sex": "men", "band": "≥7 drinks/day", "relative_risk": 6.93, "ci_low": 1.07, "ci_high": 44.99 }
+        ],
+        "output_unit": "relative risk vs long-term abstainers",
+        "valid_for": { "age": "adults", "sex": "both", "population": "7 cohort + 2 case-control studies, 2,629,272 participants, 5,505 cirrhosis cases", "exposure_range": "occasional to ≥7 drinks/day", "south_asian_validated": "no" },
+        "uncertainty": "95% CIs printed and very wide for men. Heterogeneity suggests other risk factors (hepatitis, weight, genetics) matter a lot.",
+        "source": {
+          "citation": "Roerecke M, Vafaei A, Hasan OSM, et al. Alcohol consumption and risk of liver cirrhosis: a systematic review and meta-analysis. Am J Gastroenterol 2019;114(10):1574-86",
+          "doi": "10.14309/ajg.0000000000000340",
+          "pmid": "31464740",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/31464740/",
+          "where": "Abstract, Results",
+          "quote": "Drinking ≥5 drinks per day was associated with a substantially increased risk in both women (relative risk [RR] = 12.44, 95% confidence interval [CI]: 6.65-23.27 for 5-6 drinks, and RR = 24.58, 95% CI: 14.77-40.90 for ≥7 drinks)",
+          "access": "abstract only"
+        },
+        "supporting_sources": [
+          { "citation": "Rehm J et al. Alcohol as a risk factor for liver cirrhosis: a systematic review and meta-analysis. Drug Alcohol Rev 2010;29(4):437-45", "url": "https://pubmed.ncbi.nlm.nih.gov/20636661/", "agrees": "yes", "note": "Same amount of alcohol carried higher cirrhosis risk in women; mortality endpoints showed stronger effects than morbidity." }
+        ],
+        "confidence": "medium",
+        "caveats": "Drink size in grams not visible in the abstract (the Rehm group commonly uses 12 g) — confirm in full text (PMC6776700) before mapping grams. Fatty-liver and 'how fast the liver recovers after stopping' were not found this pass.",
+        "user_copy": "At 5 or more drinks a day, liver cirrhosis risk rises steeply — for women about 12 times higher (range 7–23)."
+      },
+      {
+        "id": "alcohol-audit-screening",
+        "topic": "alcohol",
+        "name": "AUDIT screening score and zones (WHO), with Indian validation",
+        "estimates": "Risk zone from the 10-item WHO AUDIT questionnaire, with lower cut-offs suggested for Indian men.",
+        "inputs": [
+          { "name": "audit_answers", "unit": "10 items scored 0–4 (items 9–10 scored 0/2/4)", "how_we_get_it": "one-time in-app questionnaire, repeat monthly" }
+        ],
+        "kind": "score",
+        "formula": "audit_total = sum(items 1..10); zone = total<8 ? 'I' : total<=15 ? 'II' : total<=19 ? 'III' : 'IV'",
+        "coefficients": {
+          "hazardous_cutoff_WHO": { "value": 8, "ci_low": null, "ci_high": null, "unit": "points" },
+          "dependence_evaluation_cutoff_WHO": { "value": 20, "ci_low": null, "ci_high": null, "unit": "points" }
+        },
+        "table": [
+          { "score": "0–7", "zone": "I", "meaning": "lower risk" },
+          { "score": "8–15", "zone": "II", "meaning": "simple advice focused on reducing hazardous drinking" },
+          { "score": "16–19", "zone": "III", "meaning": "brief counselling and continued monitoring" },
+          { "score": "20–40", "zone": "IV", "meaning": "warrants further evaluation for dependence" },
+          { "score": "India (Goa men): 6–12", "zone": "suggested local cut-off", "meaning": "detected alcohol abuse" },
+          { "score": "India (Goa men): ≥13", "zone": "suggested local cut-off", "meaning": "detected alcohol dependence" }
+        ],
+        "output_unit": "score 0–40 and zone",
+        "valid_for": { "age": "adults", "sex": "both (Indian cut-offs: men only)", "population": "WHO: primary care in 6 countries; India: community men in Goa", "exposure_range": "past-year drinkers", "south_asian_validated": "partly: Goa study found optimal cut-offs lower than WHO's; a Delhi study (Pal 2004) found 24 better for dependence in a de-addiction clinic sample" },
+        "uncertainty": "Screening tool; not a diagnosis. In the original WHO study 92% of hazardous/harmful drinkers scored ≥8 and 94% of non-hazardous drinkers scored <8.",
+        "source": {
+          "citation": "Babor TF, Higgins-Biddle JC, Saunders JB, Monteiro MG. AUDIT: The Alcohol Use Disorders Identification Test. Guidelines for Use in Primary Care, 2nd ed. World Health Organization; 2001 (WHO/MSD/MSB/01.6a)",
+          "doi": null,
+          "pmid": null,
+          "url": "https://authorizations.bcbsm.com/docs/bh-tool-audit.pdf",
+          "where": "'Scoring and Interpretation' (p.19–20); read via a hosted copy of the manual because the WHO PDF blocked automated access",
+          "quote": "It was found that AUDIT scores in the range of 8-15 represented a medium level of alcohol problems whereas scores of 16 and above represented a high level of alcohol problems",
+          "access": "full text"
+        },
+        "supporting_sources": [
+          { "citation": "Endsley P, Weobong B, Nadkarni A. Psychometric properties of the AUDIT among men in Goa, India. Asian J Psychiatry 2017;29:54-58", "url": "https://researchonline.lshtm.ac.uk/4574654/", "agrees": "partly", "note": "Optimal cut-offs were lower than WHO's: 6–12 for alcohol abuse, ≥13 for dependence." },
+          { "citation": "Nayak MB, Bond JC, Cherpitel C, Patel V, Greenfield TK. Detecting alcohol-related problems in developing countries: a comparison of 2 screening measures in India. Alcohol Clin Exp Res 2009;33(12):2057-66", "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2789891", "agrees": "partly", "note": "In 743 Goa male drinkers, full AUDIT outperformed AUDIT-C; lowered AUDIT thresholds suggested (AUDIT-C cut-offs in full text, not seen)." }
+        ],
+        "confidence": "high",
+        "caveats": "AUDIT-C (3-item) cut-offs for India were not visible in the abstracts read; the full 10-item AUDIT is better validated in India. Questions 2–3 assume a drink of 8–13 g — map Indian pours (e.g. a 60 ml 'large peg' of 42.8% spirit is roughly 2 WHO drinks) using the grams conversion. Copy must be non-judgemental and include a helpline link for zone IV.",
+        "user_copy": "Your AUDIT score is {score} ({zone_text}). This is a screening check, not a diagnosis."
+      },
+      {
+        "id": "alcohol-calories",
+        "topic": "alcohol",
+        "name": "Calories from alcohol",
+        "estimates": "Energy from the ethanol in a drink (excluding sugar/mixers).",
+        "inputs": [
+          { "name": "grams_ethanol", "unit": "g", "how_we_get_it": "alcohol log" }
+        ],
+        "kind": "formula",
+        "formula": "kcal_from_ethanol = grams_ethanol * 7",
+        "coefficients": {
+          "kcal_per_g_ethanol": { "value": 7, "ci_low": null, "ci_high": null, "unit": "kcal/g (29 kJ/g)" }
+        },
+        "table": null,
+        "output_unit": "kcal",
+        "valid_for": { "age": "any", "sex": "both", "population": "standard food-composition energy factor", "exposure_range": "any", "south_asian_validated": "yes (universal conversion factor)" },
+        "uncertainty": "Standard conversion factor; mixers and residual sugar (beer, cocktails, sweet wine) add extra calories not captured here.",
+        "source": {
+          "citation": "IEO Food Composition Database for Epidemiological Studies in Italy (BDA), energy conversion factors, citing Greenfield & Southgate, FAO 2003",
+          "doi": null,
+          "pmid": null,
+          "url": "https://bda.ieo.it/?p=43",
+          "where": "'Energy' section, conversion factors",
+          "quote": "1 g alcohol – 7 kcal",
+          "access": "full text"
+        },
+        "supporting_sources": [
+          { "citation": "FAO. Food energy – methods of analysis and conversion factors (FAO Food and Nutrition Paper 77), 2003", "url": "https://www.fao.org/3/y5022e/y5022e05.htm", "agrees": "partly", "note": "FAO chapter on conversion factors opened; the alcohol line itself was not in the excerpt read. Use as the formal citation once confirmed." }
+        ],
+        "confidence": "high",
+        "caveats": "Directly useful for Prana: add ethanol kcal to the daily calorie total automatically. A 60 ml peg of 42.8% whisky ≈ 20 g ethanol ≈ 140 kcal (our arithmetic).",
+        "user_copy": "The alcohol in that drink added about {kcal} kcal to your day (plus any mixer)."
+      }
+    ],
+    "not_found": [
+      { "wanted": "Official Indian standard drink size", "reason": "No MoHFW/FSSAI/ICMR definition found in this pass; Indian surveys use 'pegs' of varying size. Use grams.", "searched": ["web search"] },
+      { "wanted": "Light and moderate band RRs with CIs (Bagnardi 2015 Table 2)", "reason": "PMC full text blocked by captcha; only a blog reproduced the table (not allowed).", "searched": ["https://pmc.ncbi.nlm.nih.gov/articles/PMC4453639/"] },
+      { "wanted": "South Asia region TMREL (GBD 2020)", "reason": "Only abstract ranges read; region-specific values are in the 5 MB full text.", "searched": ["https://trepo.tuni.fi/handle/10024/207885"] },
+      { "wanted": "WHO Europe 'no safe level' statement (Lancet Public Health 2023)", "reason": "Not opened in this pass; it is a position statement, not a model.", "searched": [] },
+      { "wanted": "Fatty liver / liver enzymes recovery after stopping", "reason": "Not searched in this pass.", "searched": [] },
+      { "wanted": "Alcohol and sleep quality (dose-response)", "reason": "Not searched in this pass.", "searched": [] },
+      { "wanted": "AUDIT-C cut-offs validated in India", "reason": "Nayak 2009 compared AUDIT-C but its cut-offs were not in the abstract; full text not opened.", "searched": ["PMC2789891 abstract"] },
+      { "wanted": "Mouth/throat, oesophagus per-10 g/day slopes", "reason": "Only heavy vs non RRs available from abstracts read.", "searched": ["Bagnardi 2015 abstract"] },
+      { "wanted": "IARC Handbook vol. 20A (alcohol reduction and cancer, 2023)", "reason": "Not opened in this pass.", "searched": [] }
+    ],
+    "recommend": "Show first: (1) alcohol-calories — instant, uncontroversial, fits Prana's calorie tracker (auto-add ethanol kcal). (2) alcohol-standard-drink-and-binge — log in grams and flag ≥60 g occasions, the pattern that matters most for Indian drinking. (3) alcohol-allcause-life-expectancy with alcohol-lowest-risk-level-gbd — clear weekly-grams bands plus the 'near zero for under-40s' message for a young user base. (4) alcohol-dose-cvd-subtypes (stroke row) and alcohol-bp-cutting-down — per-100 g formula and a tangible payoff from cutting down. (5) alcohol-audit-screening for an optional monthly check, using the lower Goa cut-offs as a softer nudge. Before release: confirm drink sizes in grams for the AF and cirrhosis papers, and pull Bagnardi Table 2 for light/moderate cancer bands."
+  }

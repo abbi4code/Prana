@@ -1,0 +1,718 @@
+{
+    "batch": "H1",
+    "theme": "Cigarettes, dose → harm (part 2 of 2): other cancers, sexual & reproductive health, eyes, teeth, bones, skin, brain",
+    "generated_on": "2026-09-30",
+    "models": [
+      {
+        "id": "smoking-dose-oral-pharyngeal-cancer",
+        "topic": "smoking",
+        "name": "Mouth and throat (oral cavity + pharynx) cancer by cigarettes/day",
+        "estimates": "Relative risk of oral and pharyngeal cancer vs never smokers by cigarettes/day, plus fall in risk after quitting (vs continuing).",
+        "inputs": [
+          { "name": "cigs_per_day", "unit": "cigarettes/day", "how_we_get_it": "daily log, 30-day average" },
+          { "name": "years_since_quit", "unit": "years", "how_we_get_it": "date of last cigarette (former smokers only)" }
+        ],
+        "kind": "curve",
+        "formula": null,
+        "coefficients": null,
+        "table": [
+          { "band": "never smoker", "relative_risk": 1.0, "ci_low": null, "ci_high": null },
+          { "band": "6 cigarettes/day (spline point)", "relative_risk": 1.98, "ci_low": 1.74, "ci_high": 2.25 },
+          { "band": "10 cigarettes/day (spline point)", "relative_risk": 2.88, "ci_low": 2.37, "ci_high": 3.50 },
+          { "band": "20 cigarettes/day (spline point)", "relative_risk": 4.78, "ci_low": 3.64, "ci_high": 6.27 },
+          { "band": "current smoker, any amount", "relative_risk": 3.58, "ci_low": 3.03, "ci_high": 4.24 },
+          { "band": "current smoker, Asian studies only", "relative_risk": 2.26, "ci_low": 1.91, "ci_high": 2.67 },
+          { "band": "former smoker (vs never)", "relative_risk": 1.61, "ci_low": 1.44, "ci_high": 1.81 },
+          { "band": "quit 10 years (vs continuing smoker)", "relative_risk": 0.51, "ci_low": 0.42, "ci_high": 0.64 },
+          { "band": "quit 18 years (vs continuing smoker)", "relative_risk": 0.21, "ci_low": 0.17, "ci_high": 0.33 }
+        ],
+        "output_unit": "relative risk (pooled RR, random effects; spline points from one-stage dose-response model)",
+        "valid_for": { "age": "adults", "sex": "both", "population": "115 studies (87 case-control, 28 cohort), published 1969–2024, >40,000 cases, worldwide", "exposure_range": "spline estimated from 20 studies; curve plateaus around RR 5 at 20/day; above ~20/day do not extrapolate upward", "south_asian_validated": "partly: 14 Asian studies give a lower current-smoker RR of 2.26; betel/tobacco-chewing adjustment did not explain the difference" },
+        "uncertainty": "95% CIs printed. Substantial heterogeneity (I² ~81%). Publication bias detected for former/ever smokers (not for current). Self-reported smoking.",
+        "source": {
+          "citation": "Possenti I, Miotti S, Gallus S, et al. Smoking and oral and pharyngeal cancer: a meta-analysis. Oncol Rev 2026;19:1672607",
+          "doi": "10.3389/or.2025.1672607",
+          "pmid": "41640576",
+          "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12865294/",
+          "where": "Results, 'Dose-response analysis' paragraph; Table 1 (Total and Asia rows); Abstract",
+          "quote": "Estimated RRs were 1.98 (95% CI: 1.74–2.25) for six, 2.88 (95% CI: 2.37–3.50) for ten, and 4.78 (95% CI: 3.64–6.27) for 20 cigarettes/day",
+          "access": "full text"
+        },
+        "supporting_sources": [
+          { "citation": "Gandini S, Botteri E, Iodice S, et al. Tobacco smoking and cancer: a meta-analysis. Int J Cancer 2008;122:155-64", "url": "https://pureportal.strath.ac.uk/en/publications/tobacco-smoking-and-cancer-a-meta-analysis/", "agrees": "yes", "note": "Current smokers: oral RR 3.43 (2.37–4.94), pharyngeal RR 6.76 (2.86–15.98). Abstract only." }
+        ],
+        "confidence": "high",
+        "caveats": "Supersedes the Doll 2004 mouth/throat/oesophagus table from part 1 for mouth and throat. The spline equation is in Supplementary Box 2 (not opened); only the three printed points are given, so interpolate between them or ask us to pull the spline. In India, chewing tobacco / betel is the bigger driver of mouth cancer (belongs in H2); smoking + alcohol combined effect belongs in H5. Oral cancer alone: current RR 3.39 (2.64–4.35); pharynx alone: 4.24 (2.96–6.09).",
+        "user_copy": "Mouth and throat cancer risk is about {rr} times a non-smoker's at {n} a day (range {lo}–{hi}). It roughly halves within about 10 years of quitting."
+      },
+      {
+        "id": "smoking-larynx-cancer",
+        "topic": "smoking",
+        "name": "Voice box (larynx) cancer, current smokers",
+        "estimates": "Relative risk of laryngeal cancer in current smokers vs never smokers.",
+        "inputs": [
+          { "name": "is_current_smoker", "unit": "boolean", "how_we_get_it": "any cigarette logged in last 30 days" }
+        ],
+        "kind": "table",
+        "formula": null,
+        "coefficients": null,
+        "table": [
+          { "band": "current vs never", "relative_risk": 6.98, "ci_low": 3.14, "ci_high": 15.52 }
+        ],
+        "output_unit": "relative risk (pooled)",
+        "valid_for": { "age": "adults", "sex": "both", "population": "studies in IARC Monograph 83 (published 1961–2003), worldwide", "exposure_range": "current vs never; no dose curve in abstract", "south_asian_validated": "no" },
+        "uncertainty": "Very wide CI (3.1–15.5); strong heterogeneity by study type, sex and confounder adjustment.",
+        "source": {
+          "citation": "Gandini S, Botteri E, Iodice S, Boniol M, Lowenfels AB, Maisonneuve P, Boyle P. Tobacco smoking and cancer: a meta-analysis. Int J Cancer 2008;122(1):155-64",
+          "doi": "10.1002/ijc.23033",
+          "pmid": "17893872",
+          "url": "https://pureportal.strath.ac.uk/en/publications/tobacco-smoking-and-cancer-a-meta-analysis/",
+          "where": "Abstract",
+          "quote": "Lung (RR = 8.96; 95% CI: 6.73–12.11), laryngeal (RR = 6.98; 95% CI: 3.14–15.52) and pharyngeal (RR = 6.76; 95% CI: 2.86–15.98) cancers presented the highest relative risks (RRs) for current smokers",
+          "access": "abstract only"
+        },
+        "supporting_sources": [],
+        "confidence": "medium",
+        "caveats": "No dose-response available from this source. Show as 'several times higher' with the wide range, not as a precise number.",
+        "user_copy": "Voice box cancer risk is about 7 times a non-smoker's (wide range: 3–15 times)."
+      },
+      {
+        "id": "smoking-dose-stomach-cancer",
+        "topic": "smoking",
+        "name": "Stomach (gastric) cancer by cigarettes/day and years smoked",
+        "estimates": "Relative risk of gastric cancer vs never smokers by intensity, duration and years since quitting.",
+        "inputs": [
+          { "name": "cigs_per_day", "unit": "cigarettes/day", "how_we_get_it": "daily log, 30-day average" },
+          { "name": "years_smoked", "unit": "years", "how_we_get_it": "one-time question" },
+          { "name": "years_since_quit", "unit": "years", "how_we_get_it": "date of last cigarette" }
+        ],
+        "kind": "curve",
+        "formula": null,
+        "coefficients": null,
+        "table": [
+          { "band": "never", "relative_risk": 1.0, "ci_low": null, "ci_high": null },
+          { "band": "current, any amount", "relative_risk": 1.53, "ci_low": 1.44, "ci_high": 1.62 },
+          { "band": "20 cigarettes/day (curve levels off after this)", "relative_risk": 1.69, "ci_low": 1.55, "ci_high": 1.84 },
+          { "band": "20 years of smoking", "relative_risk": 1.31, "ci_low": 1.25, "ci_high": 1.37 },
+          { "band": "former, any", "relative_risk": 1.30, "ci_low": 1.23, "ci_high": 1.37 },
+          { "band": "30 years since quitting (vs continuing smoker)", "relative_risk": 0.65, "ci_low": 0.44, "ci_high": 0.95 },
+          { "band": "gastric cardia, current", "relative_risk": 2.08, "ci_low": 1.66, "ci_high": 2.61 },
+          { "band": "distal stomach, current", "relative_risk": 1.48, "ci_low": 1.33, "ci_high": 1.66 }
+        ],
+        "output_unit": "relative risk (pooled)",
+        "valid_for": { "age": "adults", "sex": "both", "population": "205 case-control and cohort studies, published up to January 2023, worldwide", "exposure_range": "rises non-linearly up to 20/day, then levels; duration effect linear", "south_asian_validated": "no" },
+        "uncertainty": "95% CIs printed. Points between 0 and 20/day are on the non-linear curve in the full paper (not opened).",
+        "source": {
+          "citation": "Rota M, Possenti I, Valsassina V, et al. Dose-response association between cigarette smoking and gastric cancer risk: a systematic review and meta-analysis. Gastric Cancer 2024;27(2):197-209",
+          "doi": "10.1007/s10120-023-01459-1",
+          "pmid": "38231449",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/38231449/",
+          "where": "Abstract",
+          "quote": "GC risk nonlinearly increased with smoking intensity up to 20 cigarettes/day (RR:1.69; 95% CI 1.55-1.84) and levelled thereafter.",
+          "access": "abstract only"
+        },
+        "supporting_sources": [],
+        "confidence": "high",
+        "caveats": "H. pylori is the main cause of stomach cancer; smoking adds on top. Free full text is listed at air.unimi.it if you want intermediate curve points.",
+        "user_copy": "Stomach cancer risk is about 1.5 times a non-smoker's (range 1.4–1.6), and about 1.7 times at 20 a day."
+      },
+      {
+        "id": "smoking-dose-pancreatic-cancer",
+        "topic": "smoking",
+        "name": "Pancreatic cancer by cigarettes/day",
+        "estimates": "Relative risk of pancreatic cancer vs never smokers by status, intensity, duration and years since quitting.",
+        "inputs": [
+          { "name": "cigs_per_day", "unit": "cigarettes/day", "how_we_get_it": "daily log, 30-day average" },
+          { "name": "years_since_quit", "unit": "years", "how_we_get_it": "date of last cigarette" }
+        ],
+        "kind": "curve",
+        "formula": null,
+        "coefficients": null,
+        "table": [
+          { "band": "never", "relative_risk": 1.0, "ci_low": null, "ci_high": null },
+          { "band": "current, any amount", "relative_risk": 1.8, "ci_low": 1.7, "ci_high": 1.9 },
+          { "band": "30 cigarettes/day", "relative_risk": 2.2, "ci_low": 1.9, "ci_high": 2.4 },
+          { "band": "30 years of smoking", "relative_risk": 1.8, "ci_low": 1.6, "ci_high": 2.0 },
+          { "band": "former, any", "relative_risk": 1.2, "ci_low": 1.1, "ci_high": 1.2 },
+          { "band": "20 years since quitting (vs continuing smoker)", "relative_risk": 0.6, "ci_low": 0.5, "ci_high": 0.7 }
+        ],
+        "output_unit": "relative risk (pooled)",
+        "valid_for": { "age": "adults", "sex": "both", "population": "78 studies published up to April 2017", "exposure_range": "sharp rise at low doses, up to 30/day", "south_asian_validated": "no" },
+        "uncertainty": "95% CIs printed (rounded to one decimal in abstract).",
+        "source": {
+          "citation": "Lugo A, Peveri G, Bosetti C, et al. Strong excess risk of pancreatic cancer for low frequency and duration of cigarette smoking: a comprehensive review and meta-analysis. Eur J Cancer 2018;104:117-126",
+          "doi": "10.1016/j.ejca.2018.09.007",
+          "pmid": "30347287",
+          "url": "https://boa.unimib.it/handle/10281/222855",
+          "where": "Abstract, Results",
+          "quote": "A sharp increase in pancreatic cancer risk was found already with a low number of cigarettes and up to 30 cigarettes/day (RR 2.2, 95% CI: 1.9–2.4).",
+          "access": "abstract only"
+        },
+        "supporting_sources": [
+          { "citation": "Bosetti C et al. Cigarette smoking and pancreatic cancer: an analysis from the International Pancreatic Cancer Case-Control Consortium (PanC4). Ann Oncol 2012;23(7)", "url": "https://vivo.weill.cornell.edu/display/pubid22104574", "agrees": "yes", "note": "Pooled individual data: about twofold risk in current smokers; risk reaches never-smoker level about 20 years after quitting." }
+        ],
+        "confidence": "high",
+        "caveats": "Intermediate curve points (e.g. 5 or 10/day) are in the full text only; the abstract says the rise is sharp already at low numbers.",
+        "user_copy": "Pancreatic cancer risk is about 1.8 times a non-smoker's (range 1.7–1.9), even at a few cigarettes a day."
+      },
+      {
+        "id": "smoking-dose-kidney-cancer",
+        "topic": "smoking",
+        "name": "Kidney cancer by cigarettes/day",
+        "estimates": "Relative risk of kidney cancer vs never smokers at 5 and 30 cigarettes/day and by duration.",
+        "inputs": [
+          { "name": "cigs_per_day", "unit": "cigarettes/day", "how_we_get_it": "daily log, 30-day average" },
+          { "name": "years_smoked", "unit": "years", "how_we_get_it": "one-time question" }
+        ],
+        "kind": "curve",
+        "formula": null,
+        "coefficients": null,
+        "table": [
+          { "band": "never", "relative_risk": 1.0, "ci_low": null, "ci_high": null },
+          { "band": "5 cigarettes/day", "relative_risk": 1.18, "ci_low": 1.11, "ci_high": 1.26 },
+          { "band": "30 cigarettes/day", "relative_risk": 1.72, "ci_low": 1.52, "ci_high": 1.95 },
+          { "band": "current, any amount", "relative_risk": 1.39, "ci_low": 1.28, "ci_high": 1.51 },
+          { "band": "former", "relative_risk": 1.20, "ci_low": 1.14, "ci_high": 1.27 },
+          { "band": "25 years of smoking", "relative_risk": 1.70, "ci_low": 1.10, "ci_high": 2.64 }
+        ],
+        "output_unit": "relative risk (pooled)",
+        "valid_for": { "age": "adults", "sex": "both", "population": "56 original studies, worldwide", "exposure_range": "5–30 cigarettes/day (non-linear)", "south_asian_validated": "no" },
+        "uncertainty": "95% CIs printed. Risk falls linearly with time since quitting (no numbers in abstract).",
+        "source": {
+          "citation": "Liu X, Peveri G, Bosetti C, Bagnardi V, Specchia C, Gallus S, Lugo A. Dose-response relationships between cigarette smoking and kidney cancer: a systematic review and meta-analysis. Crit Rev Oncol Hematol 2019;142:86-93",
+          "doi": "10.1016/j.critrevonc.2019.07.019",
+          "pmid": "31387065",
+          "url": "https://air.unimi.it/handle/2434/919544",
+          "where": "Abstract, Results",
+          "quote": "Kidney cancer risk increased non-linearly with smoking intensity, the RR compared with never smokers being 1.18 (95% CI: 1.11–1.26) for five and 1.72 (95% CI: 1.52–1.95) for 30 cigarettes/day",
+          "access": "abstract only"
+        },
+        "supporting_sources": [
+          { "citation": "Hunt JD, van der Hel OL, McMillan GP, Boffetta P, Brennan P. Renal cell carcinoma in relation to cigarette smoking: meta-analysis of 24 studies. Int J Cancer 2005;114:101-8", "url": "https://researchconnect.stonybrook.edu/en/publications/renal-cell-carcinoma-in-relation-to-cigarette-smoking-meta-analys/", "agrees": "yes", "note": "Men 1–9/day RR 1.60 (1.21–2.12), 10–20/day 1.83 (1.30–2.57), 21+/day 2.03 (1.51–2.74); women 0.98, 1.38, 1.58. Gives sex-specific bands if needed." }
+        ],
+        "confidence": "high",
+        "caveats": "Two curve points only in the abstract; interpolate on log scale between 5 and 30 as our own step, or pull the spline from full text.",
+        "user_copy": "Kidney cancer risk is about 1.2 times a non-smoker's at 5 a day and about 1.7 times at 30 a day."
+      },
+      {
+        "id": "smoking-dose-bladder-cancer",
+        "topic": "smoking",
+        "name": "Bladder cancer, current and former smokers",
+        "estimates": "Summary odds ratio of bladder cancer for current and former smokers vs never smokers, with a plateau at ~15/day and 50 pack-years.",
+        "inputs": [
+          { "name": "is_current_smoker", "unit": "boolean", "how_we_get_it": "any cigarette logged in last 30 days" },
+          { "name": "cigs_per_day", "unit": "cigarettes/day", "how_we_get_it": "daily log, 30-day average" }
+        ],
+        "kind": "table",
+        "formula": null,
+        "coefficients": null,
+        "table": [
+          { "band": "never", "odds_ratio": 1.0, "ci_low": null, "ci_high": null },
+          { "band": "current", "odds_ratio": 3.14, "ci_low": 2.53, "ci_high": 3.75 },
+          { "band": "former", "odds_ratio": 1.83, "ci_low": 1.52, "ci_high": 2.14 }
+        ],
+        "output_unit": "summary odds ratio (SOR)",
+        "valid_for": { "age": "adults", "sex": "both", "population": "89 observational studies, 57,145 cases", "exposure_range": "risk plateaus at about 15 cigarettes/day and 50 pack-years", "south_asian_validated": "no" },
+        "uncertainty": "95% CIs printed. Dose curve values are in the full text (author manuscript is openly available at the Birmingham URL; only the abstract was read).",
+        "source": {
+          "citation": "van Osch FHM, Jochems SHJ, van Schooten FJ, Bryan RT, Zeegers MP. Quantified relations between exposure to tobacco smoking and bladder cancer risk: a meta-analysis of 89 observational studies. Int J Epidemiol 2016;45(3):857-870",
+          "doi": "10.1093/ije/dyw044",
+          "pmid": null,
+          "url": "https://research.birmingham.ac.uk/files/26314603/Frits_et_al_Quantified_relations_between_exposure_2016.pdf",
+          "where": "Abstract, Results",
+          "quote": "Current smokers (SOR=3.14, 95% CI=2.53-3.75) and former smokers (SOR=1.83, 95% CI=1.52-2.14) had an increased risk of BC compared to never smokers.",
+          "access": "abstract only"
+        },
+        "supporting_sources": [],
+        "confidence": "high",
+        "caveats": "Odds ratios, not RRs; for a relatively rare cancer they approximate RR. Excess risk stays elevated even after long-term quitting (authors), so the H3 recovery copy for bladder should be conservative.",
+        "user_copy": "Bladder cancer risk is about 3 times a non-smoker's (range 2.5–3.8)."
+      },
+      {
+        "id": "smoking-dose-colorectal-cancer",
+        "topic": "smoking",
+        "name": "Colorectal (bowel) cancer",
+        "estimates": "Relative risk of colorectal cancer for current and former smokers vs never smokers, with a per-dose slope from an earlier meta-analysis.",
+        "inputs": [
+          { "name": "cigs_per_day", "unit": "cigarettes/day", "how_we_get_it": "daily log, 30-day average" }
+        ],
+        "kind": "table",
+        "formula": null,
+        "coefficients": null,
+        "table": [
+          { "band": "never", "relative_risk": 1.0, "ci_low": null, "ci_high": null },
+          { "band": "current", "relative_risk": 1.14, "ci_low": 1.10, "ci_high": 1.18 },
+          { "band": "former", "relative_risk": 1.17, "ci_low": 1.15, "ci_high": 1.20 }
+        ],
+        "output_unit": "relative risk (pooled)",
+        "valid_for": { "age": "adults", "sex": "both", "population": "188 original studies published up to September 2018", "exposure_range": "abstract states risk rises linearly with intensity and duration; slope value not in abstract", "south_asian_validated": "no" },
+        "uncertainty": "95% CIs printed. Former > current reflects long latency (risk appears after ~30 years of smoking per Botteri 2008).",
+        "source": {
+          "citation": "Botteri E, Borroni E, Sloan EK, et al. Smoking and colorectal cancer risk, overall and by molecular subtypes: a meta-analysis. Am J Gastroenterol 2020;115(12):1940-1949",
+          "doi": "10.14309/ajg.0000000000000803",
+          "pmid": "32773458",
+          "url": "https://boa.unimib.it/handle/10281/301882",
+          "where": "Abstract, Results",
+          "quote": "Compared with never smokers, the pooled RR for CRC was 1.14 (95% confidence interval [CI] 1.10-1.18) for current smokers and 1.17 (95% CI 1.15-1.20) for former smokers. CRC risk increased linearly with smoking intensity and duration.",
+          "access": "abstract only"
+        },
+        "supporting_sources": [
+          { "citation": "Liang PS, Chen TY, Giovannucci E. Cigarette smoking and colorectal cancer incidence and mortality: systematic review and meta-analysis. Int J Cancer 2009 (PubMed 19142968)", "url": "https://pubmed.ncbi.nlm.nih.gov/19142968", "agrees": "yes", "note": "Slope: RR 1.38 for an increase of 40 cigarettes/day; RR 1.51 for an increase of 60 pack-years (CIs not in the snippet read). A separate source, so not merged into the formula." },
+          { "citation": "Botteri E et al. Smoking and colorectal cancer: a meta-analysis. JAMA 2008;300(23):2765-78", "url": "https://pubmed.ncbi.nlm.nih.gov/19088354/", "agrees": "yes", "note": "Ever vs never 1.18 (1.11–1.25); association significant only after 30 years of smoking." }
+        ],
+        "confidence": "medium",
+        "caveats": "Small relative effect; the linear slope from the 2020 paper needs the full text. If you want a per-cigarette line now, Liang 2009 is a single-source option: RR = 1.38^(cigs/40) (our algebra on their printed slope; confirm CI first).",
+        "user_copy": "Bowel cancer risk is about 1.1–1.2 times a non-smoker's, and it builds up over many years of smoking."
+      },
+      {
+        "id": "smoking-dose-liver-cancer",
+        "topic": "smoking",
+        "name": "Liver cancer death risk by cigarettes/day",
+        "estimates": "Hazard ratio of dying from liver cancer vs non-smokers, per extra 10 cigarettes/day or 10 pack-years.",
+        "inputs": [
+          { "name": "cigs_per_day", "unit": "cigarettes/day", "how_we_get_it": "daily log, 30-day average" },
+          { "name": "pack_years", "unit": "pack-years", "how_we_get_it": "from one-time history (see smoking-pack-years-screening)" }
+        ],
+        "kind": "formula",
+        "formula": "hr_vs_nonsmoker = 1.071 ^ (cigs_per_day / 10)",
+        "coefficients": {
+          "hr_per_10_cigs": { "value": 1.071, "ci_low": 1.014, "ci_high": 1.132, "unit": "HR per +10 cigarettes/day" },
+          "hr_per_10_pack_years": { "value": 1.052, "ci_low": 1.0002, "ci_high": 1.112, "unit": "HR per +10 pack-years" },
+          "hr_current_vs_non": { "value": 1.45, "ci_low": 1.33, "ci_high": 1.59, "unit": "HR" },
+          "hr_former_vs_non": { "value": 1.22, "ci_low": 1.11, "ci_high": 1.34, "unit": "HR" }
+        },
+        "table": null,
+        "output_unit": "hazard ratio (liver cancer mortality)",
+        "valid_for": { "age": "adults", "sex": "both", "population": "27 articles, ~4 million participants, 7 countries, published 1986–2014", "exposure_range": "per-10-cigarette slope from dose-response analysis; range of included doses not stated in abstract", "south_asian_validated": "no" },
+        "uncertainty": "Printed as % increase with CI: 7.1% (1.4–13.2) per 10 cigarettes/day; 5.2% (0.02–11.2) per 10 pack-years. Mortality, not incidence.",
+        "source": {
+          "citation": "Cigarette smoking increases the risk of mortality from liver cancer: a clinical-based cohort and meta-analysis. J Gastroenterol Hepatol 2015;30(10):1450-1460 (author list not captured in the page I read)",
+          "doi": "10.1111/jgh.12990",
+          "pmid": null,
+          "url": "https://scholar.xjtu.edu.cn/en/publications/cigarette-smoking-increases-the-risk-of-mortality-from-liver-canc/",
+          "where": "Abstract, Results",
+          "quote": "The risk increased by 7.1% (95% CI: 1.4-13.2) for per additional 10 cigarettes per day and by 5.2% (95% CI: 0.02-11.2) for per additional 10 pack-years.",
+          "access": "abstract only"
+        },
+        "supporting_sources": [
+          { "citation": "Chuang SC, Lee YC, Hashibe M, et al. Interaction between cigarette smoking and hepatitis B and C virus infection on the risk of liver cancer: a meta-analysis. Cancer Epidemiol Biomarkers Prev 2010;19(5):1261-8", "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4170071", "agrees": "partly", "note": "Smoking interacts with hepatitis B (more than additive) and C (more than multiplicative) — relevant in India, but no simple number to show." }
+        ],
+        "confidence": "medium",
+        "caveats": "Coefficients are the printed % converted to multipliers (7.1% → 1.071); no other stitching. Alcohol and hepatitis B/C dominate liver cancer risk; alcohol liver models go in H4.",
+        "user_copy": "Liver cancer death risk is about 1.45 times a non-smoker's (range 1.3–1.6), rising about 7% for every extra 10 a day."
+      },
+      {
+        "id": "smoking-cervical-cancer",
+        "topic": "smoking",
+        "name": "Cervical cancer (women)",
+        "estimates": "Relative risk of squamous-cell cervical cancer in current and past smokers vs never smokers.",
+        "inputs": [
+          { "name": "sex", "unit": "women", "how_we_get_it": "profile; show only to women" },
+          { "name": "is_current_smoker", "unit": "boolean", "how_we_get_it": "any cigarette logged in last 30 days" }
+        ],
+        "kind": "table",
+        "formula": null,
+        "coefficients": null,
+        "table": [
+          { "band": "never", "relative_risk": 1.0, "ci_low": null, "ci_high": null },
+          { "band": "current, squamous cell carcinoma", "relative_risk": 1.60, "ci_low": 1.48, "ci_high": 1.73 },
+          { "band": "past, squamous cell carcinoma", "relative_risk": 1.12, "ci_low": 1.01, "ci_high": 1.25 },
+          { "band": "current, among HPV-positive women (squamous)", "relative_risk": 1.95, "ci_low": 1.43, "ci_high": 2.65 },
+          { "band": "current, adenocarcinoma", "relative_risk": 0.89, "ci_low": 0.74, "ci_high": 1.06 }
+        ],
+        "output_unit": "relative risk (pooled individual data)",
+        "valid_for": { "age": "adult women", "sex": "women", "population": "23 epidemiological studies, 13,541 cases and 23,017 controls", "exposure_range": "abstract says squamous risk rises with cigarettes/day and younger starting age (numbers in full text)", "south_asian_validated": "no" },
+        "uncertainty": "95% CIs printed; stratified by study, age, sexual partners, age at first intercourse, OC use, parity.",
+        "source": {
+          "citation": "International Collaboration of Epidemiological Studies of Cervical Cancer (Appleby P, Beral V, et al.). Carcinoma of the cervix and tobacco smoking: collaborative reanalysis of individual data on 13,541 women with carcinoma of the cervix and 23,017 women without carcinoma of the cervix from 23 epidemiological studies. Int J Cancer 2006;118(6):1481-95",
+          "doi": "10.1002/ijc.21493",
+          "pmid": null,
+          "url": "https://www.ceu.ox.ac.uk/publications/33254",
+          "where": "Abstract",
+          "quote": "Current smokers had a significantly increased risk of squamous cell carcinoma of the cervix compared to never smokers (RR = 1.60 (95% CI: 1.48-1.73), p<0.001).",
+          "access": "abstract only"
+        },
+        "supporting_sources": [],
+        "confidence": "high",
+        "caveats": "HPV is the necessary cause; smoking raises risk on top of it. Good hook to pair with 'HPV vaccine / screening' info, not with fear.",
+        "user_copy": "Cervical cancer risk is about 1.6 times a non-smoker's (range 1.5–1.7). Regular screening helps catch it early."
+      },
+      {
+        "id": "smoking-dose-breast-cancer",
+        "topic": "smoking",
+        "name": "Breast cancer by cigarettes/day (women)",
+        "estimates": "Relative risk of female breast cancer vs never smokers at 20 and 40 cigarettes/day and by years smoked.",
+        "inputs": [
+          { "name": "cigs_per_day", "unit": "cigarettes/day", "how_we_get_it": "daily log, 30-day average" },
+          { "name": "years_smoked", "unit": "years", "how_we_get_it": "one-time question" }
+        ],
+        "kind": "curve",
+        "formula": null,
+        "coefficients": null,
+        "table": [
+          { "band": "never", "relative_risk": 1.0, "ci_low": null, "ci_high": null },
+          { "band": "20 cigarettes/day", "relative_risk": 1.12, "ci_low": 1.08, "ci_high": 1.16 },
+          { "band": "40 cigarettes/day", "relative_risk": 1.26, "ci_low": 1.17, "ci_high": 1.36 },
+          { "band": "20 years of smoking", "relative_risk": 1.05, "ci_low": 1.03, "ci_high": 1.08 },
+          { "band": "40 years of smoking", "relative_risk": 1.11, "ci_low": 1.06, "ci_high": 1.16 }
+        ],
+        "output_unit": "relative risk (one-stage dose-response)",
+        "valid_for": { "age": "adult women", "sex": "women", "population": "worldwide meta-analysis (Mario Negri series)", "exposure_range": "linear with intensity up to 40/day", "south_asian_validated": "no" },
+        "uncertainty": "95% CIs printed. Small effect; residual confounding (alcohol) possible.",
+        "source": {
+          "citation": "Scala M, Bosetti C, Bagnardi V, et al. Dose-response relationships between cigarette smoking and breast cancer risk: a systematic review and meta-analysis. J Epidemiol 2023;33(12):640-8",
+          "doi": "10.2188/jea.JE20220206",
+          "pmid": "36967121",
+          "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10635814/",
+          "where": "Abstract",
+          "quote": "Breast cancer risk increased linearly with intensity of smoking (RR 1.12; 95% CI, 1.08–1.16 for 20 cigarettes/day and 1.26; 95% CI, 1.17–1.36 for 40 cigarettes/day)",
+          "access": "abstract only"
+        },
+        "supporting_sources": [],
+        "confidence": "medium",
+        "caveats": "Linear, so a per-cigarette formula RR = 1.12^(cigs/20) matches the two printed points closely; this is our algebra on the paper's linear model, please confirm. Alcohol-breast cancer is the bigger lever (H4).",
+        "user_copy": "Breast cancer risk is slightly higher: about +12% at 20 a day (range +8 to +16%)."
+      },
+      {
+        "id": "smoking-dose-erectile-dysfunction",
+        "topic": "smoking",
+        "name": "Erectile dysfunction, per extra 10 cigarettes/day",
+        "estimates": "Odds ratio of erectile dysfunction for each additional 10 cigarettes/day (and each 10 years of smoking).",
+        "inputs": [
+          { "name": "cigs_per_day", "unit": "cigarettes/day", "how_we_get_it": "daily log, 30-day average" },
+          { "name": "years_smoked", "unit": "years", "how_we_get_it": "one-time question" },
+          { "name": "sex", "unit": "men", "how_we_get_it": "profile; show only to men" }
+        ],
+        "kind": "formula",
+        "formula": "or_vs_nonsmoker = 1.14 ^ (cigs_per_day / 10)",
+        "coefficients": {
+          "or_per_10_cigs": { "value": 1.14, "ci_low": 1.09, "ci_high": 1.18, "unit": "OR per +10 cigarettes/day" },
+          "or_per_10_years": { "value": 1.15, "ci_low": 1.10, "ci_high": 1.19, "unit": "OR per +10 years of smoking" }
+        },
+        "table": null,
+        "output_unit": "odds ratio",
+        "valid_for": { "age": "adult men", "sex": "men", "population": "1 cohort + 9 cross-sectional studies, 50,360 participants, 12,218 cases, searched to March 2014", "exposure_range": "authors found no evidence of curvilinear association; range of doses not given in abstract", "south_asian_validated": "no" },
+        "uncertainty": "Mostly cross-sectional data, so causality and reverse causation are less certain; moderate heterogeneity (I² 44.7%) for intensity.",
+        "source": {
+          "citation": "Cao S, Gan Y, Dong X, Liu J, Lu Z. Association of quantity and duration of smoking with erectile dysfunction: a dose-response meta-analysis. J Sex Med 2014;11(10):2376-2384",
+          "doi": "10.1111/jsm.12641",
+          "pmid": null,
+          "url": "https://academic.oup.com/jsm/article-abstract/11/10/2376/6958400",
+          "where": "Abstract, Results",
+          "quote": "The summary odds ratio of ED for an increase of 10 cigarettes smoked per day was 1.14 (95% confidence interval 1.09 to 1.18)",
+          "access": "abstract only"
+        },
+        "supporting_sources": [
+          { "citation": "Cao S, Yin X, Wang Y, Zhou H, Song F, Lu Z. Smoking and risk of erectile dysfunction: systematic review of observational studies with meta-analysis. PLoS One 2013;8(4):e60443", "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3616119/", "agrees": "yes", "note": "Prospective cohorts only: current smokers OR 1.51 (1.34–1.71), former 1.29 (1.07–1.47)." }
+        ],
+        "confidence": "medium",
+        "caveats": "The formula is the paper's own linear (log-scale) model applied per 10 cigarettes. Sensitive topic: show only if the user opts in to 'sexual health' insights, and never as a diagnosis.",
+        "user_copy": "Erection problems are about +14% more likely for every 10 cigarettes a day (range +9 to +18%)."
+      },
+      {
+        "id": "smoking-female-infertility",
+        "topic": "smoking",
+        "name": "Female infertility",
+        "estimates": "Odds of infertility in women who smoke vs non-smokers, and odds of pregnancy per IVF cycle.",
+        "inputs": [
+          { "name": "sex", "unit": "women", "how_we_get_it": "profile; show only to women who opt in" },
+          { "name": "is_current_smoker", "unit": "boolean", "how_we_get_it": "any cigarette logged in last 30 days" }
+        ],
+        "kind": "table",
+        "formula": null,
+        "coefficients": null,
+        "table": [
+          { "outcome": "infertility, smokers vs non-smokers", "odds_ratio": 1.60, "ci_low": 1.34, "ci_high": 1.91 },
+          { "outcome": "pregnancy per IVF cycle, smokers vs non-smokers", "odds_ratio": 0.66, "ci_low": 0.49, "ci_high": 0.88 }
+        ],
+        "output_unit": "odds ratio",
+        "valid_for": { "age": "reproductive age", "sex": "women", "population": "12 studies (infertility) and 9 studies (IVF), published up to 1998", "exposure_range": "smoker vs non-smoker; no dose bands", "south_asian_validated": "no" },
+        "uncertainty": "95% CIs printed. Old, observational; the authors flag possible confounding.",
+        "source": {
+          "citation": "Augood C, Duckitt K, Templeton AA. Smoking and female infertility: a systematic review and meta-analysis. Hum Reprod 1998;13(6):1532-9",
+          "doi": "10.1093/humrep/13.6.1532",
+          "pmid": "9688387",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/9688387/",
+          "where": "Abstract",
+          "quote": "the overall value of the odds ratio (OR) for risk of infertility in women smokers versus non-smokers was 1.60 [95% confidence interval (CI) 1.34-1.91]",
+          "access": "abstract only"
+        },
+        "supporting_sources": [
+          { "citation": "World Health Organization. Tobacco and infertility (fact document)", "url": "https://www.drugsandalcohol.ie/46787/1/WHO_Tobacco_and_infertility.pdf", "agrees": "partly", "note": "Describes the 1998 review as about 1.5 times higher risk, and a newer (unpublished) review at 1.4 times; gives the example 15% → 21%. The newer estimate is cited as unpublished data, so not used as a model." },
+          { "citation": "Lyngs et al. Female cigarette smoking and successful fertility treatment: a Danish cohort study. Acta Obstet Gynecol Scand 2021;100:58-66", "url": "https://research.regionh.dk/da/publications/female-cigarette-smoking-and-successful-fertility-treatment-a-dan/", "agrees": "no", "note": "In a modern Danish IVF/IUI cohort, occasional/daily smoking was not associated with live birth (RR 1.15, 0.82–1.60). Shows the IVF effect is uncertain." }
+        ],
+        "confidence": "medium",
+        "caveats": "Show as 'about 1.5 times more likely to have trouble conceiving', never as a personal prediction. Opt-in only.",
+        "user_copy": "Women who smoke are about 1.6 times more likely to have trouble getting pregnant (range 1.3–1.9)."
+      },
+      {
+        "id": "smoking-male-semen-quality",
+        "topic": "smoking",
+        "name": "Male fertility: sperm count",
+        "estimates": "Risk of low sperm count (oligozoospermia) in smoking vs non-smoking men attending infertility care.",
+        "inputs": [
+          { "name": "sex", "unit": "men", "how_we_get_it": "profile; opt-in only" },
+          { "name": "is_current_smoker", "unit": "boolean", "how_we_get_it": "any cigarette logged in last 30 days" }
+        ],
+        "kind": "table",
+        "formula": null,
+        "coefficients": null,
+        "table": [
+          { "outcome": "oligozoospermia, smokers vs non-smokers", "risk_ratio": 1.29, "ci_low": 1.05, "ci_high": 1.59 },
+          { "outcome": "abnormal sperm morphology (mean difference, %)", "mean_difference": 2.44, "ci_low": 0.99, "ci_high": 3.89 },
+          { "outcome": "motility problems (not significant)", "risk_ratio": 1.42, "ci_low": 0.97, "ci_high": 2.09 }
+        ],
+        "output_unit": "risk ratio / mean difference",
+        "valid_for": { "age": "adult men", "sex": "men", "population": "16 studies, 10,823 infertile men", "exposure_range": "smoker vs non-smoker", "south_asian_validated": "no" },
+        "uncertainty": "95% CIs printed. Infertile-clinic populations only.",
+        "source": {
+          "citation": "Bundhun PK, Janoo G, Bhurtu A, et al. Tobacco smoking and semen quality in infertile males: a systematic review and meta-analysis. BMC Public Health 2019;19:36",
+          "doi": "10.1186/s12889-018-6319-3",
+          "pmid": null,
+          "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6325781/",
+          "where": "Abstract, Results",
+          "quote": "Results of this analysis showed oligozoospermia to be significantly higher in smokers (RR: 1.29, 95% CI: 1.05–1.59; P = 0.02).",
+          "access": "abstract only"
+        },
+        "supporting_sources": [
+          { "citation": "Sharma R, Harlev A, Agarwal A, Esteves SC. Cigarette smoking and semen quality: a new meta-analysis examining the effect of the 2010 WHO laboratory methods. Eur Urol 2016;70(4):635-645", "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9639498", "agrees": "yes", "note": "5,865 men; lower sperm count, motility and morphology, larger effect in moderate/heavy smokers. Original not opened; a citing review gives count MD −9.72 ×10^6/ml while another secondary page gives −8.92 — verify against the paper before using any number." }
+        ],
+        "confidence": "low",
+        "caveats": "No link to actual time-to-pregnancy for men; do not convert to 'fertility %'.",
+        "user_copy": "In men seeking fertility help, smokers were about 1.3 times more likely to have a low sperm count (range 1.05–1.6)."
+      },
+      {
+        "id": "smoking-dose-cataract",
+        "topic": "smoking",
+        "name": "Cataract, per 10 pack-years",
+        "estimates": "Relative risk of age-related cataract per 10 pack-years of cumulative smoking, and after quitting.",
+        "inputs": [
+          { "name": "pack_years", "unit": "pack-years", "how_we_get_it": "from one-time history (see smoking-pack-years-screening, part 1)" },
+          { "name": "years_since_quit", "unit": "years", "how_we_get_it": "date of last cigarette" }
+        ],
+        "kind": "formula",
+        "formula": "rr_vs_zero_pack_years = 1.07 ^ (pack_years / 10)",
+        "coefficients": {
+          "rr_per_10_pack_years": { "value": 1.07, "ci_low": 1.04, "ci_high": 1.10, "unit": "RR per +10 pack-years" }
+        },
+        "table": [
+          { "band": "current smoker (reference)", "relative_risk": 1.0, "ci_low": null, "ci_high": null },
+          { "band": "quit <10 years", "relative_risk": 0.79, "ci_low": 0.64, "ci_high": 0.98 },
+          { "band": "quit 10–<20 years", "relative_risk": 0.73, "ci_low": 0.61, "ci_high": 0.88 },
+          { "band": "quit 20+ years", "relative_risk": 0.74, "ci_low": 0.63, "ci_high": 0.87 },
+          { "band": "never smoker", "relative_risk": 0.64, "ci_low": 0.54, "ci_high": 0.76 }
+        ],
+        "output_unit": "relative risk",
+        "valid_for": { "age": "middle-aged and older adults", "sex": "men", "population": "US male physicians (prospective)", "exposure_range": "cumulative pack-years", "south_asian_validated": "no" },
+        "uncertainty": "95% CIs printed. Men only; quitters' lower risk mostly explained by lower total dose.",
+        "source": {
+          "citation": "Physicians' Health Study analysis of smoking cessation and age-related cataract in men, JAMA Network (JAMA Ophthalmology archive, article 265801). Full author/year citation not captured in the page I read; please take it from the URL.",
+          "doi": null,
+          "pmid": null,
+          "url": "https://jamanetwork-com.libproxy.ajou.ac.kr/journals/jamaophthalmology/fullarticle/265801",
+          "where": "Abstract, Results",
+          "quote": "The reduced risk in past smokers was principally due to a lower total cumulative dose (RR of cataract for increase of 10 pack-years of smoking, 1.07; 95% CI, 1.04-1.10).",
+          "access": "abstract only"
+        },
+        "supporting_sources": [
+          { "citation": "Risk of cataract in smokers: a meta-analysis of observational studies. Arch Soc Esp Oftalmol (Elsevier), abstract", "url": "https://www.elsevier.es/es-revista-archivos-sociedad-espanola-oftalmologia-296-articulo-riesgo-catarata-fumadores-metaanalisis-estudios-S0365669118303447", "agrees": "yes", "note": "Current smokers, cohort studies: OR 1.41 (1.24–1.60); nuclear cataract OR 1.71 (1.47–1.98)." },
+          { "citation": "Ye J, He J, Wang C, et al. Smoking and risk of age-related cataract: a meta-analysis. Invest Ophthalmol Vis Sci 2012;53(7):3885", "url": "https://ami.group.uq.edu.au/node/731", "agrees": "yes", "note": "Current and former smokers at higher risk of nuclear and posterior subcapsular cataract; no association with cortical. Numbers not in the page read." }
+        ],
+        "confidence": "medium",
+        "caveats": "Cataract is very common in India at older ages; the relative effect is modest. Citation for the primary source needs completing before release (see source.citation).",
+        "user_copy": "Cataract risk goes up about 7% for every 10 pack-years smoked (range 4–10%)."
+      },
+      {
+        "id": "smoking-macular-degeneration",
+        "topic": "smoking",
+        "name": "Age-related macular degeneration (AMD)",
+        "estimates": "Odds of late AMD (neovascular or geographic atrophy) in current and former smokers vs never smokers, aged 65+.",
+        "inputs": [
+          { "name": "is_current_smoker", "unit": "boolean", "how_we_get_it": "any cigarette logged in last 30 days" },
+          { "name": "age", "unit": "years", "how_we_get_it": "profile" }
+        ],
+        "kind": "table",
+        "formula": null,
+        "coefficients": null,
+        "table": [
+          { "band": "never", "odds_ratio": 1.0, "ci_low": null, "ci_high": null },
+          { "band": "current, neovascular (wet) AMD", "odds_ratio": 2.6, "ci_low": 1.4, "ci_high": 4.8 },
+          { "band": "current, geographic atrophy (dry) AMD", "odds_ratio": 4.8, "ci_low": 2.1, "ci_high": 11.1 },
+          { "band": "former smoker", "odds_ratio": 1.7, "ci_low": null, "ci_high": null }
+        ],
+        "output_unit": "odds ratio",
+        "valid_for": { "age": "65+", "sex": "both", "population": "Europe (EUREYE, 7 countries), 4,750 people, cross-sectional", "exposure_range": "current / former / never", "south_asian_validated": "no" },
+        "uncertainty": "Wide CIs; cross-sectional; former-smoker value printed as 'around 1.7' without CI.",
+        "source": {
+          "citation": "Chakravarthy U, Augood C, Bentham GC, et al. Cigarette smoking and age-related macular degeneration in the EUREYE Study. Ophthalmology 2007;114(6):1157-1163",
+          "doi": "10.1016/j.ophtha.2006.09.022",
+          "pmid": null,
+          "url": "https://repub.eur.nl/pub/35790",
+          "where": "Abstract, Results",
+          "quote": "Current smokers had increased odds of neovascular AMD (odds ratio [OR], 2.6; 95% confidence interval [CI], 1.4-4.8) or GA (OR, 4.8; 95% CI, 2.1-11.1), whereas for ex-smokers the odds were around 1.7.",
+          "access": "abstract only"
+        },
+        "supporting_sources": [
+          { "citation": "Vingerling JR, Hofman A, Grobbee DE, de Jong PTVM. Age-related macular degeneration and smoking: the Rotterdam Study. Arch Ophthalmol", "url": "https://researchinformation.umcutrecht.nl/en/publications/age-related-macular-degeneration-and-smoking-the-rotterdam-study/", "agrees": "yes", "note": "Under age 85: current smokers 6.6-fold neovascular AMD (2.8–15.9); >10 pack-years RR 6.5 (2.9–14.8); no increased risk 20+ years after quitting." }
+        ],
+        "confidence": "low",
+        "caveats": "European, 65+ only; do not show to young users as a number. AMD prevalence and genetics differ in South Asians.",
+        "user_copy": "In older adults, smoking is linked to about 2.5–5 times the risk of the main causes of age-related vision loss."
+      },
+      {
+        "id": "smoking-periodontitis",
+        "topic": "smoking",
+        "name": "Gum disease (periodontitis)",
+        "estimates": "Risk of periodontitis onset or progression in smokers vs non-smokers, and in quitters vs never smokers.",
+        "inputs": [
+          { "name": "is_current_smoker", "unit": "boolean", "how_we_get_it": "any cigarette logged in last 30 days" },
+          { "name": "has_quit", "unit": "boolean", "how_we_get_it": "date of last cigarette" }
+        ],
+        "kind": "table",
+        "formula": null,
+        "coefficients": null,
+        "table": [
+          { "band": "smokers vs non-smokers", "risk_ratio": 1.85, "ci_low": 1.5, "ci_high": 2.2 },
+          { "band": "quitters vs never smokers", "risk_ratio": 0.97, "ci_low": 0.87, "ci_high": 1.08 },
+          { "band": "smokers vs quitters", "risk_ratio": 1.79, "ci_low": 1.36, "ci_high": 2.35 }
+        ],
+        "output_unit": "risk ratio (prospective studies)",
+        "valid_for": { "age": "adults", "sex": "both", "population": "14 prospective studies (meta-analysis, to May 2017); 6 studies for cessation", "exposure_range": "smoker / quitter / never; no dose slope", "south_asian_validated": "no" },
+        "uncertainty": "95% CIs printed. Age explained over half of between-study variation.",
+        "source": {
+          "citation": "Leite FRM, Nascimento GG, Scheutz F, López R. Effect of smoking on periodontitis: a systematic review and meta-regression. Am J Prev Med 2018;54(6):831-841",
+          "doi": "10.1016/j.amepre.2018.02.014",
+          "pmid": "29656920",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/29656920/",
+          "where": "Abstract, Evidence synthesis",
+          "quote": "Pooled adjusted risk ratios estimate that smoking increases the risk of periodontitis by 85% (risk ratio=1.85, 95% CI=1.5, 2.2).",
+          "access": "abstract only"
+        },
+        "supporting_sources": [
+          { "citation": "Leite FRM, Nascimento GG, Baake S, et al. Impact of smoking cessation on periodontitis: a systematic review and meta-analysis of prospective longitudinal observational and interventional studies. Nicotine Tob Res 2018", "url": "https://www.naquitline.org/news/413130/Impact-of-Smoking-Cessation-on-Periodontitis-A-Systematic-Review-and-Meta-analysis-of-Prospective-L.htm", "agrees": "yes", "note": "Source of the quitter rows (RR 0.97 vs never; 1.79 smokers vs quitters). Abstract read via a quitline-association page reproducing it; verify on PubMed (doi 10.1093/ntr/nty147)." }
+        ],
+        "confidence": "medium",
+        "caveats": "Great 'recovery' message for H3: quitters' gum-disease risk was not different from never smokers. Tooth-loss numbers not found this pass.",
+        "user_copy": "Gum disease risk is about 1.85 times a non-smoker's (range 1.5–2.2), and people who quit had about the same risk as never-smokers."
+      },
+      {
+        "id": "smoking-fracture-risk",
+        "topic": "smoking",
+        "name": "Bone fractures (any, osteoporotic, hip)",
+        "estimates": "Relative risk of fracture in current smokers vs non-smokers, with and without adjustment for bone density.",
+        "inputs": [
+          { "name": "is_current_smoker", "unit": "boolean", "how_we_get_it": "any cigarette logged in last 30 days" },
+          { "name": "age", "unit": "years", "how_we_get_it": "profile" }
+        ],
+        "kind": "table",
+        "formula": null,
+        "coefficients": null,
+        "table": [
+          { "outcome": "any fracture", "relative_risk": 1.25, "ci_low": 1.15, "ci_high": 1.36 },
+          { "outcome": "any fracture, adjusted for BMD", "relative_risk": 1.13, "ci_low": null, "ci_high": null },
+          { "outcome": "osteoporotic fracture", "relative_risk": 1.29, "ci_low": 1.13, "ci_high": 1.28 },
+          { "outcome": "hip fracture", "relative_risk": 1.84, "ci_low": 1.52, "ci_high": 2.22 },
+          { "outcome": "hip fracture, adjusted for BMD", "relative_risk": 1.60, "ci_low": 1.27, "ci_high": 2.02 }
+        ],
+        "output_unit": "relative risk (Poisson models, merged beta-coefficients)",
+        "valid_for": { "age": "older adults (cohort baseline ages vary; mostly 50+)", "sex": "both (74% women)", "population": "10 prospective cohorts incl. Europe, Canada, USA, Australia, Japan (Hiroshima); 59,232 people, 250,000 person-years", "exposure_range": "current vs non-smoker; no dose", "south_asian_validated": "no" },
+        "uncertainty": "The osteoporotic-fracture CI (1.13–1.28) is printed that way in the abstract but does not contain the point estimate 1.29, so it is likely a typo in the original; a secondary summary gives 1.17–1.43. Verify in full text before use.",
+        "source": {
+          "citation": "Kanis JA, Johnell O, Oden A, et al. Smoking and fracture risk: a meta-analysis. Osteoporos Int 2005;16(2):155-62",
+          "doi": "10.1007/s00198-004-1640-3",
+          "pmid": "15175845",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/15175845/",
+          "where": "Abstract",
+          "quote": "The highest risk was observed for hip fracture (RR=1.84; 95% CI=1.52-2.22), but this was also somewhat lower after adjustment for BMD (RR=1.60; 95% CI=1.27-2.02).",
+          "access": "abstract only"
+        },
+        "supporting_sources": [],
+        "confidence": "medium",
+        "caveats": "This analysis underpins smoking as an input in the FRAX fracture tool (not opened; mention only). Most relevant for users 50+; for young users the absolute risk is tiny.",
+        "user_copy": "Hip fracture risk is about 1.8 times a non-smoker's (range 1.5–2.2), mostly relevant later in life."
+      },
+      {
+        "id": "smoking-facial-wrinkling",
+        "topic": "smoking",
+        "name": "Skin ageing (facial wrinkles)",
+        "estimates": "Relative risk of moderate/severe facial wrinkling in current vs never smokers aged 40+.",
+        "inputs": [
+          { "name": "is_current_smoker", "unit": "boolean", "how_we_get_it": "any cigarette logged in last 30 days" },
+          { "name": "sex", "unit": "men | women", "how_we_get_it": "profile" },
+          { "name": "age", "unit": "years", "how_we_get_it": "profile" }
+        ],
+        "kind": "table",
+        "formula": null,
+        "coefficients": null,
+        "table": [
+          { "group": "men 40+, current vs never", "relative_risk": 2.3, "ci_low": 1.2, "ci_high": 4.2 },
+          { "group": "women 40+, current vs never", "relative_risk": 3.1, "ci_low": 1.6, "ci_high": 5.9 },
+          { "group": "effect of pack-years in wrinkle score, expressed as years of ageing", "years_equivalent": 1.4, "ci_low": null, "ci_high": null }
+        ],
+        "output_unit": "relative risk; years of ageing equivalent",
+        "valid_for": { "age": "40+ (40–69 women, 40–59 men for pack-years analysis)", "sex": "both", "population": "USA, cross-sectional (911 people aged 40+ analysed)", "exposure_range": "current / never; pack-years for score", "south_asian_validated": "no" },
+        "uncertainty": "Wide CIs; cross-sectional; photo grading. Controlled for age, sun exposure and BMI.",
+        "source": {
+          "citation": "Ernster VL, Grady D, Miike R, Black D, Selby J, Kerlikowske K. Facial wrinkling in men and women, by smoking status. Am J Public Health 1995;85:78-82",
+          "doi": null,
+          "pmid": null,
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC1615259",
+          "where": "Abstract, Results and Conclusions",
+          "quote": "the estimated relative risk of moderate/severe wrinkling for current smokers compared to never smokers was 2.3 (95% confidence interval [CI] = 1.2, 4.2) among men and 3.1 (95% CI = 1.6, 5.9) among women.",
+          "access": "abstract only"
+        },
+        "supporting_sources": [
+          { "citation": "Koh JS, Kang H, Choi SW, Kim HO. Cigarette smoking associated with premature facial wrinkling: image analysis of facial skin replicas. Int J Dermatol 2002;41(1):21-7", "url": "https://pubmed.ncbi.nlm.nih.gov/11895509/", "agrees": "yes", "note": "Korean study (Asian skin), 20–69 years: current smokers RR 2.72 (1.32–3.21); >19 pack-years 2.93 (1.14–4.1); 11–19 pack-years 1.75 (1.54–3.67)." }
+        ],
+        "confidence": "low",
+        "caveats": "Useful motivational hook for young users, but the evidence is small and cross-sectional. The '1.4 years of ageing' figure is the pack-years effect as described in the abstract's words; do not scale it per cigarette.",
+        "user_copy": "People who smoke are about 2–3 times more likely to have noticeable facial wrinkles after 40."
+      },
+      {
+        "id": "smoking-dose-dementia",
+        "topic": "smoking",
+        "name": "Dementia, per 20 cigarettes/day",
+        "estimates": "Relative risk of all-cause dementia per 20 cigarettes/day, and for current vs never smokers.",
+        "inputs": [
+          { "name": "cigs_per_day", "unit": "cigarettes/day", "how_we_get_it": "daily log, 30-day average" }
+        ],
+        "kind": "formula",
+        "formula": "rr_vs_never = 1.34 ^ (cigs_per_day / 20)",
+        "coefficients": {
+          "rr_per_20_cigs": { "value": 1.34, "ci_low": 1.25, "ci_high": 1.43, "unit": "RR per +20 cigarettes/day" },
+          "rr_current_all_cause": { "value": 1.30, "ci_low": 1.18, "ci_high": 1.45, "unit": "RR" },
+          "rr_current_alzheimers": { "value": 1.40, "ci_low": 1.13, "ci_high": 1.73, "unit": "RR" },
+          "rr_current_vascular": { "value": 1.38, "ci_low": 1.15, "ci_high": 1.66, "unit": "RR" },
+          "rr_former_all_cause": { "value": 1.01, "ci_low": 0.96, "ci_high": 1.06, "unit": "RR" }
+        },
+        "table": null,
+        "output_unit": "relative risk",
+        "valid_for": { "age": "older adults (cohort baselines mostly 55+; effect strongest at 65–75)", "sex": "both", "population": "37 prospective cohort studies", "exposure_range": "dose slope per 20 cigarettes/day; do not extrapolate far above 40/day", "south_asian_validated": "no" },
+        "uncertainty": "95% CIs printed. Competing risk: smokers die earlier, which can bias dementia estimates either way.",
+        "source": {
+          "citation": "Zhong G, Wang Y, Zhang Y, Guo JJ, Zhao Y. Smoking is associated with an increased risk of dementia: a meta-analysis of prospective cohort studies with investigation of potential effect modifiers. PLoS One 2015;10(3):e0118333",
+          "doi": "10.1371/journal.pone.0118333",
+          "pmid": "25763939",
+          "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4357455/",
+          "where": "Abstract, Methods and Findings",
+          "quote": "For all-cause dementia, the risk increased by 34% for every 20 cigarettes per day (RR 1.34, 95% CI 1.25–1.43).",
+          "access": "abstract only"
+        },
+        "supporting_sources": [],
+        "confidence": "medium",
+        "caveats": "Good H3 message: former smokers showed no increased dementia risk (RR 1.01). Show only to users 40+.",
+        "user_copy": "Dementia risk is about +34% for every 20 cigarettes a day (range +25 to +43%), and people who quit had no extra risk."
+      }
+    ],
+    "not_found": [
+      { "wanted": "Oesophagus cancer by cigarettes/day", "reason": "Not reached in this pass; part 1 only has Doll 2004 (combined with mouth/throat). The Mario Negri dose-response series may have an oesophagus paper; not searched.", "searched": [] },
+      { "wanted": "Tooth loss numbers", "reason": "Not searched in this pass; only periodontitis found.", "searched": [] },
+      { "wanted": "Spline equations for oral/pharyngeal, gastric, pancreatic, kidney, breast curves", "reason": "Published in supplementary files / full texts that were not opened; only printed curve points used.", "searched": ["PMC12865294 (Supplementary Box 2 not opened)", "PubMed abstracts"] },
+      { "wanted": "Colorectal per-cigarette slope from Botteri 2020", "reason": "Abstract says linear but gives no slope; full text not opened.", "searched": ["https://boa.unimib.it/handle/10281/301882"] },
+      { "wanted": "Macular degeneration pooled meta-analysis numbers (Chakravarthy et al., BMC Ophthalmol 2010)", "reason": "Abstract read did not show smoking ORs; also note several co-authors were from a pharmaceutical company (not tobacco) — acceptable but used EUREYE instead.", "searched": ["https://doaj.org/article/6b63e14d7b534b929bd7e6ebde44a345"] },
+      { "wanted": "Male fertility: time-to-pregnancy or dose-response", "reason": "Only semen-parameter meta-analyses found; no validated link to conception probability.", "searched": ["PMC6325781", "PMC9639498"] },
+      { "wanted": "Skin ageing composite score / 'skin age'", "reason": "No validated composite; per your rules, not invented.", "searched": ["PMC1615259", "PubMed 11895509"] },
+      { "wanted": "Carried over from part 1 and still open: FEV1 per pack-year, asthma worsening, pneumonia, depression/anxiety, Carter NEJM 2015, US Surgeon General 2014 chapters", "reason": "Not covered in part 2 (you asked for cancers, sexual/reproductive, eyes, teeth, bones, skin, dementia).", "searched": [] }
+    ],
+    "recommend": "Show first: (1) smoking-dose-oral-pharyngeal-cancer — full-text, recent, a real dose curve plus a quitting curve, and mouth cancer is a top cancer in India (pair with the H2 chewing models). (2) smoking-dose-erectile-dysfunction — a clean per-10-cigarettes formula that is highly motivating for young men (opt-in only). (3) smoking-periodontitis — tangible, and quitters return to never-smoker risk, great for H3. (4) smoking-dose-pancreatic-cancer and smoking-dose-kidney-cancer — show that even a few cigarettes matter for cancer, from one consistent meta-analysis group. (5) smoking-dose-dementia — formula plus 'quitters had no extra risk' message for users 40+. Before release, fix three flagged items: complete the cataract source citation, confirm the Kanis osteoporotic-fracture CI, and add the author list for the liver-cancer meta-analysis."
+  }

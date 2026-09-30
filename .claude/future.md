@@ -11,6 +11,11 @@
 | Q5 | Food images: AI-generated illustrations vs photos? | D11 proposes illustrations |
 | ~~Q6~~ | ~~Chai value~~ | **Resolved:** derived chai (80 g milk + 8 g sugar per 150 ml cup = 89 kcal) + no-sugar variant (D22) |
 | ~~Q7~~ | ~~Missing basics~~ | **Resolved:** USDA values for dahi/sugar/honey/butter/bread/cheese/cola (D22); packaged items (toned milk, Parle-G…) via custom foods (D21) |
+| ~~Q8~~ | ~~Missing-food requests (D54): record failed searches automatically, or only on "Request it"?~~ | **Resolved 2026-09-30: both**, signed-in users only, food name text only ([food-requests.md](food-requests.md) "Capturing demand") |
+| ~~Q9~~ | ~~Which model runs the research agent?~~ | **Resolved 2026-09-30: OpenAI.** Tested both with web search: `gpt-6-luna` (13.7 s) paired a correct USDA id with another food's name; `gpt-6-astra` (27.8 s) got both right → `RESEARCH_MODEL` default `gpt-6-astra`; AI logging keeps luna |
+| ~~Q10~~ | ~~Where does the scheduled job run?~~ | **Resolved 2026-09-30 (follows Q11 = B):** a "Run research" button in the admin panel first; a daily Vercel Cron call later. No GitHub Actions |
+| ~~Q11~~ | ~~How do new foods reach users?~~ | **Resolved 2026-09-30: B**, a Supabase table of approved foods; the owner approves each one in the admin panel; the app downloads them and merges them into search; no deploy. Partly supersedes D13 (the built-in catalog stays; approved foods come on top) |
+| ~~Q12~~ | ~~May the agent transcribe official label images / chain nutrition PDFs (`MFR_LABEL`)?~~ | **Resolved 2026-09-30: yes**, transcription only, shown beside the image, the owner checks each one before Approve |
 
 ## Planned future changes
 
@@ -18,10 +23,12 @@
 |---|---|
 | **Home vs restaurant toggle** | Restaurant/dhaba food ≈ 1.5–2× the oil; biggest source of hidden calories |
 | **Hidden-calorie chips** | "+ ghee on roti", "+ tadka", "+ sugar in chai" on the food detail |
+| **Syrup-soaked fried sweets** (jalebi, imarti, balushahi, gulab jamun) | The D52 model covers dough + absorbed oil only; the research agent answers "not found" for jalebi. Needs a syrup-uptake step (measured sugar uptake or a label) before these can be researched |
 | **Rebuild existing fried rows with D52** | done: bhatura, samosa (potato), kachori (khasta). Left: veg samosa, matar kachori, aloo + onion pakora, poori, medu vada, dahi vada, gulab jamun, besan kadhi pakodi, fried fish: send them through `recipe.frying` and drop the INDB rows (old logs keep their snapshots) |
 | NL logging follow-ups | Real-phone voice test (Android + iPhone); prune `parse_cache` / `parse_usage` (pg_cron); grow `evals/nl-parse.jsonl` from real corrections; maybe server STT later (nl-logging.md) |
 | Thali photo logging | Photo → items + katori counts (Claude vision) |
-| Weekly Wrapped, calorie bank, festival/shaadi mode, fasting mode | Engagement features from the roadmap (features.md v2) |
+| Calorie bank (D44), festival/shaadi days (D43), fasting mode | Engagement features from the roadmap (features.md v2); Weekly Wrapped is built (D42) |
+| **Missing-food requests + research agent** (D54, decided) | Demand from failed searches / AI logging / custom foods → alias triage → AI call finds source refs → server reads the numbers from INDB/IFCT/USDA + checks → owner approves in admin → live from a Supabase table → notify. [food-requests.md](food-requests.md) "Build plan"; all decisions made (Q8–Q12), not built |
 | Barcode scan | Packaged foods |
 | Realtime sync | Today sync runs on edit/focus/reconnect; Supabase Realtime could push to other open devices |
 | Per-dish illustrations (D11) | Category art exists; per-dish art would be the next visual step |
@@ -31,6 +38,19 @@
 | Gym place search follow-ups (D37) | Smoke-test with the real Geoapify key; prune `place_cache` / `api_rate` (pg_cron, with the parse tables); compare Ola Maps on ~20 real gym names once its storage terms are confirmed in writing; maybe reverse-geocode a hand-placed pin for an area label |
 | **Per-record IndexedDB for user data** (D50) | Replace the single `ct-v1` localStorage blob: one IndexedDB record per entry/workout/…, write only what changed, quota becomes a share of the disk; one-time move of existing data; maybe `idb-keyval` (ask first). Needed before users reach ~2 years of logs |
 | Capacitor wrapper | Only if App Store/Play Store presence or native features are needed |
+
+## Known issues (found 2026-09-30, not fixed yet)
+
+| Issue | Where | Notes |
+|---|---|---|
+| ~~Migration `20260925180000_measurements` probably not pushed~~ | CLAUDE.md status | **Resolved 2026-09-30:** the owner pushed every pending migration |
+| Challenge lift ✓ can reuse an old verified visit | `challenge_best_lift` (`…101000_challenges.sql`) | A set counts as verified if its `visitId` (client-synced JSON) is any of the user's verified visits; the visit's date isn't compared with the workout's date. Fix: require `v.started_at::date` (IST) = the workout date, or the set's `createdAt` inside the visit window |
+| One missing server env var breaks unrelated routes | `src/server/env.ts` | `serverEnv()` validates everything at once: no `OPENAI_API_KEY` → gym, places and admin routes 500 too. Split per feature or make the key optional until parse is called |
+| ~~Checker: a `REPLACES` target missing from the catalog is still accepted~~ | `scripts/check-research.mjs` | **Fixed 2026-09-30** (status decided after the replacement check) |
+| `/akhada` not precached | `public/sw.js` | Main nav tab; cached only after the first visit |
+| Manifest locks portrait | `src/app/manifest.ts` | Installed on a tablet, the landscape layouts can't be used |
+| Stale code comments | `store.ts` (says `lib/sync.ts`), `burn.ts` `liftBurn` (says weight lifted isn't in the model; lifting v2 is) | Cosmetic. (The checker's DEMO_KEY comment was right: 30 an hour, 50 a day per IP; fixed the docs instead) |
+| `admin/userModel.ts` copies `DEFAULT_GOALS` | `src/lib/admin/userModel.ts` | Can drift from `lib/nutrition.ts` |
 
 ## Parked (not now)
 
@@ -90,3 +110,9 @@
 | 2026-09-28 | Chicken biryani added (INDB ASC122 recipe with IFCT chicken thigh, cooked weight from USDA water contents; 185 kcal/100 g). Checker refuses self-contradicting IFCT rows (N001). Found: INDB per-100 g is on raw ingredient weight. Catalog 308. Eval 84/84 |
 | 2026-09-28 | Batch 1b finished (pav, momos, vada pav, dabeli, misal pav, bread pakora): 44 research foods, catalog 317; checker reads USDA from local CSV downloads (`FDC_DIRS`), keeps a food's own aliases on re-runs; veg momos rebuilt from a recipe (USDA's 'no meat' dumpling is plain dough). Alcohol research prompt written (import needs an alcohol category + alcohol_g). Eval 84/84 |
 | 2026-09-29 | Alcohol (D53): `alcohol` category, `alc` field, ml + 'incl. N kcal from alcohol' in the food detail, beer-mug art, checker computes kcal from ABV (7 kcal/g); batch A1: 12 beers (Bira, Godfather, generics). Catalog 329. Eval 84/84 |
+| 2026-09-30 | Docs synced with the code (architecture: 11 API routes, Akhada routes, store fields, eval 84; badges 57 + 16 = 73; Akhada screens; data.md missing list + source-file location); known issues listed above; missing-food requests + research agent proposed (D54, food-requests.md). No code change |
+| 2026-09-30 | D54 phase 1: missing-food requests. Migration `…100000_food_requests` (**not pushed yet**): `food_requests`, `food_request_users`, `food_request_add` (signed in, rate limited), admin functions + audit action. App: Request it + Create at the end of a search (add sheet, Add anything), `looksLikeFoodName` for dish names with spaces, signals search (looked at 1.5 s, then given up) / AI / custom, offline queue. Admin Requests tab (Same as ≥ 85 %, Dismiss, Reopen). Found: Postgres `[[:punct:]]` splits Devanagari conjuncts; signed-in users never saw Create for multi-word searches. SQL on PGlite, UI in Chrome (phone + desktop, both themes) |
+| 2026-09-30 | D54 phase 2: shared foods. Migration `…110000_shared_foods` (**not pushed yet**): `food_candidates`, `shared_foods`, `catalog_updates()` (anon + authenticated), `admin_food_review`, `admin_food_candidate_decide` (approve → shared + request found), `admin_shared_food_set` (retract / restore), audit actions. Device: `lib/sharedFoods.ts` (start + focus, 15 min, saved copy `prana-shared-foods`, shape check) → `setSharedFoods` in `lib/foods.ts` (search, matcher, getFood; catalog wins an id clash); "Same as" names now live. Server gate `server/foods/schema.ts` (Zod Food + macro ±15 % + 1,200 kcal unit + not a catalog id). Admin: Waiting for your check (cards, problems block Approve, Reject with reason) + Added for everyone (Retract / Restore). SQL on PGlite, gate unit-tested, UI in Chrome (phone + desktop, both themes) |
+| 2026-09-30 | D54 phase 3: food research agent. Checker rules moved to `src/lib/research/check.ts` (+ `shape.ts`, `csv.ts`), shared by `scripts/check-research.mjs`, `scripts/build-foods.mjs` and the server; regression: identical report + `foods-research.json` + `foods.generated.json`; the REPLACES bug fixed. Server: `src/server/foods/{sources,verify,research}.ts` (INDB.xlsx from GitHub at run time, IFCT CSV, USDA API with `USDA_API_KEY`), `POST /api/admin/research` (one food per call, 300 s, `RESEARCH_PER_DAY`), `src/data/food-refs.generated.json`. Admin: Research / Research top N / Research again (stuck), AI "same as" suggestions, reject reopens the request. Real runs: dal makhani (INDB OSR139), fulka (alias), asdfgh (not a food), kulfi (INDB ASC321, reads low: raw-weight warning added), Amul Kool Kesar (official Rajkot Union table), jalebi (not found: syrup). No migration |
+| 2026-09-30 | D54 phase 4: label images beside the numbers. `src/server/foods/label.ts` (vision copy with `LABEL_MODEL` = gpt-6-luna after a test on known Yogabar labels: 20/20 + a blurred misaligned label; astra slipped once), per-serve / kJ maths and the comparison in our code; research reads label images; review route: Read (link or uploaded photo), Use the label's numbers, Approve refuses a differing label and needs the owner's tick. Card: zoomable image + ✓ / ≠ table. Migration `…120000_candidate_labels` (**not pushed yet**). The old session's INDB / USDA download folder is gone (tmp wiped): data.md says how to get them again. Also: one test request to Open Food Facts carried the owner's email in its User-Agent by mistake; retries used a generic one |
+| 2026-09-30 | D54 phase 5 (D54 complete): "your food is in Prana now". Migration `…130000_food_request_news` (**not pushed yet**): `food_request_news()`, `food_request_seen()`. Today cards (Log it opens the food, Use it instead of mine swaps thalis to the checked food at the same grams with Undo, dismiss); only people who asked or made their own are told. Store fix: `addCustomFood` also clears a pending delete. Earlier the same day: `…100000` + `…110000` had been run outside `db push`; history fixed with `migration repair`, `…120000` pushed |
