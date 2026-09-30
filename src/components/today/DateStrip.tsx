@@ -30,7 +30,7 @@ export function DateStrip({ date, onChange, logged, streak, streakLive }: {
         </div>
         <div className="flex items-center gap-1">
           <Link
-            href="/progress"
+            href="/health"
             aria-label={`${streak} day streak`}
             className={`mr-1 flex h-10 items-center gap-1 rounded-full border px-3 text-sm font-bold tabular transition-colors ${
               streak ? "border-saffron/40 bg-saffron/10 text-saffron" : "border-line text-faint"

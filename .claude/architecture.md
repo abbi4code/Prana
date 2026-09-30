@@ -31,7 +31,7 @@ src/app/
   api/places/search/    gym place search (D37): sign-in, rate limit, shared cache, provider behind an interface (Geoapify)
   api/admin/            admin panel API (D51): me, stats?section=, users, user?id= (logged), reports (resolve), food-requests (D54 queue + triage), food-review (D54 candidates, approve / reject, retract), research (D54: one food per call, maxDuration 300); admin = ADMIN_EMAILS + Google, server-checked
   admin/, admin/u/[id]/ admin panel pages (D51, admin.md)
-  progress/page.tsx     Prana (global) + food streak cards, year heatmap (food/workout/both), weight, 14-day calories
+  health/page.tsx       Health (D55): ?tab=progress | body | habits (components/health); progress/page.tsx redirects here
   akhada/page.tsx       Akhada tab (D46–D49): ?tab=leaderboard | challenges | awards (badges D38 + records D36), inside AkhadaGate
   akhada/c/[id], d/[id], join/[token]   one challenge, one duel, invite-link accept page
   achievements/page.tsx redirect to /akhada?tab=awards (old links)
@@ -52,6 +52,7 @@ src/components/
   akhada/               Akhada (D46–D49): Profile (gate, consent/edit, avatar), Leaderboard (+ Trained today), People (person / friends / inbox sheets, CheerButton), Challenges (tab, create, detail, Results), Duels (block, picker, DuelView), AkhadaCard (Me)
   admin/                admin panel (D51): ui.tsx kit (Panel, Stat, Segmented, BarList, SplitBar, Ring), AdminGate, AdminLink, Overview, UsersTab, FoodTab, TrainingTab, SocialTab, SystemTab, RequestsTab + FoodReview (D54), UserDetail, UserDay, Corrections
   wrapped/              Weekly Wrapped (D42): WrappedViewer (stories), WrappedCards, WrappedEntry (Today banner, Progress card)
+  health/               ProgressTab (streaks, heatmap, weight, calories), BodyTab (report tiles, WHO heart risk, BP log, INTERHEART, IDRS), HabitsTab (opt-in, counter, per-disease risk, quit, alcohol), HealthQuestions (sheet), ui.tsx (RiskRow, SourceNote)
   progress/             StreakShell (one layout for every streak card) + StreakCard / PranaStreakCard / WorkoutStreakCard, YearHeatmap (fluid squares), BodyCards (D39)
   achievements/         AchievementsView (the Akhada "Awards" tab), Badges, Medal
   me/                   EnergyCard (D45; also exports GoalNudge, used on Progress)
@@ -82,6 +83,7 @@ src/lib/
   sharedFoods.ts        D54 phase 2: `catalog_updates()` on start + focus (15 min) → saved copy `prana-shared-foods` → `setSharedFoods` in foods.ts
   foodNews.ts           D54 phase 5: food_request_news() → Today cards; ownVersion + swapToChecked (thalis to the checked food at the same grams, custom food removed, undo)
   foodRequests.ts       D54: missing-food signals → `food_request_add` RPC (signed in, name only, offline queue `prana-food-requests`, one send per name + signal per session)
+  health/               D55, PURE: sources.ts (every study), tobacco.ts (per-disease models, spline curves), quit.ts, alcohol.ts, scores.ts (WHO chart lookup, INTERHEART, IDRS, BMI), bp.ts (home BP rules); useHealth.ts gathers the inputs from the store
   greet.ts              PURE greeting picker (D31): moments, fits, pickGreeting, greetParts
   useWorkouts.ts        usePerson (body weight for a day), useDayWorkouts, lastTime, useFitnessStreaks (workout + global)
   auth.ts               useAuth, initAuth, signInWithGoogle, signOut, adoptLocalData
@@ -124,7 +126,7 @@ UI action → useStore action ─→ state (entries, goals, weights, water, cust
 ```
 
 ### Store (`lib/store.ts`)
-- `useStore` persisted fields: `entries, goals, profile, weights, water, customFoods, savedMeals, workouts, fitness, routines, measurements, gyms, visits, localVisits, pendingCheckout, locationConsent, locationConsentAt, sync, guest` (see `partialize`). Not in the store: Akhada data (`lib/social/state.ts`, online RPCs), rest timer (`prana-rest`), progress photos (IndexedDB).
+- `useStore` persisted fields: `entries, goals, profile, weights, water, customFoods, savedMeals, workouts, fitness, routines, measurements, bp, habitDays, health, gyms, visits, localVisits, pendingCheckout, locationConsent, locationConsentAt, sync, guest` (see `partialize`). Not in the store: Akhada data (`lib/social/state.ts`, online RPCs), rest timer (`prana-rest`), progress photos (IndexedDB).
 - Saved through `lib/localSave.ts` (`batchedStorage`), not zustand's default: see "Local storage" below.
 - `skipHydration: true`; `AppShell` calls `hydrateStore()` then `initAuth()`. Pages render skeletons until `hydrated` (so SSR HTML and the first client render match).
 - `merge` fills missing queue fields from `EMPTY_QUEUE` (old saves lack newer fields).
@@ -132,7 +134,7 @@ UI action → useStore action ─→ state (entries, goals, weights, water, cust
 - `useUI` (not persisted): selected `date` (null = today), `sheet` (`add` | `edit` | `thali`), `toast`, `fresh` (entry ids to glow once).
 
 ### Sync (`lib/sync`, `lib/auth.ts`, D18)
-- Tables: `food_logs`, `user_goals` (+ `profile`, `fitness` jsonb), `weights`, `water`, `custom_foods` (jsonb), `saved_meals` (jsonb), `workouts` (jsonb), `routines` (jsonb), `measurements` (jsonb, D39), `user_gyms` (columns). **Read-only on the device:** `gym_visits` (pulled, never pushed; written by `/api/gym/*` through Postgres functions), `gym_events` (server only). Device-only gym visits (offline/guest) upload through `flushGym()` inside the sync run. All have RLS `user_id = auth.uid()`, `updated_at` trigger, soft delete via `deleted_at`.
+- Tables: `food_logs`, `user_goals` (+ `profile`, `fitness` jsonb), `weights`, `water`, `custom_foods` (jsonb), `saved_meals` (jsonb), `workouts` (jsonb), `routines` (jsonb), `measurements` (jsonb, D39), `blood_pressure` + `habit_days` (jsonb, D55; `user_goals.health` jsonb), `user_gyms` (columns). **Read-only on the device:** `gym_visits` (pulled, never pushed; written by `/api/gym/*` through Postgres functions), `gym_events` (server only). Device-only gym visits (offline/guest) upload through `flushGym()` inside the sync run. All have RLS `user_id = auth.uid()`, `updated_at` trigger, soft delete via `deleted_at`.
 - Push upserts dirty rows, soft-deletes deleted ids, then clears only what it pushed (edits made mid-push stay queued).
 - Pull fetches rows with `updated_at > lastPulledAt` (paged by 1000) and merges: server wins, **except** ids with unpushed local changes.
 - Sign-in: `adoptLocalData` pushes guest data into the account (goals only if edited as guest). Another user's leftover data is wiped first. Sign-out: sync, `signOut`, `resetLocal()`.

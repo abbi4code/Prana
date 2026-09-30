@@ -205,3 +205,48 @@ export type LocalVisit = { id: string; gymId: string | null; startedAt: number; 
 export type MeasureSite = "waist" | "chest" | "arms" | "hips" | "thighs" | "neck";
 /** One day's tape measurements in cm (only the sites measured that day). Synced (measurements). */
 export type Measurement = { id: string; date: string; cm: Partial<Record<MeasureSite, number>>; createdAt: number };
+
+// ── Health tab (D55, .claude/habits.md) ──
+
+/** One blood-pressure reading a day (mmHg; pulse in beats/min). Synced (blood_pressure). */
+export type BpReading = { id: string; date: string; sys: number; dia: number; pulse?: number; createdAt: number };
+
+export type TobaccoKind = "cigarette" | "bidi" | "chew" | "hookah" | "vape";
+/** One day's tobacco: cigarettes / bidis / chews (gutka, khaini, paan with tobacco) / hookah sessions / vape sessions. Synced (habit_days). */
+export type HabitDay = { id: string; date: string; counts: Partial<Record<TobaccoKind, number>>; createdAt: number };
+
+export type YesNo = "yes" | "no" | "unsure";
+/**
+ * Answers the risk scores need (INTERHEART non-lab, Indian Diabetes Risk Score, WHO chart) + Habits settings.
+ * All optional: a score shows what it still needs. Synced with the goals row (user_goals.health).
+ */
+export type HealthInfo = {
+  /** Habits tab turned on (opt-in) and when (the tobacco average starts there) */
+  habitsOn?: boolean;
+  habitsSince?: string;
+  /** tobacco kinds shown in the counter */
+  kinds?: TobaccoKind[];
+  /** before Prana: smoking status, usual amount a day, years smoked, date of the last cigarette if quit */
+  smoker?: "never" | "former" | "current";
+  pastPerDay?: number;
+  yearsSmoked?: number;
+  quitOn?: string;
+  /** ₹ per unit, for the money line */
+  price?: Partial<Record<TobaccoKind, number>>;
+  diabetes?: YesNo;
+  highBp?: YesNo;
+  /** a biological parent had a heart attack (INTERHEART) */
+  parentHeart?: YesNo;
+  /** parents with diabetes (IDRS) */
+  parentsDiabetes?: 0 | 1 | 2;
+  /** IDRS 4 levels; INTERHEART counts mild / none as "mainly sedentary or mild" */
+  activity?: "vigorous" | "moderate" | "mild" | "none";
+  secondHand?: boolean;
+  stress?: boolean;
+  lowMood?: boolean;
+  saltyDaily?: boolean;
+  friedOften?: boolean;
+  fruitDaily?: boolean;
+  vegDaily?: boolean;
+  meatTwiceDaily?: boolean;
+};

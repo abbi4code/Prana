@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "motion/react";
-import { ChartLine, Dumbbell, House, Plus, Swords, UserRound } from "lucide-react";
+import { Dumbbell, HeartPulse, House, Plus, Swords, UserRound } from "lucide-react";
 import { useUI } from "@/lib/store";
 import { mealForNow } from "@/lib/nutrition";
 
@@ -11,7 +11,7 @@ import { mealForNow } from "@/lib/nutrition";
 export const NAV_TABS = [
   { href: "/", label: "Today", short: "Today", icon: House },
   { href: "/workout", label: "Workout", short: "Workout", icon: Dumbbell },
-  { href: "/progress", label: "Progress", short: "Progress", icon: ChartLine },
+  { href: "/health", label: "Health", short: "Health", icon: HeartPulse },
   { href: "/akhada", label: "Akhada", short: "Akhada", icon: Swords },
   { href: "/me", label: "Me", short: "Me", icon: UserRound },
 ] as const;

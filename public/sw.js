@@ -1,8 +1,8 @@
 // Offline support (decision D02). Hand-written instead of Serwist so it works with Turbopack.
 // Pages: network first, cached copy when offline. Build assets: cache first (they're content-hashed).
 // Exercise photos (/exercises/*.webp) are cache-first too: fetched the first time they're seen, then offline.
-const VERSION = "v3";
-const PAGES = ["/", "/workout", "/progress", "/me", "/login"];
+const VERSION = "v4";
+const PAGES = ["/", "/workout", "/health", "/akhada", "/me", "/login"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(caches.open(`pages-${VERSION}`).then((c) => c.addAll(PAGES)).then(() => self.skipWaiting()));

@@ -166,5 +166,30 @@ Prompt: `data/research/PROMPT-HABITS.txt` (browser Claude, batches H1–H5: ciga
 ## Research status and verified data (2026-09-30)
 All batches H1–H5 received and verified against the original papers (~90 models, ~60 sources; every source re-opened, no invented numbers, no tobacco / alcohol-industry funding). Raw replies stay in `data/research/habits-*.json` as browser Claude wrote them; the corrections and additions above are what a verified data file (to be written when the screen is designed) must use. Official chart: `data/research/who-cvd-south-asia-nonlab.json`.
 
-## Open (after the research)
-Where it lives (Progress section vs own page), synced vs device-only (sensitive health data, DPDP; admin visibility), whether to add a blood pressure entry (needed by the WHO CVD chart), alcohol reference line.
+## As built (2026-09-30, D55)
+Owner's picks: Progress renamed **Health** with Progress · Body · Habits sub-tabs (no new nav tab); habits data **synced like everything else**; a **blood-pressure entry**.
+
+| Path | Role |
+|---|---|
+| `supabase/migrations/20260930140000_health.sql` | `blood_pressure`, `habit_days` (jsonb docs, RLS own rows, one entry per day each), `user_goals.health` jsonb |
+| `src/lib/types.ts` | `BpReading`, `HabitDay`, `TobaccoKind`, `HealthInfo` (answers + Habits settings) |
+| `src/lib/store.ts`, `sync/engine.ts`, `sync/rows.ts`, `auth.ts` | `bp`, `habitDays`, `health`; queues `dirtyBp/deletedBp`, `dirtyHabits/deletedHabits`; `health` rides on `goalsDirty` |
+| `src/lib/health/sources.ts` | every study (citation, URL, who was studied, India yes / partly / no) |
+| `src/lib/health/tobacco.ts` | per-disease models: Hackshaw (log-linear 1–20 a day, jump 0 → 1, capped above 20), Banks bands, Doll bands, Mario Negri spline curves (oral, stomach, pancreas, kidney, breast), Pan bands, status-only rows (TB India, dementia, gums, hip fracture), ED odds per 10; India all-cause (Jha), years lost, minutes per cigarette; chewing, hookah, vape, tobacco × alcohol |
+| `src/lib/health/quit.ts` | sourced milestones only (12 h CO, a few months lung +5 %, 1 y extra heart risk halves, 5–15 y stroke, 10 y lung 30–50 %, 15 y heart), CVD / lung by years since quitting, oral-cancer quit curve, years gained by quit age (conservative: the published age at or above yours), weight after quitting, minutes regained, cutting down |
+| `src/lib/health/alcohol.ts` | ethanol g from logged drinks, South Asia lowest-risk / no-net-harm by age + sex, Wood life-expectancy bands, Bagnardi cancer bands, BP payoff, breast, AF (men), cirrhosis (women), 60 g heavy days |
+| `src/lib/health/scores.ts` | Asian BMI, Indian waist / WHtR / 2025 stages, WHO chart lookup (`src/data/who-cvd-south-asia.json`), INTERHEART points + South Asia risk, IDRS |
+| `src/lib/health/bp.ts` | home BP: ≥ 135/85 high (ISH 2020, IGH-IV 2019, InSH 2025), ≥ 180/120 urgent + red-flag symptoms (ICMR STW 2026), fewer than 3 days = keep measuring; clinic grades not applied to home readings |
+| `src/lib/health/useHealth.ts` | inputs from the store: BMI (7-day weight), waist / hips / WHR / WHtR, BP 7-day average, tobacco a day (14 days or since Habits started), smoking status (log wins: smoked in 30 days = current; else answers), quit date, alcohol over 28 days |
+| `src/app/health/page.tsx`, `src/app/progress/page.tsx` | tabs; old route redirects |
+| `src/components/health/` | `ProgressTab`, `BodyTab`, `HabitsTab`, `HealthQuestions`, `ui.tsx` (RiskRow: "+X %" under 3×, "N×" above, "no clear change" when the range includes 1; SourceNote) |
+
+**Screens.** Body: 4 tiles (BMI, waist, BP, 10-year heart risk) → WHO heart-risk card (colour scale, what-ifs from the same chart: not smoking, BP one band lower, BMI one band lower; diabetes / ≥ 10 % advice) · BP card (log, trend, readings, how-to-measure) · Heart score (INTERHEART, changeable vs fixed points, "N to answer") · Diabetes risk (IDRS parts) → Tape & photos. Habits: opt-in card → setup sheet (kinds, status, usual amount, years, quit date, prices) → Today counter · per-disease impact (slider 1–40, tap a row for its study) · quit card (smoke-free days + milestones + vs-still-smoking, or "if you quit today") · life & money · chewing / hookah / vape · alcohol · smoking + drinking. Phone: one column, the impact list right after the counter; desktop: two columns, the left one sticky.
+
+**Verified:** Node checks reproduce every published curve point and score (oral 1.78 / 2.88 / 4.80, pancreas 2.15 at 30, INTERHEART 1.6 % / 8.4 %, WHO 12 % → 7 % example, IDRS, South Asia limits); Chrome 390 × 844 + 1440 × 900, dark + light: opt-in → setup → counter → slider → source note, BP log → queue, answers → goalsDirty, `/progress` → `/health`; no page errors, no sideways scroll.
+
+**Not done yet (future.md):** admin member page doesn't show BP / habits; the counter only edits today; the 2025 obesity "symptoms" aren't asked (stage 2 needs them); BP is one reading a day (guidelines average morning + evening).
+
+## Decided / still open
+- Decided (owner, 2026-09-30, D55): Health tab with sub-tabs (not a new nav tab); habits synced like other data (admin can see logged data, so the privacy policy must say so, D51); BP entry added. Alcohol reference = the GBD South Asia lowest-risk / no-net-harm amounts by age and sex (no single number).
+- Open: waist method. Prana's tape card uses the WHO midpoint (rib ↔ hip bone); the Indian consensus measures just above the iliac crest. Scores use whatever the user measured.

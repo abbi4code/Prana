@@ -76,7 +76,7 @@ function Body({ e }: { e: E }) {
       <p className="mt-4 flex items-start gap-1.5 text-[11px] leading-relaxed text-faint">
         <Scale size={12} className="mt-0.5 shrink-0" />
         <span>
-          At {e.weight.kg} kg ({e.weight.from === "weigh-ins" ? "7-day average of your weigh-ins" : "the weight in your profile; log weigh-ins in Progress to keep it current"}).
+          At {e.weight.kg} kg ({e.weight.from === "weigh-ins" ? "7-day average of your weigh-ins" : "the weight in your profile; log weigh-ins in Health → Progress to keep it current"}).
           Mifflin–St Jeor: within about 10% for most people in studies, less tested in Indian adults, so treat it as a guide.
           Most of it keeps your organs going: brain, liver, heart, kidneys.
         </span>

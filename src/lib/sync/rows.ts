@@ -1,6 +1,6 @@
 // Row mapping + merge rules between the local store and Supabase tables.
 // Pure functions (no imports with side effects) so they can be tested in isolation.
-import type { Entry, Fitness, Food, Gym, GymVisit, Measurement, Routine, SavedMeal, WeightLog, Workout } from "../types";
+import type { BpReading, Entry, Fitness, Food, Gym, GymVisit, HabitDay, HealthInfo, Measurement, Routine, SavedMeal, WeightLog, Workout } from "../types";
 import { readGymPlace } from "../gym/places.ts";
 
 export type LogRow = {
@@ -31,6 +31,8 @@ export type MealRow = { id: string; user_id?: string; data: SavedMeal; updated_a
 export type WorkoutRow = { id: string; user_id?: string; data: Workout; updated_at?: string; deleted_at: string | null };
 export type RoutineRow = { id: string; user_id?: string; data: Routine; updated_at?: string; deleted_at: string | null };
 export type MeasurementRow = { id: string; user_id?: string; data: Measurement; updated_at?: string; deleted_at: string | null };
+export type BpRow = { id: string; user_id?: string; data: BpReading; updated_at?: string; deleted_at: string | null };
+export type HabitRow = { id: string; user_id?: string; data: HabitDay; updated_at?: string; deleted_at: string | null };
 
 const num = (v: unknown) => (v == null ? null : Number(v));
 
@@ -99,6 +101,11 @@ export function rowToFitness(v: unknown, fallback: Fitness): Fitness {
     burnGoal: typeof f.burnGoal === "number" && f.burnGoal > 0 ? f.burnGoal : null,
     restDays: Array.isArray(f.restDays) ? f.restDays.filter((d) => Number.isInteger(d) && d >= 0 && d <= 6) : fallback.restDays,
   };
+}
+
+/** user_goals.health from the server (D55); older rows have none. Keeps only an object. */
+export function rowToHealth(v: unknown, fallback: HealthInfo): HealthInfo {
+  return v && typeof v === "object" && !Array.isArray(v) ? (v as HealthInfo) : fallback;
 }
 
 /** Latest server timestamp seen, used as the next pull's lower bound. */

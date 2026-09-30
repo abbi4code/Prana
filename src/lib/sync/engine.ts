@@ -5,8 +5,8 @@ import { getSupabase } from "../supabase";
 import { flushGym } from "../gym/api";
 import { useStore, type SyncQueue } from "../store";
 import {
-  entryToRow, gymToRow, maxUpdated, mergeDocs, mergeEntries, mergeFoods, mergeGyms, mergeVisits, mergeWater, mergeWeights, rowToFitness,
-  type FoodRow, type GymRow, type LogRow, type MealRow, type MeasurementRow, type RoutineRow, type VisitRow, type WaterRow, type WeightRow, type WorkoutRow,
+  entryToRow, gymToRow, maxUpdated, mergeDocs, mergeEntries, mergeFoods, mergeGyms, mergeVisits, mergeWater, mergeWeights, rowToFitness, rowToHealth,
+  type BpRow, type FoodRow, type GymRow, type HabitRow, type LogRow, type MealRow, type MeasurementRow, type RoutineRow, type VisitRow, type WaterRow, type WeightRow, type WorkoutRow,
 } from "./rows";
 
 const PAGE = 1000; // PostgREST max rows per request
@@ -109,6 +109,16 @@ async function push(userId: string) {
   if (q.deletedMeasurements.length)
     check(await supabase.from("measurements").update({ deleted_at: now }).in("id", q.deletedMeasurements));
 
+  const bp = s.bp.filter((r) => q.dirtyBp.includes(r.id));
+  if (bp.length) check(await supabase.from("blood_pressure").upsert(bp.map((r) => ({ id: r.id, user_id: userId, data: r, deleted_at: null }))));
+  if (q.deletedBp.length)
+    check(await supabase.from("blood_pressure").update({ deleted_at: now }).in("id", q.deletedBp));
+
+  const habits = s.habitDays.filter((d) => q.dirtyHabits.includes(d.id));
+  if (habits.length) check(await supabase.from("habit_days").upsert(habits.map((d) => ({ id: d.id, user_id: userId, data: d, deleted_at: null }))));
+  if (q.deletedHabits.length)
+    check(await supabase.from("habit_days").update({ deleted_at: now }).in("id", q.deletedHabits));
+
   const gyms = s.gyms.filter((g) => q.dirtyGyms.includes(g.id));
   if (gyms.length) check(await supabase.from("user_gyms").upsert(gyms.map((g) => gymToRow(g, userId))));
   if (q.deletedGyms.length)
@@ -118,6 +128,7 @@ async function push(userId: string) {
     check(await supabase.from("user_goals").upsert({
       user_id: userId, daily_kcal: s.goals.kcal, protein_g: s.goals.p, carbs_g: s.goals.c, fat_g: s.goals.f, profile: s.profile,
       fitness: s.fitness,
+      health: s.health,
       location_consent: s.locationConsent,
       location_consent_at: s.locationConsentAt ? new Date(s.locationConsentAt).toISOString() : null,
     }));
@@ -141,11 +152,15 @@ async function push(userId: string) {
       dirtyRoutines: minus(cur.sync.dirtyRoutines, routines.map((r) => r.id)),
       dirtyMeasurements: minus(cur.sync.dirtyMeasurements, measurements.map((m) => m.id)),
       deletedMeasurements: minus(cur.sync.deletedMeasurements, q.deletedMeasurements),
+      dirtyBp: minus(cur.sync.dirtyBp, bp.map((r) => r.id)),
+      deletedBp: minus(cur.sync.deletedBp, q.deletedBp),
+      dirtyHabits: minus(cur.sync.dirtyHabits, habits.map((d) => d.id)),
+      deletedHabits: minus(cur.sync.deletedHabits, q.deletedHabits),
       deletedRoutines: minus(cur.sync.deletedRoutines, q.deletedRoutines),
       dirtyGyms: minus(cur.sync.dirtyGyms, gyms.map((g) => g.id)),
       deletedGyms: minus(cur.sync.deletedGyms, q.deletedGyms),
       // if goals changed again mid-push, keep the flag
-      goalsDirty: cur.goals === s.goals && cur.profile === s.profile && cur.fitness === s.fitness && cur.locationConsent === s.locationConsent ? false : cur.sync.goalsDirty,
+      goalsDirty: cur.goals === s.goals && cur.profile === s.profile && cur.fitness === s.fitness && cur.health === s.health && cur.locationConsent === s.locationConsent ? false : cur.sync.goalsDirty,
     },
   }));
 }
@@ -166,7 +181,7 @@ async function fetchSince<T>(table: string, since: string | null): Promise<T[]> 
 async function pull() {
   const supabase = getSupabase()!;
   const since = useStore.getState().sync.lastPulledAt;
-  const [logs, weights, water, foods, meals, workouts, gyms, visits, routines, measurements, goalsRes] = await Promise.all([
+  const [logs, weights, water, foods, meals, workouts, gyms, visits, routines, measurements, bp, habits, goalsRes] = await Promise.all([
     fetchSince<LogRow>("food_logs", since),
     fetchSince<WeightRow>("weights", since),
     fetchSince<WaterRow>("water", since),
@@ -177,6 +192,8 @@ async function pull() {
     fetchSince<VisitRow>("gym_visits", since),
     fetchSince<RoutineRow>("routines", since),
     fetchSince<MeasurementRow>("measurements", since),
+    fetchSince<BpRow>("blood_pressure", since),
+    fetchSince<HabitRow>("habit_days", since),
     supabase.from("user_goals").select("*").maybeSingle(),
   ]);
   if (goalsRes.error) throw new Error(goalsRes.error.message);
@@ -195,12 +212,15 @@ async function pull() {
       visits: mergeVisits(s.visits, visits),
       routines: mergeDocs(s.routines, routines, new Set([...q.dirtyRoutines, ...q.deletedRoutines])),
       measurements: mergeDocs(s.measurements, measurements, new Set([...q.dirtyMeasurements, ...q.deletedMeasurements])).sort((a, b) => a.date.localeCompare(b.date)),
-      sync: { ...q, lastPulledAt: maxUpdated(q.lastPulledAt, logs, weights, water, foods, meals, workouts, gyms, visits, routines, measurements) },
+      bp: mergeDocs(s.bp, bp, new Set([...q.dirtyBp, ...q.deletedBp])).sort((a, b) => a.date.localeCompare(b.date)),
+      habitDays: mergeDocs(s.habitDays, habits, new Set([...q.dirtyHabits, ...q.deletedHabits])).sort((a, b) => a.date.localeCompare(b.date)),
+      sync: { ...q, lastPulledAt: maxUpdated(q.lastPulledAt, logs, weights, water, foods, meals, workouts, gyms, visits, routines, measurements, bp, habits) },
     };
     if (g && !q.goalsDirty) {
       next.goals = { kcal: g.daily_kcal, p: g.protein_g, c: g.carbs_g, f: g.fat_g };
       next.profile = g.profile ?? s.profile;
       next.fitness = rowToFitness(g.fitness, s.fitness);
+      next.health = rowToHealth(g.health, s.health);
       next.locationConsent = typeof g.location_consent === "boolean" ? g.location_consent : null;
       next.locationConsentAt = g.location_consent_at ? Date.parse(g.location_consent_at) : null;
     }

@@ -61,6 +61,7 @@ When something changes, mark the old entry **Superseded by Dxx** instead of dele
 | D52 | Deep-fried foods: absorbed-oil model (sourced dough + measured fat of the fried food, dry basis × (1 − moisture)); INDB deep-fried rows no longer added; fresh-oil values for home food, reused-oil for street food | Decided (checker built; existing fried rows not converted yet) | 2026-09-28 |
 | D53 | Alcohol: new `alcohol` category; kcal = 7 × ethanol g (ABV × 0.789) + 4 × (protein + carbs) + 9 × fat; ABV per brand from label / brand / excise sources, carbs from the brand or the USDA style row; ml everywhere; logged like food, no judgement | Decided (built; beers from batch A1) | 2026-09-29 |
 | D54 | Missing foods: record what people can't find (search, AI logging, custom foods, "Request it"), fix alias gaps first, then a scheduled research agent that returns source **references** (never numbers); `check-research.mjs` re-reads every number; approved foods live in a Supabase table, approved by the owner in the admin panel, merged into search on the device (no deploy); people who asked are told | Decided (built, phases 1–5) | 2026-09-30 |
+| D55 | Health tab: Progress becomes **Health** with Progress · Body · Habits; Body adds a synced blood-pressure log and sourced risk scores (WHO 2019 South Asia chart, INTERHEART non-lab, IDRS, Indian BMI / waist cut-offs); Habits = opt-in tobacco counter + alcohol from drink logs → per-disease risk, quit progress, all numbers from the verified research (habits.md); habits data syncs like other data | Decided (built) | 2026-09-30 |
 
 ---
 
@@ -423,6 +424,13 @@ Owner, 2026-09-30: when a search finds nothing, instead of only "add it yourself
 - **Phase 5 default (2026-09-30, the owner can widen it):** only people who tapped "Request it" or made the food themselves are told when it's added or found under another name; silent signals (a search that found nothing, an AI miss) aren't. Swapping their own version moves thalis at the same grams; past logs keep their snapshots.
 - **Decided (owner, 2026-09-30, Q8):** record both "Request it" taps and failed searches / AI misses; signed-in users only; the food name text only.
 - Open: Q9–Q12 in future.md.
+
+## D55 — Health tab: Progress · Body · Habits
+Owner, 2026-09-30: a place for "taboo" habits (cigarettes, alcohol) that shows their impact on the body, with numbers ("without any metrics there is no reason to add this"), plus a report of body health; "its own page… or under progress, renamed"; picked **Health**, habits **synced like everything else**, and a **blood-pressure entry**. Research + verification: [habits.md](habits.md).
+- **No new nav tab** (the phone bar already has 5 + the round +): Progress is renamed **Health** (`/health?tab=progress|body|habits`, `/progress` redirects), sub-tabs like Akhada. Progress keeps today's cards; Body gets measurements + photos (moved) and the risk report; Habits is off until the user turns it on.
+- **Numbers only from the verified research**: relative risks shown as "about N× a non-smoker's" with the source named, never as a personal probability; the only absolute risks are the WHO 10-year CVD chart (South Asia, non-lab, ages 40–74) and the INTERHEART non-lab score recalibrated for South Asia (PURE). Population averages are labelled as such; Western-only numbers say so.
+- **Blood pressure** log (one reading a day: systolic / diastolic / pulse), synced (`blood_pressure` table, jsonb). Health questions for the scores (diabetes, BP diagnosis, family history, activity, diet items, stress…) live in `user_goals.health` (jsonb), synced with the goals.
+- **Habits**: tobacco per day (cigarettes, bidis, chewing, hookah, vape), synced (`habit_days` table, jsonb); alcohol is read from the drink entries already logged (ethanol grams, D53), never logged twice. Habits data never appears in Akhada, Weekly Wrapped, share cards or greetings. No shaming (D23): the tone is "what changes if you cut down / quit"; a relapse never wipes history.
 
 ## D12 — Project docs
 Decisions, features, future changes and data notes live as separate md files in `.claude/`, indexed in [CLAUDE.md](CLAUDE.md).

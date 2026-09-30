@@ -7,11 +7,11 @@ import { getFood, getUnit, setCustomFoods } from "./foods";
 import { DEFAULT_GOALS, portion } from "./nutrition";
 import { dayKey } from "./dates";
 import { activeVisit } from "./gym/visits";
-import type { Entry, Fitness, Food, Goals, Gym, GymVisit, LocalVisit, LogSource, Meal, Measurement, Profile, Routine, RoutineItem, SavedMeal, ThaliItem, WeightLog, Workout } from "./types";
+import type { BpReading, Entry, Fitness, Food, Goals, Gym, GymVisit, HabitDay, HealthInfo, LocalVisit, LogSource, Meal, Measurement, Profile, Routine, RoutineItem, SavedMeal, ThaliItem, TobaccoKind, WeightLog, Workout } from "./types";
 
 /**
  * Local changes not yet pushed to Supabase (decision D14).
- * Every mutation below records what it touched; lib/sync.ts pushes and clears these.
+ * Every mutation below records what it touched; lib/sync/engine.ts pushes and clears these.
  */
 export type SyncQueue = {
   userId: string | null; // account the local data belongs to; null = guest data
@@ -33,13 +33,17 @@ export type SyncQueue = {
   deletedRoutines: string[];
   dirtyMeasurements: string[];
   deletedMeasurements: string[];
-  /** goals, profile or fitness changed (all live in user_goals) */
+  dirtyBp: string[];
+  deletedBp: string[];
+  dirtyHabits: string[];
+  deletedHabits: string[];
+  /** goals, profile, fitness or health changed (all live in user_goals) */
   goalsDirty: boolean;
 };
 
 export const EMPTY_QUEUE: SyncQueue = {
   userId: null, lastPulledAt: null, dirtyEntries: [], deletedEntries: [],
-  dirtyWeights: [], deletedWeights: [], dirtyWater: [], dirtyFoods: [], deletedFoods: [], dirtyMeals: [], deletedMeals: [], dirtyWorkouts: [], deletedWorkouts: [], dirtyGyms: [], deletedGyms: [], dirtyRoutines: [], deletedRoutines: [], dirtyMeasurements: [], deletedMeasurements: [], goalsDirty: false,
+  dirtyWeights: [], deletedWeights: [], dirtyWater: [], dirtyFoods: [], deletedFoods: [], dirtyMeals: [], deletedMeals: [], dirtyWorkouts: [], deletedWorkouts: [], dirtyGyms: [], deletedGyms: [], dirtyRoutines: [], deletedRoutines: [], dirtyMeasurements: [], deletedMeasurements: [], dirtyBp: [], deletedBp: [], dirtyHabits: [], deletedHabits: [], goalsDirty: false,
 };
 
 type Data = {
@@ -58,6 +62,10 @@ type Data = {
   routines: Routine[];
   /** body measurements, one per day (D39); progress photos live only on the device (lib/photos.ts) */
   measurements: Measurement[];
+  /** Health tab (D55): blood-pressure readings and tobacco days (one each per day, synced), health answers + Habits settings */
+  bp: BpReading[];
+  habitDays: HabitDay[];
+  health: HealthInfo;
   /** gym check-in (D30): the user's gym (synced), server visits (read-only copy), visits saved only on this device */
   gyms: Gym[];
   visits: GymVisit[];
@@ -108,6 +116,13 @@ type State = Data & {
   /** add or replace a day's measurements (same date = same entry) */
   saveMeasurement: (m: Measurement) => void;
   deleteMeasurement: (id: string) => void;
+  /** add or replace a day's blood-pressure reading (same date = same entry) */
+  saveBp: (r: BpReading) => void;
+  deleteBp: (id: string) => void;
+  /** +1 / −1 on a tobacco kind for a day (never below 0) */
+  addTobacco: (date: string, kind: TobaccoKind, delta: number) => void;
+  /** merge answers / Habits settings (synced with the goals) */
+  setHealth: (patch: Partial<HealthInfo>) => void;
   /** create the gym, or edit it in place (same gym: fix the pin, rename, radius) */
   saveGym: (g: Gym) => void;
   /** moved to a different gym: `next` becomes the gym, the old one is retired (soft delete) so past visits keep pointing at it */
@@ -132,7 +147,7 @@ export const DEFAULT_FITNESS: Fitness = { burnGoal: null, restDays: [0] };
 
 const INITIAL: Data = {
   entries: [], goals: DEFAULT_GOALS, profile: null, weights: [], water: {}, customFoods: [], savedMeals: [],
-  workouts: [], fitness: DEFAULT_FITNESS, routines: [], measurements: [], gyms: [], visits: [], localVisits: [], pendingCheckout: null,
+  workouts: [], fitness: DEFAULT_FITNESS, routines: [], measurements: [], bp: [], habitDays: [], health: {}, gyms: [], visits: [], localVisits: [], pendingCheckout: null,
   locationConsent: null, locationConsentAt: null, sync: EMPTY_QUEUE, guest: false,
 };
 
@@ -315,6 +330,33 @@ export const useStore = create<State>()(
           measurements: s.measurements.filter((x) => x.id !== id),
           sync: { ...s.sync, dirtyMeasurements: drop(s.sync.dirtyMeasurements, id), deletedMeasurements: add(s.sync.deletedMeasurements, id) },
         })),
+      saveBp: (r) =>
+        set((s) => {
+          const same = s.bp.find((x) => x.date === r.date && x.id !== r.id);
+          const item = same ? { ...r, id: same.id, createdAt: same.createdAt } : r;
+          return {
+            bp: [...s.bp.filter((x) => x.id !== item.id), item].sort((a, b) => a.date.localeCompare(b.date)),
+            sync: { ...s.sync, dirtyBp: add(s.sync.dirtyBp, item.id), deletedBp: drop(s.sync.deletedBp, item.id) },
+          };
+        }),
+      deleteBp: (id) =>
+        set((s) => ({
+          bp: s.bp.filter((x) => x.id !== id),
+          sync: { ...s.sync, dirtyBp: drop(s.sync.dirtyBp, id), deletedBp: add(s.sync.deletedBp, id) },
+        })),
+      addTobacco: (date, kind, delta) =>
+        set((s) => {
+          const day = s.habitDays.find((d) => d.date === date);
+          const n = Math.max(0, Math.min(200, (day?.counts[kind] ?? 0) + delta));
+          const item: HabitDay = day
+            ? { ...day, counts: { ...day.counts, [kind]: n } }
+            : { id: `habit-${uid()}`, date, counts: { [kind]: n }, createdAt: Date.now() };
+          return {
+            habitDays: [...s.habitDays.filter((d) => d.id !== item.id), item].sort((a, b) => a.date.localeCompare(b.date)),
+            sync: { ...s.sync, dirtyHabits: add(s.sync.dirtyHabits, item.id), deletedHabits: drop(s.sync.deletedHabits, item.id) },
+          };
+        }),
+      setHealth: (patch) => set((s) => ({ health: { ...s.health, ...patch }, sync: { ...s.sync, goalsDirty: true } })),
       saveGym: (g) =>
         set((s) => ({
           gyms: [...s.gyms.filter((x) => x.id !== g.id), g],
@@ -355,8 +397,8 @@ export const useStore = create<State>()(
       version: 1, // new fields fall back to INITIAL via the default shallow merge
       // batched writes that survive a full localStorage (lib/localSave.ts)
       storage: typeof window === "undefined" ? undefined : batchedStorage(),
-      partialize: ({ entries, goals, profile, weights, water, customFoods, savedMeals, workouts, fitness, routines, measurements, gyms, visits, localVisits, pendingCheckout, locationConsent, locationConsentAt, sync, guest }) =>
-        ({ entries, goals, profile, weights, water, customFoods, savedMeals, workouts, fitness, routines, measurements, gyms, visits, localVisits, pendingCheckout, locationConsent, locationConsentAt, sync, guest }),
+      partialize: ({ entries, goals, profile, weights, water, customFoods, savedMeals, workouts, fitness, routines, measurements, bp, habitDays, health, gyms, visits, localVisits, pendingCheckout, locationConsent, locationConsentAt, sync, guest }) =>
+        ({ entries, goals, profile, weights, water, customFoods, savedMeals, workouts, fitness, routines, measurements, bp, habitDays, health, gyms, visits, localVisits, pendingCheckout, locationConsent, locationConsentAt, sync, guest }),
       // queues persisted before a field existed would lack it
       merge: (persisted, current) => {
         const p = persisted as Partial<State>;
@@ -383,7 +425,8 @@ export const pendingCount = (q: SyncQueue) =>
   q.dirtyEntries.length + q.deletedEntries.length + q.dirtyWeights.length + q.deletedWeights.length + q.dirtyWater.length +
   q.dirtyFoods.length + q.deletedFoods.length + q.dirtyMeals.length + q.deletedMeals.length +
   q.dirtyWorkouts.length + q.deletedWorkouts.length + q.dirtyGyms.length + q.deletedGyms.length +
-  q.dirtyRoutines.length + q.deletedRoutines.length + q.dirtyMeasurements.length + q.deletedMeasurements.length + (q.goalsDirty ? 1 : 0);
+  q.dirtyRoutines.length + q.deletedRoutines.length + q.dirtyMeasurements.length + q.deletedMeasurements.length +
+  q.dirtyBp.length + q.deletedBp.length + q.dirtyHabits.length + q.deletedHabits.length + (q.goalsDirty ? 1 : 0);
 
 export type Toast = { id: number; text: string; action?: { label: string; run: () => void } };
 

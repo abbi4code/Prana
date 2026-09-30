@@ -44,7 +44,7 @@ Guiding rule: **logging fast beats everything.** People quit trackers because lo
 | Hinglish voice + text logging | "2 roti aur dal for dinner", "bench 3x10 60kg aur 20 min walk", "kal raat…" → one confirm card (food + workouts, today/yesterday) → log; mic in both sheets (D26, nl-logging.md) | done (voice: verify on real phones) |
 | Thali photo logging | Photo → suggested items + katori counts, confirm in one tap | planned |
 | Barcode scan | Packaged foods | planned |
-| Habits: smoking, tobacco, alcohol impact ([habits.md](habits.md)) | Daily tobacco counter + alcohol from drink logs → sourced % more risk per disease, recovery timeline, no-lab risk scores; opt-in, private | research done + verified (habits.md), design next |
+| Habits: smoking, tobacco, alcohol impact ([habits.md](habits.md)) | Daily tobacco counter + alcohol from drink logs → sourced % more risk per disease, recovery timeline, no-lab risk scores; opt-in, private | done (D55, Health → Habits; migration `…140000_health` to push) |
 
 ## v2.5: Workouts (D27, see workouts.md)
 
@@ -104,7 +104,7 @@ Guiding rule: **logging fast beats everything.** People quit trackers because lo
 - **Today** `/`: week strip + streak flame, calorie ring (rolling digits), macro bars, chai + water cards, 4 meal cards (swipe rows, save-as-thali, ⚡ thali chips, "same as yesterday").
 - **Log sheet** (+ button, or N / on desktop): meal chips, search, My thalis, recent/frequent/popular, create food → food detail (drag katori, units, meal) · thali builder · create food.
 - **Workout** `/workout`: week strip + workout flame, Burned card, Exercise/Cardio buttons, session list, workout streak, workout goals (burn goal, rest days). Sheet: library → lift / cardio detail.
-- **Progress** `/progress`: bento grid: Prana, food and workout streak cards in one row (equal heights), full-width year heatmap (Food/Workout/Both; tapping a day lists its workouts), weight (7-day avg) | calories last 14 days (equal heights, goal line always visible).
+- **Health** `/health` (D55; was Progress, `/progress` redirects): tabs **Progress** · **Body** · **Habits**. Progress = bento grid: Prana, food and workout streak cards in one row (equal heights), full-width year heatmap (Food/Workout/Both; tapping a day lists its workouts), weight (7-day avg) | calories last 14 days (equal heights, goal line always visible).
 - **Akhada** `/akhada` (D46–D49; nav tab, replaced the old "Awards" tab): Leaderboard · Challenges · Awards (`?tab=`). Awards = the achievements view: summary hero, badges (16 tiered families incl. 4 Akhada + 9 one-offs, detail sheet per badge), records (every PR, best for every exercise). `/akhada/c/[id]` challenge, `/akhada/d/[id]` duel, `/akhada/join/[token]` invite. `/achievements` redirects to Awards.
 - **Admin** `/admin`, `/admin/u/[id]` (D51): only for `ADMIN_EMAILS`, linked from Me.
 - **Me** `/me`: "Your energy" (D45: live resting burn, goal breakdown, refresh nudge), then goal calculator, daily goals, appearance, my foods, account/sync, backup.

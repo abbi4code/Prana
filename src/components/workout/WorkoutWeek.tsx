@@ -147,7 +147,7 @@ export function WorkoutWeek({ date, onChange }: { date: string; onChange: (d: st
         </div>
         <div className="flex items-center gap-1">
           <Link
-            href="/progress"
+            href="/health"
             aria-label={`${run.current} day workout streak`}
             className={`mr-1 flex h-10 items-center gap-1 rounded-full border px-3 text-sm font-bold tabular transition-colors ${
               run.current ? "border-saffron/40 bg-saffron/10 text-saffron" : "border-line text-faint"
