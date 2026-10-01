@@ -2,14 +2,16 @@
 
 import { useMemo, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { Ban, CheckCheck, Link2, Loader2, PackageSearch, Sparkles, Undo2, UsersRound } from "lucide-react";
+import { Ban, CheckCheck, ChevronDown, Link2, Loader2, PackageSearch, Sparkles, Undo2, UsersRound } from "lucide-react";
+import Link from "next/link";
 import { FoodIcon } from "@/components/FoodIcon";
 import { adminFetch, failText, invalidateAdmin, useAdminQuery } from "@/lib/admin/api";
-import type { FoodRequestFilter, FoodRequestRow, FoodRequestStatus, FoodRequests, FoodReview as Review } from "@/lib/admin/types";
+import type { FoodRequestFilter, FoodRequestPerson, FoodRequestRow, FoodRequestStatus, FoodRequests, FoodReview as Review } from "@/lib/admin/types";
+import { dayKey } from "@/lib/dates";
 import { getFood, matchFood } from "@/lib/foods";
 import { useUI } from "@/lib/store";
 import { FoodReview } from "./FoodReview";
-import { Empty, ErrorState, Panel, PanelSkeleton, Segmented, Stat, ago, nf } from "./ui";
+import { Empty, ErrorState, Panel, PanelSkeleton, Segmented, Stat, UserAvatar, ago, nf, shortDay } from "./ui";
 
 // D54 (.claude/food-requests.md): what members looked for and couldn't find, most wanted first. Triage by hand
 // (Same as / Dismiss) or Research: the AI names a source, the server reads the numbers, a candidate waits above.
@@ -187,6 +189,7 @@ function RequestItem({ row, rank, busy, running, said, stuck, onSet, onResearch 
   const aliasOf = open ? null : linked;
   const suggestion = open && row.status === "new" ? linked : null;
   const st = STATUS[row.status];
+  const [who, setWho] = useState(false);
   const signals = [
     ["asked", row.asked],
     ["searched", row.searched],
@@ -211,27 +214,37 @@ function RequestItem({ row, rank, busy, running, said, stuck, onSet, onResearch 
             {row.status !== "new" && <span className={`rounded-full px-2 py-0.5 text-[11px] font-bold ${st.cls}`}>{st.label}</span>}
           </p>
           <p className="mt-0.5 text-xs text-muted">
-            <b className="font-semibold text-text tabular">{nf(row.people)}</b> {row.people === 1 ? "person" : "people"}
+            <button onClick={() => setWho(!who)} aria-expanded={who} className="inline-flex items-center gap-1 rounded-full hover:text-text" title="See who asked">
+              <b className="font-semibold text-text tabular">{nf(row.people)}</b> {row.people === 1 ? "person" : "people"}
+              <ChevronDown size={12} className={`transition-transform ${who ? "rotate-180" : ""}`} />
+            </button>
             {signals.map(([label, n]) => <span key={label as string}> · {label} {nf(n as number)}</span>)}
             <span className="text-faint"> · {ago(row.lastSeen)}</span>
           </p>
+          <AnimatePresence initial={false}>
+            {who && (
+              <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden">
+                <People id={row.id} />
+              </motion.div>
+            )}
+          </AnimatePresence>
           {aliasOf && (
-            <p className="mt-1 flex items-center gap-1.5 text-xs text-leaf">
+            <div className="mt-1 flex items-center gap-1.5 text-xs text-leaf">
               <Link2 size={12} /> another name for <FoodIcon cat={aliasOf.cat} size={18} /> <b className="font-semibold">{aliasOf.name}</b>
-            </p>
+            </div>
           )}
           {suggestion && (
-            <p className="mt-1 flex items-center gap-1.5 text-xs text-sky">
+            <div className="mt-1 flex items-center gap-1.5 text-xs text-sky">
               <Sparkles size={12} /> AI: same as <FoodIcon cat={suggestion.cat} size={18} /> <b className="font-semibold">{suggestion.name}</b>
-            </p>
+            </div>
           )}
           {row.reason && !said && <p className="mt-1 text-xs text-faint">“{row.reason}”</p>}
           {said && <p className="mt-1 text-xs font-medium text-sky">{said}</p>}
           {guess && !suggestion && (
-            <p className="mt-1 flex flex-wrap items-center gap-1.5 text-xs text-muted">
+            <div className="mt-1 flex flex-wrap items-center gap-1.5 text-xs text-muted">
               {guess.score >= ALIAS_SCORE ? "Looks like" : "Closest in the catalog:"} <FoodIcon cat={guess.item.cat} size={18} /> <b className="font-semibold text-text">{guess.item.name}</b>
               <span className="text-faint tabular">({Math.round(guess.score * 100)}% match)</span>
-            </p>
+            </div>
           )}
         </div>
       </div>
@@ -271,5 +284,40 @@ function RequestItem({ row, rank, busy, running, said, stuck, onSet, onResearch 
         ) : null}
       </div>
     </motion.li>
+  );
+}
+
+const VIA: Record<FoodRequestPerson["signals"][number]["via"], string> = { request: "asked", search: "searched", ai: "AI", custom: "made own" };
+
+/** Who asked for this food, how and when (loaded on open; each open is written to the admin access log). */
+function People({ id }: { id: number }) {
+  const { data, error, loading, reload } = useAdminQuery<{ people: FoodRequestPerson[] }>(`/api/admin/food-requests?people=${id}`);
+  if (error) return <div className="mt-2"><ErrorState reason={error} onRetry={reload} /></div>;
+  if (loading || !data) return <div className="mt-2 space-y-1.5"><div className="skeleton h-10" /><div className="skeleton h-10" /></div>;
+  if (!data.people.length) return <p className="mt-2 text-xs text-faint">Nobody on record (the account may have been deleted).</p>;
+  return (
+    <ul className="mt-2 space-y-1.5">
+      {data.people.map((p) => {
+        const name = p.name ?? p.email ?? "Unknown";
+        return (
+          <li key={p.user}>
+            <Link href={`/admin/u/${p.user}`} className="flex items-center gap-2.5 rounded-xl bg-surface-2 px-2.5 py-2 transition-colors hover:bg-surface-3">
+              <UserAvatar url={p.avatar} name={name} size={28} />
+              <span className="min-w-0 flex-1">
+                <span className="block truncate text-xs font-semibold text-text">
+                  {name}{p.handle && <span className="font-normal text-faint"> @{p.handle}</span>}
+                </span>
+                <span className="block truncate text-[11px] text-muted">
+                  {p.email && p.name ? `${p.email} · ` : ""}
+                  {p.signals.map((s) => `${VIA[s.via]}${s.times > 1 ? ` ×${s.times}` : ""}`).join(", ")}
+                  {" · "}first {shortDay(dayKey(new Date(p.firstAt)))}{dayKey(new Date(p.lastAt)) !== dayKey(new Date(p.firstAt)) ? `, last ${ago(p.lastAt)}` : ""}
+                </span>
+              </span>
+              {p.asked && <span className="shrink-0 rounded-full bg-turmeric/15 px-2 py-0.5 text-[10px] font-bold text-turmeric">asked</span>}
+            </Link>
+          </li>
+        );
+      })}
+    </ul>
   );
 }

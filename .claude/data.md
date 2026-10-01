@@ -68,6 +68,8 @@ All were produced by browser Claude from the research prompt. Schema: `meta` + `
 
 Most of the basics are single-ingredient IFCT items or printed on packet labels, so they're easy to fill (see future.md).
 
+**Macro check with the source's own factors (2026-10-01):** the check (4P + 4C + 9F within 15 % of kcal) wrongly failed USDA SR Legacy foods whose energy USDA computes with food-specific factors: sweet corn (fdcId 169999) gives 111 kcal by 4 / 4 / 9 but USDA states 96, computed with corn's 2.44 / 3.57 / 8.37 kcal per g (protein / carbs / fat; carbs include fibre). Now the checker reads USDA's "Calories From Proximates" factors (API `nutrientConversionFactors`; local SR Legacy CSVs `food_calorie_conversion_factor.csv` + `food_nutrient_conversion_factor.csv`) and uses them when present (corn: 95.8 vs 96, passes); else 4 / 4 / 9 as before (FNDDS has none). Accepted rows keep them (`per_100g.energy_factors` → Food `ef`), and the shared-food gate (`server/foods/schema.ts`) rebuilds the energy the same way. Rows already in `data/research/fdc-cache.json` were cached without factors: delete a food's entry there to refetch it.
+
 ## Adding foods at scale: browser-Claude research (2026-09-28)
 
 The catalog had 276 foods; the owner wants the thousands of everyday dishes it lacks (chicken biryani, pani puri, ice cream, fries, chaat, air-fried chicken…). Same idea as greetings.md:

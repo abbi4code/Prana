@@ -20,8 +20,10 @@ export type ResearchFood = {
   confidence: string; notes?: string; image_prompt?: string;
 };
 /** Per 100 g (drinks: per 100 ml) as read from a source. */
-export type SourceRow = { name?: string; kcal: number | null; p: number | null; c: number | null; f: number | null; fib: number | null; alc?: number | null; fdcId?: number };
-export type Truth = { name?: string; kcal: number; p: number | null; c: number | null; f: number | null; fib: number | null; alc?: number | null; fdcId?: number };
+/** kcal per g the source itself used for its energy value (USDA SR Legacy "Calories From Proximates", e.g. corn 2.44 / 3.57 / 8.37). */
+export type CalorieFactors = { p: number; c: number; f: number };
+export type SourceRow = { name?: string; kcal: number | null; p: number | null; c: number | null; f: number | null; fib: number | null; alc?: number | null; fdcId?: number; factors?: CalorieFactors | null };
+export type Truth = { name?: string; kcal: number; p: number | null; c: number | null; f: number | null; fib: number | null; alc?: number | null; fdcId?: number; factors?: CalorieFactors | null };
 
 export const CATEGORIES = new Set(["breakfast", "roti_bread", "rice", "dal", "sabzi", "paneer", "egg", "non_veg", "snack", "sweet", "dairy", "fruit", "beverage", "condiment", "nuts", "soup", "supplement", "cereal", "alcohol"]);
 export const DIETS = new Set(["vegan", "veg", "egg", "non_veg"]);
@@ -215,9 +217,13 @@ export async function checkFood(food: ResearchFood, ctx: CheckContext): Promise<
     for (const k of ["kcal", "p", "c", "f"] as const) {
       if (claimed[k] != null && !near(claimed[k], truth[k], food.source.id === "DERIVED" ? 0.05 : 0.02)) warnings.push(`${k}: research ${claimed[k]}, source ${r2(truth[k])} (source used)`);
     }
-    const macroKcal = 4 * (truth.p ?? 0) + 4 * (truth.c ?? 0) + 9 * (truth.f ?? 0) + 7 * (truth.alc ?? 0);
+    // Rebuild the energy from the macros with the factors the source itself used when it gives them (USDA SR Legacy: corn
+    // protein 2.44, carbs 3.57, fat 8.37 kcal/g, because its carbs include fibre), else the general 4 / 4 / 9 (+ 7 for alcohol).
+    const fx = truth.factors ?? { p: 4, c: 4, f: 9 };
+    const macroKcal = fx.p * (truth.p ?? 0) + fx.c * (truth.c ?? 0) + fx.f * (truth.f ?? 0) + 7 * (truth.alc ?? 0);
     const macroOk = truth.p != null && Math.abs(macroKcal - truth.kcal) <= truth.kcal * 0.15;
-    if (!macroOk) warnings.push(`macro check fails (${Math.round(macroKcal)} vs ${Math.round(truth.kcal)} kcal): macros set to null`);
+    const how = truth.factors ? ` with the source's own factors ${fx.p} / ${fx.c} / ${fx.f}` : "";
+    if (!macroOk) warnings.push(`macro check fails (${Math.round(macroKcal)} vs ${Math.round(truth.kcal)} kcal${how}): macros set to null`);
     if (truth.f != null && truth.f > FRIED_FAT_MAX && !["condiment", "nuts"].includes(food.category) && !/oil|ghee|butter|nut|seed/i.test(food.name))
       problems.push(`${r2(truth.f)} g fat / 100 g: frying oil counted (Q4), held until the fried-food fix`);
     for (const u of food.units) if ((truth.kcal * u.grams) / 100 > UNIT_KCAL_MAX) problems.push(`unit ${u.unit} = ${Math.round((truth.kcal * u.grams) / 100)} kcal (recipe yield?)`);
@@ -236,7 +242,12 @@ export function acceptedRow(food: ResearchFood, r: CheckResult, extra: { researc
     id: extra.id ?? food.id, ...(extra.replaces ? { replaces: extra.replaces } : {}),
     name: food.name.replace(/\s*\(absorbed-oil model\)/i, ""), name_hi: food.name_hi, category: food.category, diet: food.diet, form: food.form,
     aliases: extra.aliases ?? [],
-    per_100g: { kcal: r2(truth.kcal), protein_g: ok ? r2(truth.p) : null, carbs_g: ok ? r2(truth.c) : null, fat_g: ok ? r2(truth.f) : null, fiber_g: r2(truth.fib), ...(truth.alc != null ? { alcohol_g: r2(truth.alc) } : {}) },
+    per_100g: {
+      kcal: r2(truth.kcal), protein_g: ok ? r2(truth.p) : null, carbs_g: ok ? r2(truth.c) : null, fat_g: ok ? r2(truth.f) : null, fiber_g: r2(truth.fib),
+      ...(truth.alc != null ? { alcohol_g: r2(truth.alc) } : {}),
+      // the source's own kcal-per-gram factors, so later checks (the shared-food gate) rebuild the energy the same way
+      ...(ok && truth.factors ? { energy_factors: truth.factors } : {}),
+    },
     units: extra.units ?? food.units, default_unit: extra.default_unit ?? food.default_unit,
     source: { id: food.source.id, ref: food.source.ref, url: food.source.url, ...(food.source.image_url ? { image_url: food.source.image_url } : {}) },
     ...(food.recipe ? { recipe: food.recipe } : {}),

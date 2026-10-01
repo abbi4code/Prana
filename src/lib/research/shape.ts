@@ -6,7 +6,7 @@ import type { Category, Food, FoodUnit, UnitKind } from "../types.ts";
 /** A research row as the data files store it (per 100 g values already verified). */
 export type SourceFood = {
   id: string; name: string; name_hi?: string | null; category: string; diet: string; form?: string;
-  per_100g: { kcal: number | null; protein_g?: number | null; carbs_g?: number | null; fat_g?: number | null; fiber_g?: number | null; alcohol_g?: number | null };
+  per_100g: { kcal: number | null; protein_g?: number | null; carbs_g?: number | null; fat_g?: number | null; fiber_g?: number | null; alcohol_g?: number | null; energy_factors?: { p: number; c: number; f: number } | null };
   units: { unit: string; label: string; grams: number }[]; default_unit: string;
   source: { id: string }; confidence: string; notes?: string | null;
 };
@@ -70,6 +70,7 @@ export function toAppFood(f: SourceFood, aliases: string[]): Shaped {
     f: round(p.fat_g),
     fib: round(p.fiber_g),
     ...(p.alcohol_g != null ? { alc: round(p.alcohol_g, 2) } : {}), // D53: ethanol g / 100 ml, 7 kcal each
+    ...(p.energy_factors ? { ef: p.energy_factors } : {}), // the source's own kcal / g factors (USDA SR Legacy)
     units,
     du,
     conf: f.confidence as Food["conf"],

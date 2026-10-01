@@ -5,7 +5,8 @@ import { CATEGORY_LABEL } from "@/lib/foods";
 import type { Category, Food } from "@/lib/types";
 
 // The gate every shared food passes before it goes live (D54): exactly the shape the app uses (lib/types.ts Food),
-// plus the checker's rules (scripts/check-research.mjs): macros add up within 15 % (else they must be null) and no
+// plus the checker's rules (lib/research/check.ts): macros add up within 15 % (with the source's own factors when it
+// gave them, else 4 / 4 / 9; else they must be null) and no
 // unit over 1,200 kcal (a recipe yield, not a portion).
 
 const UNIT_KINDS = ["g", "katori", "bowl", "plate", "piece", "glass", "cup", "tbsp", "tsp", "handful", "pack", "scoop"] as const;
@@ -25,6 +26,7 @@ export const FoodSchema = z
     f: num.nullable(),
     fib: num.nullable(),
     alc: num.nullable().optional(),
+    ef: z.object({ p: z.number().min(1).max(5), c: z.number().min(1).max(5), f: z.number().min(5).max(10) }).strict().nullable().optional(),
     units: z.array(z.object({ id: z.string().min(1).max(40), kind: z.enum(UNIT_KINDS), label: z.string().min(1).max(60), g: z.number().positive().max(2000) })).min(1).max(12),
     du: z.string().min(1),
     conf: z.enum(["high", "medium", "low"]),
@@ -40,7 +42,8 @@ export const FoodSchema = z
     const macros = [f.p, f.c, f.f];
     if (macros.some((m) => m == null) && macros.some((m) => m != null)) ctx.addIssue({ code: "custom", message: "macros must be all known or all null" });
     if (f.p != null && f.c != null && f.f != null) {
-      const fromMacros = 4 * f.p + 4 * f.c + 9 * f.f + 7 * (f.alc ?? 0);
+      const fx = f.ef ?? { p: 4, c: 4, f: 9 }; // the source's own factors when it gave them (same rule as the checker)
+      const fromMacros = fx.p * f.p + fx.c * f.c + fx.f * f.f + 7 * (f.alc ?? 0);
       if (Math.abs(fromMacros - f.kcal) > f.kcal * 0.15) ctx.addIssue({ code: "custom", message: `macros give ${Math.round(fromMacros)} kcal, not ${f.kcal}` });
     }
     for (const u of f.units)

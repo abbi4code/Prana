@@ -1,5 +1,6 @@
 // Missing-food requests (D54 phase 1, .claude/food-requests.md).
 // GET  ?filter=open|done|junk|all&days=30: the queue, most wanted first (admin_food_requests).
+// GET  ?people=<request id>: who asked, how and when (admin_food_request_people); logged in admin_audit.
 // POST { id, status: new|alias|not_found|junk, foodId?, reason? }: triage one request; logged in admin_audit.
 import { z } from "zod";
 import { adminError, adminJson, audit, requireAdmin } from "@/server/admin/auth";
@@ -22,10 +23,26 @@ const Body = z
   })
   .refine((b) => b.status !== "alias" || !!b.foodId, { message: "alias needs foodId" });
 
+const People = z.object({ people: z.coerce.number().int().positive() });
+
 export async function GET(req: Request) {
   const admin = await requireAdmin(req);
   if (admin instanceof Response) return admin;
-  const q = Query.safeParse(Object.fromEntries(new URL(req.url).searchParams));
+  const params = Object.fromEntries(new URL(req.url).searchParams);
+  if (params.people) {
+    const p = People.safeParse(params);
+    if (!p.success) return adminJson({ error: "bad_request" }, 400);
+    try {
+      const { data, error } = await supabaseAdmin().rpc("admin_food_request_people", { p_id: p.data.people });
+      if (error) return adminError("food-requests", error);
+      // seeing who asked is seeing members' data: leave a trace (D51)
+      await audit(admin, "food_request", null, { request: p.data.people, viewed: "people" });
+      return adminJson({ people: data ?? [] });
+    } catch (err) {
+      return adminError("food-requests", err);
+    }
+  }
+  const q = Query.safeParse(params);
   if (!q.success) return adminJson({ error: "bad_request" }, 400);
   try {
     const { data, error } = await supabaseAdmin().rpc("admin_food_requests", { p_days: q.data.days, p_filter: q.data.filter });

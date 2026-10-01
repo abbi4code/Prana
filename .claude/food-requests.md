@@ -223,3 +223,6 @@ Datasets in CI: INDB.xlsx from the INDB GitHub repo, USDA FNDDS + SR Legacy zips
 - Vercel cron limits: https://vercel.com/docs/cron-jobs/usage-and-pricing · function limits: https://vercel.com/docs/functions/limitations
 - GitHub Actions `schedule`: https://docs.github.com/en/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows
 - OpenAI web search tool: https://developers.openai.com/api/docs/guides/tools-web-search
+
+## Who asked (2026-10-01)
+In the admin Requests tab, "N people" opens the list of members behind a request (name, email, @handle, how each asked: Request it / search / AI / made own, how often, first and last time) with a link to their member page. Read through `admin_food_request_people(p_id)` (service role only, migration `20261001100000_food_request_people`); every open writes an `admin_audit` row (`food_request`, `viewed: people`), as for any member data (D51).

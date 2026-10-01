@@ -23,6 +23,8 @@ export type Food = {
   fib: number | null;
   /** grams of ethanol per 100 g (drinks: per 100 ml), 7 kcal each (D53); absent for everything that isn't alcoholic */
   alc?: number | null;
+  /** kcal per g of protein / carbs / fat the source used for `kcal` (USDA SR Legacy, e.g. corn 2.44 / 3.57 / 8.37); absent = 4 / 4 / 9 */
+  ef?: { p: number; c: number; f: number } | null;
   units: FoodUnit[];
   du: string;
   /** "user" = created by the owner (custom food) */

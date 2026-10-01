@@ -59,6 +59,12 @@ export function ifctRows() {
 const fdcKey = () => serverEnv().USDA_API_KEY ?? "DEMO_KEY";
 const fdcCache = new Map<number, SourceRow & { name: string; dataType: string; portions: string[] }>();
 
+/** USDA's own kcal-per-gram factors for a food (SR Legacy "Calories From Proximates"); null when it has none (FNDDS). */
+function calorieFactors(list?: { type?: string; proteinValue?: number; fatValue?: number; carbohydrateValue?: number }[]) {
+  const f = list?.find((x) => /CalorieConversionFactor/.test(x.type ?? ""));
+  return f && f.proteinValue && f.fatValue && f.carbohydrateValue ? { p: f.proteinValue, c: f.carbohydrateValue, f: f.fatValue } : null;
+}
+
 /** One USDA food by fdcId: per 100 g values (FNDDS energy 208, or the Atwater rows), alcohol, household portions. */
 export async function usdaFood(fdcId: number) {
   const hit = fdcCache.get(fdcId);
@@ -67,7 +73,8 @@ export async function usdaFood(fdcId: number) {
   if (res.status === 404) throw new Error(`USDA ${fdcId} doesn't exist`);
   if (!res.ok) throw new Error(`USDA ${fdcId}: HTTP ${res.status}`);
   type N = { amount?: number; nutrient?: { number?: string } };
-  const d = (await res.json()) as { description: string; dataType: string; foodNutrients?: N[]; foodPortions?: { portionDescription?: string; amount?: number; measureUnit?: { name?: string }; modifier?: string; gramWeight: number }[] };
+  type F = { type?: string; proteinValue?: number; fatValue?: number; carbohydrateValue?: number };
+  const d = (await res.json()) as { description: string; dataType: string; foodNutrients?: N[]; nutrientConversionFactors?: F[]; foodPortions?: { portionDescription?: string; amount?: number; measureUnit?: { name?: string }; modifier?: string; gramWeight: number }[] };
   const by = (...nums: string[]) => {
     for (const n of nums) {
       const x = d.foodNutrients?.find((fn) => String(fn.nutrient?.number) === n);
@@ -78,6 +85,7 @@ export async function usdaFood(fdcId: number) {
   const v = {
     name: d.description, dataType: d.dataType, fdcId,
     kcal: by("208", "958", "957"), p: by("203"), c: by("205"), f: by("204"), fib: by("291"), alc: by("221"),
+    factors: calorieFactors(d.nutrientConversionFactors),
     portions: (d.foodPortions ?? []).map((p) => `${p.portionDescription || `${p.amount ?? ""} ${p.measureUnit?.name ?? ""} ${p.modifier ?? ""}`.trim()} = ${p.gramWeight} g`),
   };
   fdcCache.set(fdcId, v);

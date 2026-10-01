@@ -80,6 +80,15 @@ for (const dir of (process.env.FDC_DIRS ?? "").split(":").filter(Boolean)) {
     const v = local.byId.get(Number(c[iFdc].replace(/"/g, "")));
     if (v) v[k] = Number(c[iAmt].replace(/"/g, ""));
   }
+  // USDA's own kcal-per-gram factors (SR Legacy): conversion factor id → food, then the calorie values for it
+  if (existsSync(`${dir}/food_calorie_conversion_factor.csv`) && existsSync(`${dir}/food_nutrient_conversion_factor.csv`)) {
+    const owner = new Map(read("food_nutrient_conversion_factor.csv").map((r) => [r.id, Number(r.fdc_id)]));
+    for (const r of read("food_calorie_conversion_factor.csv")) {
+      const v = local.byId.get(owner.get(r.food_nutrient_conversion_factor_id));
+      const p = Number(r.protein_value), c = Number(r.carbohydrate_value), f = Number(r.fat_value);
+      if (v && p && c && f) v.factors = { p, c, f };
+    }
+  }
   for (const r of existsSync(`${dir}/food_portion.csv`) ? read("food_portion.csv") : []) {
     const v = local.byId.get(Number(r.fdc_id));
     if (v) v.portions.push(`${r.portion_description || r.modifier || `${r.amount} unit`} = ${r.gram_weight} g`);
@@ -100,7 +109,9 @@ async function usda(fdcId) {
     }
     return null;
   };
-  const v = { name: d.description, dataType: d.dataType, kcal: by("208", "958", "957"), p: by("203"), c: by("205"), f: by("204"), fib: by("291"), alc: by("221"),
+  const cf = d.nutrientConversionFactors?.find((x) => /CalorieConversionFactor/.test(x.type ?? ""));
+  const factors = cf?.proteinValue && cf?.fatValue && cf?.carbohydrateValue ? { p: cf.proteinValue, c: cf.carbohydrateValue, f: cf.fatValue } : null;
+  const v = { name: d.description, dataType: d.dataType, kcal: by("208", "958", "957"), p: by("203"), c: by("205"), f: by("204"), fib: by("291"), alc: by("221"), factors,
     portions: (d.foodPortions ?? []).map((p) => `${p.portionDescription || `${p.amount ?? ""} ${p.measureUnit?.name ?? ""} ${p.modifier ?? ""}`.trim()} = ${p.gramWeight} g`) };
   fdcCache.set(fdcId, v);
   fdcDisk.foods[fdcId] = { ...v, fetched: new Date().toISOString().slice(0, 10) };

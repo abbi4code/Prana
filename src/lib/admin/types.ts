@@ -126,6 +126,12 @@ export type FoodRequestRow = {
   id: number; name: string; status: FoodRequestStatus; reason: string | null; foodId: string | null;
   firstSeen: string; lastSeen: string; people: number; asked: number; searched: number; ai: number; custom: number; times: number;
 };
+/** One person behind a request (admin_food_request_people): how they asked, how often, when. */
+export type FoodRequestPerson = {
+  user: string; email: string | null; name: string | null; avatar: string | null; handle: string | null;
+  asked: boolean; times: number; firstAt: string; lastAt: string;
+  signals: { via: "request" | "search" | "ai" | "custom"; times: number; firstAt: string; lastAt: string }[];
+};
 export type FoodRequests = { counts: { open: number; done: number; junk: number; people: number }; rows: FoodRequestRow[] };
 
 // ── shared foods review (D54 phase 2, admin_food_review) ──
