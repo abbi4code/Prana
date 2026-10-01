@@ -188,7 +188,9 @@ Owner's picks: Progress renamed **Health** with Progress · Body · Habits sub-t
 
 **Verified:** Node checks reproduce every published curve point and score (oral 1.78 / 2.88 / 4.80, pancreas 2.15 at 30, INTERHEART 1.6 % / 8.4 %, WHO 12 % → 7 % example, IDRS, South Asia limits); Chrome 390 × 844 + 1440 × 900, dark + light: opt-in → setup → counter → slider → source note, BP log → queue, answers → goalsDirty, `/progress` → `/health`; no page errors, no sideways scroll.
 
-**Not done yet (future.md):** admin member page doesn't show BP / habits; the counter only edits today; the 2025 obesity "symptoms" aren't asked (stage 2 needs them); BP is one reading a day (guidelines average morning + evening).
+**Edit days** (2026-10-01): the counter's "Edit days" opens the last 14 days (newest first, each with its total) + a date field for older days; the steppers then change that day (never a future day). The tobacco average starts at the earlier of "Habits turned on" and the first filled-in day.
+
+**Not done yet (future.md):** admin member page doesn't show BP / habits; the 2025 obesity "symptoms" aren't asked (stage 2 needs them); BP is one reading a day (guidelines average morning + evening).
 
 ## Decided / still open
 - Decided (owner, 2026-09-30, D55): Health tab with sub-tabs (not a new nav tab); habits synced like other data (admin can see logged data, so the privacy policy must say so, D51); BP entry added. Alcohol reference = the GBD South Asia lowest-risk / no-net-harm amounts by age and sex (no single number).

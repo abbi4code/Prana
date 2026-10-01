@@ -54,7 +54,9 @@ export function useHealth() {
       : null;
 
     // tobacco: average a day over the last 14 days (or since Habits started), per kind
-    const since = health.habitsSince ?? habitDays[0]?.date ?? today;
+    // from Habits being turned on, or earlier if past days were filled in (Edit days)
+    const first = habitDays[0]?.date;
+    const since = health.habitsSince && first ? (first < health.habitsSince ? first : health.habitsSince) : health.habitsSince ?? first ?? today;
     const from = since > addDays(today, -(AVG_DAYS - 1)) ? since : addDays(today, -(AVG_DAYS - 1));
     const nDays = Math.max(1, daysBetween(from, today) + 1);
     const perDay: Record<TobaccoKind, number> = { cigarette: 0, bidi: 0, chew: 0, hookah: 0, vape: 0 };

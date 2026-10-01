@@ -4,9 +4,9 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import { Drawer } from "vaul";
 import { AnimatePresence, motion } from "motion/react";
-import { Beer, Check, Cigarette, CigaretteOff, CloudFog, Hourglass, IndianRupee, Leaf, Lock, Minus, Plus, Settings2, ShieldCheck, Sparkles, Wind } from "lucide-react";
+import { Beer, Check, Cigarette, CigaretteOff, CloudFog, Hourglass, IndianRupee, Leaf, Lock, Minus, Pencil, Plus, Settings2, ShieldCheck, Sparkles, Wind } from "lucide-react";
 import { Sheet } from "@/components/Sheet";
-import { addDays, dayKey } from "@/lib/dates";
+import { addDays, dayKey, parseDay } from "@/lib/dates";
 import {
   ALCOHOL_CANCERS, ALCOHOL_CANCER_SRC, ASIA_NOTE, HEAVY_EPISODE_G, STANDARD_DRINK_G, afMen, bpPayoff, breastPer10g, cirrhosisWomen, drinkBand, lifeYearsAt40, southAsiaLimits,
 } from "@/lib/health/alcohol";
@@ -18,7 +18,7 @@ import {
 } from "@/lib/health/tobacco";
 import { daysBetween, useHealth, type HealthData } from "@/lib/health/useHealth";
 import { useStore } from "@/lib/store";
-import type { HealthInfo, TobaccoKind } from "@/lib/types";
+import type { HabitDay, HealthInfo, TobaccoKind } from "@/lib/types";
 import { BG, CardHead, RiskRow, SourceNote, TEXT, pill, riskText, timesText, type Tone } from "./ui";
 
 // Health → Habits (D55): tobacco + alcohol and what they do to the body. Opt-in; every number from the verified
@@ -245,15 +245,40 @@ function Field({ label, value, onChange, suffix }: { label: string; value: strin
 function Counter({ h, kinds, onSettings }: { h: HealthData; kinds: TobaccoKind[]; onSettings: () => void }) {
   const habitDays = useStore((s) => s.habitDays);
   const addTobacco = useStore((s) => s.addTobacco);
-  const day = habitDays.find((d) => d.date === h.today);
+  // Edit mode: pick any past day (missed a few, logged on the wrong day); the steppers then change that day
+  const [editing, setEditing] = useState(false);
+  const [picked, setPicked] = useState<string | null>(null);
+  const date = editing && picked ? picked : h.today;
+  const day = habitDays.find((d) => d.date === date);
   const shown = KINDS.filter((k) => kinds.includes(k.id));
   const lastWord = h.tobacco.lastTobacco ? (h.tobacco.lastTobacco === h.today ? "today" : `${daysBetween(h.tobacco.lastTobacco, h.today)} days ago`) : null;
+  const isToday = date === h.today;
+  const close = () => { setEditing(false); setPicked(null); };
 
   return (
     <section className="card p-5">
-      <CardHead icon={<Hourglass size={14} className="text-turmeric" />} label="Today"
-        sub={lastWord ? `Last one ${lastWord}` : "Tap + each time: honest numbers give honest results"}
-        right={<button onClick={onSettings} aria-label="Habits settings" className="grid size-9 place-items-center rounded-full text-faint hover:bg-surface-2 hover:text-text"><Settings2 size={17} /></button>} />
+      <CardHead icon={<Hourglass size={14} className="text-turmeric" />} label={isToday ? "Today" : dayName(date, h.today)}
+        sub={!isToday ? "Editing a past day: changes save at once" : lastWord ? `Last one ${lastWord}` : "Tap + each time: honest numbers give honest results"}
+        right={
+          <div className="flex items-center gap-1">
+            {shown.length > 0 && (
+              <button onClick={() => (editing ? close() : setEditing(true))} aria-expanded={editing}
+                className={editing ? pill : "inline-flex h-8 items-center gap-1.5 rounded-full border border-line-strong px-3 text-xs font-semibold text-muted hover:text-text"}>
+                {editing ? <><Check size={13} strokeWidth={2.6} /> Done</> : <><Pencil size={13} /> Edit days</>}
+              </button>
+            )}
+            <button onClick={onSettings} aria-label="Habits settings" className="grid size-9 place-items-center rounded-full text-faint hover:bg-surface-2 hover:text-text"><Settings2 size={17} /></button>
+          </div>
+        } />
+
+      <AnimatePresence initial={false}>
+        {editing && (
+          <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden">
+            <DayPicker today={h.today} value={date} onPick={setPicked} days={habitDays} kinds={kinds} />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {shown.length ? (
         <ul className="mt-4 space-y-2">
           {shown.map((k) => {
@@ -266,13 +291,13 @@ function Counter({ h, kinds, onSettings }: { h: HealthData; kinds: TobaccoKind[]
                   <span className="block truncate text-sm font-semibold">{k.label}</span>
                   <span className="block text-[11px] text-muted tabular">{avg > 0 ? `${fmt1(avg)} a day, last ${h.tobacco.nDays} days` : "none lately"}</span>
                 </span>
-                <motion.button whileTap={{ scale: 0.85 }} onClick={() => addTobacco(h.today, k.id, -1)} disabled={!n} aria-label={`One less ${k.unit}`}
+                <motion.button whileTap={{ scale: 0.85 }} onClick={() => addTobacco(date, k.id, -1)} disabled={!n} aria-label={`One less ${k.unit}`}
                   className="grid size-9 place-items-center rounded-full border border-line-strong text-muted disabled:opacity-30"><Minus size={16} /></motion.button>
                 <AnimatePresence mode="popLayout" initial={false}>
-                  <motion.span key={n} initial={{ y: -10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: 10, opacity: 0 }}
+                  <motion.span key={`${date}-${n}`} initial={{ y: -10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: 10, opacity: 0 }}
                     className="w-8 text-center font-display text-2xl font-semibold tabular">{n}</motion.span>
                 </AnimatePresence>
-                <motion.button whileTap={{ scale: 0.85 }} onClick={() => { addTobacco(h.today, k.id, 1); navigator.vibrate?.(8); }} aria-label={`One more ${k.unit}`}
+                <motion.button whileTap={{ scale: 0.85 }} onClick={() => { addTobacco(date, k.id, 1); navigator.vibrate?.(8); }} aria-label={`One more ${k.unit}`}
                   className="grid size-9 place-items-center rounded-full bg-cream text-bg"><Plus size={16} strokeWidth={2.6} /></motion.button>
               </li>
             );
@@ -281,7 +306,51 @@ function Counter({ h, kinds, onSettings }: { h: HealthData; kinds: TobaccoKind[]
       ) : (
         <p className="mt-4 text-sm text-muted">No tobacco counters: drinks you log in food still show below.</p>
       )}
+      {!isToday && (
+        <button onClick={() => setPicked(h.today)} className="mt-3 text-xs font-semibold text-turmeric">Back to today</button>
+      )}
     </section>
+  );
+}
+
+/** "Yesterday", "Mon 29 Sept" */
+function dayName(date: string, today: string) {
+  if (date === today) return "Today";
+  if (date === addDays(today, -1)) return "Yesterday";
+  return parseDay(date).toLocaleDateString("en-IN", { weekday: "short", day: "numeric", month: "short" });
+}
+
+/** The last 14 days (newest first, each with its total) + a date field for anything older. Never a future day. */
+function DayPicker({ today, value, onPick, days, kinds }: { today: string; value: string; onPick: (d: string) => void; days: HabitDay[]; kinds: TobaccoKind[] }) {
+  const recent = Array.from({ length: 14 }, (_, i) => addDays(today, -i));
+  const total = (d: string) => {
+    const c = days.find((x) => x.date === d)?.counts ?? {};
+    return kinds.reduce((t, k) => t + (c[k] ?? 0), 0);
+  };
+  const older = !recent.includes(value);
+  return (
+    <div className="mt-4">
+      <ul className="no-scrollbar -mx-5 flex gap-2 overflow-x-auto px-5 pb-1 lg:flex-wrap" data-vaul-no-drag>
+        {recent.map((d) => {
+          const on = d === value, n = total(d), p = parseDay(d);
+          return (
+            <li key={d}>
+              <motion.button whileTap={{ scale: 0.94 }} onClick={() => onPick(d)} aria-pressed={on} aria-label={`${dayName(d, today)}, ${n} logged`}
+                className={`flex w-14 flex-col items-center rounded-2xl border py-2 transition-colors ${on ? "border-transparent bg-cream text-bg" : "border-line-strong text-muted hover:text-text"}`}>
+                <span className="text-[10px] font-bold uppercase tracking-wider">{d === today ? "Today" : p.toLocaleDateString("en-IN", { weekday: "short" })}</span>
+                <span className="font-display text-lg font-semibold leading-tight tabular">{p.getDate()}</span>
+                <span className={`mt-0.5 text-[10px] font-semibold tabular ${on ? "" : n ? "text-saffron" : "text-faint"}`}>{n ? n : "–"}</span>
+              </motion.button>
+            </li>
+          );
+        })}
+      </ul>
+      <label className={`mt-2 flex items-center justify-between gap-3 rounded-2xl border px-3.5 py-2 text-xs ${older ? "border-turmeric/60" : "border-line-strong"}`}>
+        <span className="font-semibold text-muted">An older day</span>
+        <input type="date" max={addDays(today, -14)} value={older ? value : ""} onChange={(e) => e.target.value && e.target.value <= today && onPick(e.target.value)}
+          className="bg-transparent text-sm font-semibold outline-none" />
+      </label>
+    </div>
   );
 }
 
@@ -473,7 +542,11 @@ function Milestones({ days }: { days: number }) {
 /** Longest run of days without cigarettes / bidis since Habits started (a relapse never erases it). */
 function useLongestRun() {
   const habitDays = useStore((s) => s.habitDays);
-  const since = useStore((s) => s.health.habitsSince);
+  const since = useStore((s) => {
+    const first = s.habitDays[0]?.date;
+    const on = s.health.habitsSince;
+    return on && first ? (first < on ? first : on) : on ?? first;
+  });
   const today = dayKey();
   return useMemo(() => {
     if (!since) return null;
